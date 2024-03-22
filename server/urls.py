@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from amigo.views import endpoint
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('endpoint/', endpoint.as_view())
 ]
