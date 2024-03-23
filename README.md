@@ -1,5 +1,5 @@
 # Back End
-## Configuración del Entorno Virtual
+### Configuración del Entorno Virtual
 1. Crea un entorno virtual con el comando:
    ```
    python -m venv venv
@@ -14,7 +14,7 @@
     pip install -r requirements.txt
     ```
 
-## Configuración de la Base de Datos
+### Configuración de la Base de Datos
 Crea un archivo `.env` en la raíz del proyecto y añade las credenciales de la base de datos de la siguiente manera:
 ```
 DB_NAME=your_database_name
@@ -23,13 +23,13 @@ DB_PASSWORD=your_database_password
 DB_HOST=your_database_host
 DB_PORT=your_database_port
 ```
-## Ejecutando el servidor Django
+### Ejecutando el servidor Django
 Para iniciar el servidor Django, ejecuta el siguiente comando:
 ```
 python manage.py runserver
 ```
 # Front End
-## Configuración del Cliente
+### Configuración del Cliente
 1. Navega al directorio del cliente:
     ```
     cd ./client
