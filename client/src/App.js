@@ -1,13 +1,18 @@
 import React from 'react';
 import './App.css';
 import ListaAmigos from './features/amigo/ListaAmigos';
+import Test from './features/Test/Test';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+
 
 function App() {
   return (
-    <div className="App">
-      <h1>Friender</h1>
-      <ListaAmigos/>
-    </div>
+    <Router>
+      <Routes>
+        <Route path='/amigos' element={<ListaAmigos/>}/>
+      </Routes>
+    </Router>
   );
 }
 
