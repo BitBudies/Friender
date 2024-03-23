@@ -10,9 +10,9 @@ from .serializers.clienteserializer import ClienteSerializer
 #        return Response({'mesage': 'Al kevin le gustan los endPoints'})
 
 class ClienteDetailById(APIView):
-    def get(self, request, id_cliente):
+    def get(self, request, cliente_id):
         try:
-            cliente = Cliente.objects.get(id_cliente=id_cliente)
+            cliente = Cliente.objects.get(cliente_id=cliente_id)
         except Cliente.DoesNotExist:
             return Response({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
         serializer = ClienteSerializer(cliente)

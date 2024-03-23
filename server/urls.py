@@ -20,6 +20,6 @@ from amigo.views import ClienteDetailById, ClienteListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/cliente/<int:id_cliente>/', ClienteDetailById.as_view(), name='cliente-detail-id'),
+    path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view(), name='cliente-detail-id'),
     path('api/listaClientes/<int:limite>/', ClienteListView.as_view(), name='cliente-list-limite')
 ]
