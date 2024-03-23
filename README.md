@@ -42,3 +42,5 @@ python manage.py runserver
     ```
     npm start
     ```
+
+![gato](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
