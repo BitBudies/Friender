@@ -4,6 +4,8 @@ import ListaAmigos from './features/amigo/ListaAmigos';
 import Test from './features/Test/Test';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from './Components/NavBar';
+import Home from './Pages/Home';
+import PerfilAmigo from './features/amigo/PerfilAmigo';
 
 
 
@@ -12,6 +14,7 @@ function App() {
     <Router>
       <NavBar/>
       <Routes>
+        <Route path='/' element={<Home/>}/>
         <Route path='/amigos' element={<ListaAmigos/>}/>
       </Routes>
     </Router>
