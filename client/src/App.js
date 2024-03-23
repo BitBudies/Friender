@@ -16,6 +16,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/amigos' element={<ListaAmigos/>}/>
+        <Route path='/amigos/:id_amigo' element={<PerfilAmigo/>}/>
       </Routes>
     </Router>
   );
