@@ -36,7 +36,7 @@ python manage.py runserver
     ```
 2. Instala las dependencias del cliente con:
     ```
-    npm i
+    npm install
     ```
 3. Inicia el servidor de desarrolo del cliente con:
     ```
