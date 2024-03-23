@@ -23,6 +23,7 @@
   margin: 0;
   padding: 0;
   font-family: var(--sans-serif);
+  box-sizing: content-box;
 }
 
 body {
@@ -48,10 +49,6 @@ h1,h2,h3,h4{
 /*backgrounds*/
 .bg-azul-fuerte{
   background-color: var(--azul-oscuro);
-}
-
-.bg-gradient{
-  background-image: linear-gradient(#fff,#000);
 }
 
 
