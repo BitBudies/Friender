@@ -39,13 +39,21 @@ code {
     monospace;
 }
 
-/*background*/
-.bg-azul-fuerte{
-  background-color: var(--azul-oscuro);
-}
-
 h1,h2,h3,h4{
   font-family: var(--serif);
   font-weight: 400;
   font-style: normal;
+}
+
+/*backgrounds*/
+.bg-azul-fuerte{
+  background-color: var(--azul-oscuro);
+}
+
+
+/*botones: asignar la clase de la siguiente manere: className: btn btn-[color]*/
+
+.btn-azul{
+  background-image: linear-gradient(var(--azul-marino),var(--azul-oscuro),var(--azul-marino));
+  -webkit-text-fill-color: white;
 }

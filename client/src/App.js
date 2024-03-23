@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import ListaAmigos from './features/amigo/ListaAmigos';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from './Components/NavBar';
