@@ -34,4 +34,5 @@ code {
 
 .bg-azul-fuerte{
   background-color: var(--azul-oscuro);
+  color: var(--blanco);
 }
