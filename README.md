@@ -20,6 +20,10 @@ DB_HOST=your_database_host
 DB_PORT=your_database_port
 ```
 
+Para ejecutar el Django
+```
+python manage.py runserver
+```
 ## Front end
 
 ```
