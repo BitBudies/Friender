@@ -1,6 +1,6 @@
 from django.db import models
 
-class Calificaion(models.Model):
+class Calificacion(models.Model):
   
     calificacion_id = models.BigAutoField(primary_key=True)
     puntuacion = models.IntegerField()
