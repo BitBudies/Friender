@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=GFS+Didot&family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
 :root{
+  /*Paleta de colores*/
   --azul-oscuro: #0A2647;
   --azul-marino: #144272;
   --azul-primario: #205295;
@@ -8,22 +12,26 @@
   --gris: #6c757d;
   --verde: #28a745;
   --rojo: #dc3545;
-}
 
+  /*Tipografia*/
+  --sans-serif :"Public Sans", sans-serif;
+  --serif : "GFS Didot", serif;
+}
 
 
 *{
   margin: 0;
   padding: 0;
+  font-family: var(--sans-serif);
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  
+
 }
 
 code {
@@ -31,8 +39,13 @@ code {
     monospace;
 }
 
-
+/*background*/
 .bg-azul-fuerte{
   background-color: var(--azul-oscuro);
-  color: var(--blanco);
+}
+
+h1,h2,h3,h4{
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: normal;
 }
