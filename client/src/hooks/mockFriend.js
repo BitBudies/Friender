@@ -8,6 +8,7 @@ const mockFriend = {
     descripcion: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias aut, repellat ipsum facere voluptate dicta obcaecati deserunt nobis suscipit eaque?" ,
     puntuacion: 5,
     n_clientes: 38,
+    precio : 20,
 }
 
 const friends = [];

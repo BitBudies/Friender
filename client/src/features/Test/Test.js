@@ -10,7 +10,7 @@ const Test = () => {
     },[data, isLoading])
   return (
     <div>
-      
+      <div className='image-test'></div>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { getMockFriends } from '../../hooks/mockFriend'
 import { Link } from 'react-router-dom'
 
@@ -8,6 +8,10 @@ const ListaAmigos = () => {
 
     //funcion para obtener amigos
     const amigos = getMockFriends();
+
+    useEffect(() => {
+        console.log(amigos);
+      },[amigos])
 
   return (
     <div id='lista_amigos' className='container'>
