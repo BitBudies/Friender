@@ -9,10 +9,10 @@ class Cliente(models.Model):
     
     ESTADO_OPCIONES = (
         ('A', 'Activo'),
-        ('I', 'Inactivo'),
+        ('I', 'Inactivo')
     )
     
-    id_cliente = models.AutoField(primary_key=True)
+    cliente_id = models.BigAutoField(primary_key=True)
     nombre = models.CharField(max_length=20)
     ap_paterno = models.CharField(max_length=20)
     ap_materno = models.CharField(max_length=20)
