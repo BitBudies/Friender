@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from amigo.views import ClienteDetailById, ClienteListView, AmigoListAPIView
+from amigo.views import ClienteDetailById, AmigoListLimit, AmigoDetailById
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view(), name='cliente-detail-id'),
-    path('api/listaClientes/<int:limite>/', ClienteListView.as_view(), name='cliente-list-limite'),
-    path('api/amigo/<int:amigo_id>/', AmigoListAPIView.as_view(), name = 'amigo-detail-id')
+    path('api/listaAmigos/<int:limite>/', AmigoListLimit.as_view(), name='amigos-lista-limite'),
+    path('api/listaAmigos/', AmigoListLimit.as_view(), name='amigos-lista-10'),
+    path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view(), name = 'amigo-detail-id'),
 ]
