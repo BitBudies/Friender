@@ -50,6 +50,10 @@ h1,h2,h3,h4{
   background-color: var(--azul-oscuro);
 }
 
+.bg-gradient{
+  background-image: linear-gradient(#fff,#000);
+}
+
 
 /*botones: asignar la clase de la siguiente manere: className: btn btn-[color]*/
 
