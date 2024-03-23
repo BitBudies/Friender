@@ -1,11 +1,12 @@
-
+/* 
 .container {
     display: flex;
     justify-content: center;
     margin-top: 20px;
-}
+} */
 
 .grid-container {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 10px;
@@ -14,6 +15,7 @@
 
 /* Estilos de los cards */
 .card {
+    position: relative;
     width: 100%;
     height: 100%;
     border: 1px solid #ccc;
@@ -23,8 +25,9 @@
 }
 
 .card .card_header{
-    width: 100px;
-    height: 100px;
+    position: relative;
+    width: 100%;
+    height: 12rem;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;

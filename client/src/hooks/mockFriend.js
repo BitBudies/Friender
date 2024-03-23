@@ -20,16 +20,17 @@ const generateMockFriends = (n) => {
             friends.push({
                 ...mockFriend,
                 id : index,puntuacion: (Math.random() * 5).toFixed(2),
-                n_clientes : Math.round(Math.random() * 40)})
+                n_clientes : Math.round(Math.random() * 40),
+                precio : Math.round(Math.random() * (40 - 5)) + 5
+            })
         }
     }  
 }
 
 const getMockFriends = () => {
     return friends.map((friend) => {
-        const {id, nombre, apellido_paterno, apellido_materno,imagen,edad,puntuacion} = friend;
-        console.log(id);
-        return {id,nombre,apellido_paterno,apellido_materno,imagen,edad,puntuacion}
+        const {descripcion, ...simpleFriend} = friend;
+       return simpleFriend;
     });
 }
 
