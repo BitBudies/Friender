@@ -35,7 +35,7 @@ class ClienteDetailById(APIView):
         }
         return Response(data)
 
-class AmigoListLimit(APIView):
+class ClienteListLimit(APIView):
     def get(self, request, limite=10):
         if limite <= 0:
             return Response({"error": "El límite debe ser mayor que 0"}, status=status.HTTP_400_BAD_REQUEST)
@@ -43,22 +43,23 @@ class AmigoListLimit(APIView):
             return Response({"error": "El límite no puede ser mayor que 50"}, status=status.HTTP_400_BAD_REQUEST)
 
         # por ahora ordenados por su id
-        amigos = Amigo.objects.order_by('amigo_id')[:limite]
+        clientes = Cliente.objects.order_by('cliente_id')[:limite]
         data = []
-        for amigo in amigos:
-            amigo_data = {
-                "amigo_id": amigo.amigo_id,
-                "precio_amigo": amigo.precio,
-                "nombre": amigo.cliente.nombre,
-                "ap_paterno": amigo.cliente.ap_paterno,
-                "ap_materno": amigo.cliente.ap_materno,
-                "fecha_nacimiento": amigo.cliente.fecha_nacimiento,
-                "genero": amigo.cliente.genero,
-                "descripcion": amigo.cliente.descripcion,
-                "estado_amigo": amigo.estado,
+        for cliente in clientes:
+            cliente_data = {
+                "cliente_id": cliente.cliente_id,
+                "nombre": cliente.nombre,
+                "ap_paterno": cliente.ap_paterno,
+                "ap_materno": cliente.ap_materno,
+                "fecha_nacimiento": cliente.fecha_nacimiento,
+                "genero": cliente.genero,
+                "descripcion": cliente.descripcion,
+                "dinero": cliente.dinero,
+                "estado_cliente": cliente.estado,
             }
-            data.append(amigo_data)
+            data.append(cliente_data)
         return Response(data)
+    
 
 class AmigoDetailById(APIView):
     def get(self, _, amigo_id):
@@ -84,4 +85,30 @@ class AmigoDetailById(APIView):
             "estado_amigo" : amigo.estado,
             "registro_amigo": amigo.timestamp_registro,
         }
+        return Response(data)
+    
+class AmigoListLimit(APIView):
+    def get(self, request, limite=10):
+        if limite <= 0:
+            return Response({"error": "El límite debe ser mayor que 0"}, status=status.HTTP_400_BAD_REQUEST)
+        elif limite > 50:
+            return Response({"error": "El límite no puede ser mayor que 50"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # por ahora ordenados por su id
+        amigos = Amigo.objects.order_by('amigo_id')[:limite]
+        data = []
+        for amigo in amigos:
+            amigo_data = {
+                "amigo_id": amigo.amigo_id,
+                "precio_amigo": amigo.precio,
+                "nombre": amigo.cliente.nombre,
+                "ap_paterno": amigo.cliente.ap_paterno,
+                "ap_materno": amigo.cliente.ap_materno,
+                "fecha_nacimiento": amigo.cliente.fecha_nacimiento,
+                "genero": amigo.cliente.genero,
+                "direccion": amigo.cliente.direccion,
+                "descripcion": amigo.cliente.descripcion,
+                "estado_amigo": amigo.estado,
+            }
+            data.append(amigo_data)
         return Response(data)
