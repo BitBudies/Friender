@@ -23,3 +23,6 @@ class Cliente(models.Model):
     descripcion = models.TextField(max_length=100)
     estado = models.CharField(max_length=1, choices=ESTADO_OPCIONES)
     
+    def __str__(self):
+        return self.nombre + ' ' + self.ap_paterno + ' ' + self.ap_materno
+    
