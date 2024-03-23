@@ -4,4 +4,4 @@ from ..models import Amigo
 class AmigoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Amigo
-        fields = ['__all__']
+        fields = '__all__'
