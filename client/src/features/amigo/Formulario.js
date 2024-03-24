@@ -8,8 +8,8 @@ const Formulario = ({nombre,precio}) => {
     console.log(nombre,precio);
   },[nombre,precio])
   return (
-    <div>
-      
+    <div id="formulario">
+      <h1>HOLA MUNDO</h1>
     </div>
   )
 }
