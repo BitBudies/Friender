@@ -12,4 +12,4 @@ class Calificacion(models.Model):
     timestamp_registro = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"Calificaion {self.puntuacion} para  {self.cliente.nombre}"
+        return f"Calificaion {self.puntuacion} para  {self.amigo.cliente.nombre}"
