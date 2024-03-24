@@ -1,0 +1,30 @@
+.perfil-amigo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .perfil-amigo-left {
+    margin-bottom: 20px;
+  }
+  
+  .perfil-amigo-right {
+    max-width: 600px; /* Ajusta el ancho máximo según sea necesario */
+  }
+  
+  @media (min-width: 768px) {
+    .perfil-amigo-container {
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      text-align: left;
+    }
+  
+    .perfil-amigo-left {
+      margin-right: 20px;
+      margin-bottom: 0;
+    }
+  }
+  
+  
