@@ -12,4 +12,3 @@ admin.site.register(Amigo)
 admin.site.register(solicitud_alquiler)
 admin.site.register(Calificacion)
 admin.site.register(Fotografia)
-

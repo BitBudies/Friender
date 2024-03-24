@@ -3,10 +3,17 @@
     justify-content: center;
     margin-top: 20px;
 } 
+<<<<<<< HEAD
+=======
+
+
+/* Estilos de los cards */
+>>>>>>> bc9180b70d7cc42903abbd1591d6cc6a786484ef
 
 #lista_amigos{
-    padding: 0px 3rem;
+    padding: 20px;
 }
+
 
 .card {
     width: 100%; /* Ancho máximo del 100% */
@@ -44,4 +51,5 @@
     justify-content: space-between;
     align-items: center;
 }
+
 
