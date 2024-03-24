@@ -12,7 +12,3 @@ admin.site.register(Amigo)
 admin.site.register(solicitud_alquiler)
 admin.site.register(Calificacion)
 admin.site.register(Fotografia)
-
-# Register your models here.
-admin.site.register(Cliente)
-admin.site.register(Amigo)
