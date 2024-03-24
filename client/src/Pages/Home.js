@@ -3,10 +3,18 @@ import "./Home.css"
 
 const Home = () => {
   return (
-    <div className='page '>
-      <div id='Home_section' className='bg-gradient'>
-        <h1>Friender home page</h1>
-        <p>En desarrollo</p>
+    <div id='home_section' className='page'>
+      <div className='section'>
+        <div className='section-text'>
+          <div>
+            <h1>Friender home page</h1>
+            <p>En desarrollo</p>
+          </div>
+          
+        </div>
+        <div className='section-image'>
+          <div className='image' style={{backgroundImage: `url(${"/images/home_girl2.jpeg"})`}}></div>
+        </div>
       </div>
     </div>
   )

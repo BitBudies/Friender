@@ -1,5 +1,3 @@
-#Home_section{
-    width: 100vw;
-    height: 100vh;
-    border: 2px solid black;
+#home_section{
+    position: relative;
 }
