@@ -69,7 +69,7 @@ h1,h2,h3,h4{
   position: relative;
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 91vh;
+  height: 89vh;
   width: 100vw;
 }
 
