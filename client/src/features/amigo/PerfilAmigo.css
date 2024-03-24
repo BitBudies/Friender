@@ -3,7 +3,27 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    max-width: 800px; /* Ancho máximo del perfil */
+   
   }
+  
+  .perfil-amigo-left {
+    margin-bottom: 20px; /* Espacio entre la imagen y el texto */
+  }
+  
+  .perfil-amigo-right {
+    width: 100%;
+    max-width: 600px; /* Ancho máximo del contenido */
+    padding: 20px; /* Espacio interno */
+    border: 1px solid #ccc; /* Borde para resaltar el contenido */
+    border-radius: 8px; /* Bordes redondeados */
+    background-color: #f9f9f9; /* Color de fondo */
+  }
+  
+  .solicitar-contacto-btn {
+    margin-top: 20px; /* Espacio entre el contenido y el botón */
+  }
+  
   
   .perfil-amigo-left {
     margin-bottom: 20px;
