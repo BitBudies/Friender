@@ -3,7 +3,7 @@ import { apiSlice } from "../api/apiSlice";
 const testApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getMessage : builder.query({
-        query : () => "/endpoint",
+        query : () => "/listaAmigos",
         providesTags : ["Test"]
       })
   }),

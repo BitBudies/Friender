@@ -131,4 +131,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [ ]    # quien puede acceder a la api hacer peticiones
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000" ]    # quien puede acceder a la api hacer peticiones
