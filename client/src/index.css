@@ -57,21 +57,18 @@ h1,h2,h3,h4{
 .btn-azul{
   background-image: linear-gradient(var(--azul-marino),var(--azul-oscuro),var(--azul-marino));
   -webkit-text-fill-color: white;
+  font-size: 5%;
 }
 
-.ver-perfil-btn {
-  border-radius: 25px; /* Curva de 25px en el botón */
-  padding: 10px 20px; /* Ajuste de espaciado */
-  font-size: 15px;
-  padding: 10px 20px
-}
+
 
 
 /* secciones */
 
-.page{
+.page {
   overflow-y: scroll;
   overflow-x: hidden;
   height: 90vh;
   width: 100vw;
+  padding: 20px;
 }
