@@ -16,4 +16,4 @@ class Amigo(models.Model):
     timestamp_registro = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.id_cliente)
+        return str(self.cliente)

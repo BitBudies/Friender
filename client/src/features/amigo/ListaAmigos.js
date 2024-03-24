@@ -10,7 +10,7 @@ const ListaAmigos = () => {
     return (
         <div className='lista-amigos-container'>
             <div className='container'>
-                <div className='row row-cols-1 row-cols-md-3 g-4'>
+                <div className='row row-cols-1 row-cols-md-5 g-4'> {/* Cambio a 5 columnas en dispositivos de tamaño medio */}
                     {amigos.map((amigo, index) => (
                         <div key={index} className='col'>
                             <div className='card'>
