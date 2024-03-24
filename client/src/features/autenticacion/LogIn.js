@@ -48,7 +48,7 @@ const LogIn = () => {
           <p className='form-text'>
             <Link to={"/register"}>Olvide mi contraseña</Link>
           </p>
-          <button className="btn btn-dark mb-2" onClick={handleBtn}>
+          <button className="btn btn-azul mb-2" onClick={handleBtn}>
             Iniciar Sesión
           </button>
           <p className="form-text">
