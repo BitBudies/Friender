@@ -1,6 +1,7 @@
 from django.db import models
-from .clienteDB import Cliente
 from .interes import Interes
+from .clienteDB import Cliente
+
 
 class ClienteInteres(models.Model):
     clienteInteres_id = models.BigAutoField(primary_key=True)

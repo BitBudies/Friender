@@ -6,7 +6,7 @@ class Gusto(models.Model):
         ('I', 'Inactivo')
     )
     gusto_id = models.BigAutoField(primary_key=True)
-    nombre = models.CharField(max_length=10)
+    nombre = models.CharField(max_length=15)
     descripcion = models.TextField(max_length=255)
     estado = models.CharField(max_length=1, choices=ESTADO_OPCIONES)
     timestamp_gusto = models.DateTimeField(auto_now_add=True)
