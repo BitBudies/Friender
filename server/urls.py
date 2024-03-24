@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from amigo.views import ClienteDetailById, AmigoListLimit, AmigoDetailById, ClienteListLimit
+from amigo.views import ClienteDetailById, ClienteListView, AmigoListAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +27,6 @@ urlpatterns = [
     path('api/listaClientes/', ClienteListLimit.as_view(), name='clientes-lista-10'),
 
     path('api/listaAmigos/<int:limite>/', AmigoListLimit.as_view(), name='amigos-lista-limite'),
-    path('api/listaAmigos/', AmigoListLimit.as_view(), name='amigos-lista-10'),
-    
+    path('api/listaAmigos/', AmigoListLimit.as_view(), name='amigos-lista-10'),  
     path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view(), name = 'amigo-detail-id'),
 ]

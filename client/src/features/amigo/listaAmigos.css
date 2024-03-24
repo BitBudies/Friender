@@ -1,29 +1,27 @@
-/* 
 .container {
     display: flex;
     justify-content: center;
     margin-top: 20px;
-} */
+} 
 
 
 /* Estilos de los cards */
 
 #lista_amigos{
-    padding: 0px 3rem;
+    padding: 20px;
 }
 
+
 .card {
-    position: relative;
-    width: 100%;
-    height: 100%;
+    width: 100%; /* Ancho máximo del 100% */
+    max-width: 300px; /* Anchura máxima */
     border: 1px solid #ccc;
     border-radius: 10px;
     overflow: hidden;
-    position: relative;
+    margin: 10px; /* Añadir margen para separar las tarjetas */
 }
 
-.card .card_header{
-    position: relative;
+.card-header {
     width: 100%;
     height: 12rem;
     background-position: center;
@@ -31,33 +29,24 @@
     background-size: contain;
 }
 
-.card_content {
-    position: relative;
+.card-body {
+    padding: 10px; /* Añadir relleno al cuerpo de la tarjeta */
 }
 
-.card_image {
-    width: 100%;
-    height: auto;
-    display: block;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ccc; /* Línea separadora entre imagen y nombre */
+.card-info {
+    text-align: center;
 }
 
-.card_info {
-    text-align: center; /* Centrar el contenido */
-    padding: 0 10px;
-}
-
-.card_stats {
+.card-stats {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 10px;
 }
 
-.card_actions {
+.card-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
-    margin-bottom: 10px; 
 }
+
 

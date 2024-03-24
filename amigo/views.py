@@ -17,6 +17,7 @@ class ClienteDetailById(APIView):
             cliente = Cliente.objects.get(cliente_id=cliente_id)
         except Cliente.DoesNotExist:
             return Response({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+<<<<<<< HEAD
         data = {
             "cliente_id": cliente.cliente_id,
             "nombre": cliente.nombre,
@@ -112,3 +113,32 @@ class AmigoListLimit(APIView):
             }
             data.append(amigo_data)
         return Response(data)
+=======
+        serializer = ClienteSerializer(cliente)
+        return Response(serializer.data)
+
+class ClienteListView(APIView):
+    def get(self, request, limite):
+        try:
+            limite = int(limite)
+            if limite <= 0:
+                raise ValueError
+        except ValueError:
+            return Response(
+                {"error": "Invalid limit"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        clientes = Cliente.objects.all()[:limite]  # Obtener los clientes con el limite
+        serializer = ClienteSerializer(clientes, many=True)
+        return Response(serializer.data)
+
+class AmigoListAPIView(APIView):
+    def get(self, request, amigo_id):
+        try:
+            amigo = Amigo.objects.get(amigo_id=amigo_id)
+        except Amigo.DoesNotExist:
+            return Response({"error": "Amigo no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = AmigoSerializer(amigo)
+        return Response(serializer.data)
+>>>>>>> 5575d703f7c7e3eef9402f5e8162a8a9467192f7
