@@ -17,7 +17,6 @@ class ClienteDetailById(APIView):
             cliente = Cliente.objects.get(cliente_id=cliente_id)
         except Cliente.DoesNotExist:
             return Response({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
-<<<<<<< HEAD
         data = {
             "cliente_id": cliente.cliente_id,
             "nombre": cliente.nombre,
@@ -113,10 +112,6 @@ class AmigoListLimit(APIView):
             }
             data.append(amigo_data)
         return Response(data)
-=======
-        serializer = ClienteSerializer(cliente)
-        return Response(serializer.data)
->>>>>>> 5575d70 (Agregar scroll y Bootstrap)
 
 class ClienteListView(APIView):
     def get(self, request, limite):
@@ -141,8 +136,4 @@ class AmigoListAPIView(APIView):
             return Response({"error": "Amigo no encontrado"}, status=status.HTTP_404_NOT_FOUND)
         
         serializer = AmigoSerializer(amigo)
-<<<<<<< HEAD
         return Response(serializer.data)
-=======
-        return Response(serializer.data)
->>>>>>> 5575d70 (Agregar scroll y Bootstrap)

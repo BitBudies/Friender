@@ -2,22 +2,11 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
-<<<<<<< HEAD
+
 } 
-<<<<<<< HEAD
-=======
-=======
-}
-.lista-amigos-container {
-    height: 500px; /* Establece la altura fija del contenedor */
-    overflow-y: auto; /* Habilita el desplazamiento vertical cuando el contenido es demasiado grande */
-}
->>>>>>> af07beb (Agregar scroll y booBootstrap)
 
 
 /* Estilos de los cards */
->>>>>>> bc9180b70d7cc42903abbd1591d6cc6a786484ef
-
 #lista_amigos{
     padding: 20px;
 }
