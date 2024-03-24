@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const LogIn = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [showFeedback, setShowFeedback] = useState(true);
+    const [showFeedback, setShowFeedback] = useState(false);
 
 
     const handleBtn = () => {
