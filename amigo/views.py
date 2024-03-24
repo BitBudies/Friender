@@ -17,7 +17,6 @@ class ClienteDetailById(APIView):
             cliente = Cliente.objects.get(cliente_id=cliente_id)
         except Cliente.DoesNotExist:
             return Response({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
-<<<<<<< HEAD
         data = {
             "cliente_id": cliente.cliente_id,
             "nombre": cliente.nombre,
@@ -113,7 +112,6 @@ class AmigoListLimit(APIView):
             }
             data.append(amigo_data)
         return Response(data)
-=======
         serializer = ClienteSerializer(cliente)
         return Response(serializer.data)
 
@@ -141,4 +139,3 @@ class AmigoListAPIView(APIView):
         
         serializer = AmigoSerializer(amigo)
         return Response(serializer.data)
->>>>>>> 5575d703f7c7e3eef9402f5e8162a8a9467192f7
