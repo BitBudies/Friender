@@ -6,9 +6,13 @@ const amigoApi = apiSlice.injectEndpoints({
     getAmigos : builder.query({
       query : () => "/listaAmigos",
       providesTags : ["Amigo"]
+    }),
+    getAmigoById : builder.query({
+      query : (id_amigo) => `/amigo/${id_amigo}`,
+      providesTags : ["Amigo"]
     })
   }),
 });
 
-export const {useGetAmigosQuery} =
+export const {useGetAmigosQuery,useGetAmigoByIdQuery} =
   amigoApi;

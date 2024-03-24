@@ -14,10 +14,8 @@ const ListaAmigos = () => {
     }, [amigos,isSuccess]);
 
     if (isFetching) {
-        return (
-            <div className='section'>
+        return (            
                 <Loading/>
-            </div>
         )
     }else if (isSuccess){
         return (
@@ -41,7 +39,7 @@ const ListaAmigos = () => {
                                                 <div>{amigo.n_clientes} personas</div>
                                             </div>
                                             <div className="card-actions">
-                                            <Link to={`/amigos/${amigo.id}`}className='btn btn-azul'>Ver Perfil</Link>
+                                            <Link to={`/amigos/${amigo.amigo_id}`}className='btn btn-azul'>Ver Perfil</Link>
                                                 <div>{amigo.precio_amigo} BOB</div>
                                             </div>
                                         </div>
