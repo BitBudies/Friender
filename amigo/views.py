@@ -112,8 +112,6 @@ class AmigoListLimit(APIView):
             }
             data.append(amigo_data)
         return Response(data)
-        serializer = ClienteSerializer(cliente)
-        return Response(serializer.data)
 
 class ClienteListView(APIView):
     def get(self, request, limite):
