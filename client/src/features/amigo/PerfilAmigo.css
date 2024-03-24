@@ -42,12 +42,17 @@
     }
   
     .perfil-amigo-left {
+      position: relative;
       margin-right: 20px;
       margin-bottom: 0;
+      text-align: center;
+
     }
-    .perfil-amigo-left {
-        text-align: center;
-      }
+    .image-container{
+      position: relative;
+      width: 10rem;
+      height: 10rem;
+    }
       
       .perfil-amigo-left img {
         width: 200px; /* Ancho de la imagen */

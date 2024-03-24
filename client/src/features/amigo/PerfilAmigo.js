@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { getMockFriendById } from '../../hooks/mockFriend';
 import { useGetAmigoByIdQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
+import "./PerfilAmigo.css"
+import Formulario from './Formulario';
 
 const PerfilAmigo = () => {
   const { id_amigo } = useParams();
@@ -21,7 +23,7 @@ const PerfilAmigo = () => {
           <div className='col-md-6'>
             <div className='perfil-amigo-left text-center'>
               <div className='image-container'>
-                  <div className='image' style={{backgroundImage : "/public/user.jpeg"}}></div>
+                  <div className='image' style={{backgroundImage : "/public/images/user.jpeg"}}></div>
                 </div> 
               <h3>{amigo.nombre}</h3>
               <div>★★★☆☆</div> 
@@ -40,6 +42,7 @@ const PerfilAmigo = () => {
             </div>
           </div>
         </div>
+        <Formulario nombre={amigo.nombre} precio={amigo.precio_amigo}/>
       </div>
     );
   }
