@@ -59,8 +59,8 @@ h1,h2,h3,h4{
 }
 
 .ver-perfil-btn {
-  border-radius: 25px; /* Curva de 25px en el botón */
-  padding: 10px 20px; /* Ajuste de espaciado */
+  border-radius: 25px; 
+  padding: 10px 20px; 
   font-size: 15px;
   padding: 10px 20px
 }

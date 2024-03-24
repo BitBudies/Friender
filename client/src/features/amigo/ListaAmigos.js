@@ -1,44 +1,34 @@
-import React from 'react'
-import { getMockFriends } from '../../hooks/mockFriend'
-import { Link } from 'react-router-dom'
-
-import "./listaAmigos.css"
+import React from 'react';
+import { getMockFriends } from '../../hooks/mockFriend';
+import { Link } from 'react-router-dom';
+import './listaAmigos.css';
 
 const ListaAmigos = () => {
-
-    //funcion para obtener amigos
+    // Función para obtener amigos
     const amigos = getMockFriends();
 
-  return (
-    <div id='lista_amigos' className='container'>
-      <div className='grid-container'>
+    return (
+        <div className='lista-amigos-container'>
+            <div className='container'>
+                <div className='row row-cols-1 row-cols-md-3 g-4'>
                     {amigos.map((amigo, index) => (
-                        <div key={index} className='card'>
-                            <div className='card_content'>
-                               
-                              <div className='card_header' style={{backgroundImage : `url(${amigo.imagen})`}}></div>
-                                {/* Información del amigo */}
-                                <div className='card_info'>
-                                    {/* Nombre del amigo */}
-                                    <h4>{amigo.nombre}</h4>
-                                    
-                                    {/* Estrellas y número de personas atendidas */}
-                                    <div className="card_stats">
-                                        <div>★★★☆☆</div> {/* Ejemplo de estrellas */}
-                                        <div>{amigo.personasAtendidas} personas</div>
-                                    </div>
-                                    {/* Precio y botón de Ver Perfil */}
-                                    <div className="card_actions">
-                                    <Link to={`/amigos/${amigo.id}`}className='btn btn-azul'>Ver Perfil</Link>
-                                        <div>40 BOB</div>
-                                    </div>
+                        <div key={index} className='col'>
+                            <div className='card'>
+                                <img src={amigo.imagen} className='card-img-top' alt={amigo.nombre} />
+                                <div className='card-body'>
+                                    <h5 className='card-title'>{amigo.nombre}</h5>
+                                    <p className='card-text'>{amigo.personasAtendidas} personas</p>
+                                    <Link to={`/amigos/${amigo.id}`} className='btn btn-primary'>
+                                        Ver Perfil
+                                    </Link>
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
-    </div> 
-  )
-}
+            </div>
+        </div>
+    );
+};
 
-export default ListaAmigos
+export default ListaAmigos;
