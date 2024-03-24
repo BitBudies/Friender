@@ -7,6 +7,11 @@
 
 
 /* Estilos de los cards */
+
+#lista_amigos{
+    padding: 0px 3rem;
+}
+
 .card {
     position: relative;
     width: 100%;

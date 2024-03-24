@@ -17,7 +17,7 @@ const ListaAmigos = () => {
     <div id='lista_amigos' className='page'>
     <div className='container-fluid'>
         {/*row row-cols-0 row-cols-lg-4 row-cols-md-3 g-3*/ }
-      <div className='row row-cols-0 row-cols-lg-4 row-cols-md-3 g-3 my-4'>
+      <div className='row row-cols-sm-0 row-cols-lg-4 row-cols-md-2 g-3 my-4'>
       {amigos.map((amigo, index) => (
             <div key={index} className=' col'>
                 <div className='card'>
