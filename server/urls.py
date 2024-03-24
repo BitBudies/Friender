@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from amigo.views import endpoint
+from amigo.views import ClienteDetailById, ClienteListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('endpoint/', endpoint.as_view())
+    path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view(), name='cliente-detail-id'),
+    path('api/listaClientes/<int:limite>/', ClienteListView.as_view(), name='cliente-list-limite')
 ]
