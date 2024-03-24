@@ -56,8 +56,6 @@ h1,h2,h3,h4{
 }
 
 
-
-
 /* secciones */
 
 .page{
@@ -98,4 +96,10 @@ h1,h2,h3,h4{
   background-position: center;
   background-size: contain;
   padding: 20px;
+}
+.ver-perfil-btn {
+  border-radius: 25px; 
+  padding: 10px 20px; 
+  font-size: 15px;
+  padding: 10px 20px
 }
