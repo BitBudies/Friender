@@ -1,11 +1,10 @@
 import React from 'react'
+import Spinner from './Spinner'
 
 const Loading = () => {
   return (
     <div className='section'>
-      <div className="spinner-border" role="status">
-        <span className="visually-hidden">Loading...</span> 
-      </div>
+      <Spinner/>
     </div>
     
   )
