@@ -5,6 +5,7 @@ import NavBar from './Components/NavBar';
 import Home from './Pages/Home';
 import PerfilAmigo from './features/amigo/PerfilAmigo';
 import { generateMockFriends } from './hooks/mockFriend';
+import LogIn from './features/autenticacion/LogIn';
 
 
 
@@ -18,6 +19,7 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/amigos' element={<ListaAmigos/>}/>
         <Route path='/amigos/:id_amigo' element={<PerfilAmigo/>}/>
+        <Route path='/login' element= {<LogIn/>}/>
       </Routes>
     </Router>
   );
