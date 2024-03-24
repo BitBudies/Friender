@@ -15,9 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
+from rest_framework.routers import DefaultRouter
+
 from amigo.views import ClienteDetailById, AmigoListLimit, AmigoDetailById, ClienteListLimit
-from amigo.views import ClienteDetailById, ClienteListView, AmigoListAPIView
+from amigo.views import ClienteDetailById, ClienteListView, AmigoListAPIView, SolicitudViewSet
+
+router = routers.DefaultRouter()
+router.register(r'solicitud',SolicitudViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +36,6 @@ urlpatterns = [
     path('api/listaAmigos/<int:limite>/', AmigoListLimit.as_view(), name='amigos-lista-limite'),
     path('api/listaAmigos/', AmigoListLimit.as_view(), name='amigos-lista-10'),  
     path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view(), name = 'amigo-detail-id'),
+    
+    path('api/', include(router.urls)),
 ]

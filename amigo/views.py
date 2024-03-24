@@ -2,9 +2,15 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Cliente, Amigo
+from .models import Cliente, Amigo, solicitud_alquiler
 from .serializers.cliente_serializer import ClienteSerializer
 from .serializers.amigo_serializer import AmigoSerializer
+from .serializers.solicitud_alquiler_serializer import solicitud_alquiler
+
+from rest_framework import viewsets
+from .models.solicitud_alquilerDB import solicitud_alquiler
+from .serializers.solicitud_alquiler_serializer import SolicitudAlquilerSerializer
+
 
 
 #class endpoint(APIView):
@@ -137,3 +143,9 @@ class AmigoListAPIView(APIView):
         
         serializer = AmigoSerializer(amigo)
         return Response(serializer.data)
+    
+    
+    
+class SolicitudViewSet(viewsets.ModelViewSet):    #ver si al kevin le gusta los viewsets
+    queryset = solicitud_alquiler.objects.all()
+    serializer_class = SolicitudAlquilerSerializer
