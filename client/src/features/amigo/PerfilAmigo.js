@@ -25,7 +25,7 @@ const PerfilAmigo = () => {
               <div className='image-container'>
                   <div className='image' style={{backgroundImage : "/public/images/user.jpeg"}}></div>
                 </div> 
-              <h3>{amigo.nombre}</h3>
+              <h3>{amigo.nombre_completo}</h3>
               <div>★★★☆☆</div> 
               <p><strong>Edad:</strong> {amigo.edad} años</p>
             </div>
