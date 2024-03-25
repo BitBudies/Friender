@@ -29,9 +29,10 @@ class ClienteDetailById(APIView):
             return Response({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
         data = {
             "cliente_id": cliente.cliente_id,
-            "nombre": cliente.nombre,
-            "ap_paterno": cliente.ap_paterno,
-            "ap_materno": cliente.ap_materno,
+            "nombre_completo": f"{cliente.nombre} {cliente.ap_paterno} {cliente.ap_materno}".title(),
+            "nombre": cliente.nombre.title(),
+            "ap_paterno": cliente.ap_paterno.title(),
+            "ap_materno": cliente.ap_materno.title(),
             "ci": cliente.ci,
             "fecha_nacimiento": cliente.fecha_nacimiento,
             "edad": calcular_edad(cliente.fecha_nacimiento),
@@ -71,9 +72,10 @@ class ClienteListLimitPaginator(APIView):
         for cliente in page_obj:
             cliente_data = {
                 "cliente_id": cliente.cliente_id,
-                "nombre": cliente.nombre,
-                "ap_paterno": cliente.ap_paterno,
-                "ap_materno": cliente.ap_materno,
+                "nombre_completo": f"{cliente.nombre} {cliente.ap_paterno} {cliente.ap_materno}".title(),
+                "nombre": cliente.nombre.title(),
+                "ap_paterno": cliente.ap_paterno.title(),
+                "ap_materno": cliente.ap_materno.title(),
                 "fecha_nacimiento": cliente.fecha_nacimiento,
                 "edad": calcular_edad(cliente.fecha_nacimiento),
                 "genero": cliente.genero,
@@ -90,11 +92,10 @@ class AmigoDetailById(APIView):
             amigo = Amigo.objects.get(amigo_id=amigo_id)
         except Amigo.DoesNotExist:
             return Response({"error": "Amigo no encontrado"}, status=status.HTTP_404_NOT_FOUND)
-
         data = {
             "amigo_id": amigo.amigo_id,
             "precio_amigo": amigo.precio,
-            "nombre_completo": f"{amigo.cliente.nombre.title()} {amigo.cliente.ap_paterno.title()} {amigo.cliente.ap_materno.title()}.",
+            "nombre_completo": f"{amigo.cliente.nombre} {amigo.cliente.ap_paterno} {amigo.cliente.ap_materno}".title(),
             "nombre": amigo.cliente.nombre.title(),
             "ap_paterno": amigo.cliente.ap_paterno.title(),
             "ap_materno": amigo.cliente.ap_materno.title(),
@@ -151,32 +152,6 @@ class AmigoListLimitPaginator(APIView):
             }
             data["amigos"].append(amigo_data)
         return Response(data)
-
-# al kevin le gustan las viewsets
-class ClienteListView(APIView):
-    def get(self, request, limite):
-        try:
-            limite = int(limite)
-            if limite <= 0:
-                raise ValueError
-        except ValueError:
-            return Response(
-                {"error": "Invalid limit"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        clientes = Cliente.objects.all()[:limite]  # Obtener los clientes con el limite
-        serializer = ClienteSerializer(clientes, many=True)
-        return Response(serializer.data)
-
-class AmigoListAPIView(APIView):
-    def get(self, request, amigo_id):
-        try:
-            amigo = Amigo.objects.get(amigo_id=amigo_id)
-        except Amigo.DoesNotExist:
-            return Response({"error": "Amigo no encontrado"}, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = AmigoSerializer(amigo)
-        return Response(serializer.data)
 
 class SolicitudViewSet(viewsets.ModelViewSet):    #ver si al kevin le gusta los viewsets
     queryset = solicitud_alquiler.objects.all()

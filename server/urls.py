@@ -20,7 +20,7 @@ from rest_framework import routers
 from rest_framework.routers import DefaultRouter
 
 from amigo.views import ClienteDetailById, AmigoDetailById, ClienteListLimitPaginator, AmigoListLimitPaginator
-from amigo.views import ClienteDetailById, ClienteListView, AmigoListAPIView, SolicitudViewSet
+from amigo.views import ClienteDetailById, SolicitudViewSet
 
 from django.urls import re_path
 from rest_framework import permissions
@@ -42,7 +42,6 @@ schema_view = get_schema_view(
    public=True,
    #permission_classes=(permissions.AllowAny,),
 ) 
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
