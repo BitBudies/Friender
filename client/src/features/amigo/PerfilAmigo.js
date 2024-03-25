@@ -38,7 +38,7 @@ const PerfilAmigo = () => {
               <p><pre><strong>Descripción:</strong> </pre>{amigo.descripcion}</p>
               <div className='cuadro-vacio'></div>
               <p><h2><strong>Precio:</strong> {amigo.precio_amigo}</h2></p>
-              <button className='btn btn-primary mt-3'>Solicitar Contacto</button>
+              <button id="botonSolicitarContacto" className='btn btn-primary mt-3'>Solicitar Contacto</button>
             </div>
           </div>
         </div>
