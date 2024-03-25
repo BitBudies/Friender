@@ -94,7 +94,7 @@ class AmigoDetailById(APIView):
         data = {
             "amigo_id": amigo.amigo_id,
             "precio_amigo": amigo.precio,
-            "nombre_completo": f"{amigo.cliente.nombre} {amigo.cliente.ap_paterno} {amigo.cliente.ap_materno}",
+            "nombre_completo": f"{amigo.cliente.nombre.title()} {amigo.cliente.ap_paterno.title()} {amigo.cliente.ap_materno.title()}.",
             "nombre": amigo.cliente.nombre.title(),
             "ap_paterno": amigo.cliente.ap_paterno.title(),
             "ap_materno": amigo.cliente.ap_materno.title(),
