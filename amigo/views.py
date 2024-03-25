@@ -1,4 +1,5 @@
 #from django.shortcuts import render
+from django.core.paginator import Paginator
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -6,12 +7,9 @@ from .models import Cliente, Amigo, solicitud_alquiler
 from .serializers.cliente_serializer import ClienteSerializer
 from .serializers.amigo_serializer import AmigoSerializer
 from .serializers.solicitud_alquiler_serializer import solicitud_alquiler
-
 from rest_framework import viewsets
 from .models.solicitud_alquilerDB import solicitud_alquiler
 from .serializers.solicitud_alquiler_serializer import SolicitudAlquilerSerializer
-
-
 
 #class endpoint(APIView):
 #    def get(self, request):
@@ -41,17 +39,29 @@ class ClienteDetailById(APIView):
         }
         return Response(data)
 
-class ClienteListLimit(APIView):
-    def get(self, request, limite=10):
+class ClienteListLimitPaginator(APIView):
+    def get(self, request, page_number = 1, limite=10):
         if limite <= 0:
             return Response({"error": "El límite debe ser mayor que 0"}, status=status.HTTP_400_BAD_REQUEST)
         elif limite > 50:
             return Response({"error": "El límite no puede ser mayor que 50"}, status=status.HTTP_400_BAD_REQUEST)
+        elif page_number <= 0:
+            return Response({"error": "La pagina tiene que ser mayor a 0"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # por ahora ordenados por su id
-        clientes = Cliente.objects.order_by('cliente_id')[:limite]
-        data = []
-        for cliente in clientes:
+        clientes = Cliente.objects.order_by('cliente_id') #ordenamiento temporal
+        paginator = Paginator(clientes, limite)
+
+        try:
+            page_obj = paginator.page(page_number)
+        except Exception:
+            return Response({"error": "Página no encontrada"}, status=status.HTTP_404_NOT_FOUND)
+
+        data = {
+            "numero_paginas" : paginator.num_pages,
+            "numero_clientes_total": clientes.count(),
+            "clientes" : []
+        }
+        for cliente in page_obj:
             cliente_data = {
                 "cliente_id": cliente.cliente_id,
                 "nombre": cliente.nombre,
@@ -63,9 +73,8 @@ class ClienteListLimit(APIView):
                 "dinero": cliente.dinero,
                 "estado_cliente": cliente.estado,
             }
-            data.append(cliente_data)
+            data["clientes"].append(cliente_data)
         return Response(data)
-    
 
 class AmigoDetailById(APIView):
     def get(self, _, amigo_id):
@@ -92,18 +101,30 @@ class AmigoDetailById(APIView):
             "registro_amigo": amigo.timestamp_registro,
         }
         return Response(data)
-    
-class AmigoListLimit(APIView):
-    def get(self, request, limite=10):
+
+class AmigoListLimitPaginator(APIView):
+    def get(self, request, page_number = 1, limite=10):
         if limite <= 0:
             return Response({"error": "El límite debe ser mayor que 0"}, status=status.HTTP_400_BAD_REQUEST)
         elif limite > 50:
             return Response({"error": "El límite no puede ser mayor que 50"}, status=status.HTTP_400_BAD_REQUEST)
+        elif page_number <= 0:
+            return Response({"error": "La pagina tiene que ser mayor a 0"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # por ahora ordenados por su id
-        amigos = Amigo.objects.order_by('amigo_id')[:limite]
-        data = []
-        for amigo in amigos:
+        amigos = Amigo.objects.order_by('amigo_id') #ordenamiento temporal
+        paginator = Paginator(amigos, limite)
+
+        try:
+            page_obj = paginator.page(page_number)
+        except Exception:
+            return Response({"error": "Página no encontrada"}, status=status.HTTP_404_NOT_FOUND)
+
+        data = {
+            "numero_paginas" : paginator.num_pages,
+            "numero_amigos_total": amigos.count(),
+            "amigos" : []
+        }
+        for amigo in page_obj:
             amigo_data = {
                 "amigo_id": amigo.amigo_id,
                 "precio_amigo": amigo.precio,
@@ -116,9 +137,10 @@ class AmigoListLimit(APIView):
                 "descripcion": amigo.cliente.descripcion,
                 "estado_amigo": amigo.estado,
             }
-            data.append(amigo_data)
+            data["amigos"].append(amigo_data)
         return Response(data)
 
+# al kevin le gustan las viewsets
 class ClienteListView(APIView):
     def get(self, request, limite):
         try:
@@ -143,9 +165,7 @@ class AmigoListAPIView(APIView):
         
         serializer = AmigoSerializer(amigo)
         return Response(serializer.data)
-    
-    
-    
+
 class SolicitudViewSet(viewsets.ModelViewSet):    #ver si al kevin le gusta los viewsets
     queryset = solicitud_alquiler.objects.all()
     serializer_class = SolicitudAlquilerSerializer
@@ -155,9 +175,11 @@ class LoginView(APIView):
     def post(self, request, username, password):
         try:
             user = Cliente.objects.get(usuario=username)
-            passwd = Cliente.objects.get(contrasena=password)
+            if user.contrasena == password:
+                return Response({"token": "Encontrado"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": "No encontrado"}, status=status.HTTP_404_NOT_FOUND)
         except Cliente.DoesNotExist:
             return Response({"error": "No encontrado"}, status=status.HTTP_404_NOT_FOUND)
         
-        return Response({"token": "Encontrado"}, status=status.HTTP_200_OK)
         
