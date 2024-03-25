@@ -19,7 +19,7 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework.routers import DefaultRouter
 
-from amigo.views import ClienteDetailById, AmigoListLimit, AmigoDetailById, ClienteListLimit
+from amigo.views import ClienteDetailById, AmigoDetailById, ClienteListLimitPaginator, AmigoListLimitPaginator
 from amigo.views import ClienteDetailById, ClienteListView, AmigoListAPIView, SolicitudViewSet
 
 router = routers.DefaultRouter()
@@ -30,12 +30,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view(), name='cliente-detail-id'),
-    path('api/listaClientes/<int:limite>/', ClienteListLimit.as_view(), name='clientes-lista-limite'),
-    path('api/listaClientes/', ClienteListLimit.as_view(), name='clientes-lista-10'),
+    path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view(), name = 'lista-clientes-pagina-limite'),
 
-    path('api/listaAmigos/<int:limite>/', AmigoListLimit.as_view(), name='amigos-lista-limite'),
-    path('api/listaAmigos/', AmigoListLimit.as_view(), name='amigos-lista-10'),  
     path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view(), name = 'amigo-detail-id'),
-    
+    path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator.as_view(), name='lista-amigos-pagina-limite'),
+
     path('api/', include(router.urls)),
 ]
