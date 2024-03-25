@@ -10,10 +10,16 @@ from .serializers.solicitud_alquiler_serializer import solicitud_alquiler
 from rest_framework import viewsets
 from .models.solicitud_alquilerDB import solicitud_alquiler
 from .serializers.solicitud_alquiler_serializer import SolicitudAlquilerSerializer
+from datetime import date
 
 #class endpoint(APIView):
 #    def get(self, request):
 #        return Response({'mesage': 'Al kevin le gustan los endPoints'})
+
+def calcular_edad(fecha_nacimiento):
+    today = date.today()
+    age = today.year - fecha_nacimiento.year - ((today.month, today.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
+    return age
 
 class ClienteDetailById(APIView):
     def get(self, request, cliente_id):
@@ -28,6 +34,7 @@ class ClienteDetailById(APIView):
             "ap_materno": cliente.ap_materno,
             "ci": cliente.ci,
             "fecha_nacimiento": cliente.fecha_nacimiento,
+            "edad": calcular_edad(cliente.fecha_nacimiento),
             "genero": cliente.genero,
             "direccion": cliente.direccion,
             "descripcion": cliente.descripcion,
@@ -68,6 +75,7 @@ class ClienteListLimitPaginator(APIView):
                 "ap_paterno": cliente.ap_paterno,
                 "ap_materno": cliente.ap_materno,
                 "fecha_nacimiento": cliente.fecha_nacimiento,
+                "edad": calcular_edad(cliente.fecha_nacimiento),
                 "genero": cliente.genero,
                 "descripcion": cliente.descripcion,
                 "dinero": cliente.dinero,
@@ -91,6 +99,7 @@ class AmigoDetailById(APIView):
             "ap_materno": amigo.cliente.ap_materno,
             "ci": amigo.cliente.ci,
             "fecha_nacimiento": amigo.cliente.fecha_nacimiento,
+            "edad": calcular_edad(amigo.cliente.fecha_nacimiento),
             "genero": amigo.cliente.genero,
             "direccion": amigo.cliente.direccion,
             "descripcion": amigo.cliente.descripcion,
@@ -132,6 +141,7 @@ class AmigoListLimitPaginator(APIView):
                 "ap_paterno": amigo.cliente.ap_paterno,
                 "ap_materno": amigo.cliente.ap_materno,
                 "fecha_nacimiento": amigo.cliente.fecha_nacimiento,
+                "edad": calcular_edad(amigo.cliente.fecha_nacimiento),
                 "genero": amigo.cliente.genero,
                 "direccion": amigo.cliente.direccion,
                 "descripcion": amigo.cliente.descripcion,

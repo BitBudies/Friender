@@ -27,7 +27,7 @@ const PerfilAmigo = () => {
                 </div> 
               <h3>{amigo.nombre}</h3>
               <div>★★★☆☆</div> 
-              <p><strong>Edad:</strong> {amigo.fecha_nacimiento} años</p>
+              <p><strong>Edad:</strong> {amigo.edad} años</p>
             </div>
           </div>
           <div className='col-md-6'>
