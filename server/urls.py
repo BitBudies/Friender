@@ -22,8 +22,26 @@ from rest_framework.routers import DefaultRouter
 from amigo.views import ClienteDetailById, AmigoDetailById, ClienteListLimitPaginator, AmigoListLimitPaginator
 from amigo.views import ClienteDetailById, ClienteListView, AmigoListAPIView, SolicitudViewSet
 
+from django.urls import re_path
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
 router = routers.DefaultRouter()
 router.register(r'solicitud',SolicitudViewSet)
+
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Docuamentacion de los Endpoints de la API",
+      default_version='v1',
+      description="Documentacion de los Endpoints de la API de Friender",
+      contact=openapi.Contact(email="contact@Friender.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   #permission_classes=(permissions.AllowAny,),
+) 
 
 
 urlpatterns = [
@@ -36,4 +54,7 @@ urlpatterns = [
     path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator.as_view(), name='lista-amigos-pagina-limite'),
 
     path('api/', include(router.urls)),
+
+    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
