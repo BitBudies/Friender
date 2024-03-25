@@ -149,3 +149,15 @@ class AmigoListAPIView(APIView):
 class SolicitudViewSet(viewsets.ModelViewSet):    #ver si al kevin le gusta los viewsets
     queryset = solicitud_alquiler.objects.all()
     serializer_class = SolicitudAlquilerSerializer
+
+
+class LoginView(APIView):
+    def post(self, request, username, password):
+        try:
+            user = Cliente.objects.get(usuario=username)
+            passwd = Cliente.objects.get(contrasena=password)
+        except Cliente.DoesNotExist:
+            return Response({"error": "No encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        
+        return Response({"token": "Encontrado"}, status=status.HTTP_200_OK)
+        

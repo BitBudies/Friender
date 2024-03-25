@@ -21,6 +21,7 @@ from rest_framework.routers import DefaultRouter
 
 from amigo.views import ClienteDetailById, AmigoListLimit, AmigoDetailById, ClienteListLimit
 from amigo.views import ClienteDetailById, ClienteListView, AmigoListAPIView, SolicitudViewSet
+from amigo.views import LoginView
 
 router = routers.DefaultRouter()
 router.register(r'solicitud',SolicitudViewSet)
@@ -38,4 +39,6 @@ urlpatterns = [
     path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view(), name = 'amigo-detail-id'),
     
     path('api/', include(router.urls)),
+    
+    path('api/login/<str:username>/<str:password>', LoginView.as_view(), name = 'login')
 ]
