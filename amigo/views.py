@@ -4,8 +4,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Cliente, Amigo, solicitud_alquiler
-from .serializers.cliente_serializer import ClienteSerializer
-from .serializers.amigo_serializer import AmigoSerializer
 from .serializers.solicitud_alquiler_serializer import solicitud_alquiler
 from rest_framework import viewsets
 from .models.solicitud_alquilerDB import solicitud_alquiler
