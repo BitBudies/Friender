@@ -1,6 +1,7 @@
 
 
 .card {
+    position: relative;
     width: 100%; /* Ancho máximo del 100% */
     max-width: 300px; /* Anchura máxima */
     border-radius: 10px;
@@ -24,7 +25,7 @@
     width: 100%;
     display: flex;
     gap: 1rem;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 
 .card-actions {
@@ -32,10 +33,25 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .col{
     display: flex;
     justify-content: center;
+}
+
+.coin-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.coin{
+    position: relative;
+    background-color: blue;
+    height: 1.7rem;
+    width: 1.7rem;   
 }
 

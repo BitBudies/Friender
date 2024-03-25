@@ -39,11 +39,19 @@ const ListaAmigos = () => {
                                         <div className='card-text'>
                                             <div className="card-stats">
                                                 <div>★★★☆☆</div> 
-                                                <div>{amigo.n_clientes} personas</div>
+                                                <div>{amigo.n_clientes} 
+                                                    
+                                                </div>
                                             </div>
                                             <div className="card-actions">
-                                            <Link to={`/amigos/${amigo.amigo_id}`}className='btn btn-azul'>Ver Perfil</Link>
-                                                <div>{amigo.precio_amigo} BOB</div>
+                                            <Link to={`/amigos/${amigo.amigo_id}`}className='btn btn-azul'>Ver Perfil</Link>                     
+                                                <div className='coin-container'>
+                                                    {amigo.precio_amigo}
+                                                    <div className='coin'>
+                                                        <div className='image'
+                                                            style={{backgroundImage: "url(/images/coin.png)"}}/>
+                                                    </div>
+                                                </div>        
                                             </div>
                                         </div>
                                     </div>
