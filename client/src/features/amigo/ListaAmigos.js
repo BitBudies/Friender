@@ -12,7 +12,7 @@ const ListaAmigos = () => {
 
     useEffect(() => {
         if(isSuccess){
-            console.log(amigos['numero_paginas']);
+            console.log(amigos);
         }
     }, [amigos,isSuccess]);
 
@@ -22,9 +22,9 @@ const ListaAmigos = () => {
         )
     }else if (isSuccess){
         return (
-            <div id='lista_amigos' className='page'>
-                <div className='container py-5'>
-                    <div className='row row-cols-0 row-cols-lg-4 row-cols-md-3 g-3'>
+            <div id='lista_amigos ' className='page bg-light'>
+                <div className='container-fluid py-5'>
+                    <div className='row row-cols-1 row-cols-lg-4 row-cols-md-3 g-3'>
                         {amigos['amigos'].map((amigo, index) => {
                             return (
                             <div key={index} className='col'>
