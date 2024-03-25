@@ -5,24 +5,27 @@ import { useGetAmigosQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
 
 const ListaAmigos = () => {
-    const {data:amigos,isFetching,isSuccess} = useGetAmigosQuery();
+    const {data:amigos, isFetching, isSuccess} = useGetAmigosQuery({
+        pagina: 1,
+        limite: 8
+    });
 
     useEffect(() => {
         if(isSuccess){
-            console.log(amigos[0]);
+            console.log(amigos['numero_paginas']);
         }
     }, [amigos,isSuccess]);
 
     if (isFetching) {
         return (            
-                <Loading/>
+            <Loading/>
         )
     }else if (isSuccess){
         return (
             <div id='lista_amigos' className='page'>
                 <div className='container py-5'>
                     <div className='row row-cols-0 row-cols-lg-4 row-cols-md-3 g-3'>
-                        {amigos.map((amigo, index) => {
+                        {amigos['amigos'].map((amigo, index) => {
                             return (
                             <div key={index} className='col'>
                                 <div className='card'>
