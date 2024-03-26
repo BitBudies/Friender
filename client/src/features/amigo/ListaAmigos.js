@@ -4,6 +4,12 @@ import './listaAmigos.css';
 import { useGetAmigosQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
 
+const calificacionEstrellas = (calificacion) => {
+    const numEstrellas = Math.round(calificacion);
+    const estrellas = '★'.repeat(numEstrellas) + '☆'.repeat(5 - numEstrellas);
+    return estrellas;
+};
+
 const ListaAmigos = () => {
     const {data:amigos, isFetching, isSuccess} = useGetAmigosQuery({
         pagina: 1,
@@ -38,7 +44,7 @@ const ListaAmigos = () => {
                                         <h5 className='card-title'>{amigo.nombre}</h5>
                                         <div className='card-text'>
                                             <div className="card-stats">
-                                                <div>★★★☆☆</div> 
+                                                <div>{calificacionEstrellas(amigo.calificacion)}</div> 
                                                 <div>{amigo.n_clientes} 
                                                     
                                                 </div>
