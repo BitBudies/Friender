@@ -18,18 +18,18 @@ const PerfilAmigo = () => {
   } else if (isSuccess) {
     return (
       <div className='page'>
-        <div className='container'>
+        <div className='container-fluid'>
         <div className='row perfil-amigo-container'>
-          <div className='col-md-6 perfil-amigo-left'>
+          <div className='col-md-6 col-sm-12 perfil-amigo-left d-flex flex-column align-items-center g-5'>
           <div className='image-container'style={{ backgroundImage: `url(/images/${
                                         amigo.genero === 'M' ? "guy.png":
                                         amigo.genero === 'F' ? "girl.png" : "otros.png"
                                      })` }}/>
-            <center></center><h3>{amigo.nombre}</h3>
+            <center></center><h3>{amigo.nombre_completo}</h3>
             <div>★★★☆☆</div>
             <p><strong>Edad:</strong> {amigo.fecha_nacimiento} años</p>
           </div>
-          <div className='col-md-6 perfil-amigo-right'>
+          <div className='col-md-6 col-sm-12 perfil-amigo-right'>
             <div className='p-4'>
               <h2>Perfil de Amigo</h2>
               <p><pre><strong>Descripción:</strong> {amigo.descripcion}</pre></p>

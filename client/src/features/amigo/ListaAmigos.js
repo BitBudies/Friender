@@ -47,7 +47,7 @@ const ListaAmigos = () => {
                                             <div className="card-stats">
                                                 <div>{calificacionEstrellas(amigo.calificacion)}</div> 
                                                 <div className='card-n-users'>
-                                                    30 <span><FaUser/></span>
+                                                    0 <span><FaUser/></span>
                                                 </div>
                                             </div>
                                             <div className="card-actions">

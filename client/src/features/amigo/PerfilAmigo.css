@@ -1,4 +1,5 @@
 
+
 .image-container {
   width: 300px; /* Ancho de la imagen */
   height: 300px; /* Altura de la imagen */
@@ -8,5 +9,7 @@
   border-radius: 5%; 
   margin-top: 50px;
 }
+
+
 
 
