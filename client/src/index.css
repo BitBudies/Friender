@@ -16,6 +16,8 @@
   /*Tipografia*/
   --sans-serif :"Public Sans", sans-serif;
   --serif : "GFS Didot", serif;
+
+  --navbar-height : 3rem;
 }
 
 
@@ -26,11 +28,11 @@
 }
 
 body {
+  position: relative;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
-
 }
 
 
@@ -65,18 +67,19 @@ h1,h2,h3,h4,h5,h6{
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
-  height: 89vh;
+  height: 100vh;
   width: 100vw;
+  padding-top: var(--navbar-height);
 }
 
 .section{
   position: relative;
-  height: 91vh;
+  height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3rem 0;
+  /* padding: 3rem 0; */
 }
 /* .section .section-text{
   position: relative;
