@@ -18,6 +18,11 @@
   --serif : "GFS Didot", serif;
 
   --navbar-height : 4rem;
+
+  /* Breaking points */
+  --small : 576px;
+  --medium : 768px;
+  --large : 992px;
 }
 
 
@@ -125,13 +130,14 @@ h1,h2,h3,h4,h5,h6{
 }
 
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 992px) {
   .section{
-    min-height: 100vh;
+    height: 100vh;
     flex-direction: column-reverse;
   }
   .side-section{
     padding: 0 1.5rem;
     width: 100vw;
+    height: 50%;
   }
 }
