@@ -60,7 +60,7 @@ h1,h2,h3,h4{
 
 .page{
   position: relative;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   height: 89vh;
   width: 100vw;
