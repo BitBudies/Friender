@@ -26,10 +26,10 @@ const NavBar = () => {
               <i className=''><FaUserCircle/></i>
             </span>
           <ul class="dropdown-menu">
-            <li><Link class="dropdown-item" href="#">Acerca De</Link></li>
-            <li><Link class="dropdown-item" href="#">Mi Perfil</Link></li>
+            <li><Link class="dropdown-item" to={"/acerca"}>Acerca De</Link></li>
+            <li><Link class="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
             <li><hr class="dropdown-divider"/></li>
-            <li><Link class="dropdown-item " href="#">Cerrar Sesion</Link></li>
+            <li><button class="dropdown-item ">Cerrar Sesion</button></li>
           </ul>
           </div>
         </div>
