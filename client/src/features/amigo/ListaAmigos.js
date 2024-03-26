@@ -17,12 +17,6 @@ const ListaAmigos = () => {
         limite: 15
     });
 
-    useEffect(() => {
-        if(isSuccess){
-            console.log(amigos);
-        }
-    }, [amigos,isSuccess]);
-
     if (isFetching) {
         return (            
             <Loading/>
