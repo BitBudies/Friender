@@ -1,72 +1,16 @@
-.perfil-amigo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    max-width: 800px; 
-   
-  }
-  
-  .perfil-amigo-left {
-    margin-bottom: 20px; 
-  }
-  
-  .perfil-amigo-right {
-    width: 100%;
-    max-width: 600px; 
-    padding: 20px; 
-    border: 1px solid #ccc; 
-    border-radius: 8px; 
-    background-color: #f9f9f9; 
-  }
-  
-  .solicitar-contacto-btn {
-    margin-top: 20px; 
-  }
-  
-  
-  .perfil-amigo-left {
-    margin-bottom: 20px;
-  }
-  
-  .perfil-amigo-right {
-    max-width: 600px; 
-  }
-  
-  @media (min-width: 768px) {
-    .perfil-amigo-container {
-      flex-direction: row;
-      justify-content: center;
-      align-items: flex-start;
-      text-align: left;
-    }
-  
-    .perfil-amigo-left {
-      position: relative;
-      margin-right: 20px;
-      margin-bottom: 0;
-      text-align: center;
+.perfil-amigo-scrollable {
+  max-height: 80vh; /* Altura máxima del contenedor */
+  overflow-y: auto; /* Habilita el desplazamiento vertical */
+}
 
-    }
-    .image-container{
-      position: relative;
-      width: 10rem;
-      height: 10rem;
-    }
-      
-      .perfil-amigo-left img {
-        width: 200px; /* Ancho de la imagen */
-        height: 200px; /* Altura de la imagen */
-        border-radius: 50%; /* Hacer la imagen circular */
-        margin-bottom: 10px; /* Espacio entre la imagen y el nombre */
-      }
-      
-      .perfil-amigo-left h3 {
-        margin-bottom: 5px; /* Espacio entre el nombre y las estrellas */
-      }
-      
-      /* Otras reglas de estilo necesarias para el componente PerfilAmigo */
-      
-  }
-  
-  
+.image-container {
+  width: 300px; /* Ancho de la imagen */
+  height: 300px; /* Altura de la imagen */
+  background-size: cover; /* Ajustar el tamaño de la imagen para cubrir completamente el contenedor */
+  background-repeat: no-repeat; /* No repetir la imagen */
+  background-position: right; /* Centrar la imagen dentro del contenedor */
+  border-radius: 5%; 
+  margin-top: 50px;
+}
+
+
