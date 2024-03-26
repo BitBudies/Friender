@@ -79,7 +79,7 @@ h1,h2,h3,h4,h5,h6{
 
 .section{
   position: relative;
-  height: 100vh;
+  height: calc(100vh - var(--navbar-height));
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -132,7 +132,6 @@ h1,h2,h3,h4,h5,h6{
 
 @media screen and (max-width: 992px) {
   .section{
-    height: 100vh;
     flex-direction: column-reverse;
   }
   .side-section{
