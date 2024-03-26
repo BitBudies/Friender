@@ -1,14 +1,14 @@
 #from django.shortcuts import render
+from django.db.models import Avg
 from django.core.paginator import Paginator
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Cliente, Amigo, solicitud_alquiler
-from .serializers.solicitud_alquiler_serializer import solicitud_alquiler
 from rest_framework import viewsets
-from .models.solicitud_alquilerDB import solicitud_alquiler
-from .serializers.solicitud_alquiler_serializer import SolicitudAlquilerSerializer
 from datetime import date
+#-------------------------------modelos-------------------------------
+from .models import Cliente, Amigo, solicitud_alquiler, Calificacion 
+from .serializers.solicitud_alquiler_serializer import solicitud_alquiler, SolicitudAlquilerSerializer
 
 #class endpoint(APIView):
 #    def get(self, request):
@@ -90,6 +90,13 @@ class AmigoDetailById(APIView):
             amigo = Amigo.objects.get(amigo_id=amigo_id)
         except Amigo.DoesNotExist:
             return Response({"error": "Amigo no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        calificaciones_amigo = Calificacion.objects.filter(amigo=amigo, emisor="cliente")
+        if not calificaciones_amigo.exists():
+            promedio_calificaciones = 0
+        else:
+            # se calcula el promedio de las puntuaciones
+            promedio_calificaciones = calificaciones_amigo.aggregate(Avg('puntuacion'))['puntuacion__avg']
+        
         data = {
             "amigo_id": amigo.amigo_id,
             "precio_amigo": amigo.precio,
@@ -108,6 +115,8 @@ class AmigoDetailById(APIView):
             "dinero_amigo": amigo.dinero,
             "estado_amigo" : amigo.estado,
             "registro_amigo": amigo.timestamp_registro,
+            "numero_califiaciiones": calificaciones_amigo.count(),
+            "calificacion": promedio_calificaciones
         }
         return Response(data)
 
@@ -134,6 +143,13 @@ class AmigoListLimitPaginator(APIView):
             "amigos" : []
         }
         for amigo in page_obj:
+            calificaciones_amigo = Calificacion.objects.filter(amigo=amigo, emisor="cliente")
+            if not calificaciones_amigo.exists():
+                promedio_calificaciones = 0
+            else:
+                # se calcula el promedio de las puntuaciones
+                promedio_calificaciones = calificaciones_amigo.aggregate(Avg('puntuacion'))['puntuacion__avg']
+
             amigo_data = {
                 "amigo_id": amigo.amigo_id,
                 "precio_amigo": amigo.precio,
@@ -147,6 +163,8 @@ class AmigoListLimitPaginator(APIView):
                 "direccion": amigo.cliente.direccion,
                 "descripcion": amigo.cliente.descripcion,
                 "estado_amigo": amigo.estado,
+                "numero_califiaciiones": calificaciones_amigo.count(),
+                "calificacion": promedio_calificaciones
             }
             data["amigos"].append(amigo_data)
         return Response(data)
