@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './listaAmigos.css';
 import { useGetAmigosQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
+import { FaUser } from "react-icons/fa";
 
 const calificacionEstrellas = (calificacion) => {
     const numEstrellas = Math.round(calificacion);
@@ -13,7 +14,7 @@ const calificacionEstrellas = (calificacion) => {
 const ListaAmigos = () => {
     const {data:amigos, isFetching, isSuccess} = useGetAmigosQuery({
         pagina: 1,
-        limite: 8
+        limite: 15
     });
 
     useEffect(() => {
@@ -41,12 +42,12 @@ const ListaAmigos = () => {
                                         amigo.genero === 'F' ? "girl.png" : "otros.png"
                                      })` }}/>
                                     <div className='card-body px-4'>
-                                        <h5 className='card-title'>{amigo.nombre}</h5>
+                                        <h5 className='card-title'>{amigo.nombre_completo}</h5>
                                         <div className='card-text'>
                                             <div className="card-stats">
                                                 <div>{calificacionEstrellas(amigo.calificacion)}</div> 
-                                                <div>{amigo.n_clientes} 
-                                                    
+                                                <div className='card-n-users'>
+                                                    30 <span><FaUser/></span>
                                                 </div>
                                             </div>
                                             <div className="card-actions">

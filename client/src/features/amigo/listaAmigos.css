@@ -25,7 +25,18 @@
     width: 100%;
     display: flex;
     gap: 1rem;
-    /* margin-bottom: 10px; */
+    margin-bottom: 10px;
+}
+
+.card-n-users{
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.card-n-users span{
+    font-size: 0.7rem;
+    margin-bottom: 3px;
 }
 
 .card-actions {

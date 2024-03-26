@@ -34,7 +34,7 @@ body {
 }
 
 
-h1,h2,h3,h4{
+h1,h2,h3,h4,h5,h6{
   font-family: var(--serif);
   font-weight: bold;
   font-style: normal;
@@ -53,6 +53,9 @@ h1,h2,h3,h4{
   background-image: linear-gradient(var(--azul-marino),var(--azul-oscuro),var(--azul-marino));
   -webkit-text-fill-color: white;
   font-size: 5%;
+}
+.btn-azul:hover{
+  filter: brightness(1.3);
 }
 
 
