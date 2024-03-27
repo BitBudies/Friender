@@ -6,6 +6,7 @@ import Home from './Pages/Home';
 import PerfilAmigo from './features/amigo/PerfilAmigo';
 import LogIn from './features/autenticacion/LogIn';
 import Default from './Pages/Default';
+import Perfil from './features/cliente/Perfil';
 
 
 
@@ -18,6 +19,7 @@ function App() {
         <Route path='/amigos' element={<ListaAmigos/>}/>
         <Route path='/amigos/:id_amigo' element={<PerfilAmigo/>}/>
         <Route path='/login' element= {<LogIn/>}/>
+        <Route path='/perfil' element={<Perfil/>}/>
         <Route path='/*' element={<Default/>}/>
       </Routes>
     </Router>

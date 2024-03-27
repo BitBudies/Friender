@@ -9,7 +9,7 @@
   --azul-claro: #2C74B3;
   --blanco: #f8f9fa;
   --negro: #343a40;
-  --gris: #6c757d;
+  --gris: #acadae;
   --verde: #28a745;
   --rojo: #dc3545;
 
@@ -20,6 +20,7 @@
   --navbar-height : 4rem;
 
   /* Breaking points */
+  --xs: 350px;
   --small : 576px;
   --medium : 768px;
   --large : 992px;

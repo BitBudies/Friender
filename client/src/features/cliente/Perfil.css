@@ -1,0 +1,11 @@
+.profile-section{
+    position: relative;
+    height: calc(100vh - var(--navbar-height));
+    width: 100vw;
+}
+
+.profile-options{
+    width: var(--xs);
+    height: 100vh;
+    background-color: var(--gris);
+}
