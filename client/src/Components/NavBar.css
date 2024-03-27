@@ -1,0 +1,27 @@
+nav{
+    position: fixed !important;
+    width: 100vw;
+    z-index: 1;
+    min-height: var(--navbar-height) !important;
+}
+
+
+.dropdown-menu{
+    background-color: var(--azul-oscuro) !important;
+}
+
+.profile-icon{
+    font-size: 1.5rem !important; 
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.profile-icon i {
+    font-size: 2.5rem;
+}
+
+@media screen and (min-width: 800px) {
+    .dropdown-menu{
+            transform: translate(-70%,10px);
+    }
+}

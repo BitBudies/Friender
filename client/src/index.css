@@ -9,13 +9,21 @@
   --azul-claro: #2C74B3;
   --blanco: #f8f9fa;
   --negro: #343a40;
-  --gris: #6c757d;
+  --gris: #cdcdcd;
   --verde: #28a745;
   --rojo: #dc3545;
 
   /*Tipografia*/
   --sans-serif :"Public Sans", sans-serif;
   --serif : "GFS Didot", serif;
+
+  --navbar-height : 4rem;
+
+  /* Breaking points */
+  --xs: 350px;
+  --small : 576px;
+  --medium : 768px;
+  --large : 992px;
 }
 
 
@@ -26,15 +34,15 @@
 }
 
 body {
+  position: relative;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
-
 }
 
 
-h1,h2,h3,h4{
+h1,h2,h3,h4,h5,h6{
   font-family: var(--serif);
   font-weight: bold;
   font-style: normal;
@@ -54,26 +62,42 @@ h1,h2,h3,h4{
   -webkit-text-fill-color: white;
   font-size: 5%;
 }
+.btn-azul:hover{
+  filter: brightness(1.3);
+}
 
 
 /* secciones */
 
 .page{
   position: relative;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
-  height: 89vh;
+  height: 100vh;
   width: 100vw;
+  padding-top: var(--navbar-height);
 }
 
 .section{
   position: relative;
-  height: 91vh;
+  height: calc(100vh - var(--navbar-height));
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3rem 0;
+  /* padding: 3rem 0; */
+}
+
+.side-section{
+  position: relative;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem;
+  text-align: center;
 }
 /* .section .section-text{
   position: relative;
@@ -86,20 +110,34 @@ h1,h2,h3,h4{
   position: relative;
   width: 100%;
   height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 .image{
   position: relative;
   width: 100%;
   height: 100%;
-  background-repeat: repeat;
+  background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  padding: 20px;
 }
 .ver-perfil-btn {
   border-radius: 25px; 
   padding: 10px 20px; 
   font-size: 15px;
   padding: 10px 20px
+}
+
+
+@media screen and (max-width: 992px) {
+  .section{
+    flex-direction: column-reverse;
+  }
+  .side-section{
+    padding: 0 1.5rem;
+    width: 100vw;
+    height: 50%;
+  }
 }

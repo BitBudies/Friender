@@ -3,18 +3,19 @@ import { Link } from 'react-router-dom';
 import './listaAmigos.css';
 import { useGetAmigosQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
+import { FaUser } from "react-icons/fa";
+
+const calificacionEstrellas = (calificacion) => {
+    const numEstrellas = Math.round(calificacion);
+    const estrellas = '★'.repeat(numEstrellas) + '☆'.repeat(5 - numEstrellas);
+    return estrellas;
+};
 
 const ListaAmigos = () => {
     const {data:amigos, isFetching, isSuccess} = useGetAmigosQuery({
         pagina: 1,
-        limite: 8
+        limite: 15
     });
-
-    useEffect(() => {
-        if(isSuccess){
-            console.log(amigos['numero_paginas']);
-        }
-    }, [amigos,isSuccess]);
 
     if (isFetching) {
         return (            
@@ -22,9 +23,9 @@ const ListaAmigos = () => {
         )
     }else if (isSuccess){
         return (
-            <div id='lista_amigos' className='page'>
-                <div className='container py-5'>
-                    <div className='row row-cols-0 row-cols-lg-4 row-cols-md-3 g-3'>
+            <div id='lista_amigos ' className='page bg-light'>
+                <div className='container-fluid py-5'>
+                    <div className='row row-cols-1 row-cols-lg-4 row-cols-md-3 g-3'>
                         {amigos['amigos'].map((amigo, index) => {
                             return (
                             <div key={index} className='col'>
@@ -35,15 +36,17 @@ const ListaAmigos = () => {
                                         amigo.genero === 'F' ? "girl.png" : "otros.png"
                                      })` }}/>
                                     <div className='card-body px-4'>
-                                        <h5 className='card-title'>{amigo.nombre}</h5>
+                                        <h5 className='card-title'>{amigo.nombre_completo}</h5>
                                         <div className='card-text'>
                                             <div className="card-stats">
-                                                <div>★★★☆☆</div> 
-                                                <div>{amigo.n_clientes} personas</div>
+                                                <div>{calificacionEstrellas(amigo.calificacion)}</div> 
+                                                <div className='card-n-users'>
+                                                    0 <span><FaUser/></span>
+                                                </div>
                                             </div>
                                             <div className="card-actions">
-                                            <Link to={`/amigos/${amigo.amigo_id}`}className='btn btn-azul'>Ver Perfil</Link>
-                                                <div>{amigo.precio_amigo} BOB</div>
+                                            <Link to={`/amigos/${amigo.amigo_id}`}className='btn btn-azul'>Ver Perfil</Link>                     
+                                                {amigo.precio_amigo}$/hr  
                                             </div>
                                         </div>
                                     </div>

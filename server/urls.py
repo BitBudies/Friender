@@ -18,32 +18,29 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from rest_framework.routers import DefaultRouter
-
-from amigo.views import ClienteDetailById, AmigoDetailById, ClienteListLimitPaginator, AmigoListLimitPaginator
-from amigo.views import ClienteDetailById, ClienteListView, AmigoListAPIView, SolicitudViewSet
-from amigo.views import LoginView
-
 from django.urls import re_path
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-router = routers.DefaultRouter()
-router.register(r'solicitud',SolicitudViewSet)
+from amigo.views import ClienteDetailById, AmigoDetailById, ClienteListLimitPaginator, AmigoListLimitPaginator
+from amigo.views import ClienteDetailById, SolicitudViewSet, LoginView
 
+
+router = routers.DefaultRouter()
+router.register(r'solicitud', SolicitudViewSet)
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="Docuamentacion de los Endpoints de la API",
-      default_version='v1',
-      description="Documentacion de los Endpoints de la API de Friender",
-      contact=openapi.Contact(email="contact@Friender.local"),
-      license=openapi.License(name="BSD License"),
-   ),
-   public=True,
-   #permission_classes=(permissions.AllowAny,),
-) 
-
+    openapi.Info(
+        title="Documentacion de la API 🐸",
+        default_version='v1',
+        description="Documentacion de los Endpoints de la API de Friender",
+        contact=openapi.Contact(email="contactKevin@friender.xyz"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    #permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

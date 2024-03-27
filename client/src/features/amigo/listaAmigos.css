@@ -1,24 +1,11 @@
-.container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-
-} 
-
-
-/* Estilos de los cards */
-#lista_amigos{
-    padding: 20px;
-}
 
 
 .card {
+    position: relative;
     width: 100%; /* Ancho máximo del 100% */
     max-width: 300px; /* Anchura máxima */
-    border: 1px solid #ccc;
     border-radius: 10px;
     overflow: hidden;
-    margin: 10px; /* Añadir margen para separar las tarjetas */
 }
 
 .card-header {
@@ -29,24 +16,53 @@
     background-size: contain;
 }
 
-.card-body {
-    padding: 10px; /* Añadir relleno al cuerpo de la tarjeta */
-}
-
 .card-info {
     text-align: center;
 }
 
 .card-stats {
+    position: relative;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    gap: 1rem;
     margin-bottom: 10px;
 }
 
+.card-n-users{
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.card-n-users span{
+    font-size: 0.7rem;
+    margin-bottom: 3px;
+}
+
 .card-actions {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
+.col{
+    display: flex;
+    justify-content: center;
+}
+
+.coin-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.coin{
+    position: relative;
+    background-color: blue;
+    height: 1.7rem;
+    width: 1.7rem;   
+}
 
