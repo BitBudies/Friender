@@ -6,8 +6,13 @@ const Perfil = () => {
     <div className='page'>
         <div className='profile-section'>
             <div className='profile-options'>
-                <div className='info'>
-                    
+                <div className='profile-info'>
+                    <div className='profile-image'>
+                    <div 
+                    className='image' 
+                    style={{backgroundImage:"url(/images/user.jpeg)"}}></div>
+                    </div>
+                    <h4>Kevin Huayllas Pinto</h4>
                 </div>
             </div>
             <div className='profile-content'></div>
