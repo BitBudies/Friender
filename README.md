@@ -7,7 +7,7 @@
 
 2. Activa el entorno virtual en Windows con el comando:     
     ```
-    venv\Scripts\activate
+    
     ```
 3. Una vez que el entorno virtual esté activo, instala las dependencias necesarias con:
     ```
