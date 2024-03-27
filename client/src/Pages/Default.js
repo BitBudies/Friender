@@ -6,7 +6,7 @@ const Default = () => {
     <div className='page'>
         <div className='section'>
             <div className='side-section'>
-                <h2>Oh, al parecer esta sección aun no existe.</h2>
+                <h2>Oh, al parecer esta sección aún no existe.</h2>
                 <p>Lo sentimos por las inconveniencias, pero estamos trabajando en esto, por favor tenga paciencia.</p>
                 <Link to={"/"} className='btn btn-azul'>Volver al inicio</Link>
             </div>
