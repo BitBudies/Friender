@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./Perfil.css"
+import { useGlobalContext } from '../../context'
 
 const Perfil = () => {
+
+    const {userData} = useGlobalContext();
+
+    useEffect(() => {
+      console.log(userData)
+    },[userData])
+
     return (
       <div className='page'>
           <div className='profile-section'>
