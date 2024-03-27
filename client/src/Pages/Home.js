@@ -1,6 +1,5 @@
 import React from 'react'
 import "./Home.css"
-import Test from '../features/Test/Test'
 
 const Home = () => {
 
@@ -18,7 +17,6 @@ const Home = () => {
           <div className='image' style={{backgroundImage: `url(${"/images/home_girl2.jpeg"})`}}></div>
         </div>
       </div>
-      <Test/>
     </div>
   )
 }

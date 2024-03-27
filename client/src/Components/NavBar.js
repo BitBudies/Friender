@@ -22,14 +22,14 @@ const NavBar = () => {
             </li>
           </ul>
           <div className='nav-item dropdown '>
-            <span class="nav-link dropdown-toggle profile-icon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span className="nav-link dropdown-toggle profile-icon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i className=''><FaUserCircle/></i>
             </span>
-          <ul class="dropdown-menu">
-            <li><Link class="dropdown-item" to={"/acerca"}>Acerca De</Link></li>
-            <li><Link class="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
-            <li><hr class="dropdown-divider"/></li>
-            <li><button class="dropdown-item ">Cerrar Sesión</button></li>
+          <ul className="dropdown-menu">
+            <li><Link className="dropdown-item" to={"/acerca"}>Acerca De</Link></li>
+            <li><Link className="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
+            <li><hr className="dropdown-divider"/></li>
+            <li><button className="dropdown-item ">Cerrar Sesión</button></li>
           </ul>
           </div>
         </div>
