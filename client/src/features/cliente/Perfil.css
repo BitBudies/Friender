@@ -2,6 +2,7 @@
     position: relative;
     height: calc(100vh - var(--navbar-height));
     width: 100vw; 
+    display: flex;
 }
 
 .profile-options{
@@ -35,4 +36,38 @@
 }
 .profile-image .image{
     border-radius: 50%;
+}
+
+.options{
+    position: relative;
+    height: 75%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.options ul{
+    padding: 0;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.options ul li{
+    width: 100%;
+    list-style: none;
+    padding: 1.7rem 0;
+    border-top: ridge 1px var(--azul-oscuro);
+}
+
+.options ul li:last-child{
+    border-bottom: ridge 1px var(--azul-oscuro);
+}
+
+.options ul li:hover{
+    cursor: pointer;
 }
