@@ -60,6 +60,10 @@ label::after {
     width: 27%;
 }
 
+#direction-input{
+    width: 73%;
+}
+
 /*DATOS DEL CLIENTE*/
 #fotoPerfilSolicitud{
     width: 200px;

@@ -44,7 +44,7 @@ const Formulario = ({nombre,precio}) => {
             <input className="form-control" type="number" id="duracion" name="duracion" min="1" required
             value={formData.duracion} onChange={handleChange }/>
           </div>
-            <div className='form-item'>
+            <div id="direction-input" className='form-item'>
             <label for="direccion" className='form-label'>Dirección</label>
             <input className="form-control" type="text" id="direccion" name="direccion" required
             value={formData.direccion} onChange={handleChange }/>
