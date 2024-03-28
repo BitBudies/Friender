@@ -16,7 +16,7 @@
     position: relative;
     margin: 0 auto;
     background-color: var(--blanco);
-    width: 50%;
+    width: var(--medium);
     padding: 2rem;
     border-radius: 15px;
     display: flex;
