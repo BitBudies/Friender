@@ -7,68 +7,58 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 } 
 
 #cajaFormularioEncuentro{
+    position: relative;
     margin: 0 auto;
-    background-color: rgb(205, 205, 205);
+    background-color: var(--blanco);
     width: 50%;
-    padding: 20px;
+    padding: 2rem;
     border-radius: 15px;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-gap: 5px;
+    display: flex;
+    gap: 3rem;
     position: absolute;
-    top: 50%;
-    left: 25%;
-    transform: translate(-50%, -50%);
 }
 
-#cajaFormularioEncuentro h2{
-    text-align: center;
+
+.application-form{
+    position: relative;
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
-/*ELEMENTOS DEL FORMULARIO*/
-#formularioSolicitud{
-    padding: 30px;
-}
-
-.en-bloque{
-    display: block;
-}
-
-#direccion{
+.form-box{
     width: 100%;
-    text-align: left;
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    gap: 1rem;
+
 }
-#descripcion{
-    resize: none;
-    width: 100%;
+.form-item{
+    display: flex;
+    flex-direction: column;
 }
 
 label::after {
     content: "*";
-    color: red;
+    color: var(--rojo);
   }
   
-
-input, textarea{
-    border-style: solid;
-    border-color: black;
-    border-width: 1px;
-    border-radius: 20px;
-    padding: 10px;
+.form-control{
+    border-radius: 10px;
 }
 
-input{
-    text-align: center;
+#duration-input{
+    width: 27%;
 }
-
-label {
-    margin-right: 5px;
-    margin-left: 10px;
-}
-  
 
 /*DATOS DEL CLIENTE*/
 #fotoPerfilSolicitud{
@@ -77,30 +67,11 @@ label {
 
 #datosPerfilSolicitud{
     text-align: center;
-    padding: 30px;
 }
 
-#texto-nombre{
-    font-size: 30px;
-    margin: 0;
-    padding: 0;
-}
-
-#texto-precio{
-    font-size: 25px;
-    margin-bottom: 20px;
-}
-
-#cajaEstrellas{
-    font-size: 40px;
-    margin-top: -15px;
-}
 
 #botonEnviar{
     width: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-radius: 20px;
     border-style: none;
 }
 

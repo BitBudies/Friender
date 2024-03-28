@@ -22,28 +22,39 @@ const Formulario = ({nombre,precio}) => {
   return (
     <div id="formulario">
       <div id="cajaFormularioEncuentro">
-        <form id="formularioSolicitud" action="/enviarFormulario.js" method="post">
-          <h2>Solicitud de Encuentro</h2>
-          <label className="form-label" for="fecha">Fecha</label>
-          <input  className="form-input" type="date" id="fecha" name="fecha" 
-          placeholder="dd/mm/aa" required 
-          value={formData.fecha} onChange={handleChange}/>
-
-          <label for="hora">Hora</label>
-          <input type="time" id="hora" name="hora" placeholder="00:00" required
-          value={formData.hora} onChange={handleChange}/>
-
-          <label className="en-bloque" for="duracion">Duración (hrs)</label>
-          <input type="number" id="duracion" name="duracion" min="1" required
-          value={formData.duracion} onChange={handleChange }/>
-
-          <label className="en-bloque" for="direccion">Dirección</label>
-          <input type="text" id="direccion" name="direccion" required
-          value={formData.direccion} onChange={handleChange }/>
-
-          <label className="en-bloque" for="descripcion">Descripción</label>
-          <textarea id="descripcion" name="descripcion" rows="5" cols="50" required
+      
+        <form className='application-form'>
+        <h2>Solicitud de Encuentro</h2>
+        <div className='form-box'>
+          <div className='form-item'>
+            <label className="form-label" for="fecha">Fecha</label>
+            <input  className="form-control" type="date" id="fecha" name="fecha" 
+            placeholder="dd/mm/aa" required 
+            value={formData.fecha} onChange={handleChange}/>
+          </div>
+          <div className='form-item'>
+            <label for="hora" className='form-label'>Hora</label>
+            <input className="form-control" type="time" id="hora" name="hora" placeholder="00:00" required
+            value={formData.hora} onChange={handleChange}/>
+          </div>
+        </div>
+        <div className='form-box'>
+          <div id="duration-input" className='form-item'>
+            <label htmlFor="duracion" className='form-label'>Duración (hrs)</label>
+            <input className="form-control" type="number" id="duracion" name="duracion" min="1" required
+            value={formData.duracion} onChange={handleChange }/>
+          </div>
+            <div className='form-item'>
+            <label for="direccion" className='form-label'>Dirección</label>
+            <input className="form-control" type="text" id="direccion" name="direccion" required
+            value={formData.direccion} onChange={handleChange }/>
+          </div>
+        </div>
+        <div className='form-item'>
+          <label for="descripcion" className='form-label'>Descripción</label>
+          <textarea className="form-control" id="descripcion" name="descripcion" rows="5" cols="50" required
           value={formData.descripcion} onChange={handleChange }></textarea>
+        </div> 
         </form>
 
         <div id="datosPerfilSolicitud">
