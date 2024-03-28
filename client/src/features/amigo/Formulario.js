@@ -55,15 +55,15 @@ const Formulario = ({nombre,precio}) => {
           <textarea className="form-control" id="descripcion" name="descripcion" rows="5" cols="50" required
           value={formData.descripcion} onChange={handleChange }></textarea>
         </div> 
+        <p id="texto-precio" >Total: {precio}bs</p>
+          <button className='btn btn-azul' type="button" onClick={handleSubmit}>Enviar Solicitud</button>
         </form>
 
-        <div id="datosPerfilSolicitud">
-          <img id="fotoPerfilSolicitud" src="https://cdn-icons-png.flaticon.com/512/552/552721.png" alt="fotoperfilsolicitud"/>
+        {/* <div id="datosPerfilSolicitud">
           <p id="texto-nombre" >{nombre}</p>
           <div id="cajaEstrellas" class="estrellas" >★★★☆☆</div>
-          <p id="texto-precio" >Total: {precio}bs</p>
-          <button id="botonEnviar" type="button" onClick={handleSubmit}>Enviar Solicitud</button>
-        </div>
+          
+        </div> */}
 
         <img id="icono-cerrar" src="https://cdn.icon-icons.com/icons2/1207/PNG/512/1491313938-close_82982.png" alt="iconoCerrar"/>
       </div>

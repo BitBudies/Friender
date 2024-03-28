@@ -16,7 +16,7 @@
     position: relative;
     margin: 0 auto;
     background-color: var(--blanco);
-    width: var(--medium);
+    /* width: var(--medium); */
     padding: 2rem;
     border-radius: 15px;
     display: flex;
@@ -27,10 +27,10 @@
 
 .application-form{
     position: relative;
-    width: 65%;
+    /* width: 65%; */
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 1rem;
 }
 
@@ -57,7 +57,7 @@ label::after {
 }
 
 #duration-input{
-    width: 27%;
+    /* width: 30%; */
 }
 
 #direction-input{
@@ -99,4 +99,22 @@ label::after {
 
 #cajaFormularioEncuentro #icono-cerrar:hover {
     cursor: pointer;
+}
+
+@media screen and (max-width : 768px){
+
+    #cajaFormularioEncuentro{
+        align-items: center;
+        flex-direction: column;
+        /* height: 80vh; */
+        width: var(--small);
+        overflow: scroll;
+    }
+    .form-box{
+        /* flex-direction: column; */
+        align-items: start;
+    }
+    #direction-input{
+        /* width: 100%; */
+    }
 }
