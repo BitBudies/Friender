@@ -1,5 +1,4 @@
 .formulario {
-    /* display: none; */
     position: fixed;
     top: 0;
     left: 0;
@@ -62,33 +61,6 @@ label::after {
     border-radius: 10px;
 }
 
-#duration-input{
-    /* width: 30%; */
-}
-
-/* #direction-input{
-    width: 73%;
-} */
-
-/*DATOS DEL CLIENTE*/
-#fotoPerfilSolicitud{
-    width: 200px;
-}
-
-#datosPerfilSolicitud{
-    text-align: center;
-}
-
-
-#botonEnviar{
-    width: 100%;
-    border-style: none;
-}
-
-#botonEnviar:hover{
-    background-color: var(--azul-claro);
-    color: white;
-}
 
 /*ICONO CERRAR*/
 #cajaFormularioEncuentro {
@@ -111,9 +83,6 @@ label::after {
     font-size: 2rem;
 }
 
-#cajaFormularioEncuentro #icono-cerrar:hover {
-    cursor: pointer;
-}
 
 .form-bottom{
     width: 100%;
