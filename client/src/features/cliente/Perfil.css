@@ -84,7 +84,6 @@
 .options ul .option.active{
     background-color: var(--azul-claro);
     color: var(--white);
-    border: 2px ridge white;
 }
 
 .options ul .option:last-child{
