@@ -16,7 +16,6 @@
     position: relative;
     margin: 0 auto;
     background-color: var(--blanco);
-    /* width: var(--medium); */
     padding: 2rem;
     border-radius: 15px;
     display: flex;
@@ -27,14 +26,15 @@
 
 .application-form{
     position: relative;
-    /* width: 65%; */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
+    width: 100%;
 }
 
 .form-box{
+    position: relative;
     width: 100%;
     display: flex;
     justify-content: baseline;
@@ -43,8 +43,11 @@
 
 }
 .form-item{
+    min-width: 50%;
+    position: relative;
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
 }
 
 label::after {
@@ -60,9 +63,9 @@ label::after {
     /* width: 30%; */
 }
 
-#direction-input{
+/* #direction-input{
     width: 73%;
-}
+} */
 
 /*DATOS DEL CLIENTE*/
 #fotoPerfilSolicitud{
@@ -116,19 +119,15 @@ label::after {
     align-items: center;
 }
 
-@media screen and (max-width : 768px){
+@media screen and (max-width : 576px){
 
     #cajaFormularioEncuentro{
-        align-items: center;
-        flex-direction: column;
-        /* height: 80vh; */
-        width: var(--small);
+        width: 95vw;
     }
-    .form-box{
-        /* flex-direction: column; */
-        align-items: start;
-    }
-    #direction-input{
-        /* width: 100%; */
+}
+
+@media screen and (max-width : 350px) {
+    input, label,button,p{
+        font-size: 0.8rem !important;
     }
 }
