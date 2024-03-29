@@ -236,6 +236,7 @@ class GetClientAndSolicitud(APIView):
 
         for solicitud in solicitudes:
             data["solicitudes"].append({
+                "solicitud_id": solicitud.solicitud_alquiler_id,
                 "amigo": {
                     "amigo_id": solicitud.amigo.amigo_id,
                     "precio": solicitud.amigo.precio,
@@ -249,6 +250,26 @@ class GetClientAndSolicitud(APIView):
             })
         return Response(data)
 
-
-
-
+class AcceptSolicitud(APIView):
+    def post(self, request, solicitud_id):
+        try:
+            # Solo aceptar solicitud si esta en estado Enviado
+            solicitud = solicitud_alquiler.objects.get(pk=solicitud_id, estado_solicitud='E')
+        except solicitud_alquiler.DoesNotExist:
+            return Response({"error": "Solicitud no encontrada o no esta enviada"}, status=status.HTTP_404_NOT_FOUND)
+        # Agregar control para que solo el amigo pueda cambiar la solicitud
+        solicitud.estado_solicitud = 'A'
+        solicitud.save()
+        return Response({"mensaje": "Solicitud aceptada correctamente"})
+    
+class RechazarSolicitud(APIView):
+    def post(self, request, solicitud_id):
+        try:
+            # Solo rechazar solicitud si esta en estado Enviado
+            solicitud = solicitud_alquiler.objects.get(pk=solicitud_id, estado_solicitud='E')
+        except solicitud_alquiler.DoesNotExist:
+            return Response({"error": "Solicitud no encontrada o no esta enviada"}, status=status.HTTP_404_NOT_FOUND)
+        # Agregar control para que solo el amigo pueda cambiar la solicitud
+        solicitud.estado_solicitud = 'R'
+        solicitud.save()
+        return Response({"mensaje": "Solicitud rechazada correctamente"})

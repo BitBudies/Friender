@@ -24,7 +24,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from amigo.views import ClienteDetailById, AmigoDetailById, ClienteListLimitPaginator, AmigoListLimitPaginator, SolicitudViewSet, LoginView, GetClientAndSolicitud
-
+from amigo.views import AcceptSolicitud, RechazarSolicitud
 
 router = routers.DefaultRouter()
 router.register(r'solicitud', SolicitudViewSet)
@@ -44,19 +44,23 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    # Cliente
     path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view(), name='cliente-detail-id'),
     path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view(), name = 'lista-clientes-pagina-limite'),
+    path('api/cliente+solicitud/<int:cliente_id>/', GetClientAndSolicitud.as_view(), name='cliente-solicitud-detail-id'),
 
+    # Amigo
     path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view(), name = 'amigo-detail-id'),
     path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator.as_view(), name='lista-amigos-pagina-limite'),
 
-    path('api/', include(router.urls)),
+    # Solicitud
+    path('api/solicitud/aceptar/<int:solicitud_id>', AcceptSolicitud.as_view(), name='aceptar-solicitud-alquiler'),
+    path('api/solicitud/rechazar/<int:solicitud_id>', RechazarSolicitud.as_view(), name='rechazar-solicitud-alquiler'),
 
-    
+    # Credenciales
     path('api/login/', LoginView.as_view(), name = 'login'),
-
-    path('api/cliente+solicitud/<int:cliente_id>/', GetClientAndSolicitud.as_view(), name='cliente-solicitud-detail-id'),
     
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), #ducumentacion de la API
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('api/', include(router.urls))
 ]
