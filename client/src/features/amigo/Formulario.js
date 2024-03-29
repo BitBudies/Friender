@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./Formulario.css"
+import { RxCross2 } from "react-icons/rx";
+
 
 const Formulario = ({nombre,precio}) => {
   const [formData,setFormData] = useState({
@@ -64,8 +66,8 @@ const Formulario = ({nombre,precio}) => {
           <div id="cajaEstrellas" class="estrellas" >★★★☆☆</div>
           
         </div> */}
+        <div className='close-icon'><span><RxCross2/></span></div>
 
-        <img id="icono-cerrar" src="https://cdn.icon-icons.com/icons2/1207/PNG/512/1491313938-close_82982.png" alt="iconoCerrar"/>
       </div>
     </div>
   )

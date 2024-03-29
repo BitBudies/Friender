@@ -90,11 +90,19 @@ label::after {
     align-items: center;
 }
 
-#cajaFormularioEncuentro #icono-cerrar {
+.close-icon {
     position: absolute;
-    top: 20px;
+    top: 10px;
     right: 20px;
-    width: 25px;
+    /* width: 25px; */
+}
+
+.close-icon:hover{
+    cursor: pointer;
+}
+
+.close-icon span{
+    font-size: 2rem;
 }
 
 #cajaFormularioEncuentro #icono-cerrar:hover {
