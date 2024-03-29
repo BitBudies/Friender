@@ -4,6 +4,7 @@
     width: 100vw; 
     display: flex;
     align-items: center;
+    margin-top: var(--navbar-height);
 }
 
 .profile-options{
