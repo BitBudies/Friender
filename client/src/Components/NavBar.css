@@ -2,7 +2,9 @@ nav{
     position: fixed !important;
     width: 100vw;
     z-index: 1;
-    min-height: var(--navbar-height) !important;
+    min-height: var(--navbar-height);
+    top: 0;
+    left: 0;
 }
 
 
@@ -20,7 +22,7 @@ nav{
     font-size: 2.5rem;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
     .dropdown-menu{
             transform: translate(-70%,10px);
     }

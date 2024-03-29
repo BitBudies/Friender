@@ -3,7 +3,7 @@ import "./Formulario.css"
 import { RxCross2 } from "react-icons/rx";
 
 
-const Formulario = ({nombre,precio,showForm,setShowForm}) => {
+const Formulario = ({precio,showForm,setShowForm}) => {
   const [formData,setFormData] = useState({
     fecha : '',
     direccion : '',

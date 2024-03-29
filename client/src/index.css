@@ -76,9 +76,10 @@ p,span,label{
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
-  height: 100vh;
+  height: calc(100vh - var(--navbar-height));
   width: 100vw;
-  padding-top: var(--navbar-height);
+  margin-top: var(--navbar-height);
+  /* padding-top: var(--navbar-height); */
 }
 
 .section{

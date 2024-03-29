@@ -6,7 +6,7 @@ import "./NavBar.css"
 
 const NavBar = () => {
   return (
-    <nav className='navbar navbar-expand-lg bg-azul-fuerte text-light' data-bs-theme="dark">
+    <nav className='navbar navbar-expand-md bg-azul-fuerte text-light' data-bs-theme="dark">
       <div className='container-fluid px-lg-5'>
         <Link to={"/"} className='navbar-brand'>Friender</Link>
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
