@@ -3,7 +3,7 @@ import "./Formulario.css"
 import { RxCross2 } from "react-icons/rx";
 
 
-const Formulario = ({nombre,precio}) => {
+const Formulario = ({nombre,precio,showForm,setShowForm}) => {
   const [formData,setFormData] = useState({
     fecha : '',
     direccion : '',
@@ -21,8 +21,8 @@ const Formulario = ({nombre,precio}) => {
     setFormData({...formData,[e.target.name] : e.target.value})
   }
 
-  return (
-    <div id="formulario">
+  return ( 
+    <div className={`formulario ${!showForm && "hide"}`}>
       <div id="cajaFormularioEncuentro">
       
         <form className='application-form'>
@@ -68,7 +68,7 @@ const Formulario = ({nombre,precio}) => {
           <div id="cajaEstrellas" class="estrellas" >★★★☆☆</div>
           
         </div> */}
-        <div className='close-icon'><span><RxCross2/></span></div>
+        <div className='close-icon' onClick={() => setShowForm(false)}><span><RxCross2/></span></div>
 
       </div>
     </div>
