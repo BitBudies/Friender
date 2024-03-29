@@ -16,12 +16,13 @@
 
 #cajaFormularioEncuentro{
     position: relative;
-    margin: 0 auto;
     background-color: var(--blanco);
-    padding: 2rem;
     border-radius: 15px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 3rem;
+    padding: 2rem;
     position: absolute;
 }
 
@@ -45,12 +46,13 @@
 
 }
 .form-item{
-    min-width: 50%;
+    width: 50%;
     position: relative;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
+
 
 label::after {
     content: "*";
@@ -95,6 +97,7 @@ label::after {
 
     #cajaFormularioEncuentro{
         width: 95vw;
+        padding: 1rem;
     }
 }
 

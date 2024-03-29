@@ -8,7 +8,7 @@ const Formulario = ({nombre,precio,showForm,setShowForm}) => {
     fecha : '',
     direccion : '',
     hora : '',
-    duracion : '',
+    duracion : 1,
     descripcion: '',
   });
 
@@ -52,13 +52,13 @@ const Formulario = ({nombre,precio,showForm,setShowForm}) => {
             value={formData.direccion} onChange={handleChange }/>
           </div>
         </div>
-        <div className='form-item'>
+        <div className='form-item w-100'>
           <label for="descripcion" className='form-label'>Descripción</label>
           <textarea className="form-control" id="descripcion" name="descripcion" rows="5" cols="50" required
           value={formData.descripcion} onChange={handleChange }></textarea>
         </div> 
         <div className='form-bottom'>
-          <p id="texto-precio" >Total: {precio} $us</p>
+          <p id="texto-precio" >Total: {precio * formData.duracion} $us</p>
           <button className='btn btn-azul' type="button" onClick={handleSubmit}>Enviar Solicitud</button>
         </div>
         </form>
