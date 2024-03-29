@@ -8,7 +8,7 @@ const Default = () => {
             <div className='side-section'>
                 <h2>Oh, al parecer esta sección aún no existe.</h2>
                 <p>Lo sentimos por las inconveniencias, pero estamos trabajando en esto, por favor tenga paciencia.</p>
-                <Link to={"/"} className='btn btn-azul'>Volver al inicio</Link>
+                <Link to={"/"} className='btn btn-azul mt-3'>Volver al inicio</Link>
             </div>
             <div className='side-section'>
                 <div className='image' style={{backgroundImage:"url(/images/monos.jpeg)"}}></div>

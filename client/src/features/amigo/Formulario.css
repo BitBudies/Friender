@@ -16,7 +16,7 @@
 
 #cajaFormularioEncuentro{
     position: relative;
-    background-color: var(--blanco);
+    background-color: var(--white);
     border-radius: 15px;
     display: flex;
     flex-direction: column;
