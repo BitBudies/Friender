@@ -39,8 +39,16 @@ const Perfil = () => {
     }
 
     useEffect(() => {
-      console.log(userData)
-    },[userData])
+      const handleResize = () => {
+        if (window.innerWidth >= 576) {
+          setShowContent(false);
+        }
+      };
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
 
     return (
           <div className='profile-section'>
