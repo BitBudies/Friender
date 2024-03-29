@@ -94,6 +94,7 @@
 .options ul .option:hover{
     cursor: pointer;
     background-color: var(--azul-claro);
+    filter: brightness(0.9);
     color: var(--white);
 }
 
