@@ -20,5 +20,4 @@ class solicitud_alquiler(models.Model):
     timestamp_registro = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"Cliente: {self.cliente.nombre} Solicita servicio de: {self.amigo.cliente.nombre}" # revisar si dara bien 
-    #da bien :D
+        return f"Cliente: {self.cliente.nombre} Solicita servicio de: {self.amigo.cliente.nombre}" 

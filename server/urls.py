@@ -23,8 +23,7 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from amigo.views import ClienteDetailById, AmigoDetailById, ClienteListLimitPaginator, AmigoListLimitPaginator
-from amigo.views import ClienteDetailById, SolicitudViewSet, LoginView
+from amigo.views import ClienteDetailById, AmigoDetailById, ClienteListLimitPaginator, AmigoListLimitPaginator, SolicitudViewSet, LoginView, GetClientAndSolicitud
 
 
 router = routers.DefaultRouter()
@@ -56,8 +55,8 @@ urlpatterns = [
     
     path('api/login/', LoginView.as_view(), name = 'login'),
 
-
-    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('api/cliente+solicitud/<int:cliente_id>/', GetClientAndSolicitud.as_view(), name='cliente-solicitud-detail-id'),
+    
+    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), #ducumentacion de la API
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-
 ]

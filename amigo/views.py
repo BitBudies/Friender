@@ -6,8 +6,6 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .models import Cliente, Amigo, solicitud_alquiler, Calificacion 
-from .serializers.cliente_serializer import ClienteSerializer
-from .serializers.amigo_serializer import AmigoSerializer
 from .serializers.solicitud_alquiler_serializer import solicitud_alquiler, SolicitudAlquilerSerializer
 from rest_framework import viewsets
 from .models.solicitud_alquilerDB import solicitud_alquiler
@@ -208,5 +206,49 @@ class LoginView(APIView):
                 return Response({"id": "0"}, status=status.HTTP_404_NOT_FOUND)
         return Response({"errors":serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         
+
+class GetClientAndSolicitud(APIView):
+    def get(self, request, cliente_id):
+        try:
+            cliente = Cliente.objects.get(cliente_id=cliente_id)
+            solicitudes = solicitud_alquiler.objects.filter(cliente=cliente)
+        except Cliente.DoesNotExist:
+            return Response({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        data = {
+            "cliente_id": cliente.cliente_id,
+            "nombre_completo": f"{cliente.nombre} {cliente.ap_paterno} {cliente.ap_materno}".title(),
+            "nombre": cliente.nombre.title(),
+            "ap_paterno": cliente.ap_paterno.title(),
+            "ap_materno": cliente.ap_materno.title(),
+            #"ci": cliente.ci,
+            #"fecha_nacimiento": cliente.fecha_nacimiento,
+            "edad": calcular_edad(cliente.fecha_nacimiento),
+            "genero": cliente.genero,
+            "direccion": cliente.direccion,
+            "descripcion": cliente.descripcion,
+            "usuario": cliente.usuario,
+            #"correo": cliente.correo,
+            #"dinero": cliente.dinero,
+            #"estado": cliente.estado,
+            #"timestamp_registro": cliente.estado
+            "solicitudes": []
+        }
+
+        for solicitud in solicitudes:
+            data["solicitudes"].append({
+                "amigo": {
+                    "amigo_id": solicitud.amigo.amigo_id,
+                    "precio": solicitud.amigo.precio,
+                },
+                "lugar": solicitud.lugar,
+                "descripcion": solicitud.descripcion,
+                "fecha_inicio": solicitud.fecha_inicio,
+                "minutos": solicitud.minutos,
+                "estado_solicitud": solicitud.estado_solicitud,
+                #"timestamp_registro": solicitud.timestamp_registro
+            })
+        return Response(data)
+
+
 
 
