@@ -5,22 +5,21 @@ nav{
     min-height: var(--navbar-height);
     top: 0;
     left: 0;
+    padding: 0 !important;
 }
-
 
 .dropdown-menu{
     background-color: var(--azul-oscuro) !important;
 }
 
 .profile-icon{
-    font-size: 1.5rem !important; 
-    margin: 0 !important;
-    padding: 0 !important;
+    font-size: 1.5rem; 
 }
-
 .profile-icon i {
     font-size: 2.5rem;
 }
+
+
 
 @media screen and (min-width: 768px) {
     .dropdown-menu{

@@ -7,7 +7,7 @@ import "./NavBar.css"
 const NavBar = () => {
   return (
     <nav className='navbar navbar-expand-md bg-azul-fuerte text-light' data-bs-theme="dark">
-      <div className='container-fluid px-lg-5'>
+      <div className='container-fluid px-lg-5 py-0'>
         <Link to={"/"} className='navbar-brand'>Friender</Link>
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
@@ -23,14 +23,14 @@ const NavBar = () => {
           </ul>
           <div className='nav-item dropdown '>
             <span className="nav-link dropdown-toggle profile-icon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i className=''><FaUserCircle/></i>
+              <i><FaUserCircle/></i>
             </span>
-          <ul className="dropdown-menu">
-            <li><Link className="dropdown-item" to={"/acerca"}>Acerca De</Link></li>
-            <li><Link className="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
-            <li><hr className="dropdown-divider"/></li>
-            <li><button className="dropdown-item ">Cerrar Sesión</button></li>
-          </ul>
+            <ul className="dropdown-menu">
+              <li><Link className="dropdown-item" to={"/acerca"}>Acerca De</Link></li>
+              <li><Link className="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
+              <li><hr className="dropdown-divider"/></li>
+              <li><button className="dropdown-item ">Cerrar Sesión</button></li>
+            </ul>
           </div>
         </div>
       </div>
