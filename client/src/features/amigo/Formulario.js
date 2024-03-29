@@ -57,8 +57,10 @@ const Formulario = ({nombre,precio}) => {
           <textarea className="form-control" id="descripcion" name="descripcion" rows="5" cols="50" required
           value={formData.descripcion} onChange={handleChange }></textarea>
         </div> 
-        <p id="texto-precio" >Total: {precio}bs</p>
+        <div className='form-bottom'>
+          <p id="texto-precio" >Total: {precio} $us</p>
           <button className='btn btn-azul' type="button" onClick={handleSubmit}>Enviar Solicitud</button>
+        </div>
         </form>
 
         {/* <div id="datosPerfilSolicitud">

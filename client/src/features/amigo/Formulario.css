@@ -109,6 +109,13 @@ label::after {
     cursor: pointer;
 }
 
+.form-bottom{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 @media screen and (max-width : 768px){
 
     #cajaFormularioEncuentro{
@@ -116,7 +123,6 @@ label::after {
         flex-direction: column;
         /* height: 80vh; */
         width: var(--small);
-        overflow: scroll;
     }
     .form-box{
         /* flex-direction: column; */
