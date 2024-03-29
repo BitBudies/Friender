@@ -3,18 +3,19 @@
     height: calc(100vh - var(--navbar-height));
     width: 100vw; 
     display: flex;
+    align-items: center;
 }
 
 .profile-options{
     position: relative;
-    padding-top: 12px;
-    width: var(--xs);
-    height: calc(100vh - var(--navbar-height));;
-    background-color: var(--gris);
+    width: var(--small);
+    background-color: var(--azul-marino);
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    color: var(--white);
 }
 
 .profile-info{
@@ -47,7 +48,7 @@
 }
 
 .options ul{
-    padding: 0;
+    padding: 0 2rem;
     position: relative;
     height: 100%;
     width: 100%;
@@ -55,19 +56,36 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
 }
 
 .options ul li{
     width: 100%;
     list-style: none;
-    padding: 1.7rem 0;
-    border-top: ridge 1px var(--azul-oscuro);
+    padding: 1rem 0;
+    background-color: var(--white);
+    border-radius: 50px;
+    color: black;
 }
 
 .options ul li:last-child{
-    border-bottom: ridge 1px var(--azul-oscuro);
+   background-color: var(--red);
+   color: white;
 }
 
 .options ul li:hover{
     cursor: pointer;
+    background-color: var(--azul-claro);
+    color: var(--white);
+}
+
+.options ul li:last-child:hover{
+    background-color: var(--red);
+    color: var(--white);
+    filter: brightness(0.9);
+ }
+
+.profile-content{
+    width: 100%;
+    height: 100%;
 }
