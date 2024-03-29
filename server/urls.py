@@ -23,8 +23,8 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from amigo.views import ClienteDetailById, AmigoDetailById, ClienteListLimitPaginator, AmigoListLimitPaginator, SolicitudViewSet, LoginView, GetClientAndSolicitud
-from amigo.views import AcceptSolicitud, RechazarSolicitud
+from amigo.views import ClienteDetailById, AmigoDetailById, ClienteListLimitPaginator, AmigoListLimitPaginator, SolicitudViewSet, LoginView
+from amigo.views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud
 
 router = routers.DefaultRouter()
 router.register(r'solicitud', SolicitudViewSet)
@@ -46,16 +46,18 @@ urlpatterns = [
 
     # Cliente
     path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view(), name='cliente-detail-id'),
+    path('api/cliente/solicitudes/<int:cliente_id>/', GetSolicitudesCliente.as_view(), name='cliente-solicitud-detail-id'),
     path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view(), name = 'lista-clientes-pagina-limite'),
-    path('api/cliente+solicitud/<int:cliente_id>/', GetClientAndSolicitud.as_view(), name='cliente-solicitud-detail-id'),
+    # probando postsssss
+    path('api/cliente/enviar/solicitud', EnviarSolicitud.as_view(), name = 'cliente-enviar-solicitud'),
 
     # Amigo
     path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view(), name = 'amigo-detail-id'),
     path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator.as_view(), name='lista-amigos-pagina-limite'),
 
     # Solicitud
-    path('api/solicitud/aceptar/<int:solicitud_id>', AcceptSolicitud.as_view(), name='aceptar-solicitud-alquiler'),
-    path('api/solicitud/rechazar/<int:solicitud_id>', RechazarSolicitud.as_view(), name='rechazar-solicitud-alquiler'),
+    path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud.as_view(), name='aceptar-solicitud-alquiler'),
+    path('api/solicitud/rechazar/<int:solicitud_alquiler_id>', RechazarSolicitud.as_view(), name='rechazar-solicitud-alquiler'),
 
     # Credenciales
     path('api/login/', LoginView.as_view(), name = 'login'),

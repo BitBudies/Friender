@@ -15,8 +15,6 @@ from .serializers.login_serializer import LoginSerializer
 from datetime import date
 
 #-------------------------------modelos-------------------------------
-
-
 #class endpoint(APIView):
 #    def get(self, request):
 #        return Response({'mesage': 'Al kevin le gustan los endPoints'})
@@ -207,7 +205,7 @@ class LoginView(APIView):
         return Response({"errors":serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         
 
-class GetClientAndSolicitud(APIView):
+class GetSolicitudesCliente(APIView):
     def get(self, request, cliente_id):
         try:
             cliente = Cliente.objects.get(cliente_id=cliente_id)
@@ -236,7 +234,7 @@ class GetClientAndSolicitud(APIView):
 
         for solicitud in solicitudes:
             data["solicitudes"].append({
-                "solicitud_id": solicitud.solicitud_alquiler_id,
+                "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
                 "amigo": {
                     "amigo_id": solicitud.amigo.amigo_id,
                     "precio": solicitud.amigo.precio,
@@ -251,10 +249,10 @@ class GetClientAndSolicitud(APIView):
         return Response(data)
 
 class AcceptSolicitud(APIView):
-    def post(self, request, solicitud_id):
+    def post(self, request, solicitud_alquiler_id):
         try:
             # Solo aceptar solicitud si esta en estado Enviado
-            solicitud = solicitud_alquiler.objects.get(pk=solicitud_id, estado_solicitud='E')
+            solicitud = solicitud_alquiler.objects.get(pk=solicitud_alquiler_id, estado_solicitud='E')
         except solicitud_alquiler.DoesNotExist:
             return Response({"error": "Solicitud no encontrada o no esta enviada"}, status=status.HTTP_404_NOT_FOUND)
         # Agregar control para que solo el amigo pueda cambiar la solicitud
@@ -263,13 +261,62 @@ class AcceptSolicitud(APIView):
         return Response({"mensaje": "Solicitud aceptada correctamente"})
     
 class RechazarSolicitud(APIView):
-    def post(self, request, solicitud_id):
+    def post(self, request, solicitud_alquiler_id):
         try:
             # Solo rechazar solicitud si esta en estado Enviado
-            solicitud = solicitud_alquiler.objects.get(pk=solicitud_id, estado_solicitud='E')
+            solicitud = solicitud_alquiler.objects.get(pk=solicitud_alquiler_id, estado_solicitud='E')
         except solicitud_alquiler.DoesNotExist:
             return Response({"error": "Solicitud no encontrada o no esta enviada"}, status=status.HTTP_404_NOT_FOUND)
         # Agregar control para que solo el amigo pueda cambiar la solicitud
         solicitud.estado_solicitud = 'R'
         solicitud.save()
         return Response({"mensaje": "Solicitud rechazada correctamente"})
+    
+class EnviarSolicitud(APIView):
+    def post(self, request, format=None):
+        datos_recibidos = request.data
+
+        required_fields = ['cliente_id', 'amigo_id', 'lugar', 'descripcion', 'fecha_inicio', 'minutos', 'estado_solicitud']
+        for field in required_fields:
+            if field not in datos_recibidos:
+                return Response({"error": f"El campo {field} es requerido"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Verificar si el cliente existe
+        try:
+            cliente = Cliente.objects.get(pk=datos_recibidos['cliente_id'])
+        except Cliente.DoesNotExist:
+            return Response({"error": "El cliente no existe"}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Verificar si el amigo existe
+        try:
+            amigo = Amigo.objects.get(pk=datos_recibidos['amigo_id'])
+        except Amigo.DoesNotExist:
+            return Response({"error": "El amigo no existe"}, status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            nueva_solicitud = solicitud_alquiler(
+                cliente_id=cliente.cliente_id,
+                amigo_id=amigo.amigo_id,
+                lugar=datos_recibidos['lugar'],
+                descripcion=datos_recibidos['descripcion'],
+                fecha_inicio=datos_recibidos['fecha_inicio'],
+                minutos=datos_recibidos['minutos'],
+                estado_solicitud=datos_recibidos['estado_solicitud']
+            )
+            nueva_solicitud.save()
+        except Exception as e: 
+            return Response({f'Ocurrio un error: {e}'}, status=status.HTTP_404_NOT_FOUND)
+        
+
+        # Devolver una respuesta con los datos de la solicitud creada
+        return Response({"mensaje": "Solicitud de alquiler creada correctamente", "datos": {
+            "solicitud_alquiler_id": nueva_solicitud.solicitud_alquiler_id,
+            "cliente_id": nueva_solicitud.cliente_id,
+            "amigo_id": nueva_solicitud.amigo_id,
+            "lugar": nueva_solicitud.lugar,
+            "descripcion": nueva_solicitud.descripcion,
+            "fecha_inicio": nueva_solicitud.fecha_inicio,
+            "minutos": nueva_solicitud.minutos,
+            "estado_solicitud": nueva_solicitud.estado_solicitud,
+            "timestamp_registro": nueva_solicitud.timestamp_registro
+        }}, status=status.HTTP_201_CREATED)
