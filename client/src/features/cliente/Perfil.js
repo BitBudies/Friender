@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import "./Perfil.css"
 import { useGlobalContext } from '../../context'
+import { GiReturnArrow } from "react-icons/gi";
+
+import SolicitudesPendientes from '../solicitudes/SolicitudesPendientes'
+
+
 
 const optionsData = [
   {
@@ -10,7 +15,7 @@ const optionsData = [
    {
     id : 2,
     name: 'Ver solicitudes Pendientes',
-    toRender: <></>
+    toRender: <SolicitudesPendientes/>
   },
   {
     id:3,
@@ -22,9 +27,16 @@ const optionsData = [
 
 const Perfil = () => {
     const [currentOption,setCurrentOption] = useState(1);
-
+    const [showContent,setShowContent] = useState(false);
     const {userData} = useGlobalContext();
     const {nombre_completo} = userData
+
+    const handleOptionClick = (id) => {
+      setCurrentOption(id)
+      if (window.innerWidth < 576) {
+        setShowContent(true)
+      }
+    }
 
     useEffect(() => {
       console.log(userData)
@@ -32,7 +44,7 @@ const Perfil = () => {
 
     return (
           <div className='profile-section'>
-            <div className='profile-section-center'>
+            <div className={`profile-section-center ${showContent && "show-content"}`}>
               <div className='profile-options'>
                   <div className='profile-info'>
                     <div className='profile-image'>
@@ -45,7 +57,7 @@ const Perfil = () => {
                   <div className='options'>
                     <ul>
                       {optionsData.map(item => (
-                        <li key={item.id} onClick={() => setCurrentOption(item.id)}
+                        <li key={item.id} onClick={() => handleOptionClick(item.id)}
                         className={`option ${currentOption === item.id && "active"}`}>
                           <p>{item.name}</p>
                         </li>
@@ -58,6 +70,10 @@ const Perfil = () => {
               </div>
               <div className='profile-content'>
                 {optionsData.find(option => option.id === currentOption).toRender}
+
+                <div className='return-btn' onClick={() => setShowContent(false)}>
+                  <span><GiReturnArrow/></span>
+                </div>
               </div>
             </div>
           </div>      

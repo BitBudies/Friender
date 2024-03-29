@@ -12,6 +12,12 @@
     align-items: center;
     min-width: 100%;
     height: 100%;
+    transition: 0.5s;
+
+}
+
+.profile-section-center.show-content{
+    transform: translateX(-100vw);
 }
 
 .profile-options{
@@ -102,7 +108,23 @@
     position: relative;
     width: 100%;
     height: 100%;
+    display: flex;
 }
+
+
+.return-btn{
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    font-size: 2rem;
+    color: var(--azul-oscuro);
+    display: none;
+}
+
+.return-btn :hover{
+    cursor: pointer;
+}
+
 
 @media screen and (max-width: 572px) {
     .profile-section-center{
@@ -115,4 +137,10 @@
     .profile-content{
         width: 100vw;
     }
+
+    .return-btn{
+        display: flex;
+    }
+
+    
 }
