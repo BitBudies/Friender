@@ -16,7 +16,7 @@
 
 .profile-options{
     position:relative;
-    width: var(--xs) !important;
+    width: var(--small);
     background-color: var(--azul-marino);
     height: 100%;
     display: flex;
@@ -66,7 +66,7 @@
     gap: 1rem;
 }
 
-.options ul li{
+.options ul .option{
     width: 100%;
     list-style: none;
     padding: 1rem 0;
@@ -75,18 +75,24 @@
     color: black;
 }
 
-.options ul li:last-child{
+.options ul .option.active{
+    background-color: var(--azul-claro);
+    color: var(--white);
+    border: 2px ridge white;
+}
+
+.options ul .option:last-child{
    background-color: var(--red);
    color: white;
 }
 
-.options ul li:hover{
+.options ul .option:hover{
     cursor: pointer;
     background-color: var(--azul-claro);
     color: var(--white);
 }
 
-.options ul li:last-child:hover{
+.options ul .option:last-child:hover{
     background-color: var(--red);
     color: var(--white);
     filter: brightness(0.9);
@@ -94,6 +100,19 @@
 
 .profile-content{
     position: relative;
-    /* width: 100vw; */
-    /* height: 100%; */
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (max-width: 572px) {
+    .profile-section-center{
+        width: 200vw;
+    }
+
+    .profile-options{
+        width: 100vw
+    }
+    .profile-content{
+        width: 100vw;
+    }
 }

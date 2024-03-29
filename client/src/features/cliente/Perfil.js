@@ -21,7 +21,7 @@ const optionsData = [
 
 
 const Perfil = () => {
-    const [currentOption,setCurrentOption] = useState([<h1>Hola</h1>]);
+    const [currentOption,setCurrentOption] = useState(1);
 
     const {userData} = useGlobalContext();
     const {nombre_completo} = userData
@@ -45,18 +45,19 @@ const Perfil = () => {
                   <div className='options'>
                     <ul>
                       {optionsData.map(item => (
-                        <li key={item.id} onClick={() => setCurrentOption([item.toRender])}>
+                        <li key={item.id} onClick={() => setCurrentOption(item.id)}
+                        className={`option ${currentOption === item.id && "active"}`}>
                           <p>{item.name}</p>
                         </li>
                       ))}
-                      <li>
+                      <li className='option'>
                         <p>Cerrar Sesión</p>
                       </li>
                     </ul>
                   </div>
               </div>
               <div className='profile-content'>
-                {currentOption[0]}
+                {optionsData.find(option => option.id === currentOption).toRender}
               </div>
             </div>
           </div>      
