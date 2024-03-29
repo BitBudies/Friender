@@ -62,14 +62,7 @@ const Formulario = ({nombre,precio,showForm,setShowForm}) => {
           <button className='btn btn-azul' type="button" onClick={handleSubmit}>Enviar Solicitud</button>
         </div>
         </form>
-
-        {/* <div id="datosPerfilSolicitud">
-          <p id="texto-nombre" >{nombre}</p>
-          <div id="cajaEstrellas" class="estrellas" >★★★☆☆</div>
-          
-        </div> */}
         <div className='close-icon' onClick={() => setShowForm(false)}><span><RxCross2/></span></div>
-
       </div>
     </div>
   )
