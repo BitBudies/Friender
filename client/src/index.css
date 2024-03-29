@@ -20,7 +20,7 @@
   --navbar-height : 4rem;
 
   /* Breaking points */
-  --xs: 350px;
+  --xs: 380px;
   --small : 576px;
   --medium : 768px;
   --large : 992px;
@@ -48,7 +48,7 @@ h1,h2,h3,h4,h5,h6{
   font-style: normal;
 }
 
-p,span{
+p,span,label{
   margin: 0 !important;
 }
 
@@ -143,4 +143,8 @@ p,span{
     width: 100vw;
     height: 50%;
   }
+}
+
+@media screen and (max-width : 359px) {
+  
 }

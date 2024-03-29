@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetAmigoByIdQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
@@ -6,6 +6,7 @@ import "./PerfilAmigo.css";
 import Formulario from './Formulario';
 
 const PerfilAmigo = () => {
+  const [showForm,setShowForm] = useState(false)
   const { id_amigo } = useParams();
   const { data: amigo, isFetching, isSuccess } = useGetAmigoByIdQuery(id_amigo);
 
@@ -34,11 +35,15 @@ const PerfilAmigo = () => {
               <h2>Perfil de Amigo</h2>
               <p><pre><strong>Descripción:</strong> {amigo.descripcion}</pre></p>
               <p><h2><strong>Precio:</strong> {amigo.precio_amigo}</h2></p>
-              <button className='btn btn-azul mt-3'>Solicitar Contacto</button>
+              <button className='btn btn-azul mt-3' onClick={() => setShowForm(true)}>Solicitar Contacto</button>
             </div>
           </div>
         </div>
-        <Formulario nombre={amigo.nombre} precio={amigo.precio_amigo} />
+        <Formulario nombre={amigo.nombre} 
+                    precio={amigo.precio_amigo} 
+                    showForm={showForm} 
+                    setShowForm={setShowForm} 
+        />
       </div>
       </div>
       
