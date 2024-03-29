@@ -2,14 +2,21 @@
     position: relative;
     height: calc(100vh - var(--navbar-height));
     width: 100vw; 
+    margin-top: var(--navbar-height);
+    overflow-x: hidden;
+}
+
+.profile-section-center{
+    position: relative;
     display: flex;
     align-items: center;
-    margin-top: var(--navbar-height);
+    min-width: 100%;
+    height: 100%;
 }
 
 .profile-options{
-    position: relative;
-    width: var(--small);
+    position:relative;
+    width: var(--xs) !important;
     background-color: var(--azul-marino);
     height: 100%;
     display: flex;
@@ -28,7 +35,6 @@
     align-items: center;
     justify-content: space-between;
     margin-top: 2rem;
-
 }
 
 .profile-image{
@@ -87,6 +93,7 @@
  }
 
 .profile-content{
-    width: 100%;
-    height: 100%;
+    position: relative;
+    /* width: 100vw; */
+    /* height: 100%; */
 }

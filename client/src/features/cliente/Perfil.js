@@ -32,6 +32,7 @@ const Perfil = () => {
 
     return (
           <div className='profile-section'>
+            <div className='profile-section-center'>
               <div className='profile-options'>
                   <div className='profile-info'>
                     <div className='profile-image'>
@@ -57,6 +58,7 @@ const Perfil = () => {
               <div className='profile-content'>
                 {currentOption[0]}
               </div>
+            </div>
           </div>      
     )  
 }
