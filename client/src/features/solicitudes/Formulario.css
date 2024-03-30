@@ -56,7 +56,7 @@
 
 label::after {
     content: "*";
-    color: var(--rojo);
+    color: var(--red);
   }
   
 .form-control{

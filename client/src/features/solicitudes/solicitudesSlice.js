@@ -4,7 +4,7 @@ const solicitudApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     enviarSolicitud : builder.mutation({
         query : (data) => ({
-          url: "solicitud/",
+          url: "/solicitud",
           method : "POST",
           body: data,
         })
