@@ -247,6 +247,7 @@ class GetSolicitudesCliente(APIView):
                 "lugar": solicitud.lugar,
                 "descripcion": solicitud.descripcion,
                 "fecha_inicio": solicitud.fecha_inicio,
+                "hora_inicio": solicitud.hora_inicio,
                 "minutos": solicitud.minutos,
                 "estado_solicitud": solicitud.estado_solicitud,
                 #"timestamp_registro": solicitud.timestamp_registro
