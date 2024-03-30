@@ -1,0 +1,42 @@
+#solicitudes-box {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15px;
+    place-items: center;
+    margin-bottom: 70px;
+}
+
+h1{
+    text-align: center;
+    margin: 20px !important;
+}
+
+.profile-content{
+    display: block !important;
+    overflow-y: auto;
+}
+
+.no-visible{
+    display: none !important;
+}
+
+@media screen and (max-width : 1400px) {
+    #solicitudes-box {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width : 1050px) {
+    #solicitudes-box {
+        grid-template-columns: repeat(1, 1fr);
+        margin-bottom: 70px;
+    }
+}
+
+@media screen and (max-width : 570px) {
+    .profile-section-center{
+        display: block;
+    }
+}
+

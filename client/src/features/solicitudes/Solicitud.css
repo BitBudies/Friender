@@ -1,0 +1,92 @@
+.card {
+    padding: 15px;
+    border-radius: 15px;
+    position: relative;
+    padding-bottom: 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0px;
+    place-items: center;
+}
+
+/*Datos de Perfil*/
+#foto-perfil{
+    width: 160px;
+    margin: 16px;
+    margin-bottom: 5px;
+    border-radius: 100%;
+}
+
+#datos-perfil{
+    text-align: center;
+}
+
+#datos-perfil p{
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+#button-box{
+    text-align: center;
+    display: block !important;
+    margin-top: 10px;
+}
+
+/*Datos Solicitud*/
+#datos-solicitud div{
+    display: flex;
+    align-items: center;
+}
+
+#datos-solicitud p{
+    display: inline-block;
+    margin: 10px;
+    margin-left: 10px !important; 
+}
+
+.estrellas{
+    font-size: 2rem;
+    margin: 0 !important;
+}
+
+.icono{
+    width: 20px;
+}
+
+.hora-solicitud{
+    margin: 0;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+/*Icono Eliminar*/
+.delete-icon {
+    position: absolute;
+    width: 25px;
+    bottom: 15px !important;
+    right: 15px !important;
+}
+
+.delete-icon:hover{
+    cursor: pointer;
+}
+
+/*Botón Ver perfil*/
+button {
+    border: none;
+    width: 80%;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px !important;
+    transition-duration: 0.4s;
+}
+
+button:hover{
+    cursor: pointer;
+    background-color: var(--azul-primario);
+    color: white;
+    border-radius: 10px;
+}
