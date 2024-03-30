@@ -23,8 +23,10 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from amigo.views import ClienteDetailById, AmigoDetailById, ClienteListLimitPaginator, AmigoListLimitPaginator, LoginView
-from amigo.views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud
+from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
+from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator
+from amigo.views.login_views import LoginView
+from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud
 
 #router = routers.DefaultRouter()
 #router.register(r'solicitud', SolicitudViewSet)
