@@ -174,9 +174,9 @@ class AmigoListLimitPaginator(APIView):
             data["amigos"].append(amigo_data)
         return Response(data)
 
-class SolicitudViewSet(viewsets.ModelViewSet):    #ver si al kevin le gusta los viewsets
-    queryset = solicitud_alquiler.objects.all()
-    serializer_class = SolicitudAlquilerSerializer
+#class SolicitudViewSet(viewsets.ModelViewSet):    #ver si al kevin le gusta los viewsets
+#    queryset = solicitud_alquiler.objects.all()
+#    serializer_class = SolicitudAlquilerSerializer
 
 
 
@@ -298,7 +298,7 @@ class EnviarSolicitud(APIView):
                 lugar=datos_recibidos['lugar'],
                 descripcion=datos_recibidos['descripcion'],
                 fecha_inicio=datos_recibidos['fecha_inicio'],
-                hora_inico="00:00:00",
+                hora_inicio="00:00:00",
                 minutos=datos_recibidos['duracion'],
                 estado_solicitud='E'
             )
