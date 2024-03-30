@@ -56,7 +56,7 @@
 
 label::after {
     content: "*";
-    color: var(--rojo);
+    color: var(--red);
   }
   
 .form-control{
@@ -84,6 +84,7 @@ label::after {
 .close-icon span{
     font-size: 2rem;
 }
+
 
 
 .form-bottom{

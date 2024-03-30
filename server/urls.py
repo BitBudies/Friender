@@ -23,10 +23,8 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from amigo.views.amigo_views import AmigoDetailById, AmigoListLimitPaginator
-from amigo.views.cliente_views import ClienteListLimitPaginator, ClienteDetailById
-from amigo.views.solicitud_views import SolicitudViewSet, EnviarSolicitud,GetSolicitudesCliente,AcceptSolicitud, RechazarSolicitud
-from amigo.views.login_views import LoginView
+from amigo.views import ClienteDetailById, AmigoDetailById, ClienteListLimitPaginator, AmigoListLimitPaginator, LoginView
+from amigo.views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud
 
 #router = routers.DefaultRouter()
 #router.register(r'solicitud', SolicitudViewSet)
@@ -51,9 +49,9 @@ urlpatterns = [
     path('api/cliente/solicitudes/<int:cliente_id>/', GetSolicitudesCliente.as_view(), name='cliente-solicitud-detail-id'),
     path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view(), name = 'lista-clientes-pagina-limite'),
     # probando postsssss
-    path('api/cliente/enviar/solicitud', EnviarSolicitud.as_view(), name = 'cliente-enviar-solicitud'),
-
-    # Amigo
+    path('api/solicitud', EnviarSolicitud.as_view(), name = 'cliente-enviar-solicitud'),
+    
+    # Amiwo
     path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view(), name = 'amigo-detail-id'),
     path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator.as_view(), name='lista-amigos-pagina-limite'),
 
@@ -66,5 +64,5 @@ urlpatterns = [
     
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), #ducumentacion de la API
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    #path('api/', include(router.urls))
+#    path('api/', include(router.urls))
 ]

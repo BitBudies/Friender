@@ -14,7 +14,7 @@ const calificacionEstrellas = (calificacion) => {
 const ListaAmigos = () => {
     const {data:amigos, isFetching, isSuccess} = useGetAmigosQuery({
         pagina: 1,
-        limite: 15
+        limite: 40
     });
 
     if (isFetching) {

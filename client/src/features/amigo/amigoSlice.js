@@ -10,16 +10,9 @@ const amigoApi = apiSlice.injectEndpoints({
     getAmigoById : builder.query({
       query : (id_amigo) => `/amigo/${id_amigo}`,
       providesTags : ["Amigo"]
-    }),
-    solicitarContacto : builder.mutation({
-      query : (data) => ({
-        url: "/solicitud",
-        method : "POST",
-        body: data,
-      })
     })
   }),
 });
 
-export const {useGetAmigosQuery,useGetAmigoByIdQuery,useSolicitarContactoMutation} =
+export const {useGetAmigosQuery,useGetAmigoByIdQuery} =
   amigoApi;
