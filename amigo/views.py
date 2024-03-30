@@ -279,13 +279,13 @@ class EnviarSolicitud(APIView):
         required_fields = ['cliente_id', 'amigo_id', 'lugar', 'descripcion', 'fecha_inicio', 'minutos', 'estado_solicitud']
         for field in required_fields:
             if field not in datos_recibidos:
-                return Response({"error": f"El campo {field} es requerido"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": f"El campo {field} es requerido"}, status=status.HTTP_204_NO_CONTENT)
         
         # Verificar si el cliente existe
         try:
             cliente = Cliente.objects.get(pk=datos_recibidos['cliente_id'])
         except Cliente.DoesNotExist:
-            return Response({"error": "El cliente no existe"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "El cliente no existe"}, status=status.HTTP_404_NOT_FOUND) 
         
         # Verificar si el amigo existe
         try:
