@@ -28,8 +28,8 @@ from amigo.views.cliente_views import ClienteListLimitPaginator, ClienteDetailBy
 from amigo.views.solicitud_views import SolicitudViewSet, EnviarSolicitud,GetSolicitudesCliente,AcceptSolicitud, RechazarSolicitud
 from amigo.views.login_views import LoginView
 
-router = routers.DefaultRouter()
-router.register(r'solicitud', SolicitudViewSet)
+#router = routers.DefaultRouter()
+#router.register(r'solicitud', SolicitudViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -66,5 +66,5 @@ urlpatterns = [
     
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), #ducumentacion de la API
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    path('api/', include(router.urls))
+    #path('api/', include(router.urls))
 ]
