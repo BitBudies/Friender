@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useGetAmigoByIdQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
 import "./PerfilAmigo.css";
-import Formulario from './Formulario';
+import Formulario from '../solicitudes/Formulario';
 
 const PerfilAmigo = () => {
   const { id_amigo } = useParams();
