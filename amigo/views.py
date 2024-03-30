@@ -53,11 +53,11 @@ class ClienteDetailById(APIView):
 class ClienteListLimitPaginator(APIView):
     def get(self, request, page_number = 1, limite=10):
         if limite <= 0:
-            return Response({"error": "El límite debe ser mayor que 0"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "El límite debe ser mayor que 0"}, status=status.HTTP_200_OK)
         elif limite > 50:
-            return Response({"error": "El límite no puede ser mayor que 50"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "El límite no puede ser mayor que 50"}, status=status.HTTP_200_OK)
         elif page_number <= 0:
-            return Response({"error": "La pagina tiene que ser mayor a 0"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "La pagina tiene que ser mayor a 0"}, status=status.HTTP_200_OK)
 
         clientes = Cliente.objects.order_by('cliente_id') #ordenamiento temporal
         paginator = Paginator(clientes, limite)
@@ -128,11 +128,11 @@ class AmigoDetailById(APIView):
 class AmigoListLimitPaginator(APIView):
     def get(self, request, page_number = 1, limite=10):
         if limite <= 0:
-            return Response({"error": "El límite debe ser mayor que 0"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "El límite debe ser mayor que 0"}, status=status.HTTP_200_OK)
         elif limite > 50:
-            return Response({"error": "El límite no puede ser mayor que 50"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "El límite no puede ser mayor que 50"}, status=status.HTTP_200_OK)
         elif page_number <= 0:
-            return Response({"error": "La pagina tiene que ser mayor a 0"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "La pagina tiene que ser mayor a 0"}, status=status.HTTP_200_OK)
 
         amigos = Amigo.objects.order_by('amigo_id') #ordenamiento temporal
         paginator = Paginator(amigos, limite)
@@ -179,14 +179,6 @@ class SolicitudViewSet(viewsets.ModelViewSet):    #ver si al kevin le gusta los 
     serializer_class = SolicitudAlquilerSerializer
 
 
-"""class LoginView(APIView):
-    def post(self, request, username, password):
-        try:
-            user = Cliente.objects.get(usuario=username)
-            
-        except Cliente.DoesNotExist:
-            return Response({"error": "No encontrado"}, status=status.HTTP_404_NOT_FOUND)"""
-        
 
 class LoginView(APIView):
     serializer_class = LoginSerializer
@@ -203,11 +195,11 @@ class LoginView(APIView):
                 return Response({"id": "0"}, status=status.HTTP_404_NOT_FOUND)
         else:
             if not serializer.data['usuario'] and not serializer.data['contrasena']:
-                return Response({"error":"Campo usuario y contraseña requeridos"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error":"Campo usuario y contraseña requeridos"}, status=status.HTTP_200_OK)
             if not serializer.data['usuario']: 
-                return Response({"error":"Campo usuario requerido"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error":"Campo usuario requerido"}, status=status.HTTP_200_OK)
             else:
-                return Response({"error":"Campo contraseña requerido"}, status=status.HTTP_400_BAD_REQUEST)       
+                return Response({"error":"Campo contraseña requerido"}, status=status.HTTP_200_OK)       
         
 
 class GetSolicitudesCliente(APIView):
@@ -326,3 +318,4 @@ class EnviarSolicitud(APIView):
             "estado_solicitud": nueva_solicitud.estado_solicitud,
             "timestamp_registro": nueva_solicitud.timestamp_registro
         }}, status=status.HTTP_201_CREATED)
+
