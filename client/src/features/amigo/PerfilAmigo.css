@@ -1,12 +1,15 @@
-
+.perfil-amigo-scrollable {
+  max-height: 80vh; /* Altura máxima del contenedor */
+  overflow-y: auto; /* Habilita el desplazamiento vertical */
+}
 
 .image-container {
-  width: 300px; /* Ancho de la imagen */
-  height: 300px; /* Altura de la imagen */
-  background-size: cover; /* Ajustar el tamaño de la imagen para cubrir completamente el contenedor */
-  background-repeat: no-repeat; /* No repetir la imagen */
-  background-position: right; /* Centrar la imagen dentro del contenedor */
-  border-radius: 5%; 
+  width: 300px; 
+  height: 300px; 
+  background-size: cover; 
+  background-repeat: no-repeat; 
+  background-position: right; 
+  border-radius: 100%; 
   margin-top: 50px;
 }
 .rectangulo {
@@ -17,6 +20,9 @@
  
 }
 
+.perfil-amigo-left .stars-and-name {
+  margin-bottom: 10px; /* Puedes ajustar el valor según lo necesites */
+}
 
 
 

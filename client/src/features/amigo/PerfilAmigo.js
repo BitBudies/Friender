@@ -1,12 +1,11 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetAmigoByIdQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
 import "./PerfilAmigo.css";
-import Formulario from '../solicitudes/Formulario';
+import Formulario from './Formulario';
 
 const PerfilAmigo = () => {
-  const [showForm,setShowForm] = useState(false)
   const { id_amigo } = useParams();
   const { data: amigo, isFetching, isSuccess } = useGetAmigoByIdQuery(id_amigo);
 
@@ -28,8 +27,8 @@ const PerfilAmigo = () => {
                   amigo.genero === 'F' ? "girl.png" : "otros.png"
                 })`
               }} />
-              <center><h3>{amigo.nombre_completo}</h3></center>
               <div>★★★☆☆</div>
+              <center><h3>{amigo.nombre_completo}</h3></center>
               <p><strong>Edad:</strong> {amigo.edad} años</p>
               <div className='rectangulo'></div>
             </div>
@@ -40,18 +39,15 @@ const PerfilAmigo = () => {
                 <p><pre><strong>Descripción:</strong> {amigo.descripcion}</pre></p>
                 <div className='rectangulo'></div>
                 <p><h2><strong>Precio:</strong> {amigo.precio_amigo}$/hr</h2></p>
-                <button className='btn btn-azul mt-3' onClick={() => setShowForm(true)}>Solicitar Contacto</button>
+                <button className='btn btn-azul mt-3'>Solicitar Contacto</button>
               </div>
             </div>
-          </div>         
+          </div>
+          <Formulario nombre={amigo.nombre} precio={amigo.precio_amigo} />
+         
+        
         </div>
-        <Formulario amigo_id = {id_amigo}
-                    precio={amigo.precio_amigo} 
-                    showForm={showForm} 
-                    setShowForm={setShowForm} 
-        />
       </div>
-      
     );
   }
 };
