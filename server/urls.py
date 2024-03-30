@@ -51,7 +51,7 @@ urlpatterns = [
     # probando postsssss
     path('api/solicitud', EnviarSolicitud.as_view(), name = 'cliente-enviar-solicitud'),
     
-    # Amigo
+    # Amiwo
     path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view(), name = 'amigo-detail-id'),
     path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator.as_view(), name='lista-amigos-pagina-limite'),
 
