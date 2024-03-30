@@ -15,6 +15,7 @@ class solicitud_alquiler(models.Model):
     lugar = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=100)
     fecha_inicio = models.DateField()
+    hora_inicio = models.TimeField()
     minutos = models.IntegerField()
     estado_solicitud = models.CharField(max_length=1, choices=ESTADO_SOLICITUD)
     timestamp_registro = models.DateTimeField(auto_now_add=True)
