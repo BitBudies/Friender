@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useGetAmigoByIdQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
 import "./PerfilAmigo.css";
-import Formulario from './Formulario';
+import Formulario from '../solicitudes/Formulario';
 
 const PerfilAmigo = () => {
   const [showForm,setShowForm] = useState(false)
@@ -43,12 +43,9 @@ const PerfilAmigo = () => {
                 <button className='btn btn-azul mt-3' onClick={() => setShowForm(true)}>Solicitar Contacto</button>
               </div>
             </div>
-          </div>
-          <Formulario nombre={amigo.nombre} precio={amigo.precio_amigo} />
-         
-        
+          </div>         
         </div>
-        <Formulario nombre={amigo.nombre} 
+        <Formulario id_amigo = {amigo.id_amigo}
                     precio={amigo.precio_amigo} 
                     showForm={showForm} 
                     setShowForm={setShowForm} 

@@ -13,6 +13,7 @@ const Formulario = ({precio,showForm,setShowForm}) => {
   });
 
 
+
   const handleSubmit = () => {
     console.log(formData);
   }
