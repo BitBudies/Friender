@@ -49,7 +49,7 @@ urlpatterns = [
     path('api/cliente/solicitudes/<int:cliente_id>/', GetSolicitudesCliente.as_view(), name='cliente-solicitud-detail-id'),
     path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view(), name = 'lista-clientes-pagina-limite'),
     # probando postsssss
-    path('api/cliente/enviar/solicitud', EnviarSolicitud.as_view(), name = 'cliente-enviar-solicitud'),
+    path('api/solicitud', EnviarSolicitud.as_view(), name = 'cliente-enviar-solicitud'),
     
     # Amigo
     path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view(), name = 'amigo-detail-id'),
