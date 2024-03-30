@@ -16,6 +16,8 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
     descripcion: '',
   });
 
+  const [disableBtn,setDisableBtn] = useState(true);
+  
 
   const [send,{data, isLoading,isSuccess}] = useEnviarSolicitudMutation();
 
@@ -33,6 +35,11 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
   useEffect(() => {
     console.log(data,isLoading,isSuccess)
   },[data, isLoading, isSuccess])
+
+  useEffect(() => {
+    const isFilled = Object.keys(formData).every(item => formData[item] !== "")
+    console.log(isFilled);
+  },[formData,disableBtn])
 
   return ( 
     <div className={`formulario ${!showForm && "hide"}`}>
@@ -72,7 +79,10 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
         </div> 
         <div className='form-bottom'>
           <p id="texto-precio" >Total: {precio * formData.duracion} $us</p>
-          <button className='btn btn-azul' type="button" onClick={handleSubmit}>Enviar Solicitud</button>
+          <button className={`btn btn-azul ${disableBtn && "disabled"}`} 
+          type="button" 
+          onClick={handleSubmit}
+          >Enviar Solicitud</button>
         </div>
         </form>
         <div className='close-icon' onClick={() => setShowForm(false)}><span><RxCross2/></span></div>
