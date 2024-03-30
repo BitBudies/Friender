@@ -24,8 +24,8 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
 
 
   const handleSubmit = async() => {
-    const body = {amigo_id, cliente_id,...formData}
     setDisableBtn(true);
+    const body = {amigo_id, cliente_id,...formData}
       await send(body)
   }
 
@@ -51,7 +51,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
     if(isFilled){
       setDisableBtn(false);
     }
-  },[formData,disableBtn])
+  },[formData])
 
   return ( 
     <div className={`formulario ${!showForm && "hide"}`}>
