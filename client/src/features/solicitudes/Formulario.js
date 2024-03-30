@@ -25,12 +25,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
 
   const handleSubmit = async() => {
     const body = {amigo_id, cliente_id,...formData}
-    try {
       await send(body)
-    } catch (error) {
-      
-    }
-      
   }
 
   const handleChange = (e) =>{
@@ -39,7 +34,13 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
 
   useEffect(() => {
     console.log(data,isLoading,isSuccess)
-  },[data, isLoading, isSuccess])
+    if(isLoading){
+      setDisableBtn(true);
+    }else if(isSuccess){
+      setShowForm(false);
+    }
+    
+  },[data, isLoading, isSuccess, setShowForm])
 
   useEffect(() => {
     const isFilled = Object.keys(formData).every(item => formData[item])
