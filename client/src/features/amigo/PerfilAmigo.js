@@ -45,7 +45,7 @@ const PerfilAmigo = () => {
             </div>
           </div>         
         </div>
-        <Formulario id_amigo = {amigo.id_amigo}
+        <Formulario amigo_id = {id_amigo}
                     precio={amigo.precio_amigo} 
                     showForm={showForm} 
                     setShowForm={setShowForm} 
