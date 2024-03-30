@@ -7,9 +7,7 @@ from rest_framework import status
 from ..models import Cliente, Amigo, solicitud_alquiler
 from ..serializers.solicitud_alquiler_serializer import solicitud_alquiler
 from ..models.solicitud_alquilerDB import solicitud_alquiler
-
-from datetime import date
-
+from .utils import calcular_edad
 class EnviarSolicitud(APIView):
     def post(self, request, format=None):
         datos_recibidos = request.data
