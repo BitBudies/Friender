@@ -21,18 +21,20 @@ const PerfilAmigo = () => {
       <div className='page'>
         <div className='container-fluid'>
           <div className='row perfil-amigo-container'>
-            <div className='col-md-6 col-sm-12 perfil-amigo-left d-flex flex-column align-items-center g-5'>
-              <div className='image-container' style={{ 
-                backgroundImage: `url(/images/${
-                  amigo.genero === 'M' ? "guy.png":
-                  amigo.genero === 'F' ? "girl.png" : "otros.png"
-                })`
-              }} />
-              <center><h3>{amigo.nombre_completo}</h3></center>
-              <div>★★★☆☆</div>
-              <p><strong>Edad:</strong> {amigo.edad} años</p>
-              <div className='rectangulo'></div>
-            </div>
+          <div className='col-md-6 col-sm-12 perfil-amigo-left d-flex flex-column align-items-center g-5'>
+  <div className='image-container' style={{ 
+    backgroundImage: `url(/images/${
+      amigo.genero === 'M' ? "guy.png":
+      amigo.genero === 'F' ? "girl.png" : "otros.png"
+    })`
+  }} />
+  <div className='stars-and-name'>
+    <div>★★★☆☆</div>
+    <center><h3>{amigo.nombre_completo}</h3></center>
+  </div>
+  <p><strong>Edad:</strong> {amigo.edad} años</p>
+  <div className='rectangulo'></div>
+</div>
             <div className='col-md-6 col-sm-12 perfil-amigo-right'>
               <div className='p-4'>
                 <h2>Perfil de Amigo</h2>
