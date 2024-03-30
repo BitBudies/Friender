@@ -274,7 +274,7 @@ class EnviarSolicitud(APIView):
     def post(self, request, format=None):
         datos_recibidos = request.data
 
-        required_fields = ['cliente_id', 'amigo_id', 'lugar', 'descripcion', 'fecha_inicio', 'minutos', 'estado_solicitud']
+        required_fields = ['cliente_id', 'amigo_id', 'lugar', 'descripcion', 'fecha_inicio', 'duracion']
         for field in required_fields:
             if field not in datos_recibidos:
                 return Response({"error": f"El campo {field} es requerido"}, status=status.HTTP_200_OK)
@@ -298,14 +298,14 @@ class EnviarSolicitud(APIView):
                 lugar=datos_recibidos['lugar'],
                 descripcion=datos_recibidos['descripcion'],
                 fecha_inicio=datos_recibidos['fecha_inicio'],
-                minutos=datos_recibidos['minutos'],
-                estado_solicitud=datos_recibidos['estado_solicitud']
+                hora_inico="00:00:00",
+                minutos=datos_recibidos['duracion'],
+                estado_solicitud='E'
             )
             nueva_solicitud.save()
-        except Exception as e: 
+        except Exception as e:
             return Response({f'Ocurrio un error: {e}'}, status=status.HTTP_404_NOT_FOUND)
         
-
         # Devolver una respuesta con los datos de la solicitud creada
         return Response({"mensaje": "Solicitud de alquiler creada correctamente", "datos": {
             "solicitud_alquiler_id": nueva_solicitud.solicitud_alquiler_id,
@@ -318,4 +318,3 @@ class EnviarSolicitud(APIView):
             "estado_solicitud": nueva_solicitud.estado_solicitud,
             "timestamp_registro": nueva_solicitud.timestamp_registro
         }}, status=status.HTTP_201_CREATED)
-
