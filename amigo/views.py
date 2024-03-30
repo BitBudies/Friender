@@ -190,9 +190,8 @@ class SolicitudViewSet(viewsets.ModelViewSet):    #ver si al kevin le gusta los 
 
 class LoginView(APIView):
     serializer_class = LoginSerializer
-
     def post(self, request):
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.serializer_class(data=request.data) 
         if serializer.is_valid():
             try:
                 user = Cliente.objects.get(usuario=serializer.data['usuario'])
@@ -202,7 +201,13 @@ class LoginView(APIView):
                     return Response({"id": "0"}, status=status.HTTP_404_NOT_FOUND)
             except Cliente.DoesNotExist:
                 return Response({"id": "0"}, status=status.HTTP_404_NOT_FOUND)
-        return Response({"errors":serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            if not serializer.data['usuario'] and not serializer.data['contrasena']:
+                return Response({"error":"Campo usuario y contraseña requeridos"}, status=status.HTTP_400_BAD_REQUEST)
+            if not serializer.data['usuario']: 
+                return Response({"error":"Campo usuario requerido"}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({"error":"Campo contraseña requerido"}, status=status.HTTP_400_BAD_REQUEST)       
         
 
 class GetSolicitudesCliente(APIView):
