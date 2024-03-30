@@ -15,11 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from rest_framework import routers
-from rest_framework.routers import DefaultRouter
-from django.urls import re_path
-from rest_framework import permissions
+from django.urls import path
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
@@ -47,19 +43,19 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Cliente
-    path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view(), name='cliente-detail-id'),
-    path('api/cliente/solicitudes/<int:cliente_id>/', GetSolicitudesCliente.as_view(), name='cliente-solicitud-detail-id'),
-    path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view(), name = 'lista-clientes-pagina-limite'),
+    path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view()),
+    path('api/cliente/solicitudes/<int:cliente_id>/', GetSolicitudesCliente.as_view()),
+    path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view()),
     # probando postsssss
-    path('api/solicitud', EnviarSolicitud.as_view(), name = 'cliente-enviar-solicitud'),
+    path('api/solicitud', EnviarSolicitud.as_view()),
     
     # Amiwo
-    path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view(), name = 'amigo-detail-id'),
-    path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator.as_view(), name='lista-amigos-pagina-limite'),
+    path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view()),
+    path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator.as_view()),
 
     # Solicitud
-    path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud.as_view(), name='aceptar-solicitud-alquiler'),
-    path('api/solicitud/rechazar/<int:solicitud_alquiler_id>', RechazarSolicitud.as_view(), name='rechazar-solicitud-alquiler'),
+    path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud.as_view()),
+    path('api/solicitud/rechazar/<int:solicitud_alquiler_id>', RechazarSolicitud.as_view()),
 
     # Credenciales
     path('api/login/', LoginView.as_view(), name = 'login'),
