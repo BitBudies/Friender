@@ -37,7 +37,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
   },[data, isLoading, isSuccess])
 
   useEffect(() => {
-    const isFilled = Object.keys(formData).every(item => formData[item] !== "")
+    const isFilled = Object.keys(formData).every(item => formData[item])
     console.log(isFilled);
   },[formData,disableBtn])
 
