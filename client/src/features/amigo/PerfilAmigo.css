@@ -1,24 +1,35 @@
 
 
 .image-container {
-  width: 300px; /* Ancho de la imagen */
-  height: 300px; /* Altura de la imagen */
-  background-size: cover; /* Ajustar el tamaño de la imagen para cubrir completamente el contenedor */
-  background-repeat: no-repeat; /* No repetir la imagen */
-  background-position: right; /* Centrar la imagen dentro del contenedor */
+  width: 200px; /* Ancho de la imagen */
+  height: 200px; /* Altura de la imagen */
+  background-size: cover; 
+  background-repeat: no-repeat; 
+  background-position: right; 
   border-radius: 100%; 
   margin-top: 50px;
 }
 .rectangulo {
+  width: 100%;
+  height: 100px; 
+  background-color: #6c757d; 
+  margin-top: 20px; 
+  position: relative;
+ 
+}
+
+.rectangulo2 {
   width: 70%;
   height: 100px; 
   background-color: #6c757d; 
   margin-top: 20px; 
+  position: relative;
  
 }
 
 .perfil-amigo-left .stars-and-name {
-  margin-bottom: 10px; /* Puedes ajustar el valor según lo necesites */
+  margin-bottom: 10px;
+ 
 }
 
 

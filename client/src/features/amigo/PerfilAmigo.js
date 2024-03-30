@@ -28,16 +28,16 @@ const PerfilAmigo = () => {
       amigo.genero === 'F' ? "girl.png" : "otros.png"
     })`
   }} />
-  <div className='stars-and-name'>
-    <div>★★★☆☆</div>
+  <div className='stars-and-name' style={{ fontSize: '35px' }}>
+  <center><div>★★★☆☆</div></center>
     <center><h3>{amigo.nombre_completo}</h3></center>
   </div>
   <p><strong>Edad:</strong> {amigo.edad} años</p>
-  <div className='rectangulo'></div>
+  <div className='rectangulo2'></div>
 </div>
             <div className='col-md-6 col-sm-12 perfil-amigo-right'>
               <div className='p-4'>
-                <h2>Perfil de Amigo</h2>
+              <center><h2>Perfil de Amigo</h2></center>
                 <div className='rectangulo'></div>
                 <p><pre><strong>Descripción:</strong> {amigo.descripcion}</pre></p>
                 <div className='rectangulo'></div>
