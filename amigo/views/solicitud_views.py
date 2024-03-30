@@ -4,24 +4,17 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from ..models import Cliente, Amigo, solicitud_alquiler, Calificacion 
-from ..serializers.solicitud_alquiler_serializer import solicitud_alquiler, SolicitudAlquilerSerializer
-from rest_framework import viewsets
+from ..models import Cliente, Amigo, solicitud_alquiler
+from ..serializers.solicitud_alquiler_serializer import solicitud_alquiler
 from ..models.solicitud_alquilerDB import solicitud_alquiler
-from ..serializers.solicitud_alquiler_serializer import SolicitudAlquilerSerializer
-from ..serializers.login_serializer import LoginSerializer
 
 from datetime import date
-
-#class SolicitudViewSet(viewsets.ModelViewSet):    #ver si al kevin le gusta los viewsets
-#    queryset = solicitud_alquiler.objects.all()
-#    serializer_class = SolicitudAlquilerSerializer
 
 class EnviarSolicitud(APIView):
     def post(self, request, format=None):
         datos_recibidos = request.data
 
-        required_fields = ['cliente_id', 'amigo_id', 'lugar', 'descripcion', 'fecha_inicio', 'minutos', 'estado_solicitud']
+        required_fields = ['cliente_id', 'amigo_id', 'lugar', 'descripcion', 'fecha_inicio', 'hora_inicio', 'duracion']
         for field in required_fields:
             if field not in datos_recibidos:
                 return Response({"error": f"El campo {field} es requerido"}, status=status.HTTP_400_BAD_REQUEST)
@@ -45,26 +38,19 @@ class EnviarSolicitud(APIView):
                 lugar=datos_recibidos['lugar'],
                 descripcion=datos_recibidos['descripcion'],
                 fecha_inicio=datos_recibidos['fecha_inicio'],
-                minutos=datos_recibidos['minutos'],
-                estado_solicitud=datos_recibidos['estado_solicitud']
+                hora_inicio=datos_recibidos['hora_inicio'],
+                minutos=datos_recibidos['duracion'],
+                estado_solicitud='E'
             )
             nueva_solicitud.save()
         except Exception as e: 
             return Response({f'Ocurrio un error: {e}'}, status=status.HTTP_404_NOT_FOUND)
         
-
-        # Devolver una respuesta con los datos de la solicitud creada
-        return Response({"mensaje": "Solicitud de alquiler creada correctamente", "datos": {
-            "solicitud_alquiler_id": nueva_solicitud.solicitud_alquiler_id,
-            "cliente_id": nueva_solicitud.cliente_id,
-            "amigo_id": nueva_solicitud.amigo_id,
-            "lugar": nueva_solicitud.lugar,
-            "descripcion": nueva_solicitud.descripcion,
-            "fecha_inicio": nueva_solicitud.fecha_inicio,
-            "minutos": nueva_solicitud.minutos,
-            "estado_solicitud": nueva_solicitud.estado_solicitud,
-            "timestamp_registro": nueva_solicitud.timestamp_registro
-        }}, status=status.HTTP_201_CREATED)
+        # Devolver una respuesta correcta
+        return Response(
+            {"mensaje": "Solicitud de alquiler creada correctamente"}, 
+            status=status.HTTP_201_CREATED
+        )
 
 class GetSolicitudesCliente(APIView):
     def get(self, request, cliente_id):

@@ -1,14 +1,13 @@
 from django.db import models
 
 class solicitud_alquiler(models.Model):
-    
     ESTADO_SOLICITUD = (
         ('E', 'Enviado'),
         ('A', 'Aceptado'),
         ('R', 'Rechazado'),
         ('F', 'Finalizado')
     )
-  
+    
     solicitud_alquiler_id = models.BigAutoField(primary_key=True)
     cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
     amigo = models.ForeignKey('Amigo', on_delete=models.CASCADE)
