@@ -179,14 +179,6 @@ class AmigoListLimitPaginator(APIView):
 #    serializer_class = SolicitudAlquilerSerializer
 
 
-"""class LoginView(APIView):
-    def post(self, request, username, password):
-        try:
-            user = Cliente.objects.get(usuario=username)
-            
-        except Cliente.DoesNotExist:
-            return Response({"error": "No encontrado"}, status=status.HTTP_404_NOT_FOUND)"""
-        
 
 class LoginView(APIView):
     serializer_class = LoginSerializer
@@ -277,7 +269,6 @@ class EnviarSolicitud(APIView):
         datos_recibidos = request.data
 
         required_fields = ['cliente_id', 'amigo_id', 'lugar', 'descripcion', 'fecha_inicio', 'duracion']
-        
         for field in required_fields:
             if field not in datos_recibidos:
                 return Response({"error": f"El campo {field} es requerido"}, status=status.HTTP_400_BAD_REQUEST)
@@ -301,7 +292,7 @@ class EnviarSolicitud(APIView):
                 lugar=datos_recibidos['lugar'],
                 descripcion=datos_recibidos['descripcion'],
                 fecha_inicio=datos_recibidos['fecha_inicio'],
-                hora_inicio="00:00:00",
+                hora_inicio=datos_recibidos['hora_inicio'],
                 minutos=datos_recibidos['duracion'],
                 estado_solicitud='E'
             )
