@@ -279,7 +279,7 @@ class EnviarSolicitud(APIView):
         required_fields = ['cliente_id', 'amigo_id', 'lugar', 'descripcion', 'fecha_inicio', 'minutos', 'estado_solicitud']
         for field in required_fields:
             if field not in datos_recibidos:
-                return Response({"error": f"El campo {field} es requerido"}, status=status.HTTP_204_NO_CONTENT)
+                return Response({"error": f"El campo {field} es requerido"}, status=status.HTTP_200_OK)
         
         # Verificar si el cliente existe
         try:
