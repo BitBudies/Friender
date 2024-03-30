@@ -38,7 +38,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
 
   useEffect(() => {
     const isFilled = Object.keys(formData).every(item => formData[item])
-    console.log(isFilled);
+    setDisableBtn(false);
   },[formData,disableBtn])
 
   return ( 
@@ -50,7 +50,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
         <div className='form-box'>
           <div className='form-item'>
             <label className="form-label" htmlFor="fecha">Fecha</label>
-            <input  className="form-control" type="date" id="fecha" name="fecha" 
+            <input  className="form-control" type="date" id="fecha" name="fecha_inicio" 
             placeholder="dd/mm/aa" required 
             value={formData.fecha} onChange={handleChange}/>
           </div>
