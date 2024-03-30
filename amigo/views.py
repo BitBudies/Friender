@@ -178,8 +178,6 @@ class AmigoListLimitPaginator(APIView):
 #    queryset = solicitud_alquiler.objects.all()
 #    serializer_class = SolicitudAlquilerSerializer
 
-
-
 class LoginView(APIView):
     serializer_class = LoginSerializer
     def post(self, request):
@@ -274,7 +272,7 @@ class EnviarSolicitud(APIView):
     def post(self, request, format=None):
         datos_recibidos = request.data
 
-        required_fields = ['cliente_id', 'amigo_id', 'lugar', 'descripcion', 'fecha_inicio', 'duracion']
+        required_fields = ['cliente_id', 'amigo_id', 'lugar', 'descripcion', 'fecha_inicio', 'hora_inicio', 'duracion']
         for field in required_fields:
             if field not in datos_recibidos:
                 return Response({"error": f"El campo {field} es requerido"}, status=status.HTTP_200_OK)
@@ -298,7 +296,7 @@ class EnviarSolicitud(APIView):
                 lugar=datos_recibidos['lugar'],
                 descripcion=datos_recibidos['descripcion'],
                 fecha_inicio=datos_recibidos['fecha_inicio'],
-                hora_inicio="00:00:00",
+                hora_inicio=datos_recibidos['hora_inicio'],
                 minutos=datos_recibidos['duracion'],
                 estado_solicitud='E'
             )
@@ -307,14 +305,4 @@ class EnviarSolicitud(APIView):
             return Response({f'Ocurrio un error: {e}'}, status=status.HTTP_404_NOT_FOUND)
         
         # Devolver una respuesta con los datos de la solicitud creada
-        return Response({"mensaje": "Solicitud de alquiler creada correctamente", "datos": {
-            "solicitud_alquiler_id": nueva_solicitud.solicitud_alquiler_id,
-            "cliente_id": nueva_solicitud.cliente_id,
-            "amigo_id": nueva_solicitud.amigo_id,
-            "lugar": nueva_solicitud.lugar,
-            "descripcion": nueva_solicitud.descripcion,
-            "fecha_inicio": nueva_solicitud.fecha_inicio,
-            "minutos": nueva_solicitud.minutos,
-            "estado_solicitud": nueva_solicitud.estado_solicitud,
-            "timestamp_registro": nueva_solicitud.timestamp_registro
-        }}, status=status.HTTP_201_CREATED)
+        return Response({"mensaje": "Solicitud de alquiler creada correctamente"}, status=status.HTTP_201_CREATED)
