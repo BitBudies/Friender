@@ -1,25 +1,38 @@
-import React, {  useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import "./Formulario.css"
 import { RxCross2 } from "react-icons/rx";
+import { useEnviarSolicitudMutation } from './solicitudesSlice';
+import {useGlobalContext} from "../../context"
 
 
-const Formulario = ({precio,showForm,setShowForm}) => {
+const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
+
+  const {clientId : cliente_id} = useGlobalContext();
   const [formData,setFormData] = useState({
-    fecha : '',
-    direccion : '',
-    hora : '',
+    fecha_inicio : '',
+    lugar : '',
+    hora_inicio : '',
     duracion : 1,
     descripcion: '',
   });
 
 
-  const handleSubmit = () => {
-    console.log(formData);
+  const [send,{data, isLoading,isSuccess}] = useEnviarSolicitudMutation();
+
+
+
+  const handleSubmit = async() => {
+    const body = {amigo_id, cliente_id,...formData}
+    await send(body)
   }
 
   const handleChange = (e) =>{
     setFormData({...formData,[e.target.name] : e.target.value})
   }
+
+  useEffect(() => {
+    console.log(data,isLoading,isSuccess)
+  },[data, isLoading, isSuccess])
 
   return ( 
     <div className={`formulario ${!showForm && "hide"}`}>
@@ -29,14 +42,14 @@ const Formulario = ({precio,showForm,setShowForm}) => {
         <h2>Solicitud de Encuentro</h2>
         <div className='form-box'>
           <div className='form-item'>
-            <label className="form-label" for="fecha">Fecha</label>
+            <label className="form-label" htmlFor="fecha">Fecha</label>
             <input  className="form-control" type="date" id="fecha" name="fecha" 
             placeholder="dd/mm/aa" required 
             value={formData.fecha} onChange={handleChange}/>
           </div>
           <div className='form-item'>
-            <label for="hora" className='form-label'>Hora</label>
-            <input className="form-control" type="time" id="hora" name="hora" placeholder="00:00" required
+            <label htmlFor="hora" className='form-label'>Hora</label>
+            <input className="form-control" type="time" id="hora" name="hora_inicio" placeholder="00:00" required
             value={formData.hora} onChange={handleChange}/>
           </div>
         </div>
@@ -48,7 +61,7 @@ const Formulario = ({precio,showForm,setShowForm}) => {
           </div>
             <div id="direction-input" className='form-item'>
             <label for="direccion" className='form-label'>Dirección</label>
-            <input className="form-control" type="text" id="direccion" name="direccion" required
+            <input className="form-control" type="text" id="direccion" name="lugar" required
             value={formData.direccion} onChange={handleChange }/>
           </div>
         </div>
