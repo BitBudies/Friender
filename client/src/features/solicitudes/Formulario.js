@@ -25,7 +25,12 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
 
   const handleSubmit = async() => {
     const body = {amigo_id, cliente_id,...formData}
-    await send(body)
+    try {
+      await send(body)
+    } catch (error) {
+      console.log(error,data)
+    }
+    
   }
 
   const handleChange = (e) =>{
