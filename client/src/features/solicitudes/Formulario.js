@@ -36,11 +36,14 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
   useEffect(() => {
     console.log(data,isLoading)
    if(isSuccess){
-      setFormData({fecha_inicio : '',
+      setFormData(() => {
+      return {
+      fecha_inicio : '',
       lugar : '',
       hora_inicio : '',
       duracion : 1,
-      descripcion: '',})
+      descripcion: ''
+    }})
       setShowForm(false);
     }
     
@@ -64,12 +67,12 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
             <label className="form-label" htmlFor="fecha">Fecha</label>
             <input  className="form-control" type="date" id="fecha" name="fecha_inicio" 
             placeholder="dd/mm/aa" required 
-            value={formData.fecha} onChange={handleChange}/>
+            value={formData.fecha_inicio} onChange={handleChange}/>
           </div>
           <div className='form-item'>
             <label htmlFor="hora" className='form-label'>Hora</label>
             <input className="form-control" type="time" id="hora" name="hora_inicio" placeholder="00:00" required
-            value={formData.hora} onChange={handleChange}/>
+            value={formData.hora_inicio} onChange={handleChange}/>
           </div>
         </div>
         <div className='form-box'>
@@ -79,9 +82,9 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
             value={formData.duracion} onChange={handleChange }/>
           </div>
             <div id="direction-input" className='form-item'>
-            <label for="direccion" className='form-label'>Dirección</label>
+            <label htmlForor="direccion" className='form-label'>Dirección</label>
             <input className="form-control" type="text" id="direccion" name="lugar" required
-            value={formData.direccion} onChange={handleChange }/>
+            value={formData.lugar} onChange={handleChange }/>
           </div>
         </div>
         <div className='form-item w-100'>
