@@ -10,6 +10,7 @@ from rest_framework import viewsets
 from ..models.solicitud_alquilerDB import solicitud_alquiler
 from ..serializers.solicitud_alquiler_serializer import SolicitudAlquilerSerializer
 from ..serializers.login_serializer import LoginSerializer
+from .utils import calcular_edad
 
 from datetime import date
 
