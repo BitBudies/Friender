@@ -43,11 +43,11 @@ class ClienteDetailById(APIView):
 class ClienteListLimitPaginator(APIView):
     def get(self, request, page_number = 1, limite=10):
         if limite <= 0:
-            return Response({"error": "El límite debe ser mayor que 0"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "El límite debe ser mayor que 0"}, status=status.HTTP_200_OK)
         elif limite > 50:
-            return Response({"error": "El límite no puede ser mayor que 50"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "El límite no puede ser mayor que 50"}, status=status.HTTP_200_OK)
         elif page_number <= 0:
-            return Response({"error": "La pagina tiene que ser mayor a 0"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "La pagina tiene que ser mayor a 0"}, status=status.HTTP_200_OK)
 
         clientes = Cliente.objects.order_by('cliente_id') #ordenamiento temporal
         paginator = Paginator(clientes, limite)

@@ -27,4 +27,10 @@ class LoginView(APIView):
                     return Response({"id": "0"}, status=status.HTTP_404_NOT_FOUND)
             except Cliente.DoesNotExist:
                 return Response({"id": "0"}, status=status.HTTP_404_NOT_FOUND)
-        return Response({"errors":serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            if not serializer.data['usuario'] and not serializer.data['contrasena']:
+                return Response({"error":"Campo usuario y contraseña requeridos"}, status=status.HTTP_200_OK)
+            if not serializer.data['usuario']: 
+                return Response({"error":"Campo usuario requerido"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"error":"Campo contraseña requerido"}, status=status.HTTP_200_OK)   
