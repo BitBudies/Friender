@@ -8,6 +8,8 @@ from ..models import Cliente, Amigo, solicitud_alquiler
 from ..serializers.solicitud_alquiler_serializer import solicitud_alquiler
 from ..models.solicitud_alquilerDB import solicitud_alquiler
 from .utils import calcular_edad
+
+
 class EnviarSolicitud(APIView):
     def post(self, request, format=None):
         datos_recibidos = request.data
@@ -65,11 +67,11 @@ class GetSolicitudesCliente(APIView):
             "ap_materno": cliente.ap_materno.title(),
             #"ci": cliente.ci,
             #"fecha_nacimiento": cliente.fecha_nacimiento,
-            "edad": calcular_edad(cliente.fecha_nacimiento),
-            "genero": cliente.genero,
-            "direccion": cliente.direccion,
-            "descripcion": cliente.descripcion,
-            "usuario": cliente.usuario,
+            #"edad": calcular_edad(cliente.fecha_nacimiento),
+            #"genero": cliente.genero,
+            #"direccion": cliente.direccion,
+            #"descripcion": cliente.descripcion,
+            #"usuario": cliente.usuario,
             #"correo": cliente.correo,
             #"dinero": cliente.dinero,
             #"estado": cliente.estado,
@@ -87,7 +89,7 @@ class GetSolicitudesCliente(APIView):
                 "lugar": solicitud.lugar,
                 "descripcion": solicitud.descripcion,
                 "fecha_inicio": solicitud.fecha_inicio,
-                "minutos": solicitud.minutos,
+                "horas": solicitud.minutos,
                 "estado_solicitud": solicitud.estado_solicitud,
                 #"timestamp_registro": solicitud.timestamp_registro
             })
