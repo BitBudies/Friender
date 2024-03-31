@@ -9,6 +9,7 @@ const PerfilAmigo = () => {
   const { id_amigo } = useParams();
   const { data: amigo, isFetching, isSuccess } = useGetAmigoByIdQuery(id_amigo);
   const [showForm,setShowForm] = useState(false)
+  const [formStatus,setFormStatus] = useState({sent : false, message: ''})
 
   useEffect(() => {
     console.log(amigo, isFetching, isSuccess);
@@ -46,12 +47,16 @@ const PerfilAmigo = () => {
               </div>
             </div>
           </div>
-          <Formulario amigo_id = {id_amigo}
+        </div>
+        <Formulario amigo_id = {id_amigo}
                     precio={amigo.precio_amigo} 
                     showForm={showForm} 
                     setShowForm={setShowForm}  />
+        <div class={`profile-alert ${!formStatus.sent && "hide"} alert alert-success`} role="alert">
+          <strong>Success!</strong> You have successfully submitted the form
         </div>
       </div>
+      
     );
   }
 };

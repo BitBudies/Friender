@@ -46,7 +46,7 @@ const ListaAmigos = () => {
                                             </div>
                                             <div className="card-actions">
                                             <Link to={`/amigos/${amigo.amigo_id}`}className='btn btn-azul'>Ver Perfil</Link>                     
-                                                {amigo.precio_amigo}$/hr  
+                                                {amigo.precio_amigo} $/Hr  
                                             </div>
                                         </div>
                                     </div>
