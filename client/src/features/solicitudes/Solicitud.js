@@ -23,7 +23,7 @@ const Solicitud = () => {
                     <p>Bolivia - Cochabamba</p>
                 </div>
                 <div id="button-box">
-                    <button type="button">Ver Perfil</button>
+                    <button id="ver-perfil-button" type="button">Ver Perfil</button>
                 </div>
             </div>
             <p className="hora-solicitud">1h</p>
