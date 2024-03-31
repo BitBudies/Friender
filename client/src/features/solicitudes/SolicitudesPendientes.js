@@ -1,23 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Solicitud from './Solicitud';
 import "./SolicitudesPendientes.css";
 
 
 const SolicitudesPendientes = () => {
-  useEffect(() => {
-    function ocultarElemento(event) {
-        const elementoClickeado = event.target;
-        if (elementoClickeado.classList.contains("delete-icon")) {
-            elementoClickeado.closest('.solicitud-recibida-card').classList.add("no-visible");
-        }
-    }
-
-    const closeIcons = document.querySelectorAll('.delete-icon');
-    closeIcons.forEach(closeIcon => {
-        closeIcon.addEventListener('click', ocultarElemento);
-    });
-  }, []);
-  
   return (
     <div className='solicitudes-pendientes'>
       <h1 id='titulo-solicitudes'>Solicitudes Recibidas</h1>

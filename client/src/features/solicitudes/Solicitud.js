@@ -27,7 +27,6 @@ const Solicitud = ({solicitud}) => {
                 </div>
             </div>
             <p className="hora-solicitud">1h</p>
-            <img className="delete-icon" src="https://cdn-icons-png.freepik.com/512/1017/1017530.png" alt="Boton eliminar"/>
     </div>
   )
 }

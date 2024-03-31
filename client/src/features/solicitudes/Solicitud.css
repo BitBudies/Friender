@@ -64,18 +64,6 @@
     right: 15px;
 }
 
-/*Icono Eliminar*/
-.delete-icon {
-    position: absolute;
-    width: 25px;
-    bottom: 15px !important;
-    right: 15px !important;
-}
-
-.delete-icon:hover{
-    cursor: pointer;
-}
-
 /*Botón Ver perfil*/
 #ver-perfil-button {
     border: none;
