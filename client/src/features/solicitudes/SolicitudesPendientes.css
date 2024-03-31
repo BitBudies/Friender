@@ -14,7 +14,6 @@
 
 .profile-content{
     display: block !important;
-    overflow-y: auto;
 }
 
 .no-visible{
@@ -34,9 +33,4 @@
     }
 }
 
-@media screen and (max-width : 570px) {
-    .profile-section-center{
-        display: block;
-    }
-}
 
