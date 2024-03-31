@@ -46,7 +46,12 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
     }})
 
       setShowForm(false);
-      setFormStatus({sent : true, message : "Enviado exitosamente"})
+      setFormStatus({sent : true, message : data.mensaje})
+      const myTimeOut = setTimeout(() => {
+        setFormStatus({...formStatus,sent : false});
+      },[3000]);
+
+      return () => clearTimeout(myTimeOut);
     }
     
   },[data, isLoading, isSuccess, setFormStatus, setShowForm])

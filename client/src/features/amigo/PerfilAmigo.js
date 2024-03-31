@@ -55,7 +55,7 @@ const PerfilAmigo = () => {
                     formStatus={formStatus}
                     setFormStatus ={setFormStatus} />
         <div class={`profile-alert ${!formStatus.sent && "hide"} alert alert-success`} role="alert">
-          <strong>Success!</strong> You have successfully submitted the form
+          <strong>{formStatus.message}</strong> 
         </div>
       </div>
       
