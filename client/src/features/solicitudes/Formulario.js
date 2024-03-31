@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Formulario.css"
 import { RxCross2 } from "react-icons/rx";
 import { useEnviarSolicitudMutation } from './solicitudesSlice';
@@ -33,10 +33,9 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
   }
 
   useEffect(() => {
-    console.log(data,isLoading)
+    console.log(data,isLoading) 
    if(isSuccess){
-
-    if(data.mensaje){
+    if(data.mensaje && !formStatus.sent){
       setFormData(() => {
         return {
         fecha_inicio : '',
@@ -45,14 +44,9 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
         duracion : 1,
         descripcion: ''
       }})
-  
+
         setShowForm(false);
-        setFormStatus({sent : true, message : data.mensaje})
-        const myTimeOut = setTimeout(() => {
-          setFormStatus({...formStatus,sent : false});
-        },[3000]);
-  
-        return () => clearTimeout(myTimeOut);
+        setFormStatus({sent : true, message : data.mensaje,show: true})
     }else{
       setShowFeedback({status: true,message : data.error})
     }

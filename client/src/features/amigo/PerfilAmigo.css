@@ -40,10 +40,7 @@
 }
 
 .profile-alert{
-  position: fixed !important;
   max-width: var(--xs);
-  bottom: 0;
-  left: calc(100vw - var(--xs) - 1rem);
 }
 
 .profile-alert.hide{
