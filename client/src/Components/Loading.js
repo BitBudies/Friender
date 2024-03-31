@@ -3,7 +3,7 @@ import Spinner from './Spinner'
 
 const Loading = () => {
   return (
-    <div className='section'>
+    <div className='loading-section'>
       <Spinner/>
     </div>
     

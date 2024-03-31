@@ -13,7 +13,7 @@ const SolicitudesPendientes = () => {
 
 
   useEffect(() => {
-    console.log(data.solicitudes,isFetching,isSuccess);
+    console.log(data,isFetching,isSuccess);
   },[data,isFetching,isSuccess])
 
   useEffect(() => {
@@ -31,8 +31,8 @@ const SolicitudesPendientes = () => {
   }, []);
   
   if(isFetching){
-    <Loading/>
-  }else{
+    return <Loading/>
+  }else if(isSuccess){
     return (
       <div className='solicitudes-pendientes'>
         <h1 id='titulo-solicitudes'>Solicitudes pendientes</h1>
