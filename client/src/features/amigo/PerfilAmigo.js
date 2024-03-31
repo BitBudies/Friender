@@ -9,6 +9,7 @@ const PerfilAmigo = () => {
   const { id_amigo } = useParams();
   const { data: amigo, isFetching, isSuccess } = useGetAmigoByIdQuery(id_amigo);
   const [showForm,setShowForm] = useState(false)
+  const [formStatus,setFormStatus] = useState({sent : false, message: '',show: false})
 
   useEffect(() => {
     console.log(amigo, isFetching, isSuccess);
@@ -42,16 +43,25 @@ const PerfilAmigo = () => {
                 <p><pre><strong>Descripción:</strong> {amigo.descripcion}</pre></p>
                 <div className='rectangulo'></div>
                 <p><h2><strong>Precio:</strong> {amigo.precio_amigo}$/hr</h2></p>
-                <button className='btn btn-azul mt-3' onClick={() => setShowForm(true)}>Solicitar Contacto</button>
+                {formStatus.sent ? 
+                <div class={`profile-alert ${!formStatus.show && "hide"} alert alert-success`} role="alert">
+                <strong>{formStatus.message}</strong> 
+              </div> 
+              :
+              <button className='btn btn-azul mt-3' onClick={() => setShowForm(true)}>Solicitar Contacto</button>
+              }
               </div>
             </div>
           </div>
-          <Formulario amigo_id = {id_amigo}
+        </div>
+        <Formulario amigo_id = {id_amigo}
                     precio={amigo.precio_amigo} 
                     showForm={showForm} 
-                    setShowForm={setShowForm}  />
-        </div>
+                    setShowForm={setShowForm} 
+                    formStatus={formStatus}
+                    setFormStatus ={setFormStatus} />
       </div>
+      
     );
   }
 };

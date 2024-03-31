@@ -49,7 +49,7 @@ urlpatterns = [
     # probando postsssss
     path('api/solicitud', EnviarSolicitud.as_view()),
     
-    # Amiwo
+    # Amigo
     path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view()),
     path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator.as_view()),
 
