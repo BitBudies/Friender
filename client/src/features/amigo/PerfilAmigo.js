@@ -51,7 +51,9 @@ const PerfilAmigo = () => {
         <Formulario amigo_id = {id_amigo}
                     precio={amigo.precio_amigo} 
                     showForm={showForm} 
-                    setShowForm={setShowForm}  />
+                    setShowForm={setShowForm} 
+                    formStatus={formStatus}
+                    setFormStatus ={setFormStatus} />
         <div class={`profile-alert ${!formStatus.sent && "hide"} alert alert-success`} role="alert">
           <strong>Success!</strong> You have successfully submitted the form
         </div>
