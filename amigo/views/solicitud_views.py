@@ -6,6 +6,7 @@ from rest_framework import status
 from ..models import Cliente, Amigo, solicitud_alquiler
 from ..serializers.solicitud_alquiler_serializer import solicitud_alquiler
 from ..models.solicitud_alquilerDB import solicitud_alquiler
+from ..models.calificacionDB import Calificacion
 from .utils import calcular_edad
 from datetime import date
 
@@ -100,6 +101,39 @@ class GetSolicitudesCliente(APIView):
                 "estado_solicitud": solicitud.estado_solicitud,
                 #"timestamp_registro": solicitud.timestamp_registro
             })
+        return Response(data)
+
+class GetSolicitudesRecibidas(APIView):
+    def get(self, request, cliente_id):
+        try:
+            cliente = Cliente.objects.get(cliente_id=cliente_id)
+            solicitudes = solicitud_alquiler.objects.filter(amigo__cliente=cliente)
+        except Cliente.DoesNotExist:
+            return Response({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+        data = {
+            "solicitudes_recibidas": []
+        }
+
+        for solicitud in solicitudes:
+            nombre_cliente = f"{solicitud.cliente.nombre} {solicitud.cliente.ap_paterno} {solicitud.cliente.ap_materno}".title()
+            calificacion_cliente = Calificacion.objects.filter(amigo=solicitud.amigo, emisor="cliente").aggregate(Avg('puntuacion'))['puntuacion__avg']
+
+
+            lugar_solicitud = solicitud.lugar
+            fecha_solicitud = solicitud.fecha_inicio
+            duracion_solicitud = solicitud.minutos
+            solicitud_data = {
+                "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
+                "nombre_cliente": nombre_cliente,
+                "calificacion_cliente": calificacion_cliente,
+                "lugar": lugar_solicitud,
+                "fecha_inicio": solicitud.fecha_inicio,
+                "duracion_minutos": solicitud.minutos
+            }
+
+            data["solicitudes_recibidas"].append(solicitud_data)
+
         return Response(data)
 
 class AcceptSolicitud(APIView):
