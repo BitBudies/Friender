@@ -17,8 +17,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
   });
 
   const [disableBtn,setDisableBtn] = useState(true);
-  
-
+  const [showFeedback,setShowFeedback] = useState({status : false, message : ""})
   const [send,{data, isLoading,isSuccess}] = useEnviarSolicitudMutation();
 
 
@@ -26,7 +25,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
   const handleSubmit = async() => {
     setDisableBtn(true);
     const body = {amigo_id, cliente_id,...formData}
-      await send(body)
+    await send(body)
   }
 
   const handleChange = (e) =>{
@@ -36,28 +35,40 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
   useEffect(() => {
     console.log(data,isLoading)
    if(isSuccess){
+
+    if(data.mensaje){
       setFormData(() => {
-      return {
-      fecha_inicio : '',
-      lugar : '',
-      hora_inicio : '',
-      duracion : 1,
-      descripcion: ''
-    }})
-
-      setShowForm(false);
-      setFormStatus({sent : true, message : data.mensaje})
-      const myTimeOut = setTimeout(() => {
-        setFormStatus({...formStatus,sent : false});
-      },[3000]);
-
-      return () => clearTimeout(myTimeOut);
+        return {
+        fecha_inicio : '',
+        lugar : '',
+        hora_inicio : '',
+        duracion : 1,
+        descripcion: ''
+      }})
+  
+        setShowForm(false);
+        setFormStatus({sent : true, message : data.mensaje})
+        const myTimeOut = setTimeout(() => {
+          setFormStatus({...formStatus,sent : false});
+        },[3000]);
+  
+        return () => clearTimeout(myTimeOut);
+    }else{
+      setShowFeedback({status: true,message : data.error})
+    }
     }
     
-  },[data, isLoading, isSuccess, setFormStatus, setShowForm])
+  },[data, formStatus, isLoading, isSuccess, setFormStatus, setShowForm])
 
   useEffect(() => {
-    const isFilled = Object.keys(formData).every(item => formData[item])
+    const isFilled = Object.keys(formData).every(item =>{
+      if(item === "descripcion"){
+        if(formData[item].length < 30){
+          return false
+        }
+      }
+      return formData[item]
+    } )
     if(isFilled){
       setDisableBtn(false);
     }
@@ -72,7 +83,9 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
         <div className='form-box'>
           <div className='form-item'>
             <label className="form-label" htmlFor="fecha">Fecha</label>
-            <input  className="form-control" type="date" id="fecha" name="fecha_inicio" 
+            <input  className="form-control" 
+            type="date" data-date= "" data-date-format="DD MM YYYY"
+            id="fecha" name="fecha_inicio" 
             placeholder="dd/mm/aa" required 
             value={formData.fecha_inicio} onChange={handleChange}/>
           </div>
@@ -97,8 +110,10 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
         <div className='form-item w-100'>
           <label for="descripcion" className='form-label'>Descripción</label>
           <textarea className="form-control" id="descripcion" name="descripcion" rows="5" cols="50" required
-          value={formData.descripcion} onChange={handleChange }></textarea>
+          value={formData.descripcion} onChange={handleChange } maxLength={500}></textarea>
         </div> 
+        {showFeedback.status && <p className='text-danger'>{showFeedback.message}</p>}
+        
         <div className='form-bottom'>
           <p id="texto-precio" >Total: {precio * formData.duracion} $us</p>
           <button className={`btn btn-azul ${disableBtn && "disabled"}`} 
