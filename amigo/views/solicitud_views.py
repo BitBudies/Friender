@@ -8,6 +8,8 @@ from ..models import Cliente, Amigo, solicitud_alquiler
 from ..serializers.solicitud_alquiler_serializer import solicitud_alquiler
 from ..models.solicitud_alquilerDB import solicitud_alquiler
 from .utils import calcular_edad
+from datetime import date
+
 class EnviarSolicitud(APIView):
     def post(self, request, format=None):
         datos_recibidos = request.data
@@ -29,6 +31,14 @@ class EnviarSolicitud(APIView):
         except Amigo.DoesNotExist:
             return Response({"error": "El amigo no existe"}, status=status.HTTP_404_NOT_FOUND)
 
+        # Verificar que sea fecha valida
+        anio = int(datos_recibidos['fecha_inicio'][:4])
+        mes = int(datos_recibidos['fecha_inicio'][5:7])
+        dia = int(datos_recibidos['fecha_inicio'][8:])
+        today = date.today()
+        if anio < today.year or mes < today.month or dia < today.day:
+            return Response({"error": f"La fecha {datos_recibidos['fecha_inicio']} no es valida"}, status=status.HTTP_404_NOT_FOUND)
+        
         try:
             nueva_solicitud = solicitud_alquiler(
                 cliente_id=cliente.cliente_id,
@@ -40,7 +50,7 @@ class EnviarSolicitud(APIView):
                 minutos=datos_recibidos['duracion'],
                 estado_solicitud='E'
             )
-            nueva_solicitud.save()
+            nueva_solicitud.save() 
         except Exception as e: 
             return Response({f'Ocurrio un error: {e}'}, status=status.HTTP_404_NOT_FOUND)
         
