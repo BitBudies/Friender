@@ -8,7 +8,7 @@ const SolicitudesPendientes = () => {
     function ocultarElemento(event) {
         const elementoClickeado = event.target;
         if (elementoClickeado.classList.contains("delete-icon")) {
-            elementoClickeado.closest('.card').classList.add("no-visible");
+            elementoClickeado.closest('.solicitud-recibida-card').classList.add("no-visible");
         }
     }
 
@@ -20,7 +20,7 @@ const SolicitudesPendientes = () => {
   
   return (
     <div className='solicitudes-pendientes'>
-      <h1>Solicitudes Recibidas</h1>
+      <h1 id='titulo-solicitudes'>Solicitudes Recibidas</h1>
       <div className='solicitudes-pendientes-center' id="solicitudes-box">
         {Array.from({length : 8},(_,index) => <Solicitud/>)}
       </div>
