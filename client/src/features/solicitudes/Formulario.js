@@ -5,7 +5,7 @@ import { useEnviarSolicitudMutation } from './solicitudesSlice';
 import {useGlobalContext} from "../../context"
 
 
-const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
+const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStatus}) => {
 
   const {clientId : cliente_id} = useGlobalContext();
   const [formData,setFormData] = useState({
@@ -44,10 +44,12 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm}) => {
       duracion : 1,
       descripcion: ''
     }})
+
       setShowForm(false);
+      setFormStatus({sent : true, message : "Enviado exitosamente"})
     }
     
-  },[data, isLoading, isSuccess, setShowForm])
+  },[data, isLoading, isSuccess, setFormStatus, setShowForm])
 
   useEffect(() => {
     const isFilled = Object.keys(formData).every(item => formData[item])

@@ -46,5 +46,9 @@
   left: calc(100vw - var(--xs) - 1rem);
 }
 
+.profile-alert.hide{
+  display: none;
+}
+
 
 
