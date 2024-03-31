@@ -1,12 +1,14 @@
 import React from 'react'
 import "./Solicitud.css"
 
-const Solicitud = () => {
+const Solicitud = ({solicitud}) => {
+
+
     return (
     <div className="card" >
             <div id="datos-perfil">
                 <img id="foto-perfil" src="https://lapi.com.mx/web/image/product.template/5138/image_1024?unique=f67111b" alt="foto-perfil"/>
-                <p>Nombre de Usuario</p>
+                <p>{solicitud.nombre_amigo}</p>
             </div>
             <div id="datos-solicitud">
                 <p className="estrellas">★★★★☆</p>
@@ -20,7 +22,7 @@ const Solicitud = () => {
                 </div>
                 <div>
                     <img className="icono" src="https://w7.pngwing.com/pngs/912/661/png-transparent-computer-icons-location-location-icon-map-location-icon-miscellaneous-desktop-wallpaper-map-thumbnail.png" alt="icono ubicacion"/>
-                    <p>Bolivia - Cochabamba</p>
+                    <p>{solicitud.lugar}</p>
                 </div>
                 <div id="button-box">
                     <button id="ver-perfil-button" type="button">Ver Perfil</button>

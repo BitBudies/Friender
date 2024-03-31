@@ -8,9 +8,12 @@ const solicitudApi = apiSlice.injectEndpoints({
           method : "POST",
           body: data,
         })
-      })
+      }),
+    getSolicitudes : builder.query({
+      query : (id_cliente) => `/cliente/solicitudes/${id_cliente}` 
+    })
   }),
 });
 
-export const { useEnviarSolicitudMutation} =
+export const { useEnviarSolicitudMutation, useGetSolicitudesQuery} =
   solicitudApi;
