@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import "./Solicitud.css"
 
 const Solicitud = () => {
     return (
-    <div className="card">
+    <div className="card" >
             <div id="datos-perfil">
                 <img id="foto-perfil" src="https://lapi.com.mx/web/image/product.template/5138/image_1024?unique=f67111b" alt="foto-perfil"/>
                 <p>Nombre de Usuario</p>
