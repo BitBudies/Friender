@@ -1,17 +1,11 @@
-from django.db.models import Avg
-from django.core.paginator import Paginator
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from ..models import Cliente, Amigo, solicitud_alquiler, Calificacion 
-from ..serializers.solicitud_alquiler_serializer import solicitud_alquiler, SolicitudAlquilerSerializer
-from rest_framework import viewsets
-from ..models.solicitud_alquilerDB import solicitud_alquiler
-from ..serializers.solicitud_alquiler_serializer import SolicitudAlquilerSerializer
+from ..models import Cliente
 from ..serializers.login_serializer import LoginSerializer
 
-from datetime import date
+
 
 class LoginView(APIView):
     serializer_class = LoginSerializer
@@ -33,4 +27,4 @@ class LoginView(APIView):
             if not serializer.data['usuario']: 
                 return Response({"error":"Campo usuario requerido"}, status=status.HTTP_200_OK)
             else:
-                return Response({"error":"Campo contraseña requerido"}, status=status.HTTP_200_OK)   
+                return Response({"error":"Campo contraseña requerido"}, status=status.HTTP_200_OK)

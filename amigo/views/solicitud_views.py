@@ -1,5 +1,4 @@
-from django.db.models import Avg
-from django.core.paginator import Paginator
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -7,8 +6,9 @@ from rest_framework import status
 from ..models import Cliente, Amigo, solicitud_alquiler
 from ..serializers.solicitud_alquiler_serializer import solicitud_alquiler
 from ..models.solicitud_alquilerDB import solicitud_alquiler
+from ..models.calificacionDB import Calificacion
 from .utils import calcular_edad
-
+from datetime import date
 
 class EnviarSolicitud(APIView):
     def post(self, request, format=None):
@@ -31,6 +31,14 @@ class EnviarSolicitud(APIView):
         except Amigo.DoesNotExist:
             return Response({"error": "El amigo no existe"}, status=status.HTTP_404_NOT_FOUND)
 
+        # Verificar que sea fecha valida
+        anio = int(datos_recibidos['fecha_inicio'][:4])
+        mes = int(datos_recibidos['fecha_inicio'][5:7])
+        dia = int(datos_recibidos['fecha_inicio'][8:])
+        today = date.today()
+        if anio < today.year or mes < today.month or dia < today.day:
+            return Response({"error": f"La fecha {datos_recibidos['fecha_inicio']} no es valida"}, status=status.HTTP_404_NOT_FOUND)
+        
         try:
             nueva_solicitud = solicitud_alquiler(
                 cliente_id=cliente.cliente_id,
@@ -42,7 +50,7 @@ class EnviarSolicitud(APIView):
                 minutos=datos_recibidos['duracion'],
                 estado_solicitud='E'
             )
-            nueva_solicitud.save()
+            nueva_solicitud.save() 
         except Exception as e: 
             return Response({f'Ocurrio un error: {e}'}, status=status.HTTP_404_NOT_FOUND)
         
@@ -93,6 +101,39 @@ class GetSolicitudesCliente(APIView):
                 "estado_solicitud": solicitud.estado_solicitud,
                 #"timestamp_registro": solicitud.timestamp_registro
             })
+        return Response(data)
+
+class GetSolicitudesRecibidas(APIView):
+    def get(self, request, cliente_id):
+        try:
+            cliente = Cliente.objects.get(cliente_id=cliente_id)
+            solicitudes = solicitud_alquiler.objects.filter(amigo__cliente=cliente)
+        except Cliente.DoesNotExist:
+            return Response({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+        data = {
+            "solicitudes_recibidas": []
+        }
+
+        for solicitud in solicitudes:
+            nombre_cliente = f"{solicitud.cliente.nombre} {solicitud.cliente.ap_paterno} {solicitud.cliente.ap_materno}".title()
+            calificacion_cliente = Calificacion.objects.filter(amigo=solicitud.amigo, emisor="cliente").aggregate(Avg('puntuacion'))['puntuacion__avg']
+
+
+            lugar_solicitud = solicitud.lugar
+            fecha_solicitud = solicitud.fecha_inicio
+            duracion_solicitud = solicitud.minutos
+            solicitud_data = {
+                "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
+                "nombre_cliente": nombre_cliente,
+                "calificacion_cliente": calificacion_cliente,
+                "lugar": lugar_solicitud,
+                "fecha_inicio": solicitud.fecha_inicio,
+                "duracion_minutos": solicitud.minutos
+            }
+
+            data["solicitudes_recibidas"].append(solicitud_data)
+
         return Response(data)
 
 class AcceptSolicitud(APIView):
