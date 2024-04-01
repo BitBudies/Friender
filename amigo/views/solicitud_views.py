@@ -178,3 +178,21 @@ class SolicitudAlquilerDetailAPIView(APIView):
             'timestamp_registro': solicitud.timestamp_registro.strftime('%Y-%m-%d %H:%M:%S'),
         }
         return Response(data)
+    
+
+    #dar cliente y amigo , si existen solicitudes enviadas devuelve true sino false
+class VerificarSolicitudes(APIView):
+    def get(self, request, cliente_idR, amigo_idR):
+        try:
+            cliente = Cliente.objects.get(cliente_id=cliente_idR)
+            amigo = Amigo.objects.get(amigo_id=amigo_idR)
+            solicitudes = solicitud_alquiler.objects.filter(cliente=cliente, amigo=amigo, estado_solicitud='E')
+        except Cliente.DoesNotExist:
+                return Response({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        except Amigo.DoesNotExist:
+                return Response({"error": "Amigo no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        if solicitudes:
+            return Response({"TieneSolicitudes": True})
+        else:
+            return Response({"TieneSolicitudes": False})
+        
