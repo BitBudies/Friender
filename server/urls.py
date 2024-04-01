@@ -22,7 +22,7 @@ from drf_yasg import openapi
 from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
 from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator
 from amigo.views.login_views import LoginView
-from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, GetSolicitudesRecibidas
+from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, GetSolicitudesRecibidas, SolicitudAlquilerDetailAPIView
 
 #router = routers.DefaultRouter()
 #router.register(r'solicitud', SolicitudViewSet)
@@ -56,6 +56,8 @@ urlpatterns = [
     # Solicitud
     path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud.as_view()),
     path('api/solicitud/rechazar/<int:solicitud_alquiler_id>', RechazarSolicitud.as_view()),
+    path('api/solicitud/informacion/<int:solicitud_alquiler_id>', SolicitudAlquilerDetailAPIView.as_view()),
+    
 
     # Credenciales
     path('api/login/', LoginView.as_view(), name = 'login'),

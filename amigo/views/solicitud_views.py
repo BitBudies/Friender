@@ -1,4 +1,5 @@
 
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -160,3 +161,20 @@ class RechazarSolicitud(APIView):
         solicitud.estado_solicitud = 'R'
         solicitud.save()
         return Response({"mensaje": "Solicitud rechazada correctamente"})
+    
+class SolicitudAlquilerDetailAPIView(APIView):
+    def get(self, request, solicitud_alquiler_id):
+        solicitud = get_object_or_404(solicitud_alquiler, pk=solicitud_alquiler_id)
+        data = {
+            'solicitud_alquiler_id': solicitud.solicitud_alquiler_id,
+            'cliente': solicitud.cliente.cliente_id,  # Cambia esto si deseas el nombre del cliente
+            'amigo': solicitud.amigo.amigo_id,      # Cambia esto si deseas el nombre del amigo
+            'lugar': solicitud.lugar,
+            'descripcion': solicitud.descripcion,
+            'fecha_inicio': solicitud.fecha_inicio,
+            'hora_inicio': solicitud.hora_inicio.strftime('%H:%M:%S'),
+            'minutos': solicitud.minutos,
+            'estado_solicitud': solicitud.get_estado_solicitud_display(),
+            'timestamp_registro': solicitud.timestamp_registro.strftime('%Y-%m-%d %H:%M:%S'),
+        }
+        return Response(data)
