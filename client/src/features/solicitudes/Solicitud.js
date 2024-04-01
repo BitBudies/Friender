@@ -8,7 +8,7 @@ import { FaCalendarAlt,FaMapMarkerAlt } from "react-icons/fa";
 const Solicitud = ({solicitud}) => {
     console.log(solicitud)
     return (
-    <div className='col col-xl-4 col-lg-6 col-md-12 '>
+    <div className='col-container '>
         <div className="solicitud-recibida-card " >
                 <div id="datos-perfil">
                     <div className='card-image mb-2' style={{backgroundImage: "url(/images/user.jpeg)"}}>

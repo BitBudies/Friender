@@ -1,6 +1,13 @@
+.col-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    
+}
 .solicitud-recibida-card {
     position: relative;
-    width: 90%;
+    width: 17rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,13 +36,6 @@
     
 }
 
-/* #button-box{
-    width: 100%;
-    text-align: center;
-    display: block !important;
-    margin-top: 10px;
-    background-color: red;
-} */
 
 /*Datos Solicitud*/
 #datos-solicitud{
@@ -77,28 +77,21 @@
     align-items: center;
 }
 
-/*Botón Ver perfil*/
-/* #ver-perfil-button {
-    border: none;
-    text-align: center;
-    text-decoration: none;
-    transition-duration: 0.4s;
+/* @media screen and (max-width: 993px) {
+    .solicitud-recibida-card{
+        width: 60%
+    }
 }
 
-#ver-perfil-button:hover{
-    cursor: pointer;
-    background-color: var(--azul-primario);
-    color: white;
-    border-radius: 10px;
-} */
 
-/* @media screen and (max-width : 350px) {
-    .estrellas{
-        font-size: 1.5rem !important;
-        margin: 0 !important;
+@media screen and (max-width: 745px) {
+    .solicitud-recibida-card{
+        width: 80%;
     }
+}
 
-    .icono-solicitudes-recibidas{
-        width: 15px;
+@media screen and (max-width: 630px) {
+    .solicitud-recibida-card{
+        width: 100%;
     }
 } */
