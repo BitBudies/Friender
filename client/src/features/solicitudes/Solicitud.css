@@ -1,13 +1,16 @@
-/* .card {
+.solicitud-recibida-card {
+    display: flex !important;
+    flex-direction: column;
     padding: 15px;
     border-radius: 15px;
+    border-color: black;
+    --bs-card-border-width: var(--bs-border-width) !important;
+    --bs-card-border-color: var(--bs-border-color-translucent) !important;
+    border: var(--bs-card-border-width) solid var(--bs-card-border-color);
     position: relative;
     padding-bottom: 32px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 0px;
     place-items: center;
-} */
+}
 
 /*Datos de Perfil*/
 #foto-perfil{
@@ -50,7 +53,7 @@
     margin: 0 !important;
 }
 
-.icono{
+.icono-solicitudes-recibidas{
     width: 20px;
 }
 
@@ -59,18 +62,6 @@
     position: absolute;
     top: 15px;
     right: 15px;
-}
-
-/*Icono Eliminar*/
-.delete-icon {
-    position: absolute;
-    width: 25px;
-    bottom: 15px !important;
-    right: 15px !important;
-}
-
-.delete-icon:hover{
-    cursor: pointer;
 }
 
 /*Botón Ver perfil*/
@@ -89,4 +80,15 @@
     background-color: var(--azul-primario);
     color: white;
     border-radius: 10px;
+}
+
+@media screen and (max-width : 350px) {
+    .estrellas{
+        font-size: 1.5rem !important;
+        margin: 0 !important;
+    }
+
+    .icono-solicitudes-recibidas{
+        width: 15px;
+    }
 }
