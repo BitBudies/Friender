@@ -31,7 +31,7 @@ class EnviarSolicitud(APIView):
             amigo = Amigo.objects.get(pk=datos_recibidos['amigo_id'])
         except Amigo.DoesNotExist:
             print("El amigo no exsite")
-            return Response({"error": "El amigo no existe"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "El amigo no existe"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Verificar que sea fecha valida
         anio = int(datos_recibidos['fecha_inicio'][:4])

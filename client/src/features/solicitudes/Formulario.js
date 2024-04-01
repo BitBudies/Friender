@@ -18,7 +18,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
 
   const [disableBtn,setDisableBtn] = useState(true);
   const [showFeedback,setShowFeedback] = useState({status : false, message : ""})
-  const [send,{data, isLoading,isSuccess}] = useEnviarSolicitudMutation();
+  const [send,{data, isLoading,isSuccess,isError,error}] = useEnviarSolicitudMutation();
 
 
 
@@ -34,6 +34,11 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
 
   useEffect(() => {
     console.log(data,isLoading) 
+    if(isError){
+      setShowFeedback({status: true, message : error.data.error})
+      setDisableBtn(false);
+      return console.log(error)
+    }
    if(isSuccess){
     if(data.mensaje && !formStatus.sent){
       setFormData(() => {
@@ -52,7 +57,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
     }
     }
     
-  },[data, formStatus, isLoading, isSuccess, setFormStatus, setShowForm])
+  },[data, formStatus, isError, isLoading, isSuccess, setFormStatus, setShowForm,error])
 
   useEffect(() => {
     const isFilled = Object.keys(formData).every(item =>{
