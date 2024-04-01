@@ -29,5 +29,5 @@ class Cliente(models.Model):
     timestamp_registro = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"{self.nombre} {self.ap_paterno} {self.ap_materno}"
+        return f"{self.cliente_id} {self.nombre} {self.ap_paterno} {self.ap_materno}"
     
