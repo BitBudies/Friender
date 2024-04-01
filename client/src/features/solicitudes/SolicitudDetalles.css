@@ -1,5 +1,5 @@
 #solicitud_detalles{
-    padding: 2rem 5rem;
+    padding: 2rem 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,8 +8,10 @@
 .solicitud-detalles-center{
     position: relative;
     display: flex;
-    height: 100%;
+    height: fit-content;
     align-items: center;
+    height: 100%;
+    padding: 0 5rem;
     gap: 7rem;
 }
 
@@ -50,4 +52,19 @@
 .btns{
     display: flex;
     gap: 2rem;
+}
+
+@media  screen and (max-width : 763px) {
+    .solicitud-detalles-center{
+        flex-direction: column;
+        gap: 3rem;        
+    }
+
+    .solicitud-details{
+        text-align: center;
+        align-items: center;
+    }
+    .btns{
+        margin-bottom: 2rem;
+    }
 }
