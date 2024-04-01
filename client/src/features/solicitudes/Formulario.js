@@ -109,7 +109,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
         <div className='form-item w-100'>
           <label for="descripcion" className='form-label'>Descripción</label>
           <textarea className="form-control" id="descripcion" name="descripcion" rows="5" cols="50" required
-          value={formData.descripcion} onChange={handleChange } maxLength={500}></textarea>
+          value={formData.descripcion} onChange={handleChange } maxLength={100}></textarea>
         </div> 
         {showFeedback.status && <p className='text-danger'>{showFeedback.message}</p>}
         
