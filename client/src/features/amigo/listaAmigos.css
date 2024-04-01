@@ -1,6 +1,6 @@
 
 
-.card {
+.card-list {
     position: relative;
     width: 100%; /* Ancho máximo del 100% */
     max-width: 300px; /* Anchura máxima */

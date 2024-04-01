@@ -1,27 +1,37 @@
 .solicitud-recibida-card {
-    display: flex !important;
+    position: relative;
+    width: 100%;
+    display: flex;
     flex-direction: column;
-    padding: 15px;
+    align-items: center;
     border-radius: 15px;
     border-color: black;
-    --bs-card-border-width: var(--bs-border-width) !important;
-    --bs-card-border-color: var(--bs-border-color-translucent) !important;
+    --bs-card-border-width: var(--bs-border-width);
+    --bs-card-border-color: var(--bs-border-color-translucent) ;
     border: var(--bs-card-border-width) solid var(--bs-card-border-color);
-    position: relative;
-    padding-bottom: 32px;
-    place-items: center;
+    padding: 2rem;
 }
 
 /*Datos de Perfil*/
-#foto-perfil{
+/* #foto-perfil{
     width: 160px;
     margin: 16px;
     margin-bottom: 5px;
     border-radius: 100%;
+} */
+
+.card-image{
+    width: 100%;
+    height: 13rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 15px;
 }
 
 #datos-perfil{
-    text-align: center;
+    position: relative;
+    width: 100%;
 }
 
 #datos-perfil p{
@@ -30,17 +40,23 @@
     padding: 0;
 }
 
-#button-box{
+/* #button-box{
+    width: 100%;
     text-align: center;
     display: block !important;
     margin-top: 10px;
-}
+    background-color: red;
+} */
 
 /*Datos Solicitud*/
-#datos-solicitud div{
+#datos-solicitud{
+    position: relative;
+    width: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    
 }
+
 
 #datos-solicitud p{
     display: inline-block;
@@ -65,13 +81,10 @@
 }
 
 /*Botón Ver perfil*/
-#ver-perfil-button {
+/* #ver-perfil-button {
     border: none;
-    width: 80%;
-    padding: 16px 32px;
     text-align: center;
     text-decoration: none;
-    border-radius: 10px !important;
     transition-duration: 0.4s;
 }
 
@@ -80,9 +93,9 @@
     background-color: var(--azul-primario);
     color: white;
     border-radius: 10px;
-}
+} */
 
-@media screen and (max-width : 350px) {
+/* @media screen and (max-width : 350px) {
     .estrellas{
         font-size: 1.5rem !important;
         margin: 0 !important;
@@ -91,4 +104,4 @@
     .icono-solicitudes-recibidas{
         width: 15px;
     }
-}
+} */
