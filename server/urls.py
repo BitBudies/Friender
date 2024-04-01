@@ -46,6 +46,7 @@ urlpatterns = [
     path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view()),
     path('api/cliente/solicitudes/<int:cliente_id>/', GetSolicitudesCliente.as_view()),
     path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view()),
+    path('api/cliente/solicitudes/recibidas/<int:cliente_id>/', GetSolicitudesRecibidas.as_view()),
     # probando postsssss
     path('api/solicitud', EnviarSolicitud.as_view()),
     
@@ -57,9 +58,7 @@ urlpatterns = [
     path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud.as_view()),
     path('api/solicitud/rechazar/<int:solicitud_alquiler_id>', RechazarSolicitud.as_view()),
     path('api/solicitud/informacion/<int:solicitud_alquiler_id>', SolicitudAlquilerDetailAPIView.as_view()),
-    path('api/cliente/solicitudes/recibidas/<int:cliente_id>/', GetSolicitudesRecibidas.as_view()),
-
-
+    
     path('api/solicitud/verificar/<int:cliente_idR>/<int:amigo_idR>/', VerificarSolicitudes.as_view()),
 
     # Credenciales
