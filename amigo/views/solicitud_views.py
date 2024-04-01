@@ -168,6 +168,8 @@ class SolicitudAlquilerDetailAPIView(APIView):
         data = {
             'solicitud_alquiler_id': solicitud.solicitud_alquiler_id,
             'cliente': solicitud.cliente.cliente_id,  # Cambia esto si deseas el nombre del cliente
+            'nombre_cliente': f"{solicitud.cliente.nombre} {solicitud.cliente.ap_paterno} {solicitud.cliente.ap_materno}".title(),
+            'edad_cliente': calcular_edad(solicitud.cliente.fecha_nacimiento),
             'amigo': solicitud.amigo.amigo_id,      # Cambia esto si deseas el nombre del amigo
             'lugar': solicitud.lugar,
             'descripcion': solicitud.descripcion,
