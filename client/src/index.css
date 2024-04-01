@@ -80,6 +80,7 @@ p,span,label{
   height: calc(100vh - var(--navbar-height));
   width: 100vw;
   margin-top: var(--navbar-height);
+  background-color: var(--white);
   
   /* padding-top: var(--navbar-height); */
 }

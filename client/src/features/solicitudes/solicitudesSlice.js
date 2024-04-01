@@ -11,9 +11,12 @@ const solicitudApi = apiSlice.injectEndpoints({
       }),
     getSolicitudes : builder.query({
       query : (id_cliente) => `/cliente/solicitudes/recibidas/${id_cliente}`
+    }),
+    getSolicitudPendienteById : builder.query({
+      query : (id_solicitud) => `/solicitud/informacion/${id_solicitud}` 
     })
   }),
 });
 
-export const { useEnviarSolicitudMutation, useGetSolicitudesQuery} =
+export const { useEnviarSolicitudMutation, useGetSolicitudesQuery,useGetSolicitudPendienteByIdQuery} =
   solicitudApi;
