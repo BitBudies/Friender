@@ -3,25 +3,32 @@ import Solicitud from './Solicitud';
 import "./SolicitudesPendientes.css";
 import { useGetSolicitudesQuery } from './solicitudesSlice';
 import { useGlobalContext } from '../../context';
+import Loading from '../../Components/Loading';
 
 
 const SolicitudesPendientes = () => {
 
   const {clientId} = useGlobalContext();
-  const {data,isFetching,isSuccess} = useGetSolicitudesQuery(clientId)
+  const {data,isFetching,isSuccess} = useGetSolicitudesQuery(clientId);
 
   useEffect(() => {
     console.log(data,isFetching,isSuccess);
   },[data,isFetching,isSuccess])
 
-  return (
-    <div className='solicitudes-pendientes'>
-      <h1 id='titulo-solicitudes'>Solicitudes Recibidas</h1>
-      <div className='solicitudes-pendientes-center' id="solicitudes-box">
-        {Array.from({length : 8},(_,index) => <Solicitud/>)}
+
+  if(isFetching){
+    return <Loading/>
+  }else if(isSuccess){
+    return (
+      <div className='solicitudes-pendientes'>
+        <h1 id='titulo-solicitudes'>Solicitudes Recibidas</h1>
+        <div className='solicitudes-pendientes-center' id="solicitudes-box">
+          {data.solicitudes_recibidas.map((item,index) => <Solicitud key={index} solicitud={item}/>)}
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
+  
 }
 
 export default SolicitudesPendientes
