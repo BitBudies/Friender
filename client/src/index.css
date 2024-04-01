@@ -46,6 +46,7 @@ h1,h2,h3,h4,h5,h6{
   font-family: var(--serif);
   font-weight: bold;
   font-style: normal;
+  margin: 0 !important;
 }
 
 p,span,label{
@@ -154,8 +155,4 @@ p,span,label{
     width: 100vw;
     height: 50%;
   }
-}
-
-@media screen and (max-width : 359px) {
-  
 }

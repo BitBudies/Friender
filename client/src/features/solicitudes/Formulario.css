@@ -102,8 +102,3 @@ label::after {
     }
 }
 
-@media screen and (max-width : 350px) {
-    input, label,button,p{
-        font-size: 0.8rem !important;
-    }
-}

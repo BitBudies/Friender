@@ -22,7 +22,7 @@ const SolicitudesPendientes = () => {
     return (
       <div className='solicitudes-pendientes'>
         <h1 id='titulo-solicitudes'>Solicitudes Recibidas</h1>
-        <div className='solicitudes-pendientes-center row' id="solicitudes-box">
+        <div className='solicitudes-pendientes-center row'>
           {data.solicitudes_recibidas.map((item,index) => <Solicitud key={index} solicitud={item}/>)}
         </div>
       </div>

@@ -1,6 +1,6 @@
 .solicitud-recibida-card {
     position: relative;
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,16 +9,10 @@
     --bs-card-border-width: var(--bs-border-width);
     --bs-card-border-color: var(--bs-border-color-translucent) ;
     border: var(--bs-card-border-width) solid var(--bs-card-border-color);
-    padding: 2rem;
+    padding: 1rem;
 }
 
 /*Datos de Perfil*/
-/* #foto-perfil{
-    width: 160px;
-    margin: 16px;
-    margin-bottom: 5px;
-    border-radius: 100%;
-} */
 
 .card-image{
     width: 100%;
@@ -32,12 +26,7 @@
 #datos-perfil{
     position: relative;
     width: 100%;
-}
-
-#datos-perfil p{
-    font-size: 1.5rem;
-    margin: 0;
-    padding: 0;
+    
 }
 
 /* #button-box{
@@ -54,19 +43,15 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    gap:  0.7rem;
     
 }
 
 
-#datos-solicitud p{
-    display: inline-block;
-    margin: 10px;
-    margin-left: 10px !important; 
-}
+
 
 .estrellas{
-    font-size: 2rem;
-    margin: 0 !important;
+    font-size: 1.3rem;
 }
 
 .icono-solicitudes-recibidas{
@@ -78,6 +63,17 @@
     position: absolute;
     top: 15px;
     right: 15px;
+}
+
+.card-double-item{
+    display: flex;
+    width: 100% ;
+    gap: 1rem   ;
+}
+
+.card-item{
+    display: flex;
+    gap: 0.3rem;
 }
 
 /*Botón Ver perfil*/
