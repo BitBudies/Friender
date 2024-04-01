@@ -48,7 +48,9 @@ const PerfilAmigo = () => {
                 <strong>{formStatus.message}</strong> 
               </div> 
               :
-              <button className='btn btn-azul mt-3' onClick={() => setShowForm(true)}>Solicitar Contacto</button>
+              <div className='btn-container'>
+                  <button className='btn btn-azul mt-3' onClick={() => setShowForm(true)}>Solicitar Contacto</button>
+                </div>
               }
               </div>
             </div>

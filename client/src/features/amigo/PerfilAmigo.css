@@ -32,7 +32,12 @@
 
 .perfil-amigo-left .stars-and-name {
   margin-bottom: 10px;
- 
+}
+
+.btn-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .perfil-amigo-left .stars-and-name {
