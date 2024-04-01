@@ -2,6 +2,7 @@ import React from 'react'
 import "./Solicitud.css"
 import { FaClock } from "react-icons/fa6";
 import { FaCalendarAlt,FaMapMarkerAlt } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 
 
@@ -34,7 +35,7 @@ const Solicitud = ({solicitud}) => {
                         <p>{solicitud.lugar}</p>
                     </div>
                     <div className='d-flex justify-content-between align-items-center'>
-                        <button id="ver-perfil-button" className='btn btn-azul' type="button">Ver solicitud</button>
+                        <Link to={`/usuario/solicitud_pendiente/${solicitud.solicitud_alquiler_id}`} id="ver-perfil-button" className='btn btn-azul' type="button">Ver solicitud</Link>
                         <p >{solicitud.duracion_minutos} H</p>
                     </div>
                 </div>
