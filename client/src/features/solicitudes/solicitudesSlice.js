@@ -14,9 +14,19 @@ const solicitudApi = apiSlice.injectEndpoints({
     }),
     getSolicitudPendienteById : builder.query({
       query : (id_solicitud) => `/solicitud/informacion/${id_solicitud}` 
+    }),
+    aceptarSolicitud : builder.query({
+      query : (id_solicitud) => `/solicitud/aceptar/${id_solicitud}`
+    }),
+    rechazarSolicitud : builder.query({
+      query : (id_solicitud) => `/solicitud/rechazar/${id_solicitud}`
     })
   }),
 });
 
-export const { useEnviarSolicitudMutation, useGetSolicitudesQuery,useGetSolicitudPendienteByIdQuery} =
+export const { useEnviarSolicitudMutation, 
+               useGetSolicitudesQuery,
+               useGetSolicitudPendienteByIdQuery,
+               useAceptarSolicitudQuery,
+               useRechazarSolicitudQuery} =
   solicitudApi;
