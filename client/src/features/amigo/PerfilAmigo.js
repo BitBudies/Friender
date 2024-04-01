@@ -42,7 +42,9 @@ const PerfilAmigo = () => {
                 <p><pre><strong>Descripción:</strong> {amigo.descripcion}</pre></p>
                 <div className='rectangulo'></div>
                 <p><h2><strong>Precio:</strong> {amigo.precio_amigo}$/hr</h2></p>
-                <button className='btn btn-azul mt-3' onClick={() => setShowForm(true)}>Solicitar Contacto</button>
+                <div className='btn-container'>
+                  <button className='btn btn-azul mt-3' onClick={() => setShowForm(true)}>Solicitar Contacto</button>
+                </div>
               </div>
             </div>
           </div>         
