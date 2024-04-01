@@ -1,0 +1,53 @@
+#solicitud_detalles{
+    padding: 2rem 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.solicitud-detalles-center{
+    position: relative;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    gap: 7rem;
+}
+
+.solicitud-detalles-center .cliente-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cliente-info .profile-image{
+    width: 17rem;
+    height: 17rem;
+    border-radius: 30px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.cliente-info span{
+    transform: scale(2);
+}
+
+
+.solicitud-details{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+
+.solicitud-details .footer{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.btns{
+    display: flex;
+    gap: 2rem;
+}
