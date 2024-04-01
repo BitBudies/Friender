@@ -10,7 +10,7 @@ const solicitudApi = apiSlice.injectEndpoints({
         })
       }),
     getSolicitudes : builder.query({
-      query : (id_cliente) => `/cliente/solicitudes/${id_cliente}` 
+      query : (id_cliente) => `/cliente/solicitudes/recibidas/${id_cliente}`
     })
   }),
 });

@@ -9,6 +9,7 @@ from ..models.solicitud_alquilerDB import solicitud_alquiler
 from ..models.calificacionDB import Calificacion
 from .utils import calcular_edad
 from datetime import date
+from django.db.models import Avg
 
 class EnviarSolicitud(APIView):
     def post(self, request, format=None):

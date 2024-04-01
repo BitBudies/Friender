@@ -21,7 +21,7 @@ function App() {
 
   useEffect(() => {
     if(!isFetching && !isUninitialized){
-      setUserData(data)
+      setUserData(data)    
     }
   },[data, isFetching, isUninitialized, setUserData])
 
