@@ -108,10 +108,11 @@
     position: relative;
     width: 100%;
     height: 100%;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     overflow-y: auto;
-    padding: 3rem 0;
+    padding: 2rem 0;
 }
 
 

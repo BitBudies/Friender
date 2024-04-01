@@ -1,5 +1,9 @@
 import React from 'react'
 import "./Solicitud.css"
+import { FaClock } from "react-icons/fa6";
+import { FaCalendarAlt,FaMapMarkerAlt } from "react-icons/fa";
+
+
 
 const Solicitud = ({solicitud}) => {
     console.log(solicitud)
@@ -16,17 +20,17 @@ const Solicitud = ({solicitud}) => {
                 <p className="estrellas text-warning">★★★★☆</p>
                     <div className='card-double-item'>                       
                         <div className='card-item'>
-                            <img className="icono-solicitudes-recibidas" src="https://w7.pngwing.com/pngs/162/843/png-transparent-computer-icons-calendar-date-others-miscellaneous-text-calendar.png" alt="icono calendario"/>
+                            <span><FaCalendarAlt/></span>
                             <p>{solicitud.fecha_inicio}</p>
                         </div>
                         <div className='card-item'>
-                            <img className="icono-solicitudes-recibidas" src="https://w7.pngwing.com/pngs/971/269/png-transparent-clock-computer-icons-clock-cdr-text-time.png" alt="icono hora"/>
+                            <span><FaClock/></span>
                             <p>00:00</p>
                         </div>
                     </div>
                     
                     <div className='card-item'>
-                        <img className="icono-solicitudes-recibidas" src="https://w7.pngwing.com/pngs/912/661/png-transparent-computer-icons-location-location-icon-map-location-icon-miscellaneous-desktop-wallpaper-map-thumbnail.png" alt="icono ubicacion"/>
+                        <span><FaMapMarkerAlt/></span>
                         <p>{solicitud.lugar}</p>
                     </div>
                     <div className='d-flex justify-content-between align-items-center'>

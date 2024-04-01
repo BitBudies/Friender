@@ -74,6 +74,7 @@
 .card-item{
     display: flex;
     gap: 0.3rem;
+    align-items: center;
 }
 
 /*Botón Ver perfil*/

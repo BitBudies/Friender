@@ -4,22 +4,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 2rem;
 }
 
 
 .solicitudes-pendientes-center{
     position: relative;
     width: 100%;
-    padding: 1.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#titulo-solicitudes{
-    text-align: center;
-    margin: 20px ;
-}
 
 
 
