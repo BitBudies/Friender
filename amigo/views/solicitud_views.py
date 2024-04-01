@@ -24,14 +24,12 @@ class EnviarSolicitud(APIView):
         try:
             cliente = Cliente.objects.get(pk=datos_recibidos['cliente_id'])
         except Cliente.DoesNotExist:
-            print("El cliente no existe")
             return Response({"error": "El cliente no existe"}, status=status.HTTP_404_NOT_FOUND)
         
         # Verificar si el amigo existe
         try:
             amigo = Amigo.objects.get(pk=datos_recibidos['amigo_id'])
         except Amigo.DoesNotExist:
-            print("El amigo no exsite")
             return Response({"error": "El amigo no existe"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Verificar que sea fecha valida
@@ -39,9 +37,7 @@ class EnviarSolicitud(APIView):
         mes = int(datos_recibidos['fecha_inicio'][5:7])
         dia = int(datos_recibidos['fecha_inicio'][8:])
         today = date.today()
-        print(datos_recibidos['fecha_inicio'], anio,mes,dia,today.year)
         if anio <= today.year and mes <= today.month and dia <= today.day:
-            print("La fecha")
             return Response({"error": f"La fecha {datos_recibidos['fecha_inicio']} no es valida"}, status=status.HTTP_404_NOT_FOUND)
         
         try:
@@ -119,7 +115,7 @@ class GetSolicitudesRecibidas(APIView):
         data = {
             "solicitudes_recibidas": []
         }
-
+        
         for solicitud in solicitudes:
             nombre_cliente = f"{solicitud.cliente.nombre} {solicitud.cliente.ap_paterno} {solicitud.cliente.ap_materno}".title()
             calificacion_cliente = Calificacion.objects.filter(amigo=solicitud.amigo, emisor="cliente").aggregate(Avg('puntuacion'))['puntuacion__avg']
