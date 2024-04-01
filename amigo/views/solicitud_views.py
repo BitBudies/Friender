@@ -16,7 +16,7 @@ class EnviarSolicitud(APIView):
     def post(self, request, format=None):
         datos_recibidos = request.data
 
-        required_fields = ['cliente_id', 'amigo_id', 'lugar', 'descripcion', 'fecha_inicio', 'hora_inicio', 'duracion']
+        required_fields = ['cliente_id', 'amigo_id', 'lugar', 'descripcion', 'fecha_inicio', 'hora_inicio', 'duracion', 'precio']
         for field in required_fields:
             if field not in datos_recibidos:
                 return Response({"error": f"El campo {field} es requerido"}, status=status.HTTP_200_OK)
@@ -50,6 +50,7 @@ class EnviarSolicitud(APIView):
                 fecha_inicio=datos_recibidos['fecha_inicio'],
                 hora_inicio=datos_recibidos['hora_inicio'],
                 minutos=datos_recibidos['duracion'],
+                precio=datos_recibidos['precio'],
                 estado_solicitud='E'
             )
             nueva_solicitud.save() 
@@ -100,6 +101,7 @@ class GetSolicitudesCliente(APIView):
                 "descripcion": solicitud.descripcion,
                 "fecha_inicio": solicitud.fecha_inicio,
                 "horas": solicitud.minutos,
+                "precio": solicitud.precio,
                 "estado_solicitud": solicitud.estado_solicitud,
                 #"timestamp_registro": solicitud.timestamp_registro
             })
@@ -131,7 +133,8 @@ class GetSolicitudesRecibidas(APIView):
                 "calificacion_cliente": calificacion_cliente,
                 "lugar": lugar_solicitud,
                 "fecha_inicio": solicitud.fecha_inicio,
-                "duracion_minutos": solicitud.minutos
+                "duracion_minutos": solicitud.minutos,
+                'precio': solicitud.precio
             }
 
             data["solicitudes_recibidas"].append(solicitud_data)
@@ -176,6 +179,7 @@ class SolicitudAlquilerDetailAPIView(APIView):
             'fecha_inicio': solicitud.fecha_inicio,
             'hora_inicio': solicitud.hora_inicio.strftime('%H:%M:%S'),
             'minutos': solicitud.minutos,
+            'precio': solicitud.precio,
             'estado_solicitud': solicitud.get_estado_solicitud_display(),
             'timestamp_registro': solicitud.timestamp_registro.strftime('%Y-%m-%d %H:%M:%S'),
         }

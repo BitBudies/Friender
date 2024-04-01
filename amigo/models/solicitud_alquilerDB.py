@@ -12,10 +12,11 @@ class solicitud_alquiler(models.Model):
     cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
     amigo = models.ForeignKey('Amigo', on_delete=models.CASCADE)
     lugar = models.CharField(max_length=50)
-    descripcion = models.CharField(max_length=100)
+    descripcion = models.CharField(max_length=500)
     fecha_inicio = models.DateField()
     hora_inicio = models.TimeField()
     minutos = models.IntegerField()
+    precio = models.IntegerField()
     estado_solicitud = models.CharField(max_length=1, choices=ESTADO_SOLICITUD)
     timestamp_registro = models.DateTimeField(auto_now_add=True)
     
