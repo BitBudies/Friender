@@ -43,7 +43,7 @@ const SolicitudDetalles = () => {
                             <h5>Total: {10 * solicitud.minutos} $us </h5>
                             <div className='btns'>
                                 <button className='btn btn-success btn-lg'>Aceptar</button>
-                                <button className='btn btn-danger btn-lg'>Aceptar</button>
+                                <button className='btn btn-danger btn-lg'>Rechazar</button>
                             </div>
                         </div>
                         
