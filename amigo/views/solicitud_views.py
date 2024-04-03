@@ -123,10 +123,13 @@ class GetSolicitudesRecibidas(APIView):
             nombre_cliente = f"{solicitud.cliente.nombre} {solicitud.cliente.ap_paterno} {solicitud.cliente.ap_materno}".title()
             calificacion_cliente = Calificacion.objects.filter(amigo=solicitud.amigo, emisor="cliente").aggregate(Avg('puntuacion'))['puntuacion__avg']
 
+            if solicitud.estado_solicitud == 'E':
+                     solicitud.estado_solicitud = 'A'
+                     solicitud.save()
 
             lugar_solicitud = solicitud.lugar
-            fecha_solicitud = solicitud.fecha_inicio
-            duracion_solicitud = solicitud.minutos
+            #fecha_solicitud = solicitud.fecha_inicio
+            #duracion_solicitud = solicitud.minutos
             solicitud_data = {
                 "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
                 "nombre_cliente": nombre_cliente,
