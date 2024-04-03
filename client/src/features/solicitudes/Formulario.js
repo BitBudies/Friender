@@ -101,13 +101,13 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
             value={formData.duracion} onChange={handleChange }/>
           </div>
             <div id="direction-input" className='form-item'>
-            <label htmlForor="direccion" className='form-label'>Dirección</label>
+            <label htmlFor="direccion" className='form-label'>Dirección</label>
             <input className="form-control" type="text" id="direccion" name="lugar" required
             value={formData.lugar} onChange={handleChange }/>
           </div>
         </div>
         <div className='form-item w-100'>
-          <label for="descripcion" className='form-label'>Descripción</label>
+          <label htmlFor="descripcion" className='form-label'>Descripción</label>
           <textarea className="form-control" id="descripcion" name="descripcion" rows="5" cols="50" required
           value={formData.descripcion} onChange={handleChange } maxLength={100}></textarea>
         </div> 

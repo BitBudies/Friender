@@ -70,9 +70,9 @@ const Perfil = () => {
                           <p>{item.name}</p>
                         </li>
                       ))}
-                      <li className='option'>
+                      {/* <li className='option'>
                         <p>Cerrar Sesión</p>
-                      </li>
+                      </li> */}
                     </ul>
                   </div>
               </div>
