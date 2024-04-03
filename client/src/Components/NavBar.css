@@ -15,7 +15,7 @@ nav{
 .profile-icon{
     font-size: 2rem;
     height: 100%;
-    transform: scale(1.4);
+    /* transform: scale(1.4); */
 }
 .profile-icon i {
     font-size: 2rem;
