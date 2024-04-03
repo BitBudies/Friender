@@ -146,6 +146,20 @@ p,span,label{
   padding: 10px 20px
 }
 
+.general-alert{
+  position: absolute;
+  z-index: 100;
+  /* top: 0; */
+  transform: translate(calc(100vw - 22rem), -6rem);
+  max-width: 20rem;
+  text-align: center;
+  height: 4rem;
+}
+
+.hide-alert{
+  display: none;
+}
+
 
 @media screen and (max-width: 992px) {
   .section{

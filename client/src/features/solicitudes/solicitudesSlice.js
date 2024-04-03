@@ -7,19 +7,29 @@ const solicitudApi = apiSlice.injectEndpoints({
           url: "/solicitud",
           method : "POST",
           body: data,
-        })
+        }),
+        invalidatesTags : ['Solicitud']
       }),
     getSolicitudes : builder.query({
-      query : (id_cliente) => `/cliente/solicitudes/recibidas/${id_cliente}`
+      query : (id_cliente) => `/amigo/solicitudes/recibidas/${id_cliente}`,
+      providesTags: ['Solicitud'],
     }),
     getSolicitudPendienteById : builder.query({
       query : (id_solicitud) => `/solicitud/informacion/${id_solicitud}` 
     }),
-    aceptarSolicitud : builder.query({
-      query : (id_solicitud) => `/solicitud/aceptar/${id_solicitud}`
+    aceptarSolicitud : builder.mutation({
+      query : (id_solicitud) => ({
+        url: `/solicitud/aceptar/${id_solicitud}`,
+        method: "POST"
+      }),
+      invalidatesTags : ['Solicitud'],
     }),
-    rechazarSolicitud : builder.query({
-      query : (id_solicitud) => `/solicitud/rechazar/${id_solicitud}`
+    rechazarSolicitud : builder.mutation({
+      query : (id_solicitud) => ({
+        url: `/solicitud/rechazar/${id_solicitud}`,
+        method : "POST"
+      }),
+      invalidatesTags : ['Solicitud'],
     })
   }),
 });
@@ -27,6 +37,6 @@ const solicitudApi = apiSlice.injectEndpoints({
 export const { useEnviarSolicitudMutation, 
                useGetSolicitudesQuery,
                useGetSolicitudPendienteByIdQuery,
-               useAceptarSolicitudQuery,
-               useRechazarSolicitudQuery} =
+               useAceptarSolicitudMutation,
+              useRechazarSolicitudMutation} =
   solicitudApi;

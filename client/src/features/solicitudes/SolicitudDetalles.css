@@ -54,6 +54,14 @@
     gap: 2rem;
 }
 
+.solicitud-detalles-alert{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    transform: translateX(-1rem);
+    z-index: 100;
+}
+
 @media  screen and (max-width : 763px) {
     .solicitud-detalles-center{
         flex-direction: column;

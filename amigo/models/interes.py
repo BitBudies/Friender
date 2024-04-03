@@ -5,7 +5,6 @@ class Interes(models.Model):
         ('A', 'Activo'),
         ('I', 'Inactivo')
     )
-
     interes_id = models.BigAutoField(primary_key=True)
     nombre = models.CharField(max_length=15)
     descripcion = models.TextField(max_length=255)

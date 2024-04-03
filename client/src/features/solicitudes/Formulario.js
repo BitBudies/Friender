@@ -97,7 +97,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
         <div className='form-box'>
           <div id="duration-input" className='form-item'>
             <label htmlFor="duracion" className='form-label'>Duración (hrs)</label>
-            <input className="form-control" type="number" id="duracion" name="duracion" min="1" required
+            <input className="form-control" type="number" id="duracion" name="duracion" min="1" max="8" required
             value={formData.duracion} onChange={handleChange }/>
           </div>
             <div id="direction-input" className='form-item'>
