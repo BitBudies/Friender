@@ -46,7 +46,8 @@ urlpatterns = [
     path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view()),
     path('api/cliente/solicitudes/<int:cliente_id>/', GetSolicitudesCliente.as_view()),
     path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view()),
-    path('api/cliente/solicitudes/recibidas/<int:cliente_id>/', GetSolicitudesRecibidas.as_view()),
+
+    path('api/amigo/solicitudes/recibidas/<int:amigo_id>/', GetSolicitudesRecibidas.as_view()),
     
     # probando postsssss
     path('api/solicitud', EnviarSolicitud.as_view()),
