@@ -15,7 +15,7 @@ const SolicitudDetalles = () => {
 
     const [rechazar,{isSuccess:rechazarSuccess}] = useRechazarSolicitudMutation();
 
-    const {data:solicitud,isFetching,isSuccess} = useGetSolicitudPendienteByIdQuery(id_solicitud)
+    const {data:solicitud,isFetching,isSuccess} = useGetSolicitudPendienteByIdQuery(id_solicitud);
 
 
     const handleAccept = async() => {
@@ -45,44 +45,46 @@ const SolicitudDetalles = () => {
         return <Loading/>
     }else if(isSuccess){
         return (
-            <div id='solicitud_detalles' className='page'>
-                <div className='solicitud-detalles-center'>
-                    <div className='cliente-info'>
-                        <div className='profile-image' style={{backgroundImage: "url(/images/user.jpeg)"}}></div>
-                        <h3>{solicitud.nombre_cliente}</h3>
-                        <span className='text-warning'>★★★☆☆</span>
-                        <p>Edad: {solicitud.edad_cliente} años</p>
-                        <Link to={`/amigos/${solicitud.cliente}`} className='btn btn-azul btn-lg'>Ver Perfil</Link>
-                    </div>
-                    <div className='solicitud-details'>
-                        <div className='title'>
-                            <h1>Detalles de la solicitud</h1>
+            <>
+                <div id='solicitud_detalles' className='page'>
+                    <div className='solicitud-detalles-center'>
+                        <div className='cliente-info'>
+                            <div className='profile-image' style={{backgroundImage: "url(/images/user.jpeg)"}}></div>
+                            <h3>{solicitud.nombre_cliente}</h3>
+                            <span className='text-warning'>★★★☆☆</span>
+                            <p>Edad: {solicitud.edad_cliente} años</p>
+                            <Link to={`/amigos/${solicitud.cliente}`} className='btn btn-azul btn-lg'>Ver Perfil</Link>
                         </div>
-                        <div className='details'>
-                            <p><strong>Fecha: </strong> {solicitud.fecha_inicio}</p>
-                            <p><strong>Hora: </strong> {solicitud.hora_inicio}</p>
-                            <p><strong>Tiempo: </strong> {solicitud.minutos}</p>
-                            <p><strong>Lugar: </strong> {solicitud.lugar}</p>
-                            <p><strong>Descripcion:</strong></p>
-                            <p>{solicitud.descripcion}</p>
-                        </div>
-                        <div className='footer'>
-                            <h5>Total: {solicitud.precio * solicitud.minutos} $us </h5>
-                            <div className='btns'>
-                                <button 
-                                onClick={handleAccept}
-                                className={`btn btn-success btn-lg ${!enableBtn && "disabled"}`}    
-                                >Aceptar</button>
-                                <button 
-                                className={`btn btn-danger btn-lg ${!enableBtn && "disabled"}`}
-                                onClick={handleReject}>
-                                    Rechazar
-                                </button>
+                        <div className='solicitud-details'>
+                            <div className='title'>
+                                <h1>Detalles de la solicitud</h1>
+                            </div>
+                            <div className='details'>
+                                <p><strong>Fecha: </strong> {solicitud.fecha_inicio}</p>
+                                <p><strong>Hora: </strong> {solicitud.hora_inicio}</p>
+                                <p><strong>Tiempo: </strong> {solicitud.minutos}</p>
+                                <p><strong>Lugar: </strong> {solicitud.lugar}</p>
+                                <p><strong>Descripcion:</strong></p>
+                                <p>{solicitud.descripcion}</p>
+                            </div>
+                            <div className='footer'>
+                                <h5>Total: {solicitud.precio * solicitud.minutos} $us </h5>
+                                <div className='btns'>
+                                    <button 
+                                    onClick={handleAccept}
+                                    className={`btn btn-success btn-lg ${!enableBtn && "disabled"}`}    
+                                    >Aceptar</button>
+                                    <button 
+                                    className={`btn btn-danger btn-lg ${!enableBtn && "disabled"}`}
+                                    onClick={handleReject}>
+                                        Rechazar
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </>
           )   
     }
 }

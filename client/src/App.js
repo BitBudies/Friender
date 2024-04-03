@@ -11,6 +11,7 @@ import { useGetClienteByIdQuery } from './features/cliente/clienteSlice';
 import Loading from './Components/Loading';
 import { useGlobalContext } from './context';
 import SolicitudDetalles from './features/solicitudes/SolicitudDetalles';
+import Alert from './Components/Alert';
 
 
 
@@ -41,6 +42,7 @@ function App() {
           <Route path='/usuario/solicitud_pendiente/:id_solicitud' element={<SolicitudDetalles/>}/>
           <Route path='/*' element={<Default/>}/>
         </Routes>
+        <Alert/>
       </Router>
     );
   }
