@@ -13,5 +13,3 @@ class Gusto(models.Model):
 
     def __str__(self):
         return f"{self.gusto_id}"
-
-

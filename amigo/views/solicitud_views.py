@@ -111,7 +111,7 @@ class GetSolicitudesRecibidas(APIView):
     def get(self, request, amigo_id):
         try:
             amigo = Amigo.objects.get(pk=amigo_id)
-            solicitudes = solicitud_alquiler.objects.filter(amigo=amigo, estado_solicitud='E')
+            solicitudes = solicitud_alquiler.objects.filter(amigo=amigo, estado_solicitud='E').order_by('timestamp_registro')
         except Cliente.DoesNotExist:
             return Response({"error": "Amigo no encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
@@ -137,7 +137,8 @@ class GetSolicitudesRecibidas(APIView):
                 'precio': solicitud.precio,
                 "estado_solicitud": solicitud.estado_solicitud,
                 "amigo_id": solicitud.amigo.amigo_id,
-                "cliente": solicitud.cliente.cliente_id
+                "cliente": solicitud.cliente.cliente_id,
+                "timestamp_registro": solicitud.timestamp_registro
             }
 
             data["solicitudes_recibidas"].append(solicitud_data)

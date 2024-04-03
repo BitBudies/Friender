@@ -7,7 +7,6 @@ class Amigo(models.Model):
         ('O', 'Ocupado'),
         ('I', 'Inactivo')
     )
-
     amigo_id = models.BigAutoField(primary_key=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     precio = models.BigIntegerField()

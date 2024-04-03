@@ -10,7 +10,6 @@ class solicitud_alquiler(models.Model):
         ('R', 'Rechazado'),
         ('F', 'Finalizado')
     )
-    
     solicitud_alquiler_id = models.BigAutoField(primary_key=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     amigo = models.ForeignKey(Amigo, on_delete=models.CASCADE)
