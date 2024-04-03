@@ -8,7 +8,7 @@ const AppProvider = ({ children }) => {
   const [alert,setAlert] = useState({status: false, message: 'Mensaje de prueba',type : 'success'});
   
 
-  const showAlert = ({message,type}) => {
+  const showAlert = (message,type) => {
     setAlert({status:true,message,type})
 
     setTimeout(() => {
