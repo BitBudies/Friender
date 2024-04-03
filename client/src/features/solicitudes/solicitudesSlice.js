@@ -15,11 +15,17 @@ const solicitudApi = apiSlice.injectEndpoints({
     getSolicitudPendienteById : builder.query({
       query : (id_solicitud) => `/solicitud/informacion/${id_solicitud}` 
     }),
-    aceptarSolicitud : builder.query({
-      query : (id_solicitud) => `/solicitud/aceptar/${id_solicitud}`
+    aceptarSolicitud : builder.mutation({
+      query : (id_solicitud) => ({
+        url: `/solicitud/aceptar/${id_solicitud}`,
+        method: "POST"
+      })
     }),
-    rechazarSolicitud : builder.query({
-      query : (id_solicitud) => `/solicitud/rechazar/${id_solicitud}`
+    rechazarSolicitud : builder.mutation({
+      query : (id_solicitud) => ({
+        url: `/solicitud/rechazar/${id_solicitud}`,
+        method : "POST"
+      })
     })
   }),
 });
@@ -27,6 +33,6 @@ const solicitudApi = apiSlice.injectEndpoints({
 export const { useEnviarSolicitudMutation, 
                useGetSolicitudesQuery,
                useGetSolicitudPendienteByIdQuery,
-               useAceptarSolicitudQuery,
-               useRechazarSolicitudQuery} =
+               useAceptarSolicitudMutation,
+              useRechazarSolicitudMutation} =
   solicitudApi;

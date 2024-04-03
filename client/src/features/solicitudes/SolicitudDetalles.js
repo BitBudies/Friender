@@ -1,18 +1,38 @@
-import React, { useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { useGetSolicitudPendienteByIdQuery } from './solicitudesSlice';
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useAceptarSolicitudMutation,useGetSolicitudPendienteByIdQuery, useRechazarSolicitudMutation, } from './solicitudesSlice';
 import Loading from '../../Components/Loading';
 import "./SolicitudDetalles.css";
+import { useGlobalContext } from '../../context';
 
 const SolicitudDetalles = () => {
 
+    const {clientId} = useGlobalContext();
     const {id_solicitud} = useParams();
+    const [enableBtn,setEnableBtn] = useState(true);
+
+    const navigate = useNavigate();
+
+    const [aceptar,{data : aceptarResponse}] = useAceptarSolicitudMutation();
+
+    // const [rechazar,{isSuccess:rechazarSuccess}] = useRechazarSolicitudMutation();
 
     const {data:solicitud,isFetching,isSuccess} = useGetSolicitudPendienteByIdQuery(id_solicitud)
 
+
+    const handleAccept = async() => {
+        setEnableBtn(false);
+        await aceptar(id_solicitud);
+    }
+
+    const handleReject = () => {
+
+    }
+
+
     useEffect(() => {
-        console.log(solicitud,"solicitud")
-    },[solicitud])
+        console.log(aceptarResponse)
+    },[aceptarResponse])
 
     if(isFetching){
         return <Loading/>
@@ -40,13 +60,18 @@ const SolicitudDetalles = () => {
                             <p>{solicitud.descripcion}</p>
                         </div>
                         <div className='footer'>
-                            <h5>Total: {10 * solicitud.minutos} $us </h5>
+                            <h5>Total: {solicitud.precio * solicitud.minutos} $us </h5>
                             <div className='btns'>
-                                <button className='btn btn-success btn-lg'>Aceptar</button>
-                                <button className='btn btn-danger btn-lg'>Rechazar</button>
+                                <button 
+                                onClick={handleAccept}
+                                className={`btn btn-success btn-lg ${!enableBtn && "disabled"}`}    
+                                >Aceptar</button>
+                                <button 
+                                className={`btn btn-danger btn-lg ${!enableBtn && "disabled"}`}>
+                                    Rechazar
+                                </button>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>
