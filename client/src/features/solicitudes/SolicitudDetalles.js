@@ -3,11 +3,9 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAceptarSolicitudMutation,useGetSolicitudPendienteByIdQuery, useRechazarSolicitudMutation, } from './solicitudesSlice';
 import Loading from '../../Components/Loading';
 import "./SolicitudDetalles.css";
-import { useGlobalContext } from '../../context';
 
 const SolicitudDetalles = () => {
 
-    const {clientId} = useGlobalContext();
     const {id_solicitud} = useParams();
     const [enableBtn,setEnableBtn] = useState(true);
 
@@ -36,6 +34,12 @@ const SolicitudDetalles = () => {
             navigate("/perfil")
         }
     },[acepterSuccess, navigate])
+
+    useEffect(() => {
+        if(rechazarSuccess){
+            navigate("/perfil")
+        }
+    },[ navigate, rechazarSuccess])
 
     if(isFetching){
         return <Loading/>
