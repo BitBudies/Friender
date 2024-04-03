@@ -24,7 +24,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
 
   const handleSubmit = async() => {
     setDisableBtn(true);
-    const body = {amigo_id, cliente_id,...formData}
+    const body = {amigo_id, cliente_id,...formData,precio: formData.duracion * precio}
     await send(body)
   }
 
@@ -33,7 +33,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
   }
 
   useEffect(() => {
-    console.log(data,isLoading) 
+    console.log(data,isLoading,"form") 
     if(isError){
       setShowFeedback({status: true, message : error.data.error})
       setDisableBtn(false);
