@@ -1,5 +1,8 @@
 from django.db import models
 
+from amigo.models.amigoDB import Amigo
+from amigo.models.clienteDB import Cliente
+
 class solicitud_alquiler(models.Model):
     ESTADO_SOLICITUD = (
         ('E', 'Enviado'),
@@ -7,10 +10,9 @@ class solicitud_alquiler(models.Model):
         ('R', 'Rechazado'),
         ('F', 'Finalizado')
     )
-    
     solicitud_alquiler_id = models.BigAutoField(primary_key=True)
-    cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
-    amigo = models.ForeignKey('Amigo', on_delete=models.CASCADE)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    amigo = models.ForeignKey(Amigo, on_delete=models.CASCADE)
     lugar = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=500)
     fecha_inicio = models.DateField()
