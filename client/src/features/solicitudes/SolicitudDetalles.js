@@ -36,7 +36,7 @@ const SolicitudDetalles = () => {
             showAlert('Solicitud Aceptada Correctamente' , 'success')
             navigate("/perfil")
         }
-    },[acepterSuccess, navigate])
+    },[acepterSuccess, navigate, showAlert])
 
     useEffect(() => {
         if(rechazarSuccess){
