@@ -128,8 +128,6 @@ class GetSolicitudesRecibidas(APIView):
                      solicitud.save()
 
             lugar_solicitud = solicitud.lugar
-            #fecha_solicitud = solicitud.fecha_inicio
-            #duracion_solicitud = solicitud.minutos
             solicitud_data = {
                 "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
                 "nombre_cliente": nombre_cliente,
