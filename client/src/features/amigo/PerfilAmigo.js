@@ -49,7 +49,7 @@ const PerfilAmigo = () => {
               </div> 
               :
               <div className='btn-container'>
-                  <button className='btn btn-azul mt-3' onClick={() => setShowForm(true)}>Solicitar Contacto</button>
+                  <button className='btn btn-azul mt-3 btn-solicitar' onClick={() => setShowForm(true)}>Solicitar Contacto</button>
                 </div>
               }
               </div>
