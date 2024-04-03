@@ -13,9 +13,9 @@ const SolicitudDetalles = () => {
 
     const navigate = useNavigate();
 
-    const [aceptar,{data : aceptarResponse}] = useAceptarSolicitudMutation();
+    const [aceptar,{isSuccess : acepterSuccess}] = useAceptarSolicitudMutation();
 
-    // const [rechazar,{isSuccess:rechazarSuccess}] = useRechazarSolicitudMutation();
+    const [rechazar,{isSuccess:rechazarSuccess}] = useRechazarSolicitudMutation();
 
     const {data:solicitud,isFetching,isSuccess} = useGetSolicitudPendienteByIdQuery(id_solicitud)
 
@@ -25,14 +25,17 @@ const SolicitudDetalles = () => {
         await aceptar(id_solicitud);
     }
 
-    const handleReject = () => {
-
+    const handleReject = async() => {
+        setEnableBtn(false);
+        await rechazar(id_solicitud);
     }
 
 
     useEffect(() => {
-        console.log(aceptarResponse)
-    },[aceptarResponse])
+        if(acepterSuccess){
+            navigate("/perfil")
+        }
+    },[acepterSuccess, navigate])
 
     if(isFetching){
         return <Loading/>
@@ -67,7 +70,8 @@ const SolicitudDetalles = () => {
                                 className={`btn btn-success btn-lg ${!enableBtn && "disabled"}`}    
                                 >Aceptar</button>
                                 <button 
-                                className={`btn btn-danger btn-lg ${!enableBtn && "disabled"}`}>
+                                className={`btn btn-danger btn-lg ${!enableBtn && "disabled"}`}
+                                onClick={handleReject}>
                                     Rechazar
                                 </button>
                             </div>
