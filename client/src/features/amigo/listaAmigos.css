@@ -66,3 +66,8 @@
     width: 1.7rem;   
 }
 
+#mensaje-no-more-results{
+    text-align: center;
+    font-size: 2rem;
+    margin: 20px !important;
+}

@@ -4,9 +4,10 @@ import { useAceptarSolicitudMutation,useGetSolicitudPendienteByIdQuery, useRecha
 import Loading from '../../Components/Loading';
 import "./SolicitudDetalles.css";
 import { useGlobalContext } from '../../context';
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 const SolicitudDetalles = () => {
-
+    
     const {id_solicitud} = useParams();
     const [enableBtn,setEnableBtn] = useState(true);
     const {showAlert} = useGlobalContext();
@@ -29,6 +30,12 @@ const SolicitudDetalles = () => {
         setEnableBtn(false);
         await rechazar(id_solicitud);
     }
+
+    function formatFecha(fecha) {
+        const [year, month, day] = fecha.split("-");
+        return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${year}`;
+    }
+      
 
 
     useEffect(() => {
@@ -64,10 +71,10 @@ const SolicitudDetalles = () => {
                                 <h1>Detalles de la solicitud</h1>
                             </div>
                             <div className='details'>
-                                <p><strong>Fecha: </strong> {solicitud.fecha_inicio}</p>
-                                <p><strong>Hora: </strong> {solicitud.hora_inicio}</p>
-                                <p><strong>Tiempo: </strong> {solicitud.minutos}</p>
-                                <p><strong>Lugar: </strong> {solicitud.lugar}</p>
+                                <p><strong>Fecha: </strong> {formatFecha(solicitud.fecha_inicio)}</p>
+                                <p><strong>Hora: </strong> {solicitud.hora_inicio.slice(0, 5)}</p>
+                                <p><strong>Tiempo: </strong> {solicitud.minutos} {solicitud.minutos === 1 ? "hr" : "hrs"}</p>
+                                <p><strong>Lugar: </strong> {solicitud.lugar} <span><FaMapMarkerAlt/></span> </p>
                                 <p><strong>Descripcion:</strong></p>
                                 <p>{solicitud.descripcion}</p>
                             </div>
@@ -75,14 +82,14 @@ const SolicitudDetalles = () => {
                                 <h5>Total: {solicitud.precio * solicitud.minutos} $us </h5>
                                 <div className='btns'>
                                     <button 
-                                    onClick={handleAccept}
-                                    className={`btn btn-success btn-lg ${!enableBtn && "disabled"}`}    
-                                    >Aceptar</button>
-                                    <button 
                                     className={`btn btn-danger btn-lg ${!enableBtn && "disabled"}`}
                                     onClick={handleReject}>
                                         Rechazar
                                     </button>
+                                    <button 
+                                    onClick={handleAccept}
+                                    className={`btn btn-success btn-lg ${!enableBtn && "disabled"}`}    
+                                    >Aceptar</button>
                                 </div>
                             </div>
                         </div>

@@ -5,7 +5,7 @@ const Alert = () => {
     const {alert} = useGlobalContext();
   return (
     <div className={`${!alert.status && "hide-alert"} alert alert-${alert.type} general-alert`}>
-      {alert.message}
+      <p>Solicitud Aceptada</p>
     </div>
   )
 }

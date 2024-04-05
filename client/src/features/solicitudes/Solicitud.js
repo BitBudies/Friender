@@ -8,6 +8,12 @@ import { Link } from 'react-router-dom';
 
 const Solicitud = ({solicitud}) => {
     console.log(solicitud)
+
+    function formatFecha(fecha) {
+        const [year, month, day] = fecha.split("-");
+        return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${year}`;
+    }
+
     return (
     <div className='col-container '>
         <div className="solicitud-recibida-card " >
@@ -22,7 +28,7 @@ const Solicitud = ({solicitud}) => {
                     <div className='card-double-item'>                       
                         <div className='card-item'>
                             <span><FaCalendarAlt/></span>
-                            <p>{solicitud.fecha_inicio}</p>
+                            <p>{formatFecha(solicitud.fecha_inicio)}</p>
                         </div>
                         <div className='card-item'>
                             <span><FaClock/></span>
@@ -36,7 +42,7 @@ const Solicitud = ({solicitud}) => {
                     </div>
                     <div className='d-flex justify-content-between align-items-center'>
                         <Link to={`/usuario/solicitud_pendiente/${solicitud.solicitud_alquiler_id}`} id="ver-perfil-button" className='btn btn-azul' type="button">Ver solicitud</Link>
-                        <p >{solicitud.duracion_minutos} H</p>
+                        <p >{solicitud.duracion_minutos} Hrs</p>
                     </div>
                 </div>
                 

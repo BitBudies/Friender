@@ -54,6 +54,7 @@ const ListaAmigos = () => {
                             </div>
                         )})}
                     </div>
+                    <p id="mensaje-no-more-results">No existen más resultados</p>
                 </div>
             </div>
         );

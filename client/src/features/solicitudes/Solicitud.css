@@ -19,18 +19,27 @@
     padding: 1rem;
 }
 
+.solicitud-recibida-card:hover{
+    background-color: var(--azul-claro);
+    transition: 0.5s;
+    color: white;
+    width: 17.2rem;
+}
+
 /*Datos de Perfil*/
 
 .card-image{
-    width: 100%;
+    width: 90%;
     height: 13rem;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    border-radius: 15px;
+    border-radius: 100%;
 }
 
+
 #datos-perfil{
+    text-align: -webkit-center;
     position: relative;
     width: 100%;
     
@@ -75,6 +84,10 @@
     display: flex;
     gap: 0.3rem;
     align-items: center;
+}
+
+#ver-perfil-button{
+    border-radius: 25px;
 }
 
 /* @media screen and (max-width: 993px) {

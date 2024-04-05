@@ -25,7 +25,7 @@
 .cliente-info .profile-image{
     width: 17rem;
     height: 17rem;
-    border-radius: 30px;
+    border-radius: 100%;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
