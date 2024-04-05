@@ -3,9 +3,19 @@ import { Link } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa";
 import "./NavBar.css"
 import { NavLink } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 
 const NavBar = () => {
+
+  const location = useLocation();
+  
+  const handleAmigosClick = (event) => {
+    if (location.pathname === '/amigos') {
+      event.preventDefault();
+      window.location.reload();
+    }
+  };
   return (
     <nav className='navbar navbar-expand-md bg-azul-fuerte text-light' data-bs-theme="dark">
       <div className='container-fluid px-lg-5 py-0'>
@@ -19,8 +29,8 @@ const NavBar = () => {
               <Link to={"/"} className='nav-link'>Home</Link>
             </li>
             <li className='nav-item'>
-            <NavLink to={"/amigos"} className='nav-link' activeClassName='active-link'>Buscar Amigos</NavLink>
-            </li>
+             <NavLink to="/amigos" className='nav-link' activeClassName='active-link' onClick={handleAmigosClick}>Buscar Amigos</NavLink>
+             </li>
           </ul>
           <div className='nav-item dropdown '>
             <span className="nav-link dropdown-toggle profile-icon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
