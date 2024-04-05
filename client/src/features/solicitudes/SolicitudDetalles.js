@@ -4,6 +4,7 @@ import { useAceptarSolicitudMutation,useGetSolicitudPendienteByIdQuery, useRecha
 import Loading from '../../Components/Loading';
 import "./SolicitudDetalles.css";
 import { useGlobalContext } from '../../context';
+import { IoLocationSharp } from "react-icons/io5";
 
 const SolicitudDetalles = () => {
 
@@ -67,7 +68,7 @@ const SolicitudDetalles = () => {
                                 <p><strong>Fecha: </strong> {solicitud.fecha_inicio}</p>
                                 <p><strong>Hora: </strong> {solicitud.hora_inicio}</p>
                                 <p><strong>Tiempo: </strong> {solicitud.minutos}</p>
-                                <p><strong>Lugar: </strong> {solicitud.lugar}</p>
+                                <p><strong>Lugar: </strong> {solicitud.lugar}<IoLocationSharp /></p>
                                 <p><strong>Descripcion:</strong></p>
                                 <p>{solicitud.descripcion}</p>
                             </div>
