@@ -86,15 +86,16 @@ const SolicitudDetalles = () => {
                             <p className='fw-light text-secondary'> Fecha solicitud: {solicitud.timestamp_registro}</p>
                                 <h5>Total: {solicitud.precio * solicitud.minutos} $us </h5>
                                 <div className='btns'>
+                                <button 
+                                    onClick={handleAccept}
+                                    className={`btn btn-success btn-lg ${!enableBtn && "disabled"}`}    
+                                    >Aceptar</button>
                                     <button 
                                     className={`btn btn-danger btn-lg ${!enableBtn && "disabled"}`}
                                     onClick={handleReject}>
                                         Rechazar
                                     </button>
-                                    <button 
-                                    onClick={handleAccept}
-                                    className={`btn btn-success btn-lg ${!enableBtn && "disabled"}`}    
-                                    >Aceptar</button>
+                                    
                                 </div>
                             </div>
                         </div>

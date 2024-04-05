@@ -25,7 +25,7 @@ const Solicitud = ({solicitud}) => {
                     
                 </div>
                 <div id="datos-solicitud">
-                <p className="estrellas text-warning">★★★★☆</p>
+                    <p className="estrellas text-warning">★★★★☆</p>
                     <div className='card-double-item'>                       
                         <div className='card-item'>
                             <span><FaCalendarAlt/></span>
@@ -41,7 +41,7 @@ const Solicitud = ({solicitud}) => {
                         <span><FaMapMarkerAlt/></span>
                         <p>{solicitud.lugar}</p>
                     </div>
-                    <div className='d-flex justify-content-between align-items-center'>
+                    <div className='d-flex justify-content-between align-items-center solicitud-footer'>
                         <Link to={`/usuario/solicitud_pendiente/${solicitud.solicitud_alquiler_id}`} id="ver-perfil-button" className='btn btn-azul' type="button">Ver solicitud</Link>
                         <p >{solicitud.duracion_minutos} Hrs</p>
                     </div>
