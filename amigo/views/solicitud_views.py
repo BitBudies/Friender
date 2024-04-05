@@ -1,4 +1,3 @@
-
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -32,7 +31,10 @@ class EnviarSolicitud(APIView):
             amigo = Amigo.objects.get(pk=datos_recibidos['amigo_id'])
         except Amigo.DoesNotExist:
             return Response({"error": "El amigo no existe"}, status=status.HTTP_400_BAD_REQUEST)
-
+        #Verificar que maximo sea 8 horas
+        duracion_horas = datos_recibidos['duracion'] // 60
+        if duracion_horas > 8:
+            return Response({"error": "La duración máxima permitida es de 8 horas"}, status=status.HTTP_400_BAD_REQUEST)
         # Verificar que sea fecha valida
         anio = int(datos_recibidos['fecha_inicio'][:4])
         mes = int(datos_recibidos['fecha_inicio'][5:7])
@@ -61,7 +63,7 @@ class EnviarSolicitud(APIView):
         return Response(
             {"mensaje": "Solicitud de alquiler creada correctamente"}, 
             status=status.HTTP_201_CREATED
-        )
+        )       
 
 class GetSolicitudesCliente(APIView):
     def get(self, request, cliente_id):
@@ -205,4 +207,3 @@ class VerificarSolicitudes(APIView):
             return Response({"TieneSolicitudes": True})
         else:
             return Response({"TieneSolicitudes": False})
-        

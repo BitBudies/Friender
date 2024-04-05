@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 
+
 const Solicitud = ({solicitud}) => {
     console.log(solicitud)
 
