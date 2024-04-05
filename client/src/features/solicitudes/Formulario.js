@@ -19,6 +19,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
   const [disableBtn,setDisableBtn] = useState(true);
   const [showFeedback,setShowFeedback] = useState({status : false, message : ""})
   const [send,{data, isLoading,isSuccess,isError,error}] = useEnviarSolicitudMutation();
+  const [descripcionLength, setDescripcionLength] = useState(0); // Estado para longitud de descripción
 
 
 
@@ -29,6 +30,10 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
   }
 
   const handleChange = (e) =>{
+    const { name, value } = e.target;
+    if (name === 'descripcion') {
+      setDescripcionLength(value.length); // Actualiza la longitud de la descripción
+    }
     setFormData({...formData,[e.target.name] : e.target.value})
   }
 
@@ -63,6 +68,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
     const isFilled = Object.keys(formData).every(item =>{
       if(item === "descripcion"){
         if(formData[item].length < 30){
+          setDisableBtn(true);
           return false
         }
       }
@@ -110,6 +116,10 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
           <label htmlFor="descripcion" className='form-label'>Descripción</label>
           <textarea className="form-control" id="descripcion" name="descripcion" rows="5" cols="50" required
           value={formData.descripcion} onChange={handleChange } maxLength={500}></textarea>
+          <p className="text-muted">
+            {descripcionLength < 30 ? `${descripcionLength}/30 caracteres minimo.` : ''}
+            {descripcionLength >= 100 && `${descripcionLength}/500 caracteres maximo.`}
+          </p>
         </div> 
         {showFeedback.status && <p className='text-danger'>{showFeedback.message}</p>}
         
