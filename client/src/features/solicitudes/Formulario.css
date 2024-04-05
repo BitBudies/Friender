@@ -61,6 +61,7 @@ label::after {
   
 .form-control{
     border-radius: 10px;
+    resize: none;
 }
 
 
