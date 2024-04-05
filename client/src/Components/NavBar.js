@@ -16,7 +16,7 @@ const NavBar = () => {
         <div className='collapse navbar-collapse d-lg-flex justify-content-between' id="navbarSupportedContent">
           <ul className='navbar-nav px-lg-5'>
             <li className='nav-item'>
-              <Link to={"/"} className='nav-link'>Home</Link>
+              <NavLink to={"/"} className='nav-link' activeClassName='active-link'>Home</NavLink>
             </li>
             <li className='nav-item'>
             <NavLink to={"/amigos"} className='nav-link' activeClassName='active-link'>Buscar Amigos</NavLink>
