@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa";
 import "./NavBar.css"
+import { NavLink } from 'react-router-dom';
 
 
 const NavBar = () => {
@@ -18,7 +19,7 @@ const NavBar = () => {
               <Link to={"/"} className='nav-link'>Home</Link>
             </li>
             <li className='nav-item'>
-              <Link to={"/amigos"} className='nav-link'>Buscar Amigos</Link>
+            <NavLink to={"/amigos"} className='nav-link' activeClassName='active-link'>Buscar Amigos</NavLink>
             </li>
           </ul>
           <div className='nav-item dropdown '>

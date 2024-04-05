@@ -28,3 +28,7 @@ nav{
             transform: translate(-70%,10px);
     }
 }
+
+.active-link{
+    color: white !important;
+}
