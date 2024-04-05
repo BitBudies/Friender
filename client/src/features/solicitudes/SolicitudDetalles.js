@@ -46,6 +46,10 @@ const SolicitudDetalles = () => {
     },[acepterSuccess, navigate, showAlert])
 
     useEffect(() => {
+        console.log(solicitud);
+    },[solicitud])
+
+    useEffect(() => {
         if(rechazarSuccess){
             showAlert('Solicitud Rechazada Correctamente' , 'danger')
             navigate("/perfil")
@@ -79,6 +83,7 @@ const SolicitudDetalles = () => {
                                 <p>{solicitud.descripcion}</p>
                             </div>
                             <div className='footer'>
+                            <p className='fw-light text-secondary'> Fecha solicitud: {solicitud.timestamp_registro}</p>
                                 <h5>Total: {solicitud.precio * solicitud.minutos} $us </h5>
                                 <div className='btns'>
                                     <button 
