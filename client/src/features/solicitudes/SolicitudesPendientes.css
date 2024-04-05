@@ -3,10 +3,16 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 1rem 0;
+    align-items: flex-start;
+    padding: 1rem ;
     gap: 2rem;
     text-align: center;
+}
+
+.solicitudes-pendientes-header{
+    width: 100%;
+    padding: 0 2.5rem;
+    text-align: start;
 }
 
 
@@ -23,6 +29,9 @@
 
 
 @media screen and (max-width : 1400px) {
+    .solicitudes-pendientes-header{
+        text-align: center;
+    }
     .solicitudes-pendientes-center{
         grid-template-columns: repeat(2, 1fr);
     }

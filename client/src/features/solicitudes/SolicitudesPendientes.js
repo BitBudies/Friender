@@ -21,7 +21,9 @@ const SolicitudesPendientes = () => {
   }else if(isSuccess){
     return (
       <div className='solicitudes-pendientes'>
-        <h1 id='titulo-solicitudes'>Solicitudes Recibidas</h1>
+        <div className='solicitudes-pendientes-header'>
+          <h1 id='titulo-solicitudes'>Solicitudes Recibidas</h1>
+        </div>
         <div className='solicitudes-pendientes-center '>
           {data.solicitudes_recibidas.map((item,index) => <Solicitud key={index} solicitud={item}/>)}
         </div>

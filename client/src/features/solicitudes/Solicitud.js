@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 
 const Solicitud = ({solicitud}) => {
-    console.log(solicitud)
+    console.log(solicitud,"Solicitud");
 
     function formatFecha(fecha) {
         const [year, month, day] = fecha.split("-");
@@ -33,7 +33,7 @@ const Solicitud = ({solicitud}) => {
                         </div>
                         <div className='card-item'>
                             <span><FaClock/></span>
-                            <p>00:00</p>
+                            <p>{solicitud.hora_inicio.match(/\d+:\d+/)}</p>
                         </div>
                     </div>
                     

@@ -140,7 +140,8 @@ class GetSolicitudesRecibidas(APIView):
                 "estado_solicitud": solicitud.estado_solicitud,
                 "amigo_id": solicitud.amigo.amigo_id,
                 "cliente": solicitud.cliente.cliente_id,
-                "timestamp_registro": solicitud.timestamp_registro
+                "timestamp_registro": solicitud.timestamp_registro,
+                "hora_inicio": solicitud.hora_inicio
             }
 
             data["solicitudes_recibidas"].append(solicitud_data)
