@@ -32,7 +32,7 @@ class EnviarSolicitud(APIView):
         except Amigo.DoesNotExist:
             return Response({"error": "El amigo no existe"}, status=status.HTTP_400_BAD_REQUEST)
         #Verificar que maximo sea 8 horas
-        duracion_horas = datos_recibidos['duracion'] // 60
+        duracion_horas = int(datos_recibidos['duracion'] // 60)
         if duracion_horas > 8:
             return Response({"error": "La duración máxima permitida es de 8 horas"}, status=status.HTTP_400_BAD_REQUEST)
         # Verificar que sea fecha valida
