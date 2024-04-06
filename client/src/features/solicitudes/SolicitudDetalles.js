@@ -94,8 +94,7 @@ const SolicitudDetalles = () => {
                                     className={`btn btn-danger btn-lg ${!enableBtn && "disabled"}`}
                                     onClick={handleReject}>
                                         Rechazar
-                                    </button>
-                                    
+                                    </button>    
                                 </div>
                             </div>
                         </div>

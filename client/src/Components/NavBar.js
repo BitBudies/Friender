@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa";
 import "./NavBar.css"
 import { NavLink } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 import { useGetNavOptions } from '../hooks/navOptions';
 
 
 const NavBar = () => {
 
-  const location = useLocation();
+  // const location = useLocation();
   const navItems = useGetNavOptions();
 
   const [activeNav,setActiveNav] = useState(1);
