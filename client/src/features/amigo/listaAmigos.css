@@ -8,6 +8,11 @@
     overflow: hidden;
 }
 
+.card-list:hover{
+    transform: scale(0.98);
+    box-shadow: 0 0 10px 1px var(--gris);
+}
+
 .card-header {
     width: 100%;
     height: 12rem;

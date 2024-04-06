@@ -29,7 +29,7 @@ const ListaAmigos = () => {
                         {amigos['amigos'].map((amigo, index) => {
                             return (
                             <div key={index} className='col'>
-                                <div className='card card-list'>
+                                <div className='card-amigo card card-list'>
                                     <div className='card-header'
                                      style={{ backgroundImage: `url(/images/${
                                         amigo.genero === 'M' ? "guy.png":
