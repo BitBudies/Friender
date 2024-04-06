@@ -6,6 +6,7 @@ nav{
     top: 0;
     left: 0;
     padding: 0 !important;
+    margin: 0;
 }
 
 .dropdown-menu{
@@ -22,6 +23,11 @@ nav{
 }
 
 
+.navbar-nav {
+    display: flex;
+    gap: 2rem;
+}
+
 
 @media screen and (min-width: 768px) {
     .dropdown-menu{
@@ -30,5 +36,6 @@ nav{
 }
 
 .active-link{
-    color: white !important;
+    border-bottom: 3px solid white;
+    /* color: white !important; */
 }

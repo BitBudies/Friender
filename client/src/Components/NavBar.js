@@ -1,21 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa";
 import "./NavBar.css"
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { useGetNavOptions } from '../hooks/navOptions';
 
 
 const NavBar = () => {
 
   const location = useLocation();
+  const navItems = useGetNavOptions();
+
+  const [activeNav,setActiveNav] = useState(1);
   
-  const handleAmigosClick = (event) => {
-    if (location.pathname === '/amigos') {
-      event.preventDefault();
-      window.location.reload();
-    }
-  };
+  // const handleAmigosClick = (event) => {
+  //   if (location.pathname === '/amigos') {
+  //     event.preventDefault();
+  //     window.location.reload();
+  //   }
+  // };
   return (
     <nav className='navbar navbar-expand-md bg-azul-fuerte text-light' data-bs-theme="dark">
       <div className='container-fluid px-lg-5 py-0'>
@@ -25,12 +29,13 @@ const NavBar = () => {
       </button>
         <div className='collapse navbar-collapse d-lg-flex justify-content-between' id="navbarSupportedContent">
           <ul className='navbar-nav px-lg-5'>
-            <li className='nav-item'>
-              <NavLink to={"/"} className='nav-link' activeClassName='active-link'>Home</NavLink>
-            </li>
-            <li className='nav-item'>
-             <NavLink to="/amigos" className='nav-link' activeClassName='active-link' onClick={handleAmigosClick}>Buscar Amigos</NavLink>
-             </li>
+            {navItems.map((item) => {
+              return (
+                <li className={`nav-item ${activeNav === item.id && "active-link"}`} key={item.id}>
+                    <NavLink to={item.url} className="nav-link" onClick={() => setActiveNav(item.id)}>{item.name}</NavLink>
+                </li>
+              );
+            })}
           </ul>
           <div className='nav-item dropdown '>
             <span className="nav-link dropdown-toggle profile-icon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
