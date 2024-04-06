@@ -51,7 +51,7 @@ class EnviarSolicitud(APIView):
         valido = fecha_ini > today
   
         if not valido:
-            return Response({"error": f"La fecha es {fecha_ini} no es valida"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": f"La fecha {fecha_ini} no es valida"}, status=status.HTTP_404_NOT_FOUND)
         
         try:
             nueva_solicitud = solicitud_alquiler(
