@@ -26,12 +26,16 @@ const SolicitudDetalles = () => {
         }
     }
 
-    const handleReject = async () => {
-        setEnableBtn(false);
-        await rechazar(id_solicitud);
-        showAlert('Solicitud Rechazada Correctamente', 'danger');
-        navigate("/perfil");
+    const handleCancel = async () => {
+        const cancelation = window.confirm('¿Estás seguro de cancelar el encuentro?');
+        if (cancelation) {
+            setEnableBtn(false);
+            await rechazar(id_solicitud);
+            showAlert('Solicitud Rechazada Correctamente', 'danger');
+            navigate("/perfil");
+        }
     }
+   
 
     function formatFecha(fecha) {
         const [year, month, day] = fecha.split("-");
@@ -74,7 +78,7 @@ const SolicitudDetalles = () => {
                                     >Aceptar</button>
                                     <button
                                         className={`btn btn-danger btn-lg ${!enableBtn && "disabled"}`}
-                                        onClick={handleReject}
+                                        onClick={handleCancel}
                                     >
                                         Rechazar
                                     </button>
