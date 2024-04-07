@@ -8,20 +8,20 @@ import SolicitudesPendientes from '../solicitudes/SolicitudesPendientes'
 
 
 const optionsData = [
-  {
-    id : 1, 
-    name : "Editar Perfil", 
-    toRender : <div className='editar-perfil'><h1>Editar Perfil</h1></div>},
+  // {
+  //   id : 1, 
+  //   name : "Editar Perfil", 
+  //   toRender : <div className='editar-perfil'><h1>Editar Perfil</h1></div>},
    {
-    id : 2,
+    id : 1,
     name: 'Ver solicitudes Pendientes',
     toRender: <SolicitudesPendientes/>
   },
-  {
-    id:3,
-    name: 'Configuracion',
-    toRender: <h1>Configuracion</h1>
-  }
+  // {
+  //   id:3,
+  //   name: 'Configuracion',
+  //   toRender: <h1>Configuracion</h1>
+  // }
 ]
 
 
