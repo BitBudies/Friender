@@ -27,7 +27,7 @@ const SolicitudDetalles = () => {
     }
 
     const handleCancel = async () => {
-        const cancelation = window.confirm('¿Estás seguro de cancelar el encuentro?');
+        const cancelation = window.confirm('¿Estás seguro de rechazar el encuentro?');
         if (cancelation) {
             setEnableBtn(false);
             await rechazar(id_solicitud);
