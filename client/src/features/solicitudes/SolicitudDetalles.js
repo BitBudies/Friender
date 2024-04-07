@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAceptarSolicitudMutation, useGetSolicitudPendienteByIdQuery, useRechazarSolicitudMutation } from './solicitudesSlice';
 import Loading from '../../Components/Loading';
@@ -12,8 +12,8 @@ const SolicitudDetalles = () => {
     const { showAlert } = useGlobalContext();
     const navigate = useNavigate();
 
-    const [aceptar, { isSuccess: acepterSuccess }] = useAceptarSolicitudMutation();
-    const [rechazar, { isSuccess: rechazarSuccess }] = useRechazarSolicitudMutation();
+    const [aceptar] = useAceptarSolicitudMutation();
+    const [rechazar ] = useRechazarSolicitudMutation();
     const { data: solicitud, isFetching, isSuccess } = useGetSolicitudPendienteByIdQuery(id_solicitud);
 
     const handleAccept = async () => {
