@@ -11,6 +11,9 @@ from .utils import calcular_edad
 from datetime import date
 from django.db.models import Avg
 
+def parseDate (year,month,day):
+    return year * 365 + month * 30 + day
+
 class EnviarSolicitud(APIView):
     def post(self, request, format=None):
         datos_recibidos = request.data
@@ -45,6 +48,8 @@ class EnviarSolicitud(APIView):
         
 
         # Verificar que sea fecha valida
+        
+
         fecha_ini = date.fromisoformat(datos_recibidos['fecha_inicio'])
         today = date.today()
 
@@ -52,7 +57,9 @@ class EnviarSolicitud(APIView):
   
         if not valido:
             return Response({"error": f"La fecha {fecha_ini} no es valida"}, status=status.HTTP_404_NOT_FOUND)
+
         
+
         try:
             nueva_solicitud = solicitud_alquiler(
                 cliente_id=cliente.cliente_id,
