@@ -14,7 +14,7 @@ const optionsData = [
   //   toRender : <div className='editar-perfil'><h1>Editar Perfil</h1></div>},
    {
     id : 1,
-    name: 'Ver solicitudes Pendientes',
+    name: 'Solicitudes Pendientes',
     toRender: <SolicitudesPendientes/>
   },
   // {
