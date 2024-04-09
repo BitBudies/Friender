@@ -21,7 +21,7 @@ const SolicitudDetalles = () => {
         if (confirmation) {
             setEnableBtn(false);
             await aceptar(id_solicitud);
-            showAlert('Solicitud Aceptada Correctamente', 'success');
+            showAlert('Solicitud Aceptada', 'success');
             navigate("/perfil");
         }
     }
@@ -32,7 +32,7 @@ const SolicitudDetalles = () => {
         if (cancelation) {
             setEnableBtn(false);
             await rechazar(id_solicitud);
-            showAlert('Solicitud Rechazada Correctamente', 'danger');
+            showAlert('Solicitud Rechazada', 'danger');
             navigate("/perfil");
         }
     }
@@ -66,7 +66,7 @@ const SolicitudDetalles = () => {
                                 <p><strong>Hora: </strong> {solicitud.hora_inicio.slice(0, 5)}</p>
                                 <p><strong>Tiempo: </strong> {solicitud.minutos} {solicitud.minutos === 1 ? "hr" : "hrs"}</p>
                                 <p><strong>Lugar: </strong> {solicitud.lugar} <span><FaMapMarkerAlt /></span> </p>
-                                <p><strong>Descripcion:</strong></p>
+                                <p><strong>Descripción:</strong></p>
                                 <p>{solicitud.descripcion}</p>
                             </div>
                             <div className='footer'>
