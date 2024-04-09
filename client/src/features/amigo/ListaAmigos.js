@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import './listaAmigos.css';
 import { useGetAmigosQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
@@ -12,13 +12,16 @@ const calificacionEstrellas = (calificacion) => {
 };
 
 const ListaAmigos = () => {
-
-    const [pageNumber,setPageNumber] = useState(1);
+    const {n_page} = useParams();
 
     const {data:amigos, isFetching, isSuccess} = useGetAmigosQuery({
-        pagina: pageNumber,
+        pagina: n_page,
         limite: 20
     });
+
+    useEffect(() => {
+        console.log(amigos);
+    },[amigos])
 
     if (isFetching) {
         return (            
@@ -59,6 +62,21 @@ const ListaAmigos = () => {
                     </div>
                     <p id="mensaje-no-more-results">No existen más resultados</p>
                 </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <Link class="page-link" > {"<"} </Link>
+                        </li>
+                        {Array.from({length: amigos.numero_paginas},(_,index) => {
+                            return <li className='page-item' >
+                                <Link className='page-link' to={`/amigos/page/${index + 1}`}>{index + 1}</Link>
+                            </li>
+                        })}
+                        <li class="page-item">
+                        <Link class="page-link" to={`/amigos/page/${n_page + 1}`} >{">"}</Link>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         );
     }   

@@ -35,7 +35,7 @@ function App() {
         <NavBar/>
         <Routes>
           <Route path='/' element={<Home/>}/>
-          <Route path='/amigos' element={<ListaAmigos/>}/>
+          <Route path='/amigos/page/:n_page' element={<ListaAmigos/>}/>
           <Route path='/amigos/:id_amigo' element={<PerfilAmigo/>}/>
           <Route path='/login' element= {<LogIn/>}/>
           <Route path='/perfil' element={<Perfil/>}/>
