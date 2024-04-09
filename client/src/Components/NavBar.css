@@ -35,7 +35,6 @@
     }
 }
 
-.active-link{
+.nav-link.active{
     border-bottom: 3px solid white;
-    /* color: white !important; */
 }
