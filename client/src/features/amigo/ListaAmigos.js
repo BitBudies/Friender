@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './listaAmigos.css';
 import { useGetAmigosQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
@@ -12,9 +12,11 @@ const calificacionEstrellas = (calificacion) => {
 };
 
 const ListaAmigos = () => {
+    const {n_page} = useParams();
+
     const {data:amigos, isFetching, isSuccess} = useGetAmigosQuery({
-        pagina: 1,
-        limite: 40
+        pagina: n_page,
+        limite: 20
     });
 
     if (isFetching) {

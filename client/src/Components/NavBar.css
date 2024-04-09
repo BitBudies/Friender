@@ -1,4 +1,4 @@
-nav{
+.navbar{
     position: fixed !important;
     width: 100vw;
     z-index: 1;

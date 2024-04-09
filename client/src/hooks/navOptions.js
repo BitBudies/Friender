@@ -9,7 +9,7 @@ const useGetNavOptions = () => {
         {
             id : 2,
             name : 'Buscar Amigos',
-            url: '/amigos',
+            url: '/amigos/page/1',
         },
     ]
 }
