@@ -44,7 +44,7 @@ const PerfilAmigo = () => {
                   <p><strong>Descripción:</strong> {amigo.descripcion}</p>
                 </div>
                 <div className='rectangulo'></div>
-                <p><h2><strong>Precio:</strong> {amigo.precio_amigo}$/hr</h2></p>
+                <p><h2><strong>Precio:</strong> {amigo.precio_amigo}Bs/hr</h2></p>
                 {formStatus.sent ? 
                 <div class={`profile-alert ${!formStatus.show && "hide"} alert alert-success`} role="alert">
                 <strong>{formStatus.message}</strong> 
