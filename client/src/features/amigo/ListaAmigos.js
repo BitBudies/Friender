@@ -37,10 +37,7 @@ const ListaAmigos = () => {
                             <div key={index} className='col'>
                                 <div className='card-amigo card card-list'>
                                     <div className='card-header'
-                                     style={{ backgroundImage: `url(/images/${
-                                        amigo.genero === 'M' ? "guy.png":
-                                        amigo.genero === 'F' ? "girl.png" : "otros.png"
-                                     })` }}/>
+                                     style={{ backgroundImage: `url(/images/user.jpeg)` }}/>
                                     <div className='card-body px-4'>
                                         <h5 className='card-title'>{amigo.nombre_completo}</h5>
                                         <div className='card-text'>
