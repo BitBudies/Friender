@@ -65,6 +65,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
   },[data, formStatus, isError, isLoading, isSuccess, setFormStatus, setShowForm,error])
 
   useEffect(() => {
+    console.log(formData);
     const isFilled = Object.keys(formData).every(item =>{
       if(item === "descripcion"){
         if(formData[item].length < 30){
@@ -117,14 +118,14 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
           <textarea className="form-control" id="descripcion" name="descripcion" rows="5" cols="50" required
           value={formData.descripcion} onChange={handleChange } maxLength={500}></textarea>
           <p className="text-muted">
-            {descripcionLength < 30 ? `${descripcionLength}/30 caracteres minimo.` : ''}
+            {descripcionLength < 30 ? `${descripcionLength}/30 caracteres mínimo.` : ''}
             {descripcionLength >= 100 && `${descripcionLength}/500 caracteres maximo.`}
           </p>
         </div> 
         {showFeedback.status && <p className='text-danger'>{showFeedback.message}</p>}
         
         <div className='form-bottom'>
-          <p id="texto-precio" >Total: {precio * formData.duracion} $us</p>
+          <p id="texto-precio" >Total: {precio * formData.duracion} Bs</p>
           <button className={`btn btn-azul ${disableBtn && "disabled"}`} 
           type="button" 
           onClick={handleSubmit}
