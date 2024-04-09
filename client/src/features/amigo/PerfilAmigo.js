@@ -40,7 +40,9 @@ const PerfilAmigo = () => {
               <div className='p-4'>
               <center><h2>Perfil de Amigo</h2></center>
                 <div className='rectangulo'></div>
-                <p><pre><strong>Descripción:</strong> {amigo.descripcion}</pre></p>
+                <div className='profile-description w-100'>
+                  <p><strong>Descripción:</strong> {amigo.descripcion}</p>
+                </div>
                 <div className='rectangulo'></div>
                 <p><h2><strong>Precio:</strong> {amigo.precio_amigo}$/hr</h2></p>
                 {formStatus.sent ? 

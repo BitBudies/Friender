@@ -11,6 +11,9 @@ from .utils import calcular_edad
 from datetime import date
 from django.db.models import Avg
 
+def parseDate (year,month,day):
+    return year * 365 + month * 30 + day
+
 class EnviarSolicitud(APIView):
     def post(self, request, format=None):
         datos_recibidos = request.data
@@ -31,18 +34,32 @@ class EnviarSolicitud(APIView):
             amigo = Amigo.objects.get(pk=datos_recibidos['amigo_id'])
         except Amigo.DoesNotExist:
             return Response({"error": "El amigo no existe"}, status=status.HTTP_400_BAD_REQUEST)
+        
         #Verificar que maximo sea 8 horas
         # duracion_horas = int(datos_recibidos['duracion'])
         if int(datos_recibidos['duracion']) > 8:
             return Response({"error": "La duración máxima permitida es de 8 horas"}, status=status.HTTP_400_BAD_REQUEST)
-        # Verificar que sea fecha valida
-        anio = int(datos_recibidos['fecha_inicio'][:4])
-        mes = int(datos_recibidos['fecha_inicio'][5:7])
-        dia = int(datos_recibidos['fecha_inicio'][8:])
-        today = date.today()
-        if anio <= today.year and mes <= today.month and dia <= today.day:
-            return Response({"error": f"La fecha {datos_recibidos['fecha_inicio']} no es valida"}, status=status.HTTP_404_NOT_FOUND)
         
+        descripcion = datos_recibidos['descripcion']
+        if len(descripcion) < 30:
+            return Response({"error": "La descripción debe tener al menos 30 caracteres"}, status=status.HTTP_400_BAD_REQUEST)
+        elif len(descripcion) > 500:
+            return Response({"error": "La descripción no puede tener más de 500 caracteres"}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+        # Verificar que sea fecha valida
+        
+
+        fecha_ini = date.fromisoformat(datos_recibidos['fecha_inicio'])
+        today = date.today()
+
+        valido = fecha_ini > today
+  
+        if not valido:
+            return Response({"error": f"La fecha {fecha_ini} no es valida"}, status=status.HTTP_404_NOT_FOUND)
+
+        
+
         try:
             nueva_solicitud = solicitud_alquiler(
                 cliente_id=cliente.cliente_id,
@@ -63,7 +80,7 @@ class EnviarSolicitud(APIView):
         return Response(
             {"mensaje": "Solicitud de alquiler creada correctamente"}, 
             status=status.HTTP_201_CREATED
-        )       
+        )
 
 class GetSolicitudesCliente(APIView):
     def get(self, request, cliente_id):
