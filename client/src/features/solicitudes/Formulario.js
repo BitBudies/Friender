@@ -119,7 +119,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
           value={formData.descripcion} onChange={handleChange } maxLength={500}></textarea>
           <p className="text-muted">
             {descripcionLength < 30 ? `${descripcionLength}/30 caracteres mínimo.` : ''}
-            {descripcionLength >= 100 && `${descripcionLength}/500 caracteres maximo.`}
+            {descripcionLength >= 100 && `${descripcionLength}/500 caracteres máximo.`}
           </p>
         </div> 
         {showFeedback.status && <p className='text-danger'>{showFeedback.message}</p>}
