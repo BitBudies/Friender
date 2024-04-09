@@ -4,17 +4,19 @@ import { RxCross2 } from "react-icons/rx";
 import { useEnviarSolicitudMutation } from './solicitudesSlice';
 import {useGlobalContext} from "../../context"
 
+const defaultValues = {
+  fecha_inicio : '',
+  lugar : '',
+  hora_inicio : '',
+  duracion : 1,
+  descripcion: '',
+}
+
 
 const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStatus}) => {
 
   const {clientId : cliente_id} = useGlobalContext();
-  const [formData,setFormData] = useState({
-    fecha_inicio : '',
-    lugar : '',
-    hora_inicio : '',
-    duracion : 1,
-    descripcion: '',
-  });
+  const [formData,setFormData] = useState(defaultValues);
 
   const [disableBtn,setDisableBtn] = useState(true);
   const [showFeedback,setShowFeedback] = useState({status : false, message : ""})
@@ -35,6 +37,11 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
       setDescripcionLength(value.length); // Actualiza la longitud de la descripción
     }
     setFormData({...formData,[e.target.name] : e.target.value})
+  }
+
+  const handleClose = () => {
+    setFormData(defaultValues);
+    setShowForm(false);
   }
 
   useEffect(() => {
@@ -65,6 +72,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
   },[data, formStatus, isError, isLoading, isSuccess, setFormStatus, setShowForm,error])
 
   useEffect(() => {
+    console.log(formData);
     const isFilled = Object.keys(formData).every(item =>{
       if(item === "descripcion"){
         if(formData[item].length < 30){
@@ -117,21 +125,21 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
           <textarea className="form-control" id="descripcion" name="descripcion" rows="5" cols="50" required
           value={formData.descripcion} onChange={handleChange } maxLength={500}></textarea>
           <p className="text-muted">
-            {descripcionLength < 30 ? `${descripcionLength}/30 caracteres minimo.` : ''}
-            {descripcionLength >= 500 && `${descripcionLength}/500 caracteres maximo.`}
+            {descripcionLength < 30 ? `${descripcionLength}/30 caracteres mínimo.` : ''}
+            {descripcionLength >= 100 && `${descripcionLength}/500 caracteres máximo.`}
           </p>
         </div> 
         {showFeedback.status && <p className='text-danger'>{showFeedback.message}</p>}
         
         <div className='form-bottom'>
-          <p id="texto-precio" >Total: {precio * formData.duracion} $us</p>
+          <p id="texto-precio" >Total: {precio * formData.duracion} Bs</p>
           <button className={`btn btn-azul ${disableBtn && "disabled"}`} 
           type="button" 
           onClick={handleSubmit}
           >Enviar Solicitud</button>
         </div>
         </form>
-        <div className='close-icon' onClick={() => setShowForm(false)}><span><RxCross2/></span></div>
+        <div className='close-icon' onClick={handleClose}><span><RxCross2/></span></div>
       </div>
     </div>
   )
