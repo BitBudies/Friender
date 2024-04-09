@@ -8,7 +8,7 @@
   height: 200px; /* Altura de la imagen */
   background-size: cover; 
   background-repeat: no-repeat; 
-  background-position: right; 
+  background-position: center; 
   border-radius: 100%; 
   margin-top: 50px;
 }
