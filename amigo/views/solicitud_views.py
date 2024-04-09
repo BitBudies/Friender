@@ -9,7 +9,9 @@ from ..models.solicitud_alquilerDB import solicitud_alquiler
 from ..models.calificacionDB import Calificacion
 from .utils import calcular_edad
 from datetime import date
+from datetime import timedelta
 from django.db.models import Avg
+
 
 def parseDate (year,month,day):
     return year * 365 + month * 30 + day
@@ -56,9 +58,12 @@ class EnviarSolicitud(APIView):
         valido = fecha_ini > today
   
         if not valido:
-            return Response({"error": f"La fecha {fecha_ini} no es valida"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": f"La fecha {fecha_ini} no es válida"}, status=status.HTTP_404_NOT_FOUND)
 
-        
+        today_14 = today + timedelta(days=14)
+
+        if fecha_ini > today_14:
+            return Response({"error": f"La fecha {fecha_ini} no debe pasar los 14 días"}, status=status.HTTP_404_NOT_FOUND)    
 
         try:
             nueva_solicitud = solicitud_alquiler(
