@@ -61,6 +61,10 @@ const ListaAmigos = () => {
                         )})}
                     </div>
                 </div>
+                {Number(n_page) === amigos.numero_paginas &&
+                    <p id="mensaje-no-more-results">No existen más resultados
+                    </p>
+                }
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
