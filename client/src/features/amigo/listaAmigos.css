@@ -76,3 +76,7 @@
     font-size: 2rem;
     margin: 20px !important;
 }
+
+.active .page-link{
+    background-color: var(--azul-oscuro);
+}
