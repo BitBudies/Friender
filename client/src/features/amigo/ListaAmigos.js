@@ -37,10 +37,7 @@ const ListaAmigos = () => {
                             <div key={index} className='col'>
                                 <div className='card-amigo card card-list'>
                                     <div className='card-header'
-                                     style={{ backgroundImage: `url(/images/${
-                                        amigo.genero === 'M' ? "guy.png":
-                                        amigo.genero === 'F' ? "girl.png" : "otros.png"
-                                     })` }}/>
+                                     style={{ backgroundImage: `url(/images/user.jpeg)` }}/>
                                     <div className='card-body px-4'>
                                         <h5 className='card-title'>{amigo.nombre_completo}</h5>
                                         <div className='card-text'>
@@ -52,7 +49,7 @@ const ListaAmigos = () => {
                                             </div>
                                             <div className="card-actions">
                                             <Link to={`/amigos/${amigo.amigo_id}`}className='btn btn-azul'>Ver Perfil</Link>                     
-                                                {amigo.precio_amigo} $/Hr  
+                                                {amigo.precio_amigo} Bs/Hr  
                                             </div>
                                         </div>
                                     </div>
@@ -60,20 +57,26 @@ const ListaAmigos = () => {
                             </div>
                         )})}
                     </div>
-                    <p id="mensaje-no-more-results">No existen más resultados</p>
                 </div>
+                {Number(n_page) === amigos.numero_paginas &&
+                    <p id="mensaje-no-more-results">No existen más resultados
+                    </p>
+                }
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <Link class="page-link" > {"<"} </Link>
+                        <li class="page-item">
+                            <Link class="page-link" to={`/amigos/page/${Number(n_page) > 1 ? Number(n_page) - 1 : Number(n_page)}`}> {"<"} </Link>
                         </li>
                         {Array.from({length: amigos.numero_paginas},(_,index) => {
-                            return <li className='page-item' >
+                            console.log(Number(n_page) === index + 1);
+                            return <li className={`pagination-item page-item ${Number(n_page) === index + 1 && "active"}`} >
                                 <Link className='page-link' to={`/amigos/page/${index + 1}`}>{index + 1}</Link>
                             </li>
                         })}
                         <li class="page-item">
-                        <Link class="page-link" to={`/amigos/page/${n_page + 1}`} >{">"}</Link>
+                        <Link class="page-link" to={`/amigos/page/${Number(n_page) < amigos.numero_paginas ? Number(n_page) + 1 : Number(n_page)}`} >
+                            {">"}
+                        </Link>
                         </li>
                     </ul>
                 </nav>

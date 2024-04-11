@@ -71,7 +71,7 @@ const SolicitudDetalles = () => {
                             </div>
                             <div className='footer'>
                                 <p className='fw-light text-secondary'> Fecha solicitud: {solicitud.timestamp_registro}</p>
-                                <h5>Total: {solicitud.precio * solicitud.minutos} $us </h5>
+                                <h5>Total: {solicitud.precio * solicitud.minutos} Bs </h5>
                                 <div className='btns'>
                                     <button
                                         onClick={handleAccept}
