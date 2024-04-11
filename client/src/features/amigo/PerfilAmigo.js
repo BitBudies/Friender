@@ -23,27 +23,22 @@ const PerfilAmigo = () => {
         <div className='container-fluid'>
           <div className='row perfil-amigo-container'>
           <div className='col-md-6 col-sm-12 perfil-amigo-left d-flex flex-column align-items-center g-5'>
-  <div className='image-container' style={{ 
-    backgroundImage: `url(/images/${
-      amigo.genero === 'M' ? "guy.png":
-      amigo.genero === 'F' ? "girl.png" : "otros.png"
-    })`
-  }} />
+          <div className='image-container' style={{ backgroundImage: `url(/images/user.jpeg)` }} />
   <div className='stars-and-name' style={{ fontSize: '35px' }}>
   <center><div>★★★☆☆</div></center>
     <center><h3>{amigo.nombre_completo}</h3></center>
   </div>
   <p><strong>Edad:</strong> {amigo.edad} años</p>
-  <div className='rectangulo2'></div>
+  
 </div>
             <div className='col-md-6 col-sm-12 perfil-amigo-right'>
               <div className='p-4'>
               <center><h2>Perfil de Amigo</h2></center>
-                <div className='rectangulo'></div>
+               
                 <div className='profile-description w-100'>
                   <p><strong>Descripción:</strong> {amigo.descripcion}</p>
                 </div>
-                <div className='rectangulo'></div>
+                
                 <p><h2><strong>Precio:</strong> {amigo.precio_amigo}Bs/hr</h2></p>
                 {formStatus.sent ? 
                 <div class={`profile-alert ${!formStatus.show && "hide"} alert alert-success`} role="alert">
