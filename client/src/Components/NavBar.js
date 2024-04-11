@@ -6,12 +6,15 @@ import { NavLink } from 'react-router-dom';
 // import { useLocation } from 'react-router-dom';
 import { useGetNavOptions } from '../hooks/navOptions';
 
+import { useLocation } from 'react-router-dom';
 
 const NavBar = () => {
 
   // const location = useLocation();
   const navItems = useGetNavOptions();
 
+  const location = useLocation();
+  const isActive = location.pathname.startsWith('/amigos/page/');
   // const [activeNav,setActiveNav] = useState(1);
   
   const handleAmigosClick = (event,id) => {
@@ -34,7 +37,7 @@ const NavBar = () => {
             {navItems.map((item) => {
               return (
                 <li className={`nav-item`} key={item.id}>
-                    <NavLink to={item.url} className="nav-link" onClick={(e) => handleAmigosClick(e,item.id)}>{item.name}</NavLink>
+                    <NavLink to={item.url} className={`nav-link nav-item ${isActive && item.id === 2 && 'active'}`} onClick={(e) => handleAmigosClick(e,item.id)}>{item.name}</NavLink>
                 </li>
               );
             })}
