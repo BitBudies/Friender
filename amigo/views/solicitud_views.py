@@ -36,7 +36,10 @@ class EnviarSolicitud(APIView):
             amigo = Amigo.objects.get(pk=datos_recibidos['amigo_id'])
         except Amigo.DoesNotExist:
             return Response({"error": "El amigo no existe"}, status=status.HTTP_400_BAD_REQUEST)
-        
+        #Verificar que la duracion sea mayor a cero
+        duracion = int(datos_recibidos['duracion'])
+        if duracion <= 0:
+            return Response({"error": "La duración debe ser mayor a 0"}, status=status.HTTP_400_BAD_REQUEST)
         #Verificar que maximo sea 8 horas
         # duracion_horas = int(datos_recibidos['duracion'])
         if int(datos_recibidos['duracion']) > 8:
