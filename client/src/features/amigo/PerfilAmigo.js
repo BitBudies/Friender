@@ -31,26 +31,28 @@ const PerfilAmigo = () => {
   <p><strong>Edad:</strong> {amigo.edad} años</p>
   
 </div>
-            <div className='col-md-6 col-sm-12 perfil-amigo-right'>
-              <div className='p-4'>
-              <center><h2>Perfil de Amigo</h2></center>
-               
-                <div className='profile-description w-100'>
-                  <p><strong>Descripción:</strong> {amigo.descripcion}</p>
-                </div>
-                
-                <p><h2><strong>Precio:</strong> {amigo.precio_amigo}Bs/hr</h2></p>
-                {formStatus.sent ? 
-                <div class={`profile-alert ${!formStatus.show && "hide"} alert alert-success`} role="alert">
-                <strong>{formStatus.message}</strong> 
-              </div> 
-              :
-              <div className='btn-container'>
-                  <button className='btn btn-azul mt-3 btn-solicitar' onClick={() => setShowForm(true)}>Solicitar Contacto</button>
-                </div>
-              }
-              </div>
-            </div>
+<div className='col-md-6 col-sm-12 perfil-amigo-right d-flex justify-content-center align-items-center'>
+  <div className='p-4 w-55'> {/* Modificamos el ancho de la parte derecha */}
+    <center><h2>Perfil de Amigo</h2></center>
+    <br /><br /><br /><br /><br />
+    <div className='profile-description w-100'>
+      <p><strong>Descripción:</strong> {amigo.descripcion}</p>
+    </div>
+    
+    <p><h2><strong>Precio:</strong> {amigo.precio_amigo}Bs/hr</h2></p>
+    {formStatus.sent ? 
+      <div class={`profile-alert ${!formStatus.show && "hide"} alert alert-success`} role="alert">
+        <strong>{formStatus.message}</strong> 
+        
+      </div> :
+      <div className='btn-container'>
+        <br /><br /><br /><br /><br />
+        <button className='btn btn-azul mt-3 btn-solicitar' onClick={() => setShowForm(true)}>Solicitar Contacto</button>
+      </div>
+    }
+  </div>
+</div>
+
           </div>
         </div>
         <Formulario amigo_id = {id_amigo}
