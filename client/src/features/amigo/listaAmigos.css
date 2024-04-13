@@ -1,4 +1,6 @@
-
+#lista_amigos{
+   scroll-behavior: smooth !important
+}
 
 .card-list {
     position: relative;
