@@ -7,7 +7,7 @@ const Modal = ({attributes,onConfirm,onReject,onClose }) => {
         <div className={`modal-overlay ${attributes.show && "modal-active"}`} onClick={onClose}>
             <div className="modal-details" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
-                    <h3>Confirmacion de {attributes.type === 1 ? "Aceptacion" : "Rechazo"}</h3>
+                    <h3>Confirmación de {attributes.type === 1 ? "Aceptacion" : "Rechazo"}</h3>
                 </div>
                 <div className="modal-body">
                     <p>¿Estás seguro de {attributes.type === 1 ? "Aceptar " : "Rechazar "} la solicitud?</p>

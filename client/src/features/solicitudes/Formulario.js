@@ -47,6 +47,8 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
     setDisableBtn(true);
   }
 
+  const rojoClase = descripcionLength < 30 ? 'texto-rojo' : '';
+
   useEffect(() => {
     console.log(data,isLoading,"form") 
     if(isError){
@@ -127,9 +129,11 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
           <label htmlFor="descripcion" className='form-label'>Descripción</label>
           <textarea className="form-control" id="descripcion" name="descripcion" rows="5" cols="50" required
           value={formData.descripcion} onChange={handleChange } maxLength={500}></textarea>
-          <p className={descripcionLength <= 30 ? "text-danger" : "text-muted"} id="caracteres-minimo">
-            {descripcionLength < 30 && descripcionLength >= 1 ? `${descripcionLength}/30 caracteres mínimo.` : ''}
-            {descripcionLength >= 30 && `${descripcionLength}/500 caracteres máximo.`}
+          <p className="text-muted" id="caracteres-minimo">
+          <span className={rojoClase}>
+      {descripcionLength < 30 ? `${descripcionLength}/30 caracteres mínimo.` : ''}
+    </span>
+            {descripcionLength >= 100 && `${descripcionLength}/500 caracteres máximo.`}
           </p>
         </div> 
         {showFeedback.status && <p className='text-danger'>{showFeedback.message}</p>}

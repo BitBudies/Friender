@@ -62,7 +62,7 @@ const ListaAmigos = () => {
                     <p id="mensaje-no-more-results">No existen más resultados
                     </p>
                 }
-                <nav aria-label="Page navigation example">
+                 <nav aria-label="Page navigation example">
                     <ul className="pagination justify-content-center">
                         <li className="page-item">
                             <Link className={`page-link ${Number(n_page) === 1 && "disabled"}`} 

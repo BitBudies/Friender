@@ -99,6 +99,11 @@ label::after {
     align-items: center;
 }
 
+.texto-rojo {
+    color: red;
+  }
+  
+
 @media screen and (max-width : 576px){
 
     #cajaFormularioEncuentro{
