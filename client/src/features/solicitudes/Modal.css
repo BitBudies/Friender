@@ -20,22 +20,23 @@
     border-radius: 15px;
     padding: 2.5rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    width: 400px;
-    height: 200px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
-
+.modal-footer{
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    justify-content: center !important;
+}
 
 .btn-close {
     position: absolute;
     top: 0;
     right: 0;
     margin: 10px; 
-}
-
-.modal-footer {
-    display: flex;
-    justify-content: center; 
 }
 
 .modal-footer .btn {
