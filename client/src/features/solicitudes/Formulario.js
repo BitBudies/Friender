@@ -42,6 +42,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
   const handleClose = () => {
     setFormData(defaultValues);
     setShowForm(false);
+    setDescripcionLength(0);
   }
 
   useEffect(() => {
@@ -124,7 +125,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
           <label htmlFor="descripcion" className='form-label'>Descripción</label>
           <textarea className="form-control" id="descripcion" name="descripcion" rows="5" cols="50" required
           value={formData.descripcion} onChange={handleChange } maxLength={500}></textarea>
-          <p className="text-muted">
+          <p className= {(descripcionLength >= 500) ? 'text-error' : 'text-muted'} >
             {descripcionLength < 30 ? `${descripcionLength}/30 caracteres mínimo.` : ''}
             {descripcionLength >= 100 && `${descripcionLength}/500 caracteres máximo.`}
           </p>
