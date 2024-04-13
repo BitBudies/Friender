@@ -26,7 +26,8 @@
     height: 100px; */
 }
 .modal-footer{
+    width: 100%;
     display: flex;
     gap: 1rem;
-    justify-content: start;
+    justify-content: start !important;
 }

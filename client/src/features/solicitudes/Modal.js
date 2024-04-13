@@ -1,7 +1,7 @@
 import React from 'react';
 import "./Modal.css";
 
-const Modal = ({attributes,onConfirm,onCancel,onClose }) => {
+const Modal = ({attributes,onConfirm,onReject,onClose }) => {
 
     return (
         <div className={`modal-overlay ${attributes.show && "modal-active"}`} 
@@ -17,7 +17,7 @@ const Modal = ({attributes,onConfirm,onCancel,onClose }) => {
                     {attributes.type === 1 ?
                         <button className="btn btn-success" onClick={onConfirm}>Aceptar</button>
                     :
-                        <button className="btn btn-danger" onClick={onCancel}>Rechazar</button>
+                        <button className="btn btn-danger" onClick={onReject}>Rechazar</button>
                     }
                     <button className="btn btn-outline-secondary" onClick={onClose}>Cancelar</button>
                 </div>
