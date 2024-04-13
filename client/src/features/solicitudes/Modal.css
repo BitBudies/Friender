@@ -10,11 +10,12 @@
     align-items: center;
 }
 
+
 .modal {
     background-color: white;
     border-radius: 5px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    width: 100px;
-    height: 100px;
+    width: 300px; 
+    height: auto; 
 }
