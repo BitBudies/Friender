@@ -65,6 +65,10 @@ label::after {
 }
 
 
+.text-error {
+    color: var(--red);
+}
+
 /*ICONO CERRAR*/
 #cajaFormularioEncuentro {
     position: relative;

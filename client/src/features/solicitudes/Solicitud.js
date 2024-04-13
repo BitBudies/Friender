@@ -42,7 +42,7 @@ const Solicitud = ({solicitud}) => {
                         <p>{solicitud.lugar}</p>
                     </div>
                     <div className='d-flex justify-content-between align-items-center solicitud-footer'>
-                        <Link to={`/usuario/solicitud_pendiente/${solicitud.solicitud_alquiler_id}`} id="ver-perfil-button" className='btn btn-azul' type="button">Ver solicitud</Link>
+                        <Link to={`/usuario/solicitud_pendiente/${solicitud.solicitud_alquiler_id}`} id="ver-perfil-button" className='btn btn-azul' type="button">Ver Solicitud</Link>
                         <p >{solicitud.duracion_minutos} Hrs</p>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ const ListaAmigos = () => {
 
     const {data:amigos, isFetching, isSuccess} = useGetAmigosQuery({
         pagina: n_page,
-        limite: 20
+        limite: 24
     });
 
     useEffect(() => {
@@ -48,7 +48,7 @@ const ListaAmigos = () => {
                                                 </div>
                                             </div>
                                             <div className="card-actions">
-                                            <Link to={`/amigos/${amigo.amigo_id}`}className='btn btn-azul'>Ver Perfil</Link>                     
+                                            <Link to={`/amigos/${amigo.amigo_id}`}className='btn btn-azul btn-ver-perfil'>Ver Perfil</Link>                     
                                                 {amigo.precio_amigo} Bs/Hr  
                                             </div>
                                         </div>
@@ -63,9 +63,10 @@ const ListaAmigos = () => {
                     </p>
                 }
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <Link class="page-link" to={`/amigos/page/${Number(n_page) > 1 ? Number(n_page) - 1 : Number(n_page)}`}> {"<"} </Link>
+                    <ul className="pagination justify-content-center">
+                        <li className="page-item">
+                            <Link className={`page-link ${Number(n_page) === 1 && "disabled"}`} 
+                            to={`/amigos/page/${Number(n_page) > 1 ? Number(n_page) - 1 : Number(n_page)}`}> {"<"} </Link>
                         </li>
                         {Array.from({length: amigos.numero_paginas},(_,index) => {
                             console.log(Number(n_page) === index + 1);
@@ -73,8 +74,9 @@ const ListaAmigos = () => {
                                 <Link className='page-link' to={`/amigos/page/${index + 1}`}>{index + 1}</Link>
                             </li>
                         })}
-                        <li class="page-item">
-                        <Link class="page-link" to={`/amigos/page/${Number(n_page) < amigos.numero_paginas ? Number(n_page) + 1 : Number(n_page)}`} >
+                        <li className="page-item">
+                        <Link className={`page-link ${Number(n_page) === amigos.numero_paginas && "disabled"}`} 
+                        to={`/amigos/page/${Number(n_page) < amigos.numero_paginas ? Number(n_page) + 1 : Number(n_page)}`} >
                             {">"}
                         </Link>
                         </li>

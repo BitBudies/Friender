@@ -5,6 +5,7 @@ import Loading from '../../Components/Loading';
 import "./SolicitudDetalles.css";
 import { useGlobalContext } from '../../context';
 import { FaMapMarkerAlt } from "react-icons/fa";
+import Modal from './Modal'; 
 
 const SolicitudDetalles = () => {
     const { id_solicitud } = useParams();
@@ -16,27 +17,24 @@ const SolicitudDetalles = () => {
     const [rechazar ] = useRechazarSolicitudMutation();
     const { data: solicitud, isFetching, isSuccess } = useGetSolicitudPendienteByIdQuery(id_solicitud);
 
-    const handleAccept = async () => {
-        const confirmation = window.confirm('¿Estás seguro de aceptar el encuentro?');
-        if (confirmation) {
-            setEnableBtn(false);
-            await aceptar(id_solicitud);
-            showAlert('Solicitud Aceptada Correctamente', 'success');
-            navigate("/perfil");
-        }
-    }
+    const [modalAttributes,setModalAttributes] = useState({
+        show : false,
+        type : 1
+    });
 
+    const handleAccept = async () => {
+        setEnableBtn(false);
+        await aceptar(id_solicitud);
+        showAlert('Solicitud Aceptada', 'success');
+        navigate("/perfil");
+    }
 
     const handleCancel = async () => {
-        const cancelation = window.confirm('¿Estás seguro de rechazar el encuentro?');
-        if (cancelation) {
-            setEnableBtn(false);
-            await rechazar(id_solicitud);
-            showAlert('Solicitud Rechazada Correctamente', 'danger');
-            navigate("/perfil");
-        }
+        setEnableBtn(false);
+        await rechazar(id_solicitud);
+        showAlert('Solicitud Rechazada', 'danger');
+        navigate("/perfil");
     }
-   
 
     function formatFecha(fecha) {
         const [year, month, day] = fecha.split("-");
@@ -53,8 +51,8 @@ const SolicitudDetalles = () => {
                         <div className='cliente-info'>
                             <div className='profile-image' style={{ backgroundImage: "url(/images/user.jpeg)" }}></div>
                             <h3>{solicitud.nombre_cliente}</h3>
-                            <span className='text-warning'>★★★☆☆</span>
                             <p>Edad: {solicitud.edad_cliente} años</p>
+                            <span className='text-warning'>★★★☆☆</span>
                             <Link to={`/amigos/${solicitud.cliente}`} className='btn btn-azul btn-lg'>Ver Perfil</Link>
                         </div>
                         <div className='solicitud-details'>
@@ -66,7 +64,7 @@ const SolicitudDetalles = () => {
                                 <p><strong>Hora: </strong> {solicitud.hora_inicio.slice(0, 5)}</p>
                                 <p><strong>Tiempo: </strong> {solicitud.minutos} {solicitud.minutos === 1 ? "hr" : "hrs"}</p>
                                 <p><strong>Lugar: </strong> {solicitud.lugar} <span><FaMapMarkerAlt /></span> </p>
-                                <p><strong>Descripcion:</strong></p>
+                                <p><strong>Descripción:</strong></p>
                                 <p>{solicitud.descripcion}</p>
                             </div>
                             <div className='footer'>
@@ -74,12 +72,24 @@ const SolicitudDetalles = () => {
                                 <h5>Total: {solicitud.precio * solicitud.minutos} Bs </h5>
                                 <div className='btns'>
                                     <button
-                                        onClick={handleAccept}
+                                        onClick={() => setModalAttributes(
+                                            {
+                                                ...modalAttributes,
+                                                show: true,
+                                                type : 1,
+                                            }
+                                        )}
                                         className={`btn btn-success btn-lg ${!enableBtn && "disabled"}`}
                                     >Aceptar</button>
                                     <button
                                         className={`btn btn-danger btn-lg ${!enableBtn && "disabled"}`}
-                                        onClick={handleCancel}
+                                        onClick={() => setModalAttributes(
+                                            {
+                                                ...modalAttributes,
+                                                show: true,
+                                                type : 2,
+                                            }
+                                        )}
                                     >
                                         Rechazar
                                     </button>
@@ -87,7 +97,14 @@ const SolicitudDetalles = () => {
                             </div>
                         </div>
                     </div>
+                    <Modal
+                    attributes={modalAttributes}
+                    onConfirm={handleAccept}
+                    onReject={handleCancel}
+                    onClose={() => setModalAttributes({...modalAttributes,show : false})}
+                />
                 </div>
+                
             </>
         )
     }

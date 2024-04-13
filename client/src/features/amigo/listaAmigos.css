@@ -3,7 +3,7 @@
 .card-list {
     position: relative;
     width: 100%; /* Ancho máximo del 100% */
-    max-width: 300px; /* Anchura máxima */
+    max-width: 300px;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -27,7 +27,7 @@
 
 .card-stats {
     position: relative;
-    width: 100%;
+    width: 100%; 
     display: flex;
     gap: 1rem;
     margin-bottom: 10px;
@@ -79,4 +79,8 @@
 
 .active .page-link{
     background-color: var(--azul-oscuro);
+}
+
+.btn-ver-perfil{
+    border-radius: 20px !important;
 }

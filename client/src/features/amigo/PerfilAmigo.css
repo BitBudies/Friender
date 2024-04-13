@@ -8,10 +8,11 @@
   height: 200px; /* Altura de la imagen */
   background-size: cover; 
   background-repeat: no-repeat; 
-  background-position: right; 
+  background-position: center; 
   border-radius: 100%; 
   margin-top: 50px;
 }
+ /*
 .rectangulo {
   width: 100%;
   height: 100px; 
@@ -29,7 +30,7 @@
   position: relative;
  
 }
-
+*/
 .perfil-amigo-left .stars-and-name {
   margin-bottom: 10px;
 }
