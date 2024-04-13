@@ -41,6 +41,18 @@ const SolicitudDetalles = () => {
         return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${year}`;
     }
 
+    function formatDateTime(timestamp) {
+        const date = new Date(timestamp);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero for single-digit months
+        const day = String(date.getDate()).padStart(2, '0');  // Add leading zero for single-digit days
+        const hours = String(date.getHours()).padStart(2, '0'); // Add leading zero for single-digit hours
+        const minutes = String(date.getMinutes()).padStart(2, '0'); // Add leading zero for single-digit minutes
+        const seconds = String(date.getSeconds()).padStart(2, '0'); // Add leading zero for single-digit seconds
+
+        return `${day}/${month}/${year}  ${hours}:${minutes}:${seconds}`;
+    }
+
     if (isFetching) {
         return <Loading />
     } else if (isSuccess) {
@@ -68,7 +80,7 @@ const SolicitudDetalles = () => {
                                 <p>{solicitud.descripcion}</p>
                             </div>
                             <div className='footer'>
-                                <p className='fw-light text-secondary'> Fecha solicitud: {solicitud.timestamp_registro}</p>
+                                <p className='fw-light text-secondary'> Fecha solicitud: {formatDateTime(solicitud.timestamp_registro)}</p>
                                 <h5>Total: {solicitud.precio * solicitud.minutos} Bs </h5>
                                 <div className='btns'>
                                     <button

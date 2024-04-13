@@ -84,3 +84,7 @@
 .btn-ver-perfil{
     border-radius: 20px !important;
 }
+
+.d-none{
+    display: none;
+}

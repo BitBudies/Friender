@@ -86,7 +86,7 @@ class EnviarSolicitud(APIView):
         
         # Devolver una respuesta correcta
         return Response(
-            {"mensaje": "Solicitud de alquiler creada correctamente"}, 
+            {"mensaje": "El formulario ha sido enviado correctamente"}, 
             status=status.HTTP_201_CREATED
         )
 
