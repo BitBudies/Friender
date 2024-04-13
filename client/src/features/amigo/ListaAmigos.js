@@ -16,7 +16,7 @@ const ListaAmigos = () => {
 
     const {data:amigos, isFetching, isSuccess} = useGetAmigosQuery({
         pagina: n_page,
-        limite: 20
+        limite: 24
     });
 
     useEffect(() => {
@@ -48,7 +48,7 @@ const ListaAmigos = () => {
                                                 </div>
                                             </div>
                                             <div className="card-actions">
-                                            <Link to={`/amigos/${amigo.amigo_id}`}className='btn btn-azul'>Ver Perfil</Link>                     
+                                            <Link to={`/amigos/${amigo.amigo_id}`}className='btn btn-azul btn-ver-perfil'>Ver Perfil</Link>                     
                                                 {amigo.precio_amigo} Bs/Hr  
                                             </div>
                                         </div>

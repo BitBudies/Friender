@@ -80,3 +80,7 @@
 .active .page-link{
     background-color: var(--azul-oscuro);
 }
+
+.btn-ver-perfil{
+    border-radius: 20px !important;
+}
