@@ -31,12 +31,41 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
     await send(body)
   }
 
-  const handleChange = (e) =>{
+  const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'descripcion') {
       setDescripcionLength(value.length); // Actualiza la longitud de la descripción
     }
-    setFormData({...formData,[e.target.name] : e.target.value})
+    setFormData({...formData, [name]: value});
+  };
+  
+  const fechaValida = (value) => {
+    const selectedDate = new Date(value);
+    const currentDate = new Date();
+    let messageFecha="";
+    
+    const futureDate = new Date(currentDate);
+    futureDate.setDate(currentDate.getDate() + 14);
+
+    if (selectedDate < currentDate) {
+      messageFecha = "La fecha " + formatFecha(value) + " no es válida";
+    } else if(selectedDate >= futureDate ){
+      messageFecha = "La fecha no debe pasar los 14 dias";
+    }
+    return messageFecha;
+  }
+
+  function formatFecha(fecha) {
+    const [year, month, day] = fecha.split("-");
+    return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${year}`;
+}
+
+  const duracionValida = (value) => {
+    let messageDuracion="";
+    if (value > 8) {
+      messageDuracion = "La duración máxima permitida es de 8 horas";
+    }
+    return messageDuracion;
   }
 
   const handleClose = () => {
@@ -106,6 +135,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
             id="fecha" name="fecha_inicio" 
             placeholder="dd/mm/aa" required 
             value={formData.fecha_inicio} onChange={handleChange}/>
+            <p className='text-danger'>{fechaValida(formData.fecha_inicio)}</p>
           </div>
           <div className='form-item'>
             <label htmlFor="hora" className='form-label'>Hora</label>
@@ -118,6 +148,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
             <label htmlFor="duracion" className='form-label'>Duración (hrs)</label>
             <input className="form-control" type="number" id="duracion" name="duracion" min="1" max="8" required
             value={formData.duracion} onChange={handleChange }/>
+            <p className='text-danger'>{duracionValida(formData.duracion)}</p>
           </div>
             <div id="direction-input" className='form-item'>
             <label htmlFor="direccion" className='form-label'>Dirección</label>
@@ -136,7 +167,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
             {descripcionLength >= 100 && `${descripcionLength}/500 caracteres máximo.`}
           </p>
         </div> 
-        {showFeedback.status && <p className='text-danger'>{showFeedback.message}</p>}
+        {/*showFeedback.status && <p className='text-danger'>{showFeedback.message}</p>*/}
         
         <div className='form-bottom'>
           <p id="texto-precio" >Total: {precio * formData.duracion} Bs</p>

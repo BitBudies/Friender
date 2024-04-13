@@ -20,8 +20,9 @@
     border-radius: 15px;
     padding: 2.5rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    width: 400px;
-    height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.7rem;
     position: relative;
 }
 
@@ -35,7 +36,7 @@
 
 .modal-footer {
     display: flex;
-    justify-content: center !important; 
+    justify-content: start !important; 
 }
 
 .modal-footer .btn {
