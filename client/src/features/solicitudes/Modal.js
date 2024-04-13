@@ -4,14 +4,13 @@ import "./Modal.css";
 const Modal = ({attributes,onConfirm,onReject,onClose }) => {
 
     return (
-        <div className={`modal-overlay ${attributes.show && "modal-active"}`} 
-        onClick={onClose}>
-            <div className="modal-details">
+        <div className={`modal-overlay ${attributes.show && "modal-active"}`} onClick={onClose}>
+            <div className="modal-details" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
                     <h3>Confirmacion de {attributes.type === 1 ? "Aceptacion" : "Rechazo"}</h3>
                 </div>
                 <div className="modal-body">
-                    <p>¿Estás seguro de {attributes.type ===1 ? "Aceptar " : "Rechazar "} la solicitud.</p>
+                    <p>¿Estás seguro de {attributes.type === 1 ? "Aceptar " : "Rechazar "} la solicitud?</p>
                 </div>
                 <div className="modal-footer">
                     {attributes.type === 1 ?
@@ -21,6 +20,7 @@ const Modal = ({attributes,onConfirm,onReject,onClose }) => {
                     }
                     <button className="btn btn-outline-secondary" onClick={onClose}>Cancelar</button>
                 </div>
+                <button className="btn btn-close" onClick={onClose}></button> 
             </div>
         </div>
     );

@@ -4,14 +4,15 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);     
+    background-color: rgba(0, 0, 0, 0.5);
     display: none;
 }
 
-.modal-overlay.modal-active{
+.modal-overlay.modal-active {
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 .modal-details {
@@ -19,15 +20,25 @@
     border-radius: 15px;
     padding: 2.5rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 1.7rem;
-    /* width: 100px;
-    height: 100px; */
+    gap: 1.5rem;
 }
 .modal-footer{
     width: 100%;
     display: flex;
     gap: 1rem;
-    justify-content: start !important;
+    justify-content: center !important;
+}
+
+.btn-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px; 
+}
+
+.modal-footer .btn {
+    margin: 0 0.5rem;
 }
