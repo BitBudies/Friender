@@ -10,7 +10,7 @@ const Modal = ({attributes,onConfirm,onReject,onClose }) => {
                     <h3>Confirmación de {attributes.type === 1 ? "Aceptacion" : "Rechazo"}</h3>
                 </div>
                 <div className="modal-body">
-                    <p>¿Estás seguro de {attributes.type === 1 ? "Aceptar " : "Rechazar "} la solicitud?</p>
+                    <p >¿Estás seguro de {attributes.type === 1 ? "Aceptar " : "Rechazar "} la solicitud?</p>
                 </div>
                 <div className="modal-footer">
                     {attributes.type === 1 ?
