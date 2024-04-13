@@ -20,10 +20,8 @@
 }
 
 .solicitud-recibida-card:hover{
-    background-color: var(--azul-claro);
-    transition: 0.5s;
-    color: white;
-    width: 17.2rem;
+    transform: scale(0.98);
+    box-shadow: 0 0 10px 1px var(--gris);
 }
 
 
