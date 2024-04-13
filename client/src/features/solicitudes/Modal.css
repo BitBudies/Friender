@@ -15,13 +15,13 @@
 }
 
 .modal-details {
-    background-color: white;
-    border-radius: 5px;
-    padding: 2rem;
+    background-color: var(--white);
+    border-radius: 15px;
+    padding: 2.5rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.7rem;
     /* width: 100px;
     height: 100px; */
 }
