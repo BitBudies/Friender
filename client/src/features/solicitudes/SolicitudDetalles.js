@@ -17,8 +17,10 @@ const SolicitudDetalles = () => {
     const [rechazar ] = useRechazarSolicitudMutation();
     const { data: solicitud, isFetching, isSuccess } = useGetSolicitudPendienteByIdQuery(id_solicitud);
 
-    const [showAcceptModal, setShowAcceptModal] = useState(false);
-    const [showCancelModal, setShowCancelModal] = useState(false);
+    const [modalAttributes,setModalAttributes] = useState({
+        show : false,
+        type : 1
+    });
 
     const handleAccept = async () => {
         setEnableBtn(false);
@@ -70,12 +72,24 @@ const SolicitudDetalles = () => {
                                 <h5>Total: {solicitud.precio * solicitud.minutos} Bs </h5>
                                 <div className='btns'>
                                     <button
-                                        onClick={() => setShowAcceptModal(true)}
+                                        onClick={() => setModalAttributes(
+                                            {
+                                                ...modalAttributes,
+                                                show: true,
+                                                type : 1,
+                                            }
+                                        )}
                                         className={`btn btn-success btn-lg ${!enableBtn && "disabled"}`}
                                     >Aceptar</button>
                                     <button
                                         className={`btn btn-danger btn-lg ${!enableBtn && "disabled"}`}
-                                        onClick={() => setShowCancelModal(true)}
+                                        onClick={() => setModalAttributes(
+                                            {
+                                                ...modalAttributes,
+                                                show: true,
+                                                type : 2,
+                                            }
+                                        )}
                                     >
                                         Rechazar
                                     </button>
@@ -84,22 +98,10 @@ const SolicitudDetalles = () => {
                         </div>
                     </div>
                     <Modal
-                    show={showAcceptModal}
-                    onClose={() => setShowAcceptModal(false)}
+                    attributes={modalAttributes}
                     onConfirm={handleAccept}
-                    title="Confirmación de Aceptación"
-                    message="¿Estás seguro de aceptar el encuentro?"
-                    confirmText="Aceptar"
-                    cancelText="Cancelar"
-                />
-                <Modal
-                    show={showCancelModal}
-                    onClose={() => setShowCancelModal(false)}
-                    onConfirm={handleCancel}
-                    title="Confirmación de Rechazo"
-                    message="¿Estás seguro de rechazar el encuentro?"
-                    confirmText="Rechazar"
-                    cancelText="Cancelar"
+                    onReject={handleCancel}
+                    onClose={() => setModalAttributes({...modalAttributes,show : false})}
                 />
                 </div>
                 
