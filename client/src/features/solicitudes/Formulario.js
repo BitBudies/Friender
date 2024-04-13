@@ -44,6 +44,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
     setShowForm(false);
     setShowFeedback({status: false,message : ""});
     setDescripcionLength(0);
+    setDisableBtn(true);
   }
 
   useEffect(() => {
