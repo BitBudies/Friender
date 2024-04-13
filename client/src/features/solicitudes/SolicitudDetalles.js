@@ -5,6 +5,7 @@ import Loading from '../../Components/Loading';
 import "./SolicitudDetalles.css";
 import { useGlobalContext } from '../../context';
 import { FaMapMarkerAlt } from "react-icons/fa";
+import Modal from './Modal'; 
 
 const SolicitudDetalles = () => {
     const { id_solicitud } = useParams();
@@ -16,27 +17,22 @@ const SolicitudDetalles = () => {
     const [rechazar ] = useRechazarSolicitudMutation();
     const { data: solicitud, isFetching, isSuccess } = useGetSolicitudPendienteByIdQuery(id_solicitud);
 
-    const handleAccept = async () => {
-        const confirmation = window.confirm('¿Estás seguro de aceptar el encuentro?');
-        if (confirmation) {
-            setEnableBtn(false);
-            await aceptar(id_solicitud);
-            showAlert('Solicitud Aceptada', 'success');
-            navigate("/perfil");
-        }
-    }
+    const [showAcceptModal, setShowAcceptModal] = useState(false);
+    const [showCancelModal, setShowCancelModal] = useState(false);
 
+    const handleAccept = async () => {
+        setEnableBtn(false);
+        await aceptar(id_solicitud);
+        showAlert('Solicitud Aceptada', 'success');
+        navigate("/perfil");
+    }
 
     const handleCancel = async () => {
-        const cancelation = window.confirm('¿Estás seguro de rechazar el encuentro?');
-        if (cancelation) {
-            setEnableBtn(false);
-            await rechazar(id_solicitud);
-            showAlert('Solicitud Rechazada', 'danger');
-            navigate("/perfil");
-        }
+        setEnableBtn(false);
+        await rechazar(id_solicitud);
+        showAlert('Solicitud Rechazada', 'danger');
+        navigate("/perfil");
     }
-   
 
     function formatFecha(fecha) {
         const [year, month, day] = fecha.split("-");
@@ -74,12 +70,12 @@ const SolicitudDetalles = () => {
                                 <h5>Total: {solicitud.precio * solicitud.minutos} Bs </h5>
                                 <div className='btns'>
                                     <button
-                                        onClick={handleAccept}
+                                        onClick={() => setShowAcceptModal(true)}
                                         className={`btn btn-success btn-lg ${!enableBtn && "disabled"}`}
                                     >Aceptar</button>
                                     <button
                                         className={`btn btn-danger btn-lg ${!enableBtn && "disabled"}`}
-                                        onClick={handleCancel}
+                                        onClick={() => setShowCancelModal(true)}
                                     >
                                         Rechazar
                                     </button>
@@ -87,7 +83,26 @@ const SolicitudDetalles = () => {
                             </div>
                         </div>
                     </div>
+                    <Modal
+                    show={showAcceptModal}
+                    onClose={() => setShowAcceptModal(false)}
+                    onConfirm={handleAccept}
+                    title="Confirmación de Aceptación"
+                    message="¿Estás seguro de aceptar el encuentro?"
+                    confirmText="Aceptar"
+                    cancelText="Cancelar"
+                />
+                <Modal
+                    show={showCancelModal}
+                    onClose={() => setShowCancelModal(false)}
+                    onConfirm={handleCancel}
+                    title="Confirmación de Rechazo"
+                    message="¿Estás seguro de rechazar el encuentro?"
+                    confirmText="Rechazar"
+                    cancelText="Cancelar"
+                />
                 </div>
+                
             </>
         )
     }
