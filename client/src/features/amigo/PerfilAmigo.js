@@ -33,7 +33,7 @@ const PerfilAmigo = () => {
 </div>
 <div className='col-md-6 col-sm-12 perfil-amigo-right d-flex justify-content-center align-items-center'>
   <div className='p-4 w-55'> {/* Modificamos el ancho de la parte derecha */}
-    <center><h2>Perfil de Amigo</h2></center>
+    <center><h2>Perfil amigo</h2></center>
     <br /><br /><br /><br /><br />
     <div className='profile-description w-100'>
       <p><strong>Descripción:</strong> {amigo.descripcion}</p>
@@ -47,7 +47,7 @@ const PerfilAmigo = () => {
       </div> :
       <div className='btn-container'>
         <br /><br /><br /><br /><br />
-        <button className='btn btn-azul mt-3 btn-solicitar' onClick={() => setShowForm(true)}>Solicitar Contacto</button>
+        <button className='btn btn-azul mt-3 btn-solicitar' onClick={() => setShowForm(true)}>Solicitar contacto</button>
       </div>
     }
   </div>

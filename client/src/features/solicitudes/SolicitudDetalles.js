@@ -53,8 +53,8 @@ const SolicitudDetalles = () => {
                         <div className='cliente-info'>
                             <div className='profile-image' style={{ backgroundImage: "url(/images/user.jpeg)" }}></div>
                             <h3>{solicitud.nombre_cliente}</h3>
-                            <span className='text-warning'>★★★☆☆</span>
                             <p>Edad: {solicitud.edad_cliente} años</p>
+                            <span className='text-warning'>★★★☆☆</span>
                             <Link to={`/amigos/${solicitud.cliente}`} className='btn btn-azul btn-lg'>Ver Perfil</Link>
                         </div>
                         <div className='solicitud-details'>
