@@ -32,9 +32,26 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
   }
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
     if (name === 'descripcion') {
       setDescripcionLength(value.length); // Actualiza la longitud de la descripción
+    }
+    if(name === 'duracion') {
+      if(value > 8){
+        value = 8;
+      }
+      if(value < 0){
+        value = 0;
+      }
+    }
+
+    if(name === 'fecha_inicio'){
+      console.log(formData.fecha_inicio);
+      console.log(value.length);
+      if(value.length > 10){
+        setFormData({...formData,fecha_inicio : formData.fecha_inicio});
+        return;
+      }
     }
     setFormData({...formData, [name]: value});
   };
@@ -114,6 +131,12 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
           return false
         }
       }
+      if(item === "duracion"){
+        if(formData[item] === '0'){
+          setDisableBtn(true);
+          return false
+        }
+      }
       return formData[item]
     } )
     if(isFilled){
@@ -167,7 +190,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
             {descripcionLength >= 100 && `${descripcionLength}/500 caracteres máximo.`}
           </p>
         </div> 
-        {/*showFeedback.status && <p className='text-danger'>{showFeedback.message}</p>*/}
+        {showFeedback.status && <p className='text-danger'>{showFeedback.message}</p>}
         
         <div className='form-bottom'>
           <p id="texto-precio" >Total: {precio * formData.duracion} Bs</p>
