@@ -44,6 +44,15 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
         value = 0;
       }
     }
+
+    if(name === 'fecha_inicio'){
+      console.log(formData.fecha_inicio);
+      console.log(value.length);
+      if(value.length > 10){
+        setFormData({...formData,fecha_inicio : formData.fecha_inicio});
+        return;
+      }
+    }
     setFormData({...formData, [name]: value});
   };
   
