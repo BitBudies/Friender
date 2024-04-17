@@ -190,7 +190,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
             {descripcionLength >= 100 && `${descripcionLength}/500 caracteres máximo.`}
           </p>
         </div> 
-        {/*showFeedback.status && <p className='text-danger'>{showFeedback.message}</p>*/}
+        {showFeedback.status && <p className='text-danger'>{showFeedback.message}</p>}
         
         <div className='form-bottom'>
           <p id="texto-precio" >Total: {precio * formData.duracion} Bs</p>

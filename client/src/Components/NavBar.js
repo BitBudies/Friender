@@ -20,14 +20,11 @@ const NavBar = () => {
   const isActive = location.pathname.startsWith('/amigos/page/');
   // const [activeNav,setActiveNav] = useState(1);
   
-  const handleAmigosClick = (event,id) => {
-    //  setActiveNav(id);
-    //  console.log(id);
-    // if (location.pathname === '/amigos' && activeNav === 2) {
-    //   event.preventDefault();
-    //   window.location.reload();
-    // }
-  };
+  const handleAmigosClick = () => {
+    if(isActive){
+      goToBeginning();
+    }
+  }
   return (
     <nav className='navbar navbar-expand-md bg-azul-fuerte text-light' data-bs-theme="dark">
       <div className='container-fluid px-lg-5 py-0'>
@@ -40,7 +37,7 @@ const NavBar = () => {
             {navItems.map((item) => {
               return (
                 <li className={`nav-item`} key={item.id}>
-                    <NavLink to={item.url} className={`nav-link nav-item ${isActive && item.id === 2 && 'active'}`} onClick={ goToBeginning}>{item.name}</NavLink>
+                    <NavLink to={item.url} className={`nav-link nav-item ${isActive && item.id === 2 && 'active'}`} onClick={ handleAmigosClick}>{item.name}</NavLink>
                 </li>
               );
             })}
