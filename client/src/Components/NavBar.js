@@ -53,8 +53,8 @@ const NavBar = () => {
             <ul className="dropdown-menu">
               <li><Link className="dropdown-item" to={"/acerca"}>Acerca De</Link></li>
               <li><Link className="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
-              <li><hr className="dropdown-divider"/></li>
-              <li><button className="dropdown-item ">Cerrar Sesión</button></li>
+              {/* <li><hr className="dropdown-divider"/></li>
+              <li><button className="dropdown-item ">Cerrar Sesión</button></li> */}
             </ul>
           </div>
         </div>

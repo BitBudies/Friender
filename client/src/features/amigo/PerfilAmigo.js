@@ -4,6 +4,7 @@ import { useGetAmigoByIdQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
 import "./PerfilAmigo.css";
 import Formulario from '../solicitudes/Formulario';
+import { pictures } from '../api/pictures';
 
 const PerfilAmigo = () => {
   const { id_amigo } = useParams();
@@ -22,12 +23,12 @@ const PerfilAmigo = () => {
       <div className='page'>
           <div className='perfil-amigo-container'>
               <div className=' perfil-amigo-left '>
-                <div className='image-container' style={{ backgroundImage: `url(/images/user.jpeg)` }} />
+                <div className='image-container' style={{ backgroundImage: `url("${pictures[4]}")` }} />
                 <div className='stars-and-name' style={{ fontSize: '35px' }}>
                       <div className='text-warning'>★★★☆☆</div>
                       <h3>{amigo.nombre_completo}</h3>
                 </div>
-                <p><strong>Edad:</strong> {amigo.edad} años</p>
+                <p><strong>Edad:</strong>18 años</p>
       
               </div>
               <div className='perfil-amigo-right'>
@@ -37,7 +38,7 @@ const PerfilAmigo = () => {
                     <p><strong>Descripción:</strong> {amigo.descripcion}</p>
                   </div>
                   
-                  <p><h4><strong>Precio:</strong> {amigo.precio_amigo}Bs/hr</h4></p>
+                  <p><h4><strong>Precio:</strong> {amigo.precio_amigo} Bs/hr</h4></p>
                   {formStatus.sent ? 
                     <div class={`profile-alert ${!formStatus.show && "hide"} alert alert-success`} role="alert">
                       <strong>{formStatus.message}</strong> 

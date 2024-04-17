@@ -6,6 +6,7 @@ import "./SolicitudDetalles.css";
 import { useGlobalContext } from '../../context';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import Modal from './Modal'; 
+import { pictures } from '../api/pictures'; 
 
 const SolicitudDetalles = () => {
     const { id_solicitud } = useParams();
@@ -61,7 +62,7 @@ const SolicitudDetalles = () => {
                 <div id='solicitud_detalles' className='page'>
                     <div className='solicitud-detalles-center'>
                         <div className='cliente-info'>
-                            <div className='profile-image' style={{ backgroundImage: "url(/images/user.jpeg)" }}></div>
+                            <div className='profile-image' style={{ backgroundImage: `url(${pictures[pictures.length - 3]})` }}></div>
                             <h3>{solicitud.nombre_cliente}</h3>
                             <p>Edad: {solicitud.edad_cliente} años</p>
                             <span className='text-warning'>★★★☆☆</span>
