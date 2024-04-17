@@ -22,7 +22,10 @@ class Cliente(models.Model):
     usuario = models.CharField(max_length=20)
     correo = models.CharField(max_length=100)
     contrasena = models.CharField(max_length=255)
-    dinero = models.BigIntegerField()
+    
+    dinero = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    
+    
     estado = models.CharField(max_length=1, choices=ESTADO_OPCIONES)
     timestamp_registro = models.DateTimeField(auto_now_add=True)
     
