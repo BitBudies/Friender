@@ -7,8 +7,11 @@ import { NavLink } from 'react-router-dom';
 import { useGetNavOptions } from '../hooks/navOptions';
 
 import { useLocation } from 'react-router-dom';
+import { useGlobalContext } from '../context';
 
 const NavBar = () => {
+
+  const {goToBeginning} = useGlobalContext();
 
   // const location = useLocation();
   const navItems = useGetNavOptions();
@@ -37,7 +40,7 @@ const NavBar = () => {
             {navItems.map((item) => {
               return (
                 <li className={`nav-item`} key={item.id}>
-                    <NavLink to={item.url} className={`nav-link nav-item ${isActive && item.id === 2 && 'active'}`} onClick={(e) => handleAmigosClick(e,item.id)}>{item.name}</NavLink>
+                    <NavLink to={item.url} className={`nav-link nav-item ${isActive && item.id === 2 && 'active'}`} onClick={ goToBeginning}>{item.name}</NavLink>
                 </li>
               );
             })}

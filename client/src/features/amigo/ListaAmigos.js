@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, {  useEffect} from 'react';
 import { Link, useParams } from 'react-router-dom';
 import './listaAmigos.css';
 import { useGetAmigosQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
 import { FaUser } from "react-icons/fa";
+import { useGlobalContext } from '../../context';
 
 const calificacionEstrellas = (calificacion) => {
     const numEstrellas = Math.round(calificacion);
@@ -14,17 +15,14 @@ const calificacionEstrellas = (calificacion) => {
 const ListaAmigos = () => {
     const {n_page} = useParams();
 
-    const pageRef = useRef();
+    const {pageRef,goToBeginning} = useGlobalContext();
 
     const {data:amigos, isFetching, isSuccess} = useGetAmigosQuery({
         pagina: n_page,
         limite: 24
     });
 
-    const goToBeginning = () => {
-        console.log(pageRef.current.scrollTop,"pressing");
-        pageRef.current.scrollTop = 0;
-    }
+   
 
     useEffect(() => {
         console.log(amigos);
@@ -76,7 +74,7 @@ const ListaAmigos = () => {
                             to={`/amigos/page/${Number(n_page) > 1 ? Number(n_page) - 1 : Number(n_page)}`}> {"<"} </Link>
                         </li>
                         {Array.from({length: amigos.numero_paginas},(_,index) => {
-                            return <li className={`pagination-item page-item ${Number(n_page) === index + 1 && "active"}`} >
+                            return <li key={index} className={`pagination-item page-item ${Number(n_page) === index + 1 && "active"}`} >
                                 <Link className='page-link' 
                                 to={`/amigos/page/${index + 1}`}
                                 onClick={goToBeginning}
