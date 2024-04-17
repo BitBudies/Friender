@@ -4,6 +4,7 @@ import { useGetAmigoByIdQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
 import "./PerfilAmigo.css";
 import Formulario from '../solicitudes/Formulario';
+import { pictures } from '../api/pictures';
 
 const PerfilAmigo = () => {
   const { id_amigo } = useParams();
@@ -20,41 +21,36 @@ const PerfilAmigo = () => {
   } else if (isSuccess) {
     return (
       <div className='page'>
-        <div className='container-fluid'>
-          <div className='row perfil-amigo-container'>
-          <div className='col-md-6 col-sm-12 perfil-amigo-left d-flex flex-column align-items-center g-5'>
-          <div className='image-container' style={{ backgroundImage: `url(/images/user.jpeg)` }} />
-  <div className='stars-and-name' style={{ fontSize: '35px' }}>
-  <center><div>★★★☆☆</div></center>
-    <center><h3>{amigo.nombre_completo}</h3></center>
-  </div>
-  <p><strong>Edad:</strong> {amigo.edad} años</p>
-  
-</div>
-<div className='col-md-6 col-sm-12 perfil-amigo-right d-flex justify-content-center align-items-center'>
-  <div className='p-4 w-55'> {/* Modificamos el ancho de la parte derecha */}
-    <center><h2>Perfil amigo</h2></center>
-    <br /><br /><br /><br /><br />
-    <div className='profile-description w-100'>
-      <p><strong>Descripción:</strong> {amigo.descripcion}</p>
-    </div>
-    
-    <p><h2><strong>Precio:</strong> {amigo.precio_amigo}Bs/hr</h2></p>
-    {formStatus.sent ? 
-      <div class={`profile-alert ${!formStatus.show && "hide"} alert alert-success`} role="alert">
-        <strong>{formStatus.message}</strong> 
-        
-      </div> :
-      <div className='btn-container'>
-        <br /><br /><br /><br /><br />
-        <button className='btn btn-azul mt-3 btn-solicitar' onClick={() => setShowForm(true)}>Solicitar contacto</button>
-      </div>
-    }
-  </div>
-</div>
+          <div className='perfil-amigo-container'>
+              <div className=' perfil-amigo-left '>
+                <div className='image-container' style={{ backgroundImage: `url("${pictures[4]}")` }} />
+                <div className='stars-and-name' style={{ fontSize: '35px' }}>
+                      <div className='text-warning'>★★★☆☆</div>
+                      <h3>{amigo.nombre_completo}</h3>
+                </div>
+                <p><strong>Edad:</strong>18 años</p>
+      
+              </div>
+              <div className='perfil-amigo-right'>
+                 {/* Modificamos el ancho de la parte derecha */}
+                  <h1>Perfil de amigo</h1>
+                  <div className='profile-description w-100'>
+                    <p><strong>Descripción:</strong> {amigo.descripcion}</p>
+                  </div>
+                  
+                  <p><h4><strong>Precio:</strong> {amigo.precio_amigo} Bs/hr</h4></p>
+                  {formStatus.sent ? 
+                    <div class={`profile-alert ${!formStatus.show && "hide"} alert alert-success`} role="alert">
+                      <strong>{formStatus.message}</strong> 
+                      
+                    </div> :
+                    <div className='btn-container'>
+                      <button className='btn btn-azul mt-3 btn-solicitar' onClick={() => setShowForm(true)}>Solicitar contacto</button>
+                    </div>
+                  }
+              </div>
 
           </div>
-        </div>
         <Formulario amigo_id = {id_amigo}
                     precio={amigo.precio_amigo} 
                     showForm={showForm} 

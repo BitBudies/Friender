@@ -21,6 +21,7 @@ from drf_yasg import openapi
 
 from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
 from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator
+from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia
 from amigo.views.login_views import LoginView
 from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, GetSolicitudesRecibidas, SolicitudAlquilerDetailAPIView, VerificarSolicitudes
 
@@ -61,6 +62,12 @@ urlpatterns = [
     path('api/solicitud/rechazar/<int:solicitud_alquiler_id>', RechazarSolicitud.as_view()),
     path('api/solicitud/informacion/<int:solicitud_alquiler_id>', SolicitudAlquilerDetailAPIView.as_view()),
     path('api/solicitud/verificar/<int:cliente_idR>/<int:amigo_idR>/', VerificarSolicitudes.as_view()),
+   
+    
+    #Fotografias
+     path('api/fotografia/<int:fotografia_id>', FotografiaPorID.as_view()),
+     path('api/cliente/fotografias/<int:cliente_id>', FotografiasDeCliente.as_view()),
+     path('api/fotografia/subir', SubirFotografia.as_view()),
 
     # Credenciales
     path('api/login/', LoginView.as_view(), name = 'login'),

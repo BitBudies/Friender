@@ -18,6 +18,10 @@ const NavBar = () => {
 
   const location = useLocation();
   const isActive = location.pathname.startsWith('/amigos/page/');
+  const isTestJhon = location.pathname === '/test/jhon';
+  if (isTestJhon) {
+    return null;
+  }
   // const [activeNav,setActiveNav] = useState(1);
   
   const handleAmigosClick = () => {
@@ -49,8 +53,8 @@ const NavBar = () => {
             <ul className="dropdown-menu">
               <li><Link className="dropdown-item" to={"/acerca"}>Acerca De</Link></li>
               <li><Link className="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
-              <li><hr className="dropdown-divider"/></li>
-              <li><button className="dropdown-item ">Cerrar Sesión</button></li>
+              {/* <li><hr className="dropdown-divider"/></li>
+              <li><button className="dropdown-item ">Cerrar Sesión</button></li> */}
             </ul>
           </div>
         </div>

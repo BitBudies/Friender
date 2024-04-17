@@ -12,14 +12,11 @@ import Loading from './Components/Loading';
 import { useGlobalContext } from './context';
 import SolicitudDetalles from './features/solicitudes/SolicitudDetalles';
 import Alert from './Components/Alert';
-
-
+import Jhon from './features/Test/Jhon';
 
 function App() {
-  
   const {clientId,setUserData} = useGlobalContext();
   const {data,isFetching,isUninitialized} = useGetClienteByIdQuery(clientId);
-
 
   useEffect(() => {
     if(!isFetching && !isUninitialized){
@@ -41,12 +38,12 @@ function App() {
           <Route path='/perfil' element={<Perfil/>}/>
           <Route path='/usuario/solicitud_pendiente/:id_solicitud' element={<SolicitudDetalles/>}/>
           <Route path='/*' element={<Default/>}/>
+          <Route path="/test/jhon" element={<Jhon/>} />
         </Routes>
         <Alert/>
       </Router>
     );
   }
-  
 }
 
 export default App;
