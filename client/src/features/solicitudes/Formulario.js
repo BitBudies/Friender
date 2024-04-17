@@ -32,9 +32,17 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
   }
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
     if (name === 'descripcion') {
       setDescripcionLength(value.length); // Actualiza la longitud de la descripción
+    }
+    if(name === 'duracion') {
+      if(value > 8){
+        value = 8;
+      }
+      if(value < 0){
+        value = 0;
+      }
     }
     setFormData({...formData, [name]: value});
   };
@@ -110,6 +118,12 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
     const isFilled = Object.keys(formData).every(item =>{
       if(item === "descripcion"){
         if(formData[item].length < 30){
+          setDisableBtn(true);
+          return false
+        }
+      }
+      if(item === "duracion"){
+        if(formData[item] === '0'){
           setDisableBtn(true);
           return false
         }
