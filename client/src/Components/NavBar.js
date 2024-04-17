@@ -15,6 +15,10 @@ const NavBar = () => {
 
   const location = useLocation();
   const isActive = location.pathname.startsWith('/amigos/page/');
+  const isTestJhon = location.pathname === '/test/jhon';
+  if (isTestJhon) {
+    return null;
+  }
   // const [activeNav,setActiveNav] = useState(1);
   
   const handleAmigosClick = (event,id) => {
