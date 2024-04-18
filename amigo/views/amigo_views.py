@@ -95,6 +95,7 @@ class AmigoListLimitPaginator(APIView):
                 "estado_amigo": amigo.estado,
                 "numero_califiaciiones": calificaciones_amigo.count(),
                 "calificacion": promedio_calificaciones,
+                "cliente_id": amigo.cliente.cliente_id,
                 "imagenBase64": imagenBase64
             }
             data["amigos"].append(amigo_data)
