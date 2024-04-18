@@ -14,6 +14,7 @@ import SolicitudDetalles from './features/solicitudes/SolicitudDetalles';
 import Alert from './Components/Alert';
 import Jhon from './features/Test/Jhon';
 import useIsAuthenticated from './hooks/isAuthenticated';
+import Registrarse from './features/autenticacion/Registrarse';
 
 function App() {
   const {clientId,setUserData} = useGlobalContext();
@@ -44,8 +45,9 @@ function App() {
           <Route path='/login' element= {<LogIn/>}/>
           <Route path='/perfil' element={<Perfil/>}/>
           <Route path='/usuario/solicitud_pendiente/:id_solicitud' element={<SolicitudDetalles/>}/>
-          <Route path='/*' element={<Default/>}/>
           <Route path="/test/jhon" element={<Jhon/>} />
+          <Route path="registrar" element={<Registrarse/>}/>
+          <Route path='/*' element={<Default/>}/>
         </Routes>
         <Alert/>
       </Router>

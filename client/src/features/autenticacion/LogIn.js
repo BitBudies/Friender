@@ -92,7 +92,7 @@ const LogIn = () => {
             Iniciar Sesión
           </button>
           <p className='form-text'>
-            <Link to={"/register"}>¿Haz olvidado la contraseña?</Link>
+            <Link to={"/registrar"}>¿Haz olvidado la contraseña?</Link>
           </p>
           <div className='login-box-separator'>
             <hr></hr>
@@ -100,7 +100,7 @@ const LogIn = () => {
             <hr></hr>
           </div>
           <p className="form-text form-register-text">
-            ¿No tienes una cuenta?<Link to={"/register"}> Regístrate</Link>
+            ¿No tienes una cuenta?<Link to={"/registrar"}> Regístrate</Link>
           </p>
         </form>
       </div>
