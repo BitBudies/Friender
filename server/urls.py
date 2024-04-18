@@ -24,6 +24,7 @@ from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginat
 from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia
 from amigo.views.login_views import LoginView
 from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, GetSolicitudesRecibidas, SolicitudAlquilerDetailAPIView, VerificarSolicitudes
+from amigo.views.utils import enviar_correo_prueba
 
 #router = routers.DefaultRouter()
 #router.register(r'solicitud', SolicitudViewSet)
@@ -72,6 +73,8 @@ urlpatterns = [
 
     # Credenciales
     path('api/login/', LoginView.as_view(), name = 'login'),
+    path('api/test/correo', enviar_correo_prueba, name = 'correo'),
+    
 
     #ducumentacion de la API
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), 
