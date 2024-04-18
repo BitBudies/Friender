@@ -55,7 +55,7 @@ p,span,label{
 
 /*backgrounds*/
 .bg-azul-fuerte{
-  background-color: var(--azul-oscuro);
+  background-color: var(--azul-oscuro) !important;
 }
 
 
