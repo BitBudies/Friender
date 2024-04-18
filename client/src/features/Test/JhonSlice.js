@@ -4,7 +4,7 @@ const fotografiaAPI = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     uploadImage : builder.mutation({
       query : (data) => ({
-        url: `/fotografia/subir`,
+        url: `/test/subirimagen`,
         method : "POST",
         body: data,
       })

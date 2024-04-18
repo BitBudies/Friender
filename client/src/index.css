@@ -18,6 +18,7 @@
   --serif : "GFS Didot", serif;
 
   --navbar-height : 4rem;
+  --section-height : calc(100vh -(var(--navbar-height)))
 
   /* Breaking points */
   --xs: 380px;

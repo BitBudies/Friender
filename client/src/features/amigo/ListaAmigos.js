@@ -5,7 +5,6 @@ import { useGetAmigosQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
 import { FaUser } from "react-icons/fa";
 import { useGlobalContext } from '../../context';
-import { pictures } from '../api/pictures';
 
 const calificacionEstrellas = (calificacion) => {
     const numEstrellas = Math.round(calificacion);
@@ -39,12 +38,13 @@ const ListaAmigos = () => {
                 <div className='container-fluid py-5'>
                     <div className='row row-cols-1 row-cols-lg-4 row-cols-md-3 g-3'>
                         {amigos['amigos'].map((amigo, index) => {
-                            const picture = pictures[index % (pictures.length-1) ];
                             return (
                             <div key={index} className='col'>
                                 <div className='card-amigo card card-list'>
                                     <div className='card-header'
-                                     style={{ backgroundImage: `url("${picture}")` }}/>
+                                        style={{ backgroundImage: `url(${amigo.imagenBase64 ? 'data:image/jpeg;base64,' + amigo.imagenBase64 : '/images/user.jpeg'})` }}
+                                    />
+                                     {/* <h5 className='card-title'>{amigo.cliente_id}</h5> */}
                                     <div className='card-body px-4'>
                                         <h5 className='card-title'>{amigo.nombre_completo}</h5>
                                         <div className='card-text'>

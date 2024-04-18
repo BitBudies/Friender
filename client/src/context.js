@@ -3,7 +3,7 @@ import { createContext, useContext, useState,useEffect, useRef } from "react";
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
-  const [clientId, setClientId] = useState('1');
+  const [clientId, setClientId] = useState('0');
   const [userData,setUserData] = useState({});
   const [alert,setAlert] = useState({status: false, message: 'Mensaje de prueba',type : 'success'});
   const pageRef = useRef();

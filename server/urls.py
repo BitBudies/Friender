@@ -20,10 +20,11 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
-from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator
-from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia
+from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, ClienteRegistrar
+from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef
 from amigo.views.login_views import LoginView
 from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, GetSolicitudesRecibidas, SolicitudAlquilerDetailAPIView, VerificarSolicitudes
+from amigo.views.utils import enviar_correo_prueba
 
 #router = routers.DefaultRouter()
 #router.register(r'solicitud', SolicitudViewSet)
@@ -47,8 +48,9 @@ urlpatterns = [
     path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view()),
     path('api/cliente/solicitudes/<int:cliente_id>/', GetSolicitudesCliente.as_view()),
     path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view()),
-
     path('api/amigo/solicitudes/recibidas/<int:amigo_id>/', GetSolicitudesRecibidas.as_view()),
+    
+    path('api/cliente/registrar/', ClienteRegistrar.as_view()),
     
     # probando postsssss
     path('api/solicitud', EnviarSolicitud.as_view()),
@@ -65,12 +67,15 @@ urlpatterns = [
    
     
     #Fotografias
-     path('api/fotografia/<int:fotografia_id>', FotografiaPorID.as_view()),
-     path('api/cliente/fotografias/<int:cliente_id>', FotografiasDeCliente.as_view()),
-     path('api/fotografia/subir', SubirFotografia.as_view()),
+    path('api/fotografia/<int:fotografia_id>', FotografiaPorID.as_view()),
+    path('api/cliente/fotografias/<int:cliente_id>', FotografiasDeCliente.as_view()),
+    path('api/fotografia/subir', SubirFotografia.as_view()),
+    path('api/test/subirimagen', SubirFotografiaDef),
 
     # Credenciales
-    path('api/login/', LoginView.as_view(), name = 'login'),
+    path('api/login', LoginView.as_view(), name = 'login'),
+    path('api/test/correo', enviar_correo_prueba, name = 'correo'),
+    
 
     #ducumentacion de la API
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), 
