@@ -91,9 +91,11 @@ const LogIn = () => {
           <button className={`btn btn-azul mb-2 button-login ${disableBtn && "disabled"}`} onClick={handleBtn}>
             Iniciar Sesión
           </button>
+          {/*
           <p className='form-text'>
             <Link to={"/register"}>¿Haz olvidado la contraseña?</Link>
-          </p>
+          </p> 
+          */}
           <div className='login-box-separator'>
             <hr></hr>
             <p>O</p>
