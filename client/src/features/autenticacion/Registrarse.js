@@ -4,7 +4,7 @@ import "./Registrarse.css"
 const Registrarse = () => {
   return (
     <div className='page'>
-
+        Hola
     </div>
   )
 }
