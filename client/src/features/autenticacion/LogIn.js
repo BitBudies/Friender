@@ -1,7 +1,8 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { Link } from 'react-router-dom';
 import "./Login.css";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { useLoginMutation } from './authSlice';
 
 const LogIn = () => {
   const [username, setUsername] = useState("");
@@ -9,9 +10,20 @@ const LogIn = () => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleBtn = () => {
-    console.log("pip");
+  const [login, {data: response,isLoading,isSuccess,isError}] = useLoginMutation();
+
+  const handleBtn = async(e) => {
+    e.preventDefault();
+    if(username  && password){
+      const data = {usuario : username,contrasena : password};
+      await login(data);
+    }
+
   };
+
+  useEffect(() => {
+    console.log(response,isLoading,isSuccess,isError)
+  },[isError, isLoading, isSuccess, response])
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);

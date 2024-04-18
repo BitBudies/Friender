@@ -17,6 +17,7 @@ import useIsAuthenticated from './hooks/isAuthenticated';
 
 function App() {
   const {clientId,setUserData} = useGlobalContext();
+
   const {data,isFetching,isUninitialized} = useGetClienteByIdQuery(clientId);
 
   const isAuthenticated = useIsAuthenticated();

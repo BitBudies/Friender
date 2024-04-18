@@ -12,15 +12,16 @@ class LoginView(APIView):
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
+        
         if serializer.is_valid():
             try:
                 user = Cliente.objects.get(usuario=serializer.data['usuario'])
                 if user.contrasena == serializer.data['contrasena']:
                     return Response({"id": user.cliente_id}, status=status.HTTP_200_OK)
                 else:
-                    return Response({"id": "0"}, status=status.HTTP_404_NOT_FOUND)
+                    return Response({"id": "0"}, status=status.HTTP_200_OK)
             except Cliente.DoesNotExist:
-                return Response({"id": "0"}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"id": "0"}, status=status.HTTP_200_OK)
         else:
             if not serializer.data['usuario'] and not serializer.data['contrasena']:
                 return Response({"error":"Campo usuario y contraseña requeridos"}, status=status.HTTP_200_OK)
