@@ -1,10 +1,13 @@
-import React from 'react';
-import "./Registrarse.css";
+import React from 'react'
 
 const Registrarse = () => {
   return (
-    <div>hola ssss</div>
-  );
+    <div>
+      
+    </div>
+  )
 }
 
-export default Registrarse;
+export default Registrarse
+
+
