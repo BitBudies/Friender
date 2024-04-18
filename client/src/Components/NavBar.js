@@ -4,19 +4,18 @@ import { FaUserCircle } from "react-icons/fa";
 import "./NavBar.css"
 import { NavLink } from 'react-router-dom';
 // import { useLocation } from 'react-router-dom';
-import { useGetNavOptions } from '../hooks/navOptions';
 
 import { useLocation } from 'react-router-dom';
 import { useGlobalContext } from '../context';
 import { useNavigate } from 'react-router-dom';
+import useIsAuthenticated from '../hooks/isAuthenticated';
 
 const NavBar = () => {
 
   const {goToBeginning} = useGlobalContext();
   const navigate = useNavigate();
 
-  // const location = useLocation();
-  const navItems = useGetNavOptions();
+  const isAuthenticated = useIsAuthenticated();
 
   const location = useLocation();
   const isActive = location.pathname.startsWith('/amigos/page/');
@@ -24,7 +23,6 @@ const NavBar = () => {
   if (isTestJhon) {
     return null;
   }
-  // const [activeNav,setActiveNav] = useState(1);
   
   const handleAmigosClick = () => {
       if(!isActive){
@@ -51,13 +49,6 @@ const NavBar = () => {
                   onClick={handleAmigosClick}
                   >Buscar Amigos</button>
               </li>
-            {/* {navItems.map((item) => {
-              return (
-                <li className={`nav-item`} key={item.id}>
-                    <NavLink to={item.url} className={`nav-link nav-item ${isActive && item.id === 2 && 'active'}`} onClick={ handleAmigosClick}>{item.name}</NavLink>
-                </li>
-              );
-            })} */}
           </ul>
           <div className='nav-item dropdown '>
             <span className="nav-link dropdown-toggle profile-icon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -65,9 +56,22 @@ const NavBar = () => {
             </span>
             <ul className="dropdown-menu">
               <li><Link className="dropdown-item" to={"/acerca"}>Acerca De</Link></li>
-              <li><Link className="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
-              {/* <li><hr className="dropdown-divider"/></li>
-              <li><button className="dropdown-item ">Cerrar Sesión</button></li> */}
+
+              {isAuthenticated ? 
+                <>
+                  <li><Link className="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
+                  <li><hr className="dropdown-divider"/></li>
+                  <li><button className="dropdown-item ">Cerrar Sesión</button></li>
+                </>
+              :
+              <>
+                <li><Link className="dropdown-item" to={"/login"}>Iniciar Sesion</Link></li>
+                {/* <li><hr className="dropdown-divider"/></li>
+                <li><button className="dropdown-item ">Cerrar Sesión</button></li> */}
+              </>
+              }
+
+              
             </ul>
           </div>
         </div>
