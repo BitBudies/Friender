@@ -1,8 +1,11 @@
+import base64
 from django.db.models import Avg
 from django.core.paginator import Paginator
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+
+from amigo.models.fotografiaDB import Fotografia
 from ..models import Amigo, Calificacion 
 from .utils import calcular_edad
 
@@ -71,7 +74,12 @@ class AmigoListLimitPaginator(APIView):
             else:
                 # se calcula el promedio de las puntuaciones
                 promedio_calificaciones = calificaciones_amigo.aggregate(Avg('puntuacion'))['puntuacion__avg']
-
+            
+            fotografiaAmigo = Fotografia.objects.filter(cliente=amigo.cliente, prioridad=0).first()
+            imagenBase64 = None
+            if fotografiaAmigo:
+                imagenBase64 = base64.b64encode(fotografiaAmigo.imagenBase64).decode('utf-8')
+            
             amigo_data = {
                 "amigo_id": amigo.amigo_id,
                 "precio_amigo": amigo.precio,
@@ -86,8 +94,10 @@ class AmigoListLimitPaginator(APIView):
                 "descripcion": amigo.cliente.descripcion,
                 "estado_amigo": amigo.estado,
                 "numero_califiaciiones": calificaciones_amigo.count(),
-                "calificacion": promedio_calificaciones
+                "calificacion": promedio_calificaciones,
+                "imagenBase64": imagenBase64
             }
             data["amigos"].append(amigo_data)
+
         return Response(data)
         
