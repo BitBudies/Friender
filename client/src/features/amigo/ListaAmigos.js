@@ -44,7 +44,7 @@ const ListaAmigos = () => {
                                     <div className='card-header'
                                         style={{ backgroundImage: `url(${amigo.imagenBase64 ? 'data:image/jpeg;base64,' + amigo.imagenBase64 : '/images/user.jpeg'})` }}
                                     />
-                                     <h5 className='card-title'>{amigo.cliente_id}</h5>
+                                     {/* <h5 className='card-title'>{amigo.cliente_id}</h5> */}
                                     <div className='card-body px-4'>
                                         <h5 className='card-title'>{amigo.nombre_completo}</h5>
                                         <div className='card-text'>
