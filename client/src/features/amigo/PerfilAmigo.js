@@ -22,7 +22,9 @@ const PerfilAmigo = () => {
       <div className='page'>
           <div className='perfil-amigo-container'>
               <div className=' perfil-amigo-left '>
-                <div className='image-container' style={{ backgroundImage: `url(/images/user.jpeg)` }} />
+                <div className='image-container' 
+                  style={{ backgroundImage: `url(${amigo.imagenBase64 ? 'data:image/jpeg;base64,' + amigo.imagenBase64 : '/images/user.jpeg'})` }}
+                />
                 <div className='stars-and-name' style={{ fontSize: '35px' }}>
                       <div className='text-warning'>★★★☆☆</div>
                       <h3>{amigo.nombre_completo}</h3>

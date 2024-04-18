@@ -22,6 +22,12 @@ class AmigoDetailById(APIView):
             # se calcula el promedio de las puntuaciones
             promedio_calificaciones = calificaciones_amigo.aggregate(Avg('puntuacion'))['puntuacion__avg']
         
+        fotografiaAmigo = Fotografia.objects.filter(cliente=amigo.cliente, prioridad=0).first()
+        imagenBase64 = None
+        if fotografiaAmigo:
+            imagenBase64 = base64.b64encode(fotografiaAmigo.imagenBase64).decode('utf-8')
+            
+        
         data = {
             "amigo_id": amigo.amigo_id,
             "precio_amigo": amigo.precio,
@@ -41,7 +47,8 @@ class AmigoDetailById(APIView):
             "estado_amigo" : amigo.estado,
             "registro_amigo": amigo.timestamp_registro,
             "numero_califiaciiones": calificaciones_amigo.count(),
-            "calificacion": promedio_calificaciones
+            "calificacion": promedio_calificaciones,
+            "imagenBase64": imagenBase64
         }
         return Response(data)
 
