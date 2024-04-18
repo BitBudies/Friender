@@ -1,4 +1,4 @@
-/*import { apiSlice } from "../api/apiSlice";
+import { apiSlice } from "../api/apiSlice";
 
 const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,10 +12,4 @@ const authApi = apiSlice.injectEndpoints({
   }),
 });
 
-<<<<<<< HEAD
-export const {} =
-  authApi;*/
-=======
-export const {useLoginMutation} =
-  authApi;
->>>>>>> 9a49a5a57ccdfca17cc8edc4bed887c66f4821f1
+export const {useLoginMutation} = authApi;
