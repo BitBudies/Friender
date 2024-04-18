@@ -1,0 +1,95 @@
+/*Logo e Imagen Friender*/
+.button-login{
+    margin-bottom: 20px !important;
+}
+
+.login-logo-box{
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.login-logo-box img{
+    width: 100px;
+}
+
+
+/*Formulario*/
+.login-box{
+    width: 320px;
+    text-align: -webkit-center;
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0 5px 10px 1px var(--gris);
+}
+
+.login-box-title{
+    margin-top: 15px;
+}
+
+.login-box-separator{
+    display: flex;
+    width: 100%;
+    margin: 30px 0px;
+}
+
+.login-box-separator hr{
+    width: 50%;
+    margin: 0.5rem 0 !important;
+}
+
+.login-box-separator p{
+    font-size: 0.8rem;
+    margin: 0px 8px !important;
+}
+
+.login-box a {
+    text-decoration: none;
+}
+
+.login-box a:hover{
+    text-decoration: underline;
+}
+
+.login-form input{
+    width: 90% !important;
+}
+
+/*Boton Iniciar sesion*/
+.button-login{
+    width: 90%;
+    background-color: azure;
+}
+
+.button-login:hover{
+    color: white;
+    background-color: var(--azul);
+}
+
+/*Texto no tienes cuenta*/
+.form-register-text{
+    margin-bottom: 20px !important;
+}
+
+/*Input contraseña y su icono ojo*/
+.password-input{
+    position: relative;
+}
+.password-icon{
+    position: absolute;
+    right: 30px;
+    top: 5px;
+}
+.password-input input{
+    padding-right: 42px;
+}
+
+@media screen and (max-width : 380px) {
+    .login-box{
+        width: 90%;
+        margin-top: 15%;
+        padding: 1rem;
+    }
+    .login-logo-box{
+        display: none;
+    }
+  }
