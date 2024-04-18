@@ -1,17 +1,47 @@
-import React,{useState} from 'react'
-import { Link } from 'react-router-dom';
+import React,{useEffect, useState} from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import "./Login.css";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { useLoginMutation } from './authSlice';
+import { useGlobalContext } from '../../context';
 
 const LogIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showFeedback, setShowFeedback] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [disableBtn,setDisableBtn] = useState(false);
+  const navigate = useNavigate();
 
-  const handleBtn = () => {
-    console.log("pip");
+  const {setClientId} = useGlobalContext();
+
+  const [login, {data: response,isLoading,isSuccess,isError}] = useLoginMutation();
+
+  const handleBtn = async(e) => {
+    e.preventDefault();
+    if(username  && password){
+      const data = {usuario : username,contrasena : password};
+      await login(data);
+    }
+
   };
+  
+  const checkLoginResponse = () => {
+    if(isLoading){
+      setDisableBtn(true);
+    }
+    if(isSuccess){
+      if(response.id !== '0'){
+        setClientId(1);
+        navigate("/amigos/page/1");
+      }else{
+        setDisableBtn(false);
+        setShowFeedback(true);
+      }
+    }
+  }
+  
+  useEffect(checkLoginResponse,[isError, isLoading, isSuccess, navigate, response, setClientId])
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -58,7 +88,7 @@ const LogIn = () => {
             </p>
           )}
           
-          <button className="btn btn-azul mb-2 button-login" onClick={handleBtn}>
+          <button className={`btn btn-azul mb-2 button-login ${disableBtn && "disabled"}`} onClick={handleBtn}>
             Iniciar Sesión
           </button>
           <p className='form-text'>

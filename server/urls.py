@@ -73,7 +73,7 @@ urlpatterns = [
     path('api/test/subirimagen', SubirFotografiaDef),
 
     # Credenciales
-    path('api/login/', LoginView.as_view(), name = 'login'),
+    path('api/login', LoginView.as_view(), name = 'login'),
     path('api/test/correo', enviar_correo_prueba, name = 'correo'),
     
 
