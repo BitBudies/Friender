@@ -3,7 +3,7 @@ import { useUploadImageMutation, useGetImageQuery } from './JhonSlice';
 
 const Jhon = () => {
   const [clienteId, setClienteId] = useState('');
-  const [tipoImagen, setTipoImagen] = useState('');
+  //const [tipoImagen, setTipoImagen] = useState('');
   const [prioridad, setPrioridad] = useState('');
   const [imagen, setImagen] = useState(null);
 
@@ -27,7 +27,7 @@ const Jhon = () => {
 
     const formData = new FormData();
     formData.append('cliente_id', clienteId);
-    formData.append('tipoImagen', tipoImagen);
+    //formData.append('tipoImagen', tipoImagen);
     formData.append('prioridad', prioridad);
     formData.append('imagen', imagen);
 
@@ -54,15 +54,6 @@ const Jhon = () => {
             type="text"
             value={clienteId}
             onChange={(e) => setClienteId(e.target.value)}
-          />
-        </label>
-
-        <label>
-          Tipo de Imagen:
-          <input
-            type="text"
-            value={tipoImagen}
-            onChange={(e) => setTipoImagen(e.target.value)}
           />
         </label>
 

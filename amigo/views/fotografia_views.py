@@ -1,9 +1,12 @@
 import base64
+import os
 from django.db.models import Avg
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.views.decorators.csrf import csrf_exempt
 
 from ..models.clienteDB import Cliente
 from ..models.fotografiaDB import Fotografia
@@ -70,3 +73,37 @@ class SubirFotografia(APIView):
         )
         fotografiaNew.save()
         return Response({"message": f"Imagen {fotografiaNew.fotografia_id} guardada exitosamente"}, status=status.HTTP_201_CREATED)
+
+ 
+@csrf_exempt
+def SubirFotografiaDef(request):
+    print(request.POST)
+    for field in ['cliente_id', 'prioridad']:
+        if field not in request.POST:
+            return JsonResponse({"error": f"{field} no encontrado en los datos"}, status=status.HTTP_400_BAD_REQUEST)
+    if not 'imagen' in request.FILES:
+        return JsonResponse({"error": f"{field} no encontrado en los datos"}, status=status.HTTP_400_BAD_REQUEST)
+    try:    
+        cliente = Cliente.objects.get(pk=request.POST['cliente_id'])
+    except Cliente.DoesNotExist:
+        return JsonResponse({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+    imagen = request.FILES['imagen']
+    imageBytes = imagen.read()
+    tipo_archivo_mime = imagen.content_type
+    tipoooo = None
+    if tipo_archivo_mime == 'image/jpeg':
+        tipoooo = 'jpeg'
+    elif tipo_archivo_mime == 'image/png':
+        tipoooo = 'png'
+    else: 
+        return JsonResponse({"error": "El archivo no es una imagen"}, status=status.HTTP_400_BAD_REQUEST)
+    fotografiaNew = Fotografia(
+        cliente=cliente,
+        tipoImagen=tipoooo,
+        prioridad=request.POST['prioridad'],
+        imagenBase64=imageBytes,
+        estado_fotografia='P'
+    )
+    fotografiaNew.save()
+    print(f"Se guardo correctamente la imagen {tipoooo}, id: {fotografiaNew.fotografia_id}")
+    return JsonResponse({"message": f"Se guardo correctamente la imagen {tipoooo}, id: {fotografiaNew.fotografia_id}"}, status=status.HTTP_201_CREATED)
