@@ -8,10 +8,12 @@ import { useGetNavOptions } from '../hooks/navOptions';
 
 import { useLocation } from 'react-router-dom';
 import { useGlobalContext } from '../context';
+import { useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
 
   const {goToBeginning} = useGlobalContext();
+  const navigate = useNavigate();
 
   // const location = useLocation();
   const navItems = useGetNavOptions();
@@ -25,9 +27,11 @@ const NavBar = () => {
   // const [activeNav,setActiveNav] = useState(1);
   
   const handleAmigosClick = () => {
-    if(isActive){
-      goToBeginning();
-    }
+      if(!isActive){
+        navigate("/amigos/page/1")
+      }else{
+        goToBeginning();
+      } 
   }
   return (
     <nav className='navbar navbar-expand-md bg-azul-fuerte text-light' data-bs-theme="dark">
@@ -38,13 +42,22 @@ const NavBar = () => {
       </button>
         <div className='collapse navbar-collapse d-lg-flex justify-content-between' id="navbarSupportedContent">
           <ul className='navbar-nav px-lg-5'>
-            {navItems.map((item) => {
+              <li className='nav-item'>
+                <NavLink to={"/"} className={"nav-link nav-item"} onClick={ handleAmigosClick}>Home</NavLink>
+              </li>
+              <li className='nav-item'>
+                <button 
+                  className={`nav-link nav-item ${isActive && "active"}`}
+                  onClick={handleAmigosClick}
+                  >Buscar Amigos</button>
+              </li>
+            {/* {navItems.map((item) => {
               return (
                 <li className={`nav-item`} key={item.id}>
                     <NavLink to={item.url} className={`nav-link nav-item ${isActive && item.id === 2 && 'active'}`} onClick={ handleAmigosClick}>{item.name}</NavLink>
                 </li>
               );
-            })}
+            })} */}
           </ul>
           <div className='nav-item dropdown '>
             <span className="nav-link dropdown-toggle profile-icon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
