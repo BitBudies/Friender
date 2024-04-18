@@ -1,14 +1,19 @@
 import React,{useEffect, useState} from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "./Login.css";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { useLoginMutation } from './authSlice';
+import { useGlobalContext } from '../../context';
 
 const LogIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showFeedback, setShowFeedback] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [disableBtn,setDisableBtn] = useState(false);
+  const navigate = useNavigate();
+
+  const {setClientId} = useGlobalContext();
 
   const [login, {data: response,isLoading,isSuccess,isError}] = useLoginMutation();
 
@@ -20,10 +25,21 @@ const LogIn = () => {
     }
 
   };
-
-  useEffect(() => {
-    console.log(response,isLoading,isSuccess,isError)
-  },[isError, isLoading, isSuccess, response])
+  
+  const checkLoginResponse = () => {
+    if(isLoading){
+      setDisableBtn(true);
+    }
+    if(isSuccess){
+      setDisableBtn(true);
+      if(response.id !== 0){
+        setClientId(1);
+        navigate("/amigos/page/1");
+      }
+    }
+  }
+  
+  useEffect(checkLoginResponse,[isError, isLoading, isSuccess, response])
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -70,7 +86,7 @@ const LogIn = () => {
             </p>
           )}
           
-          <button className="btn btn-azul mb-2 button-login" onClick={handleBtn}>
+          <button className={`btn btn-azul mb-2 button-login ${disableBtn && "disabled"}`} onClick={handleBtn}>
             Iniciar Sesión
           </button>
           <p className='form-text'>
