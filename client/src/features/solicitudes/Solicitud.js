@@ -3,11 +3,13 @@ import "./Solicitud.css"
 import { FaClock } from "react-icons/fa6";
 import { FaCalendarAlt,FaMapMarkerAlt } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { pictures } from '../api/pictures';
 
 
 
 
-const Solicitud = ({solicitud}) => {
+const Solicitud = ({solicitud,index}) => {
+
     console.log(solicitud,"Solicitud");
 
     function formatFecha(fecha) {
@@ -15,11 +17,13 @@ const Solicitud = ({solicitud}) => {
         return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${year}`;
     }
 
+    
+
     return (
     <div className='col-container '>
         <div className="solicitud-recibida-card " >
                 <div id="datos-perfil">
-                    <div className='card-image mb-2' style={{backgroundImage: "url(/images/user.jpeg)"}}>
+                    <div className='card-image mb-2' style={{backgroundImage: `url("${pictures[(pictures.length -1) - (index % pictures.length)]}")`}}>
                     </div>
                     <h5>{solicitud.nombre_cliente}</h5>
                     

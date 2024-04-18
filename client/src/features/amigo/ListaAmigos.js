@@ -44,19 +44,19 @@ const ListaAmigos = () => {
                                     <div className='card-header'
                                         style={{ backgroundImage: `url(${amigo.imagenBase64 ? 'data:image/jpeg;base64,' + amigo.imagenBase64 : '/images/user.jpeg'})` }}
                                     />
-                                     <h5 className='card-title'>{amigo.cliente_id}</h5>
+                                     {/* <h5 className='card-title'>{amigo.cliente_id}</h5> */}
                                     <div className='card-body px-4'>
                                         <h5 className='card-title'>{amigo.nombre_completo}</h5>
                                         <div className='card-text'>
                                             <div className="card-stats">
-                                                <div>{calificacionEstrellas(amigo.calificacion)}</div> 
+                                                <div className='text-warning'>{calificacionEstrellas(amigo.calificacion)}</div> 
                                                 <div className='card-n-users'>
                                                     0 <span><FaUser/></span>
                                                 </div>
                                             </div>
                                             <div className="card-actions">
-                                            <Link to={`/amigos/${amigo.amigo_id}`}className='btn btn-azul btn-ver-perfil'>Ver Perfil</Link>                     
-                                                {amigo.precio_amigo} Bs/Hr  
+                                            <Link to={`/amigos/${amigo.amigo_id}`}className='btn btn-azul '>Ver Perfil</Link>                     
+                                                {amigo.precio_amigo} Bs/hr  
                                             </div>
                                         </div>
                                     </div>
@@ -77,7 +77,7 @@ const ListaAmigos = () => {
                         </li>
                         {Array.from({length: amigos.numero_paginas},(_,index) => {
                             return <li key={index} className={`pagination-item page-item ${Number(n_page) === index + 1 && "active"}`} >
-                                <Link className='page-link' 
+                                <Link className={`page-link ${Number(n_page) === index + 1 && "bg-azul-fuerte"}`} 
                                 to={`/amigos/page/${index + 1}`}
                                 onClick={goToBeginning}
                                 >{index + 1}
