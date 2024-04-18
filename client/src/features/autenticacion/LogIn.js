@@ -31,15 +31,17 @@ const LogIn = () => {
       setDisableBtn(true);
     }
     if(isSuccess){
-      setDisableBtn(true);
-      if(response.id !== 0){
+      if(response.id !== '0'){
         setClientId(1);
         navigate("/amigos/page/1");
+      }else{
+        setDisableBtn(false);
+        setShowFeedback(true);
       }
     }
   }
   
-  useEffect(checkLoginResponse,[isError, isLoading, isSuccess, response])
+  useEffect(checkLoginResponse,[isError, isLoading, isSuccess, navigate, response, setClientId])
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
