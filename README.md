@@ -22,6 +22,8 @@ DB_USER=your_database_user
 DB_PASSWORD=your_database_password
 DB_HOST=your_database_host
 DB_PORT=your_database_port
+EMAIL_HOST_USER= correo 
+EMAIL_HOST_PASSWORD= app pasword
 ```
 ### Ejecutando el servidor Django
 Para iniciar el servidor Django, ejecuta el siguiente comando:
