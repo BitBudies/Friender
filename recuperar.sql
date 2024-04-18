@@ -42,3 +42,5 @@ INSERT INTO public.amigo_cliente (nombre,ap_paterno,ap_materno,ci,fecha_nacimien
 INSERT INTO public.amigo_calificacion (calificacion_id,puntuacion,comentario,emisor,timestamp_registro,amigo_id,cliente_id) VALUES
     (1,5,'todo good el yon','cliente','2024-03-23 23:58:59.925011-04',1,3),
     (2,2,'mal servicio','cliente','2024-03-25 22:08:13.214322-04',1,3);
+
+ 
