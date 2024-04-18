@@ -102,7 +102,7 @@ const LogIn = () => {
             <hr></hr>
           </div>
           <p className="form-text form-register-text">
-            ¿No tienes una cuenta?<Link to={"/register"}> Regístrate</Link>
+            ¿No tienes una cuenta?<Link to={"/registrar"}> Regístrate</Link>
           </p>
         </form>
       </div>
