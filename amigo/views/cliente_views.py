@@ -5,11 +5,25 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+from django.http import HttpResponse
+from django.utils.encoding import force_str
+import random
+import string
 
 from ..models import Cliente 
 
 
 from .utils import calcular_edad
+
+
+from django.core.mail import send_mail
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.contrib.auth.tokens import default_token_generator
+
+from decouple import config
+
 
 class ClienteDetailById(APIView):
     def get(self, request, cliente_id):
@@ -76,9 +90,6 @@ class ClienteListLimitPaginator(APIView):
             data["clientes"].append(cliente_data)
         return Response(data)
 
-
-
-
 class ClienteRegistrar(APIView):
     def post(self, request):
         # Obtén todos los campos de request.data
@@ -102,7 +113,13 @@ class ClienteRegistrar(APIView):
         
         if User.objects.filter(username=usuario).exists():
             return Response({'error': 'Un usuario con ese nombre ya existe.'}, status=400)
-
+        
+        
+        codigo = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+        asunto = 'Verificación de correo'
+        mensaje = f'Hola, {nombre} {ap_paterno} {ap_materno}, tu código de verificación es: {codigo}'
+        
+        
         # Crea el usuario
         user = User.objects.create_user(username=usuario, password=contrasena, email=correo)
 
@@ -121,5 +138,20 @@ class ClienteRegistrar(APIView):
             #dinero=dinero,
             estado=estado
         )
-
-        return Response({"message": "Usuario y cliente creados correctamente"}, status=status.HTTP_201_CREATED)
+        
+        
+        try:
+            send_mail(
+                asunto,
+                mensaje,
+                config('EMAIL_HOST_USER'),
+                [correo],
+                fail_silently=False,
+            )
+            return Response({"message": "Correo enviado correctamente"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    
+#falta la verrifiacaion y almacena el codigo en la base de datos
+        
