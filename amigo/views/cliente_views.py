@@ -90,9 +90,6 @@ class ClienteListLimitPaginator(APIView):
             data["clientes"].append(cliente_data)
         return Response(data)
 
-
-
-
 class ClienteRegistrar(APIView):
     def post(self, request):
         # Obtén todos los campos de request.data
@@ -154,33 +151,7 @@ class ClienteRegistrar(APIView):
             return Response({"message": "Correo enviado correctamente"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-        
-        r#eturn Response({"message": "Usuario y cliente creados correctamente"}, status=status.HTTP_201_CREATED)
     
-
-
-
-
-# class EnviarCorreo(APIView):
-#     def post(self, request):
-        
     
-           
-#         # Verifica que todos los campos requeridos estén presentes
-#         if not all([asunto, mensaje, destinatario]):
-#             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
-
-#         # Envia el correo
-#         try:
-#             send_mail(
-#                 asunto,
-#                 mensaje,
-#                 config('EMAIL_HOST_USER'),
-#                 [destinatario],
-#                 fail_silently=False,
-#             )
-#             return Response({"message": "Correo enviado correctamente"}, status=status.HTTP_200_OK)
-#         except Exception as e:
-#             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+#falta la verrifiacaion y almacena el codigo en la base de datos
         
