@@ -52,6 +52,8 @@ urlpatterns = [
     
     path('api/cliente/registrar/', ClienteRegistrar.as_view()),
     
+    #path('api/cliente/<uidb64>/<token>/',views.activate , ClienteRegistrar.as_view()),
+    
     # probando postsssss
     path('api/solicitud', EnviarSolicitud.as_view()),
     
@@ -79,4 +81,7 @@ urlpatterns = [
     #ducumentacion de la API
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), 
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    
+    
+  #  path('correo/', EnviarCorreo.as_view())
 ]
