@@ -16,6 +16,7 @@ import Jhon from './features/Test/Jhon';
 import Registrarse from './features/autenticacion/Registrarse';
 import useIsAuthenticated from './hooks/isAuthenticated';
 import RecuperarCuenta from './features/autenticacion/RecuperarCuenta';
+import Registrarse_2 from './features/autenticacion/Registrarse_2';
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           <Route path="registrar" element={<Registrarse/>}/>
           <Route path="recuperar" element={<RecuperarCuenta/>}/>
           <Route path='/*' element={<Default/>}/>
+          <Route path='registrarse' element={<Registrarse_2/>}/>
         </Routes>
         <Alert/>
       </Router>
