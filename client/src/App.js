@@ -16,6 +16,8 @@ import Jhon from './features/Test/Jhon';
 import Registrarse from './features/autenticacion/Registrarse';
 import useIsAuthenticated from './hooks/isAuthenticated';
 import ResetPassword from './features/autenticacion/resetPassword';
+import RecuperarCuenta from './features/autenticacion/RecuperarCuenta';
+
 
 function App() {
   const {clientId,setUserData} = useGlobalContext();
@@ -49,6 +51,7 @@ function App() {
           <Route path="/test/jhon" element={<Jhon/>} />
           <Route path="/resetPassword" element={<ResetPassword/>}/>
           <Route path="/registrar" element={<Registrarse/>}/>
+          <Route path="/recuperar" element={<RecuperarCuenta/>}/>
           <Route path='/*' element={<Default/>}/>
         </Routes>
         <Alert/>
