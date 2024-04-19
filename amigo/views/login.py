@@ -5,6 +5,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from amigo.serializers.cliente_serializer import UserTokenSerializer
 from ..serializers.login_serializer import LoginSerializer
+from ..models import Cliente
 # Para instalar
 # pip install --upgrade djangorestframework-simplejwt
 class Login(ObtainAuthToken):
@@ -16,7 +17,10 @@ class Login(ObtainAuthToken):
          if not all([username, password]):
             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
          
-         userObject = authenticate(username=username, password=password)
+         cliente = Cliente.objects.filter(usuario=username).first()
+
+         userObject = authenticate(username=cliente.usuario, password=cliente.contrasena)
+         print(cliente.usuario)
          if userObject is not None:
             # El usuario existe y la contraseña es correcta
              #login_serializer = self.serializer_class(data = request.data, context = {'request':request})
