@@ -5,3 +5,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from amigo.serializers.cliente_serializer import UserTokenSerializer
 from ..serializers.login_serializer import LoginSerializer
+
+class Login(ObtainAuthToken):
+    def post(self,request,*args,**kwargs):
+         username = request.data.get('username')
+         password = request.data.get('password')
