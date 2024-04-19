@@ -23,5 +23,8 @@ class Login(ObtainAuthToken):
             if login_serializer.is_valid():
                 userData = login_serializer.validated_data['user']
                 print(userData)
+                token,created = Token.objects.get_or_create(user = userData)
+                user_serializer = UserTokenSerializer(userData)
+                print(userData)
         else:
             return Response({"error": "Nombre de usuario o contraseña incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
