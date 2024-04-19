@@ -48,7 +48,7 @@ urlpatterns = [
     path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view()),
 
     path('api/amigo/solicitudes/recibidas/<int:amigo_id>/', GetSolicitudesRecibidas.as_view()),
-    
+    path('api/cliente/login/', Login.as_view()),
     # probando postsssss
     path('api/solicitud', EnviarSolicitud.as_view()),
     
