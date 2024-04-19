@@ -21,7 +21,7 @@ from drf_yasg import openapi
 
 from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
 from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, ClienteRegistrar, ClienteVerificar
-from amigo.views.edicion_views import findEmail
+from amigo.views.edicion_views import cambiarContrasena, findEmail
 from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef
 from amigo.views.gusto_views import obtenerGustos
 from amigo.views.interes_views import obtenerIntereses
@@ -88,6 +88,8 @@ urlpatterns = [
     # Credenciales
     path('api/login', LoginView.as_view(), name = 'login'),
     path('api/test/correo', enviar_correo_prueba, name = 'correo'),
+    path('api/cambiarContrasena', cambiarContrasena),
+    
     
     path('api/findEmail', findEmail),
 
