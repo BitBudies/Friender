@@ -15,7 +15,7 @@ import Alert from './Components/Alert';
 import Jhon from './features/Test/Jhon';
 import Registrarse from './features/autenticacion/Registrarse';
 import useIsAuthenticated from './hooks/isAuthenticated';
-
+import ResetPassword from './features/autenticacion/resetPassword';
 
 function App() {
   const {clientId,setUserData} = useGlobalContext();
@@ -47,7 +47,8 @@ function App() {
           <Route path='/perfil' element={<Perfil/>}/>
           <Route path='/usuario/solicitud_pendiente/:id_solicitud' element={<SolicitudDetalles/>}/>
           <Route path="/test/jhon" element={<Jhon/>} />
-          <Route path="registrar" element={<Registrarse/>}/>
+          <Route path="/resetPassword" element={<ResetPassword/>}/>
+          <Route path="/registrar" element={<Registrarse/>}/>
           <Route path='/*' element={<Default/>}/>
         </Routes>
         <Alert/>
