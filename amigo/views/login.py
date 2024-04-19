@@ -11,3 +11,6 @@ class Login(ObtainAuthToken):
         username = request.data.get('username')
         password = request.data.get('password')
         login_serializer = self.serializer_class(data = request.data, context = {'request':request})
+
+        if not all([username, password]):
+            return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
