@@ -23,7 +23,7 @@ from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
 from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator
 from amigo.views.login_views import LoginView
 from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, GetSolicitudesRecibidas, SolicitudAlquilerDetailAPIView, VerificarSolicitudes
-
+from amigo.views.login import Login
 #router = routers.DefaultRouter()
 #router.register(r'solicitud', SolicitudViewSet)
 
