@@ -32,6 +32,9 @@ class Login(ObtainAuthToken):
                         'token': token.key,
                         'message': 'Inicio de sesion exitoso'
                     }, status= status.HTTP_201_CREATED)
+                else:
+                    token.delete()
+                    token = Token.objects.create(user = userData)
          else:
             return Response({"error": "Nombre de usuario o contraseña incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
 
