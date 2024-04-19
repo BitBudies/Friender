@@ -53,7 +53,7 @@ urlpatterns = [
     path('api/cliente/registrar/', ClienteRegistrar.as_view()),
     
     #path('api/cliente/<uidb64>/<token>/',views.activate , ClienteRegistrar.as_view()),
-    
+    path('api/cliente/login/', Login.as_view()),
     # probando postsssss
     path('api/solicitud', EnviarSolicitud.as_view()),
     
