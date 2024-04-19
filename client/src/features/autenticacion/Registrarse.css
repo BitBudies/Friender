@@ -38,7 +38,7 @@
   justify-content: center;
   align-items: center;
   gap: 5rem;
-  padding: 0 2rem;
+  padding: 10 2rem;
 }
 
 .registrarse-right{
@@ -49,12 +49,13 @@
 }
 
 .input-field {
-  width: 300px; /* Ancho del campo de entrada */
-  padding: 10px; /* Espaciado interno */
-  border: 1px solid #ccc; /* Borde */
-  border-radius: 5px; /* Borde redondeado */
-  outline: none; /* Elimina el contorno cuando el campo está enfocado */
-  /* Otros estilos personalizados */
+  width: 300px; 
+  padding: 10px;
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  outline: none; 
+  gap: 5rem;
+  
 }
 
 .registro{

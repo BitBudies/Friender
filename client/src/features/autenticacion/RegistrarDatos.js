@@ -49,7 +49,7 @@ const RegistrarDatos = () => {
               value={values.nombre}
               onChange={handleChange}
               style={{ width: '100px' }}
-              className="input-field"
+              className="form-control"
             />
           </div>
           <div className="mb-2 input-item">
@@ -62,7 +62,7 @@ const RegistrarDatos = () => {
               value={values.apellido_paterno}
               onChange={handleChange}
               style={{ width: '150px' }}
-              className="input-field"
+              className="form-control"
             />
           </div>
           <div className="mb-2 input-item">
@@ -75,7 +75,7 @@ const RegistrarDatos = () => {
               value={values.apellido_materno}
               onChange={handleChange}
               style={{ width: '150px' }}
-              className="input-field"
+              className="form-control"
             />
           </div>
           </div>
@@ -89,7 +89,7 @@ const RegistrarDatos = () => {
               value={values.fecha_nacimiento}
               onChange={handleChange}
               style={{ width: '100px' }}
-              className="input-field"
+              className="form-control"
             />
           </div>
           <div className="mb-2 input-item">
@@ -102,7 +102,7 @@ const RegistrarDatos = () => {
               value={values.genero}
               onChange={handleChange}
               style={{ width: '100px' }}
-              className="input-field"
+              className="form-control"
             />
           </div>
           <div className="mb-2 input-item">
@@ -115,7 +115,7 @@ const RegistrarDatos = () => {
               value={values.ubicacion}
               onChange={handleChange}
               style={{ width: '100px' }}
-              className="input-field"
+              className="form-control"
             />
           </div>
           </div>
@@ -130,7 +130,7 @@ const RegistrarDatos = () => {
               value={values.nombre_usuario}
               onChange={handleChange}
               style={{ width: '200px' }}
-              className="input-field"
+              className="form-control"
             />
           </div>
           <div className="mb-2 input-item">
@@ -143,7 +143,7 @@ const RegistrarDatos = () => {
               value={values.correo_electronico}
               onChange={handleChange}
               style={{ width: '200px' }}
-              className="input-field"
+              className="form-control"
             />
           </div>
           </div>
@@ -167,14 +167,13 @@ const RegistrarDatos = () => {
           <div className="mb-2 input-item">
             <label htmlFor="confirmar_contraseña" className="input-label">Confirmar Contraseña:</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="confirmar_contraseña"
-              name="confirmar_contraseña"
+              className="form-control"
               placeholder="Confirmar Contraseña"
-              value={values.confirmar_contraseña}
+              value={password}
               onChange={handleChange}
               style={{ width: '200px' }}
-              className="input-field"
             />
              <span className="password-icon" onClick={toggleShowPassword}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
