@@ -31,8 +31,10 @@ const Registrarse = () => {
           </div>
         </div>
       </div>
+      <div className='registrarse-right'>
+        <h1 className="title align-right"><b>Regístrate</b></h1>
         <RegistrarDatos/>
-      
+        </div>
       </div>
     
   );

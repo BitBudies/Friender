@@ -37,8 +37,9 @@ const RegistrarDatos = () => {
       };
 
   return (
-    <div className='registrarse-right'>
-        <h1 className="title align-right"><b>Regístrate</b></h1>
+    <div className="form-item">
+
+    
         <div className="input-group registro">
           <div className="input-item">
             <label htmlFor="nombre" className="input-label">Nombre:</label>
@@ -188,7 +189,7 @@ const RegistrarDatos = () => {
             <button className='btn btn-azul'>Siguiente</button>
           </p>
         </div>
-      </div>
+    </div>
   )
 }
 
