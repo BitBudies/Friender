@@ -8,7 +8,6 @@ from .models.solicitud_alquilerDB import solicitud_alquiler
 from .models.calificacionDB import Calificacion
 from .models.fotografiaDB import Fotografia
 
-
 # Register your models here.
 admin.site.register(Cliente)
 admin.site.register(Amigo)

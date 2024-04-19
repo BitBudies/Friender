@@ -4,15 +4,15 @@ import { useFindEmailMutation } from './authSlice';
 
 const ResetPassword = () => {
     const [step, setStep] = useState(1); // control de pagina
-    // Buscar email
+    // ------------------------------Buscar email------------------------------
     const [emailText, setEmailText] = useState("");
     const [supportingText, setSupportingText] = useState("");
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [isButtonEmailEnabled, setIsButtonEmailEnabled] = useState(false);
-
     const [findEmail, {data: response, isLoading,isSuccess,isError, error: errorsito}] = useFindEmailMutation()
     const handleEmailChange = (e) => {
         setIsEmailValid(false);
+        setUsuario("");
         setSupportingText("");
         setEmailText(e.target.value);
         if (e.target.value.length > 5) {
@@ -33,28 +33,27 @@ const ResetPassword = () => {
             }
         }
     };
-
     const checkEmailResponse = () => {
         if (isLoading) {
             setIsButtonEmailEnabled(false)
         }
         if (isSuccess){
             setIsEmailValid(true);
-            setIsButtonEmailEnabled(true)
+            setIsButtonEmailEnabled(true);
+            setUsuario(response.usuario);
         }
         if(isError) {
             setIsEmailValid(false);
             setSupportingText(errorsito.data.error)
         }
     }
-
     useEffect(checkEmailResponse,[isError, isLoading, isSuccess, response])
 
-
-    // mas paginas
-    const [verificationCode, setVerificationCode] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    // ------------------------------verificacion codigos------------------------------
+    const [usuario, setUsuario] = useState(""); 
+    const [verificationCode, setVerificationCode] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     // Funciones para manejar los cambios en los formularios
     const handleVerificationCodeChange = (e) => setVerificationCode(e.target.value);
@@ -73,7 +72,7 @@ const ResetPassword = () => {
         e.preventDefault();
         alert('Contraseña actualizada correctamente');
     };
-
+    //<button onClick={goToPreviousStep}>Atrás</button>
     return (
       <div className='page'>
         {step === 1 && (
@@ -82,7 +81,7 @@ const ResetPassword = () => {
             <form onSubmit={handleSubmitEmailForm}>
               <input type="email" name="user_email" value={emailText} onChange={handleEmailChange} placeholder="Correo electrónico" required/>
               <button type="submit" disabled={!isButtonEmailEnabled}>{
-                isEmailValid ? <p>Siguiente</p>: <p>Buscar cuenta</p>}</button>
+                isEmailValid ? <p>Continuar</p>: <p>Buscar cuenta</p>}</button>
                 {supportingText.length > 0 && (
                     <p style={{color:'red'}}>{supportingText}</p>
                 )}
@@ -91,13 +90,13 @@ const ResetPassword = () => {
         )}
         {step === 2 && (
           <div>
-            <h2>Ingresa el código de verificación</h2>
-            <p>Se ha enviado un código de verificación a tu correo electrónico.</p>
+            <h1>Hola {usuario}.</h1>
+            <h3>Ingresar el código de verificación.</h3>
             <form onSubmit={handleSubmitVerificationCodeForm}>
               <input type="text" value={verificationCode} onChange={handleVerificationCodeChange} placeholder="Código de verificación" required />
-              <button type="submit">Siguiente</button>
+              <button onClick={console.log("Enviamos codigos")}>Enviar codigo</button>
+              <button type="submit">Verificar</button>
             </form>
-            <button onClick={goToPreviousStep}>Atrás</button>
           </div>
         )}
         {step === 3 && (
