@@ -23,13 +23,16 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
-    width: 100%;
+    width: 50%;
+    border: 2px solid black;
+    background-color: white;
   }
   
 
 .registrarse-container{
   position: relative;
-  width: 80%;
+  width: 100vw;
+  background-color: antiquewhite;
   min-height: calc(100vh - var(--navbar-height));
   display: flex;
   justify-content: center;
@@ -37,6 +40,14 @@
   gap: 5rem;
   padding: 0 2rem;
 }
+
+.registrarse-right{
+  position: relative;
+  background-color: azure;
+  width: 50%;
+  padding: 2rem 0;
+}
+
 .input-field {
   width: 300px; /* Ancho del campo de entrada */
   padding: 10px; /* Espaciado interno */
