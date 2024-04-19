@@ -25,6 +25,13 @@ class Login(ObtainAuthToken):
                 print(userData)
                 token,created = Token.objects.get_or_create(user = userData)
                 user_serializer = UserTokenSerializer(userData)
+                print(userData)
+                if created:
+                    print('created')
+                    return Response({
+                        'token': token.key,
+                        'message': 'Inicio de sesion exitoso'
+                    }, status= status.HTTP_201_CREATED)
          else:
             return Response({"error": "Nombre de usuario o contraseña incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
 
