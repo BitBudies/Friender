@@ -38,8 +38,6 @@ const RegistrarDatos = () => {
 
   return (
     <div className="form-item">
-
-    
         <div className="input-group registro">
           <div className="input-item">
             <label htmlFor="nombre" className="input-label">Nombre:</label>

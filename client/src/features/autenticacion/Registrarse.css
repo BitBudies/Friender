@@ -17,11 +17,13 @@
     align-items: center;
   }
   
-  .registrarse-right{
+  .form-item{
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
+    width: 100%;
   }
   
 
@@ -42,6 +44,10 @@
   border-radius: 5px; /* Borde redondeado */
   outline: none; /* Elimina el contorno cuando el campo está enfocado */
   /* Otros estilos personalizados */
+}
+
+.registro{
+  display: flex;
 }
 .registro .input-item{
   display: flex;
