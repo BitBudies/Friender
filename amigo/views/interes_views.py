@@ -3,7 +3,7 @@ from amigo.models.interes import Interes
 
 def obtenerIntereses(request):
     if request.method == 'GET':
-        intereses = Interes.objects.all()
+        intereses = Interes.objects.all().order_by('nombre')
         intereses_data = [{'interes_id': interes.interes_id,
                            'nombre': interes.nombre,
                            'descripcion': interes.descripcion,

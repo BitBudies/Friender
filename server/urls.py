@@ -23,6 +23,7 @@ from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
 from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, ClienteRegistrar, ClienteVerificar
 from amigo.views.edicion_views import findEmail
 from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef
+from amigo.views.gusto_views import obtenerGustos
 from amigo.views.interes_views import obtenerIntereses
 from amigo.views.login_views import LoginView
 from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, GetSolicitudesRecibidas, SolicitudAlquilerDetailAPIView, VerificarSolicitudes
@@ -74,6 +75,9 @@ urlpatterns = [
    
     #Interes
     path('api/intereses', obtenerIntereses),
+    
+    #Gustos
+    path('api/gustos', obtenerGustos),
     
     #Fotografias
     path('api/fotografia/<int:fotografia_id>', FotografiaPorID.as_view()),

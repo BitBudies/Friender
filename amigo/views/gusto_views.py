@@ -1,9 +1,9 @@
 from django.http import JsonResponse
 from amigo.models.gusto import Gusto
 
-def obtener_gustos(request):
+def obtenerGustos(request):
     if request.method == 'GET':
-        gustos = Gusto.objects.all()
+        gustos = Gusto.objects.all().order_by('nombre')
         gustos_data = [{'gusto_id': gusto.gusto_id,
                         'nombre': gusto.nombre,
                         'descripcion': gusto.descripcion,
