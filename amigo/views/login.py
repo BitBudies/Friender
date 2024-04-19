@@ -19,7 +19,9 @@ class Login(ObtainAuthToken):
 
         if userObject is not None:
             # El usuario existe y la contraseña es correcta
-            login_serializer = self.serializer_class(data = request.data, context = {'request':request})
-
+             #login_serializer = self.serializer_class(data = request.data, context = {'request':request})
+            if login_serializer.is_valid():
+                userData = login_serializer.validated_data['user']
+                print(userData)
         else:
             return Response({"error": "Nombre de usuario o contraseña incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
