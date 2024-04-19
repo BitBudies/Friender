@@ -48,13 +48,17 @@ const LogIn = () => {
   };
 
   return (
-    <div className="form-section mw-100 min-vh-100 d-flex flex-column justify-content-center align-items-center">
+    
+    <div className="form-section mw-100 min-vh-100 d-flex flex-column justify-content-rigth align-items-center">
+      <h1>Friender</h1>
+      <br/>
       <div className='login-logo-box'>
+      
         <img src="https://cdn-icons-png.flaticon.com/512/7081/7081305.png" alt="icono-friender"></img>
-        <h1>Friender</h1>
+       
       </div>
 
-      <div className="form-section-center login-box">
+      <div className="form-section-rigth login-box">
         <p className="mb-4 fw-bold login-box-title">Inicia sesión en Friender</p>
         <form className='login-form'>
           <div className="mb-2">
