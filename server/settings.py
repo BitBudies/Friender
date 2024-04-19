@@ -27,6 +27,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+THIRD_APSS = [
+    'simple_history',
+    'drf_yasg'
+
+]
 
 # Application definition
 
