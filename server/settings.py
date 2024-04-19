@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'amigo',
     'drf_yasg',
+     'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
