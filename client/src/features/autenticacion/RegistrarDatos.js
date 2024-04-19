@@ -1,39 +1,45 @@
-import React, { useState } from 'react';
-import "./Registrarse.css";
-import { Link, useNavigate } from 'react-router-dom';
-import RegistrarDatos from './RegistrarDatos';
+import React,{useState} from 'react'
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 
 
-const Registrarse = () => {
-  
+const defaultValues = {
+    nombre: '',
+    apellido_paterno: '',
+    apellido_materno: '',
+    fecha_nacimiento: '',
+    genero: '',
+    ubicacion: '',
+    nombre_usuario: '',
+    correo_electronico: '',
+    contraseña: '',
+    confirmar_contraseña: '',
+  };
 
-  const navigate = useNavigate();
-  
-  
+
+const RegistrarDatos = () => {
+
+    const [password, setPassword] = useState("");
+
+    const [values, setValues] = useState(defaultValues);
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setValues({
+          ...values,
+          [name]: value,
+        });
+      };
+      const toggleShowPassword = () => {
+        setShowPassword(!showPassword); 
+      };
 
   return (
-    <div className='registrarse-container'>
-      <div className='registrarse-left'>
-        <div className="form-section mw-100 min-vh-100 d-flex flex-column justify-content-center align-items-left">
-          <div className="title-container">
-            <h1 className="title align-left"><b>Friender</b></h1>
-            <br />
-            <h5 className="title align-left">¡Enciende la diversión con Friender!
-              <br />
-              Alquila amigos y crea momentos
-              <br />
-              inolvidables.</h5>
-          </div>
+    <div className="form-item">
 
-          <div className='login-logo-box align-left'>
-            <img className="logo-img" src="https://cdn-icons-png.flaticon.com/512/7081/7081305.png" alt="icono-friender"></img>
-          </div>
-        </div>
-      </div>
-      <div className='registrarse-right'>
-        <h1 className="title align-right"><b>Regístrate</b></h1>
-<<<<<<< HEAD
+    
         <div className="input-group registro">
           <div className="input-item">
             <label htmlFor="nombre" className="input-label">Nombre:</label>
@@ -160,7 +166,7 @@ const Registrarse = () => {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-          <div className="mb-10 input-item">
+          <div className="mb-2 input-item">
             <label htmlFor="confirmar_contraseña" className="input-label">Confirmar Contraseña:</label>
             <input
               type="password"
@@ -180,15 +186,11 @@ const Registrarse = () => {
           
           <p className="form-text form-register-text">
           <br/> <br/> <br/> <br/> <br/>
-            <Link to={"/siguiente"}> Siguiente</Link>
+            <button className='btn btn-azul'>Siguiente</button>
           </p>
-=======
-        <RegistrarDatos/>
->>>>>>> 08c643084d8a91c2486d0d1a3a21f92aeb09e941
         </div>
-      </div>
-    
-  );
+    </div>
+  )
 }
 
-export default Registrarse;
+export default RegistrarDatos
