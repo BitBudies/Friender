@@ -25,7 +25,7 @@ from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, 
 from amigo.views.login_views import LoginView
 from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, GetSolicitudesRecibidas, SolicitudAlquilerDetailAPIView, VerificarSolicitudes
 from amigo.views.utils import enviar_correo_prueba
-
+from amigo.views.login import Login
 #router = routers.DefaultRouter()
 #router.register(r'solicitud', SolicitudViewSet)
 
