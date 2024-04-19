@@ -147,3 +147,27 @@ class ClienteRegistrar(APIView):
             return Response({"message": "Correo enviado correctamente"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+        
+        
+class ClienteVerificar(APIView):
+    def post(self, request):
+        usuario = request.data.get('usuario')
+        codigo = request.data.get('codigo')
+        
+        if not all([usuario, codigo]):
+            return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            cliente = Cliente.objects.get(usuario=usuario, codigoVerificaion=codigo)
+        except Cliente.DoesNotExist:
+            return Response({"error": "Usuario o código de verificación son incorrectos"}, status=status.HTTP_404_NOT_FOUND)
+        
+        cliente.codigoVerificaion = None
+        cliente.estado = 'A'
+        
+        cliente.save()
+        
+        
+        
+        return Response({"message": "Correo verificado correctamente"}, status=status.HTTP_200_OK) 

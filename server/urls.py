@@ -20,7 +20,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
-from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, ClienteRegistrar
+from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, ClienteRegistrar, ClienteVerificar
 from amigo.views.edicion_views import findEmail
 from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef
 from amigo.views.login_views import LoginView
@@ -53,7 +53,10 @@ urlpatterns = [
     
     path('api/cliente/registrar/', ClienteRegistrar.as_view()),
     
-    #path('api/cliente/<uidb64>/<token>/',views.activate , ClienteRegistrar.as_view()),
+    path('api/cliente/activar/', ClienteVerificar.as_view()),
+    
+    
+    
     path('api/cliente/login/', Login.as_view()),
     # probando postsssss
     path('api/solicitud', EnviarSolicitud.as_view()),
