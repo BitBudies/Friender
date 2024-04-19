@@ -135,6 +135,7 @@ class ClienteRegistrar(APIView):
             descripcion=descripcion,
             usuario=user,
             correo=correo,
+            codigoVerificaion=codigo,
             #dinero=dinero,
             estado=estado
         )
@@ -151,7 +152,3 @@ class ClienteRegistrar(APIView):
             return Response({"message": "Correo enviado correctamente"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
-    
-#falta la verrifiacaion y almacena el codigo en la base de datos
-        

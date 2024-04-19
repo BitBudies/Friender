@@ -22,6 +22,7 @@ class Cliente(models.Model):
     usuario = models.CharField(max_length=20)
     correo = models.CharField(max_length=100)
     contrasena = models.CharField(max_length=255)
+    codigoVerificaion = models.CharField(max_length=5, null=True, blank=True)
     
     dinero = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     
