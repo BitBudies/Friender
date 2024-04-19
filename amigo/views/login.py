@@ -16,3 +16,10 @@ class Login(ObtainAuthToken):
             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
         
         userObject = authenticate(username=username, password=password)
+
+        if userObject is not None:
+            # El usuario existe y la contraseña es correcta
+            login_serializer = self.serializer_class(data = request.data, context = {'request':request})
+
+        else:
+            return Response({"error": "Nombre de usuario o contraseña incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
