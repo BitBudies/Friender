@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from 'react';
 import "./Registrarse.css";
 
@@ -30,17 +29,3 @@ const Registrarse = () => {
 }
 
 export default Registrarse;
-=======
-import React from 'react'
-import "./Registrarse.css"
-
-const Registrarse = () => {
-  return (
-    <div className='page'>
-        Hola
-    </div>
-  )
-}
-
-export default Registrarse
->>>>>>> b430402524918245b23088cbf43183963c15a6c9
