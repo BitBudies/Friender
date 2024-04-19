@@ -16,5 +16,5 @@ def findEmail(request):
         except Cliente.DoesNotExist:
             return JsonResponse({"error": "Correo no encontrado"}, status=status.HTTP_404_NOT_FOUND)
         print(f"hola")
-        return JsonResponse({"cliente_id": f"{cliente.cliente_id}"}, status=status.HTTP_200_OK)
+        return JsonResponse({"usuario": f"{cliente.usuario}"}, status=status.HTTP_200_OK)
     return JsonResponse({'error': 'Metodo no permitido'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)

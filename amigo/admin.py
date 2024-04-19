@@ -1,4 +1,7 @@
 from django.contrib import admin
+
+from amigo.models.gusto import Gusto
+from amigo.models.interes import Interes
 from .models.clienteDB import Cliente
 from .models.amigoDB import Amigo
 from .models.solicitud_alquilerDB import solicitud_alquiler
@@ -12,4 +15,5 @@ admin.site.register(Amigo)
 admin.site.register(solicitud_alquiler)
 admin.site.register(Calificacion)
 admin.site.register(Fotografia)
-
+admin.site.register(Interes)
+admin.site.register(Gusto)
