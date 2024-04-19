@@ -6,11 +6,8 @@ import RegistrarDatos from './RegistrarDatos';
 
 
 const Registrarse = () => {
-  
-
+ 
   const navigate = useNavigate();
-  
-  
 
   return (
     <div className='registrarse-container'>
@@ -21,7 +18,7 @@ const Registrarse = () => {
             <br />
             <h5 className="title align-left">¡Enciende la diversión con Friender!
               <br />
-              Alquila amigos y crea momentos
+                      Alquila amigos y crea momentos
               <br />
               inolvidables.</h5>
           </div>

@@ -35,10 +35,10 @@
   justify-content: center;
   align-items: center;
   gap: 5rem;
-  padding: 0 2rem;
+  padding: 10 2rem;
 }
 .input-field {
-  width: 300px; /* Ancho del campo de entrada */
+  width: 300px; 
   padding: 10px;
   border: 1px solid #ccc; 
   border-radius: 5px; 
