@@ -33,7 +33,6 @@ const PerfilAmigo = () => {
       
               </div>
               <div className='perfil-amigo-right'>
-                 {/* Modificamos el ancho de la parte derecha */}
                   <h1>Perfil de amigo</h1>
                   <div className='profile-description w-100'>
                     <p><strong>Descripción:</strong> {amigo.descripcion}</p>
