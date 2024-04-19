@@ -10,7 +10,6 @@ def obtenerIntereses(request):
                            'estado': interes.estado,
                            'timestamp_interes': interes.timestamp_interes} 
                           for interes in intereses]
-        
-        return JsonResponse({'intereses': intereses_data})
+        return JsonResponse({'intereses': intereses_data}, status=200)
     else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)

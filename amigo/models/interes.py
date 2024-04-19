@@ -13,4 +13,4 @@ class Interes(models.Model):
     timestamp_interes = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.interes_id}"
+        return f"{self.interes_id} - {self.nombre} - {self.estado}"
