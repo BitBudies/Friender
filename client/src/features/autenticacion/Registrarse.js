@@ -181,7 +181,7 @@ const Registrarse = () => {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-          <div className="mb-2 input-item">
+          <div className="mb-10 input-item">
             <label htmlFor="confirmar_contraseña" className="input-label">Confirmar Contraseña:</label>
             <input
               type="password"

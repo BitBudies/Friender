@@ -37,11 +37,12 @@
 }
 .input-field {
   width: 300px; /* Ancho del campo de entrada */
-  padding: 10px; /* Espaciado interno */
-  border: 1px solid #ccc; /* Borde */
-  border-radius: 5px; /* Borde redondeado */
-  outline: none; /* Elimina el contorno cuando el campo está enfocado */
-  /* Otros estilos personalizados */
+  padding: 10px;
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  outline: none; 
+  gap: 5rem;
+  
 }
 .registro .input-item{
   display: flex;
