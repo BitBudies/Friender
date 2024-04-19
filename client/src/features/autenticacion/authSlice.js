@@ -8,10 +8,15 @@ const authApi = apiSlice.injectEndpoints({
         method : "POST",
         body : data,
       })
+    }),
+    findEmail : builder.mutation({
+      query : (data) => ({
+        url : "/findEmail",
+        method : "POST",
+        body : data,
+      })
     })
   }),
 });
 
-
-export const {useLoginMutation} = authApi;
-
+export const {useLoginMutation, useFindEmailMutation} = authApi;

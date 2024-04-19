@@ -21,6 +21,7 @@ from drf_yasg import openapi
 
 from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
 from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, ClienteRegistrar
+from amigo.views.edicion_views import findEmail
 from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef
 from amigo.views.login_views import LoginView
 from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, GetSolicitudesRecibidas, SolicitudAlquilerDetailAPIView, VerificarSolicitudes
@@ -78,6 +79,7 @@ urlpatterns = [
     path('api/login', LoginView.as_view(), name = 'login'),
     path('api/test/correo', enviar_correo_prueba, name = 'correo'),
     
+    path('api/findEmail', findEmail),
 
     #ducumentacion de la API
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), 
