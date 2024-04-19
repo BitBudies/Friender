@@ -4,14 +4,46 @@
   }
   
   .login-logo-box.align-left {
-    margin-left: 0; /* Esto es opcional, para asegurarse de que no haya ningún margen adicional en la izquierda */
+    margin-left: 0; 
   }
   
   .logo-img {
-    width: 1000px; /* Ancho deseado */
-    height: 100px; /* Altura deseada */
+    width: 1000px; 
+    height: 100px; 
   }
-  .registrarse-right{
-    position: relative;
+  .registrarse-left{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
+  .registrarse-right{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+
+.registrarse-container{
+  position: relative;
+  width: 80%;
+  min-height: calc(100vh - var(--navbar-height));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
+  padding: 0 2rem;
+}
+.input-field {
+  width: 300px; /* Ancho del campo de entrada */
+  padding: 10px; /* Espaciado interno */
+  border: 1px solid #ccc; /* Borde */
+  border-radius: 5px; /* Borde redondeado */
+  outline: none; /* Elimina el contorno cuando el campo está enfocado */
+  /* Otros estilos personalizados */
+}
+.registro .input-item{
+  display: flex;
+  flex-direction: column;
+}
