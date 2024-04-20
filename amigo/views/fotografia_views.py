@@ -9,6 +9,7 @@ from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password
 
+from django.db.models import Q
 from django.contrib.auth.models import User
 
 from ..models.clienteDB import Cliente
@@ -149,8 +150,8 @@ def crearClienteConFotografias(request):
         if not all([nombre, ap_paterno, ci, fecha_nacimiento, genero, direccion, descripcion, usuario, correo, contrasena]):
             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
         
-        if User.objects.filter(username=usuario).exists():
-            return Response({'error': 'Un usuario con ese nombre ya existe.'}, status=400)
+        if User.objects.filter(Q(username=usuario) | Q(correo=correo)).exists():
+            return Response({'error': 'El nombre de usuario o el correo ya están en uso.'}, status=400)
         
         user = User.objects.create_user(username=usuario, email=correo, password=contrasena)
       
@@ -169,7 +170,7 @@ def crearClienteConFotografias(request):
             contrasena=make_password(contrasena),
             estado='A',
         )
-        
+    
        
           
         
