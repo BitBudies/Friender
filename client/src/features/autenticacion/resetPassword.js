@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "./resetPassword.css"
-import { useFindEmailMutation } from './authSlice';
+import { useFindEmailMutation, useSendCodeMutation, useVerifyCodeMutation, useChangePassMutation } from './authSlice';
 
 const ResetPassword = () => {
     const [step, setStep] = useState(1); // control de pagina
@@ -50,8 +50,31 @@ const ResetPassword = () => {
     useEffect(checkEmailResponse,[isError, isLoading, isSuccess, response])
 
     // ------------------------------verificacion codigos------------------------------
+    const [sendCode, {data: dataCodigo, isLoading: codeLoading, isSuccess: codeSucess, isError:codeIsError, error: errorCodigo}] = useSendCodeMutation()
+    const [verifyCode, {data: verData, isLoading: verLoading, isSuccess: verSucess, isError:verIsError, error: verError}] = useVerifyCodeMutation()
     const [usuario, setUsuario] = useState(""); 
     const [verificationCode, setVerificationCode] = useState("");
+
+    const handleEnviarCodigos = (e) => {
+      try {
+        const formulario = new FormData();
+        formulario.append("correo", emailText);
+        sendCode(formulario);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    useEffect(() => {
+      if (codeLoading) {
+        console.log("Cargando..."); // Log mientras se carga
+      } else if (codeIsError) {
+        console.log("Error:", errorCodigo.data.error); // Log en caso de error
+      } else if (codeSucess) {
+        console.log(dataCodigo); // Log si la solicitud fue exitosa
+      }
+    }, [codeLoading, codeIsError, codeSucess, errorCodigo]);
+
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -67,12 +90,60 @@ const ResetPassword = () => {
     // Función para manejar el envío del formulario de código de verificación
     const handleSubmitVerificationCodeForm = (e) => {
         e.preventDefault();
+        console.log("aqui verificamos los codigos");
+        try {
+          const formulario = new FormData();
+          formulario.append("correo", emailText);
+          formulario.append("codigo", verificationCode);
+          verifyCode(formulario);
+        } catch (error) {
+          console.log(error);
+        }
     };
+    useEffect(() => {
+      if (verLoading) {
+        console.log("Cargando..."); // Log mientras se carga
+      } else if (verIsError) {
+        console.log("Error:", verError.data.error); // Log en caso de error
+      } else if (verSucess) {
+        console.log(verData); // Log si la solicitud fue exitosa
+        goToNextStep();
+      }
+    }, [verLoading, verIsError, verSucess, verError]);
+
+
+    //PASSWORD CONFIRMATION
+    const [changePass, {data: passData, isLoading: passLoading, isSuccess: passSucess, isError:passIsError, error: passError}] = useChangePassMutation()
+    
     const handleSubmitPasswordForm = (e) => {
         e.preventDefault();
-        alert('Contraseña actualizada correctamente');
+        if(password===confirmPassword) {
+          console.log(`ahora cambiamos contras`);
+          console.log(`correo: ${emailText}, codigo: ${verificationCode}`);
+          try {
+            const formulario = new FormData();
+            formulario.append("correo", emailText);
+            formulario.append("codigo", verificationCode);
+            formulario.append("nuevaContrasena", confirmPassword)
+            changePass(formulario);
+          } catch (error) {
+            console.log(error);
+          }
+
+        }
     };
-    //<button onClick={goToPreviousStep}>Atrás</button>
+
+    useEffect(() => {
+      if (passLoading) {
+        console.log("Cargando..."); // Log mientras se carga
+      } else if (passIsError) {
+        console.log("Error:", passError.data.error); // Log en caso de error
+      } else if (passSucess) {
+        console.log(passData); // Log si la solicitud fue exitosa
+        goToNextStep();
+      }
+    }, [passLoading, passIsError, passSucess, passError]);
+
     return (
       <div className='page'>
         {step === 1 && (
@@ -94,9 +165,9 @@ const ResetPassword = () => {
             <h3>Ingresar el código de verificación.</h3>
             <form onSubmit={handleSubmitVerificationCodeForm}>
               <input type="text" value={verificationCode} onChange={handleVerificationCodeChange} placeholder="Código de verificación" required />
-              <button onClick={console.log("Enviamos codigos")}>Enviar codigo</button>
               <button type="submit">Verificar</button>
             </form>
+            <button onClick={handleEnviarCodigos}>Enviar codigo</button>
           </div>
         )}
         {step === 3 && (
@@ -107,7 +178,11 @@ const ResetPassword = () => {
               <input type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} placeholder="Confirmar contraseña" required />
               <button type="submit">Confirmar</button>
             </form>
-            <button onClick={goToPreviousStep}>Atrás</button>
+          </div>
+        )}
+        {step === 4 && (
+          <div>
+            <h1>Se restablecio correctamente la contraseña</h1>
           </div>
         )}
       </div>

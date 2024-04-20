@@ -15,8 +15,29 @@ const authApi = apiSlice.injectEndpoints({
         method : "POST",
         body : data,
       })
+    }),
+    sendCode : builder.mutation({
+      query : (data) => ({
+        url : "/enviarCodigoRestablecimiento",
+        method : "POST",
+        body : data,
+      })
+    }),
+    verifyCode : builder.mutation({
+      query : (data) => ({
+        url : "/verificarCodigosRestablecimiento",
+        method : "POST",
+        body : data,
+      })
+    }),
+    changePass : builder.mutation({
+      query : (data) => ({
+        url : "/cambiarContrasena",
+        method : "POST",
+        body : data,
+      })
     })
   }),
 });
 
-export const {useLoginMutation, useFindEmailMutation} = authApi;
+export const {useLoginMutation, useFindEmailMutation, useSendCodeMutation, useVerifyCodeMutation, useChangePassMutation} = authApi;

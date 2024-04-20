@@ -52,7 +52,7 @@ def enviarCorreoCambioContrasena(request):
                 "Restablecer contraseña",
                 f"El codigo para restablecer su contraseña es: {codigoVerificaion}",
                 config('EMAIL_HOST_USER'),
-                request.POST['correo'],
+                [request.POST['correo']],
                 fail_silently=False,
             )
             cliente.codigoVerificaion = codigoVerificaion
@@ -62,7 +62,7 @@ def enviarCorreoCambioContrasena(request):
             return JsonResponse({"error": "No existe el correo"}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+        print( f"Se envio correctamente el correo a {cliente.usuario}")
         return JsonResponse({"message": f"Se envio correctamente el correo a {cliente.usuario}"}, status=status.HTTP_200_OK)
     return JsonResponse({'error': 'Metodo no permitido'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
@@ -75,6 +75,6 @@ def verificarCodigoCambioContrasena(request):
         try:
             cliente = Cliente.objects.get(correo=request.POST['correo'], codigoVerificaion=request.POST['codigo'])
         except Cliente.DoesNotExist:
-            return JsonResponse({"error": "No existe el correo"}, status=status.HTTP_404_NOT_FOUND)
-        return JsonResponse({"message": f"Se envio correctamente el correo a {cliente.usuario}"}, status=status.HTTP_200_OK)
+            return JsonResponse({"error": "El codigo no es correcto o expiro"}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({"message": f"El codigo es correcto"}, status=status.HTTP_200_OK)
     return JsonResponse({'error': 'Metodo no permitido'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
