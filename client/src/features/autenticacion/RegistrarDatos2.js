@@ -1,16 +1,14 @@
 import React,{useEffect, useState} from 'react'
-// import { Link, useNavigate } from 'react-router-dom';
 import "./Registrarse_2.css";
 import { useGetInteresesQuery, useUploadImageMutation } from './authSlice';
-// import { useLoginMutation } from './authSlice';
-// import { useGlobalContext } from '../../context';
+
 
 const RegistrarDatos2 = ({setNForm}) => {
 
     const defaultValues = {
         interes: [],
         fotos: [],
-        fotosNombres: [],
+        // fotosNombres: [],
         descripcion: '',
         terminos: false,
       };
@@ -66,19 +64,18 @@ const RegistrarDatos2 = ({setNForm}) => {
         let { name, value } = e.target;
         if (name === 'descripcion') {
             setDescripcionLength(value.length); // Actualiza la longitud de la descripción
-            setValues({
-                ...defaultValues,
-                [name] : value,
+            setValues((currentValues) => {
+                return {
+                    ...currentValues,
+                    [name] : value,
+                }
+                
               });
-            console.log(values[name])
-            // defaultValues.descripcion = value
-            // console.log(defaultValues.descripcion)
         }
         if(name === 'selInteres') {
-            if (defaultValues.interes.indexOf(value) == -1) {
-                defaultValues.interes.push(value)
+            if (values.interes.indexOf(value) === -1) {
+                setValues({...values,interes : [...values.interes,value]})
             }
-            // console.log(defaultValues.interes)
             const selectElement = document.getElementById('selInteres');
             selectElement.style.color='#000'  
         }
@@ -92,41 +89,21 @@ const RegistrarDatos2 = ({setNForm}) => {
                 return;
             }
             
-            setClienteId(1);
             setTipoImagen(fileExtension);
             setImagen(selectedFile);
 
-            const formData = new FormData();
-            formData.append('cliente_id', clienteId);
-            formData.append('tipoImagen', tipoImagen);
-            formData.append('imagen', imagen);
+           
 
-            defaultValues.fotos.push(formData)
-            console.log(defaultValues.fotos)
+            setValues({...values,fotos : [...values.fotos,selectedFile]})
 
-            defaultValues.fotosNombres.push(selectedFile.name)
-            // setValues({
-            //     ...values,
-            //     ['fotos']: selectedFile.name,
-            // });
-            console.log(defaultValues.fotosNombres);
-
-        }
-        if (name === 'checkbox'){
-            // setValues({
-                // [name] : !values[name]
-            // })
-            // console.log(values[name])
-            defaultValues.terminos = !defaultValues.terminos
-            console.log(defaultValues.terminos)
         }
     };
 
     const rojoClase = descripcionLength < 30 ? 'texto-rojo' : '';
 
-    // useEffect(() => {
-    //     console.log(data.intereses,isFetching,isSuccess);
-    // },[data,isFetching,isSuccess])
+    useEffect(() => {
+        console.log(values);
+    },[values])
 
 
   return (
@@ -169,7 +146,7 @@ const RegistrarDatos2 = ({setNForm}) => {
             name="descripcion"
             onChange={handleChange}
             maxLength={500}
-            value={defaultValues.descripcion}
+            value={values.descripcion}
           ></textarea>
           <p className="text-muted" id="caracteres-minimo">
             <span className={rojoClase}>
@@ -186,7 +163,7 @@ const RegistrarDatos2 = ({setNForm}) => {
             type="checkbox"
             id="checkbox"
             name="checkbox"
-            onClick={handleChange}
+            onClick={() => setValues((currentValues) => {return {...currentValues,terminos : !currentValues.terminos}} )}
           />
           <label className="form-label" htmlFor="checkbox">
             Aceptar términos y condiciones
@@ -207,5 +184,10 @@ const RegistrarDatos2 = ({setNForm}) => {
     </div>
   );
 }
+
+// const formData = new FormData();
+// formData.append('imagen', imagen);
+
+// console.log(formData);
 
 export default RegistrarDatos2
