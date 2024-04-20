@@ -157,22 +157,19 @@ const ResetPassword = () => {
                   onChange={handleEmailChange} 
                   placeholder="Correo electrónico" 
                   required/>
-                
-              </form>
               <div className='botones'> 
                 <a href="/">
                   <button className='b-cancelar btn'>Cancelar</button>
                 </a>
                 <button type="submit" 
                     disabled={!isButtonEmailEnabled}
-                    className='b-buscar btn btn-azul'
-                    >{
+                    className='b-buscar btn btn-azul'>{
                     isEmailValid ? <p>Continuar</p>: <p>Buscar cuenta</p>}</button>
                     {supportingText.length > 0 && (
                         <p style={{color:'red'}}>{supportingText}</p>
                     )}
               </div>
-              
+              </form>
             </div>
           </div>
         )}
