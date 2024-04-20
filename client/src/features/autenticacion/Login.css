@@ -5,6 +5,7 @@
 
 .login-logo-box{
     text-align: center;
+    margin-top: 90px;
     margin-bottom: 25px;
 }
 
@@ -86,10 +87,12 @@
 @media screen and (max-width : 380px) {
     .login-box{
         width: 90%;
-        margin-top: 15%;
         padding: 1rem;
     }
     .login-logo-box{
-        display: none;
+        
     }
-  }
+    .login-logo-box img{
+        width: 50px;
+    }
+}
