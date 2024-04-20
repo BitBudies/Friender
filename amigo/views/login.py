@@ -10,12 +10,14 @@ from ..models import Cliente
 # pip install --upgrade djangorestframework-simplejwt
 class Login(ObtainAuthToken):
     def post(self,request,*args,**kwargs):
+        
          username = request.data.get('username')
          password = request.data.get('password')
+         print(username,password)
          login_serializer = self.serializer_class(data = request.data, context = {'request':request})
 
-         if not all([username, password]):
-            return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
+        #  if not all([username, password]):
+        #     return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
          
          userObject = authenticate(username=username, password=password)
          if userObject is not None:
@@ -45,6 +47,6 @@ class Login(ObtainAuthToken):
                     }, status= status.HTTP_201_CREATED)
                 # return Response({"message": "Inicio de sesión exitoso"}, status=status.HTTP_200_OK)
          else:
-            return Response({"error": "Nombre de usuario o contraseña incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Nombre de usuario o contraseña incorrectos"}, status=status.HTTP_404_NOT_FOUND)
 
     
