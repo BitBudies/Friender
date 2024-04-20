@@ -148,7 +148,8 @@ const ResetPassword = () => {
       <div className='page'>
         {step === 1 && (
           <div>
-            <h2>Olvidaste tu contraseña</h2>
+            <h1>Recupera tu cuenta</h1>
+            <h2>Ingresa tu correo electronico para buscar tu cuenta</h2>
             <form onSubmit={handleSubmitEmailForm}>
               <input type="email" name="user_email" value={emailText} onChange={handleEmailChange} placeholder="Correo electrónico" required/>
               <button type="submit" disabled={!isButtonEmailEnabled}>{
@@ -157,14 +158,17 @@ const ResetPassword = () => {
                     <p style={{color:'red'}}>{supportingText}</p>
                 )}
             </form>
+            <a href="/">
+              <button>Cancelar</button>
+            </a>
           </div>
         )}
         {step === 2 && (
           <div>
-            <h1>Hola {usuario}.</h1>
-            <h3>Ingresar el código de verificación.</h3>
+            <h1>Código de verificación</h1>
+            <h2>Ingresar el código de verificación.</h2>
             <form onSubmit={handleSubmitVerificationCodeForm}>
-              <input type="text" value={verificationCode} onChange={handleVerificationCodeChange} placeholder="Código de verificación" required />
+              <input type="text" value={verificationCode} onChange={handleVerificationCodeChange} placeholder="Código de verificación" required />  
               <button type="submit">Verificar</button>
             </form>
             <button onClick={handleEnviarCodigos}>Enviar codigo</button>
@@ -175,7 +179,7 @@ const ResetPassword = () => {
             <h2>Ingresa tu nueva contraseña</h2>
             <form onSubmit={handleSubmitPasswordForm}>
               <input type="password" value={password} onChange={handlePasswordChange} placeholder="Contraseña" required />
-              <input type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} placeholder="Confirmar contraseña" required />
+              <input type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} placeholder="Repetir contraseña" required />
               <button type="submit">Confirmar</button>
             </form>
           </div>

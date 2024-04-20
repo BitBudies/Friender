@@ -104,8 +104,6 @@ const RegistrarDatos2 = ({setNForm}) => {
     useEffect(() => {
         console.log(values);
     },[values])
-
-
   return (
     <div className="form-item">
       <div className="form-2">
