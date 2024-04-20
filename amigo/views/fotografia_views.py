@@ -107,3 +107,42 @@ def SubirFotografiaDef(request):
     fotografiaNew.save()
     print(f"Se guardo correctamente la imagen {tipoooo}, id: {fotografiaNew.fotografia_id}")
     return JsonResponse({"message": f"Se guardo correctamente la imagen {tipoooo}, id: {fotografiaNew.fotografia_id}"}, status=status.HTTP_201_CREATED)
+
+
+
+@csrf_exempt
+def crearClienteConFotografias(request):
+    if request.method == 'POST':
+        # --------------------------------------------verificar archivos----------------------------------------------
+        imagenesSize = len(request.FILES)
+        if imagenesSize < 1 or imagenesSize > 7:
+            return JsonResponse({"error": f"Se debe de subir de 1 a 7 imagenes"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        for _, fileContent in request.FILES.items():
+            fileTipe = fileContent.content_type
+            if fileTipe != 'image/jpeg' and fileTipe != 'image/png':
+                return JsonResponse({"error": f"Solo se admiten imagenes jpeg, jpg y png"}, status=status.HTTP_400_BAD_REQUEST)
+        # --------------------------------------------verificar archivos----------------------------------------------
+
+        for field in ['nombre','apellidoPaterno','apellidoMaterno','fechaNacimiento','genero','ubicacion','usuario','correo','contrasena','descripcion', 'intereses']:
+            if field not in request.POST or not request.POST[field]:
+                return JsonResponse({"error": f"El parametro: {field} es obligatorio"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # TODO verificar intereses al menos 1?
+        
+        # TODO crear cliente
+        cliente = None
+        
+        
+        for prioridad, fileContent in request.FILES.items():
+            foto = Fotografia(
+                # cliente = cliente #crear las imagenes para el cliente
+                cliente_id = 1, # TODO temporal jeje
+                tipoImagen = 'jpeg' if fileContent.content_type == 'image/jpeg' else 'png,',
+                prioridad = prioridad,
+                imagenBase64 = fileContent.read(),
+                estado_fotografia = 'P'
+            )
+            print(foto)
+        return JsonResponse({"message": f"Se creo el cliente!"}, status=status.HTTP_201_CREATED)
+    return JsonResponse({'error': 'Metodo no permitido'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
