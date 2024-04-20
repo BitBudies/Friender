@@ -283,7 +283,7 @@ const confirmarcontraValidar = (value) => {
   {showPassword? <FaEyeSlash /> : <FaEye />}
 </span>
         </div>
-        <div className="mb-2 input-item" style={{ marginLeft: '30px' }}>
+        <div className="mb-2 " style={{ marginLeft: '30px' }}>
           <label htmlFor="confirmar_contraseña" className="input-label">
             Confirmar Contraseña:
           </label>
@@ -292,21 +292,21 @@ const confirmarcontraValidar = (value) => {
             id="confirmar_contraseña"
             className="form-control"
             placeholder="Confirmar Contraseña"
-            value={password1}
+            value={password1}input-item
             onChange={(e) => setPassword1(e.target.value)}
             style={{ width: '280px' }}
             required
           />
             <p className='text-danger'>{ confirmarcontraValidar(password)}</p>
-         <span className="password-icon" onClick={toggleShowPassword1} style={{ position: 'absolute', right: '180px', top: '40%', transform: 'translateY(-30%)' }}>
+         <span className="password-icon" onClick={toggleShowPassword1} style={{ position: 'absolute', right: '180px', top: '30%', transform: 'translateY(-30%)' }}>
   {showPassword1 ? <FaEyeSlash /> : <FaEye />}
 </span>
-        </div>
+       
       </div>
-      <p className="form-text form-register-text">
-        <button className="btn btn-azul" onClick={() => setNForm(n => n + 1)}>Siguiente</button>
-      </p>
-    </div>
+      <div className='para-boton '>
+      <button className="btn btn-azul input-item " onClick={() => setNForm(n => n + 1)}>Siguiente</button>
+      
+    </div></div></div>
   );
 };
 
