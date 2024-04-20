@@ -150,7 +150,7 @@ const RegistrarDatos2 = ({setNForm}) => {
             className="form-control"
             placeholder="Una breve descripción"
             rows="5"
-            cols="90"
+            cols="50"
             id="descripcion"
             name="descripcion"
             onChange={handleChange}

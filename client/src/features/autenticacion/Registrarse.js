@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import "./Registrarse.css";
-import { Link, useNavigate } from "react-router-dom";
 import RegistrarDatos from "./RegistrarDatos";
 import RegistrarDatos2 from "./RegistrarDatos2";
 
 const Registrarse = () => {
-  const [nForm, setNForm] = useState(0);
+  const [nForm, setNForm] = useState(1);
 
   const props = {
     setNForm,
@@ -36,19 +35,20 @@ const Registrarse = () => {
           ></img>
         </div>
         <div className="registrarse-right">
-          <div className="form-indicators">
-            <div className={`indicator ${nForm === 0 && "active"}`}></div>
-            <div className={`indicator ${nForm === 1 && "active"}`}></div>
-          </div>
-          <h1 className="mb-2">Regístrate</h1>
-          <div className="toColumns"></div>
-          <div className="form-registro">
-            <div
-              className="form-carousel"
-              style={{ transform: `translate(${nForm * -50}%)` }}
-            >
-              <RegistrarDatos {...props} />
-              <RegistrarDatos2 {...props} />
+          <div className="registrarse-right-container">
+            <div className="form-indicators">
+              <div className={`indicator ${nForm === 0 && "active"}`}></div>
+              <div className={`indicator ${nForm === 1 && "active"}`}></div>
+            </div>
+            <h1 className="mb-2">Regístrate</h1>
+            <div className="form-registro">
+              <div
+                className="form-carousel"
+                style={{ transform: `translate(${nForm * -50}%)` }}
+              >
+                <RegistrarDatos {...props} />
+                <RegistrarDatos2 {...props} />
+              </div>
             </div>
           </div>
         </div>

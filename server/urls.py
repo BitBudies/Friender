@@ -66,7 +66,7 @@ urlpatterns = [
     
     
     
-    path('api/cliente/login/', Login.as_view()),
+    path('api/cliente/login', Login.as_view()),
     # probando postsssss
     path('api/solicitud', EnviarSolicitud.as_view()),
     
