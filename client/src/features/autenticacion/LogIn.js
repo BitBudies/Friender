@@ -34,7 +34,7 @@ const LogIn = () => {
     }
     if(isSuccess){
       if(response.id !== '0'){
-        setClientId(1);
+        setClientId(response.id);       //as;ldjkfl;ashidf 'as
         navigate("/amigos/page/1");
       }else{
         setDisableBtn(false);

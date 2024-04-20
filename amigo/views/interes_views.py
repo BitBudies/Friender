@@ -13,3 +13,4 @@ def obtenerIntereses(request):
         return JsonResponse({'intereses': intereses_data}, status=200)
     else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)
+    

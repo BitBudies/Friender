@@ -1,5 +1,4 @@
 
-
 import React, { useState } from 'react';
 import "./Registrarse.css";
 import { Link, useNavigate } from 'react-router-dom';
@@ -20,7 +19,7 @@ const Registrarse = () => {
 
   return (
       <div className="page regist">
-      <div class="registrarse-left">
+      <div className="registrarse-left">
           <h1 className='mb-4'><b>Friender</b></h1>
           
           <h5><p>¡Enciende la diversión con Friender!</p></h5>
