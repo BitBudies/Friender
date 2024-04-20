@@ -25,13 +25,14 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
-    width: 100%;
+    width: 50%;
+    background-color: white;
   }
   
 
 .registrarse-container{
   position: relative;
-  width: 80%;
+  width: 100vw;
   min-height: calc(100vh - var(--navbar-height));
   display: flex;
   justify-content: center;
@@ -40,6 +41,15 @@
   padding: 0 2rem;
 }
 
+<<<<<<< HEAD
+=======
+.registrarse-right{
+  position: relative;
+  width: 50%;
+  padding: 2rem 0;
+}
+
+>>>>>>> 1e59a35cf4e5a793c210ae747bbe71c682fa4cb8
 .input-field {
   width: 300px; 
   padding: 10px;

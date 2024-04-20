@@ -35,50 +35,50 @@
     align-items: center;
 }
 
-.box1 .btns{
+.form-indicators{
     position: absolute;
-    border: 1px solid blue;
     width: 5rem;
     height: 1rem;
     display: flex;
     justify-content: center;
     gap: 1rem;
-    top: 1rem;
+    top: 0;
 }
 
-.box1 .btns .btn-item{
-    width: 1rem;
-    height: 1rem;
+.form-indicators .indicator{
+    width: 1.2em;
+    height: 1.2rem;
     border-radius: 50%;
+    border: 2px solid var(--gris);
+}
+
+.form-indicators .indicator.active{
     background-color: black;
 }
 
-.box1 .form{
+.form-registro{
     position: relative;
     width: 100%;
     height: 80%;
-    background-color: aquamarine;
     overflow-x: hidden;
     /* display: flex;
     align-items: center;
     overflow-x: visible; */
 }
 
-.box1 .form .form-carousel{
+.form-registro .form-carousel{
     width: 200%;
     height: 100%;
-    background-color: silver;
     display: flex;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     transition: 1s;
-    transform: translateX(-50%);
+    transform: translateX(50%);
 }
 
 .form-itema{
     /* position: relative; */
-    width: 40%;
+    width: 100%;
     height: 100%;
-    background-color: aqua;
 }
 
 

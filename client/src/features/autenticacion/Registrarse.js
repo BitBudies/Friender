@@ -6,7 +6,8 @@ import RegistrarDatos from './RegistrarDatos';
 
 
 const Registrarse = () => {
- 
+  
+  const [nForm,setNForm] = useState(0);
   const navigate = useNavigate();
 
   return (
@@ -29,10 +30,24 @@ const Registrarse = () => {
         </div>
       </div>
       <div className='registrarse-right'>
+<<<<<<< HEAD
       <br /><br /><br />
         <h1 className="title align-right">Regístrate</h1>
         <br />
         <RegistrarDatos/>
+=======
+        <div className="form-indicators">
+          <div className={`indicator ${nForm === 0 && "active"}`}></div>
+          <div className={`indicator ${nForm === 1 && "active"}`}></div>
+        </div>
+        <h1 className="title align-right"><b>Regístrate</b></h1>
+        <div className='form-registro'>
+          <div className="form-carousel" style={{transform: `translate(${nForm * -50}%)`}}>
+            <RegistrarDatos/>
+          </div>  
+        </div>
+        
+>>>>>>> 1e59a35cf4e5a793c210ae747bbe71c682fa4cb8
         </div>
       </div>
     

@@ -104,11 +104,11 @@ class ClienteRegistrar(APIView):
         usuario = request.data.get('username')
         correo = request.data.get('correo')
         contrasena = request.data.get('password')
-        #dinero = request.data.get('dinero')
-        estado = request.data.get('estado')
+       
+
 
         # Verifica que todos los campos requeridos estén presentes
-        if not all([nombre, ap_paterno, ap_materno, ci, fecha_nacimiento, genero, direccion, descripcion, usuario, correo, contrasena, estado]):
+        if not all([nombre, ap_paterno, ci, fecha_nacimiento, genero, direccion, descripcion, usuario, correo, contrasena]):
             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
         
         if User.objects.filter(username=usuario).exists():
@@ -118,11 +118,7 @@ class ClienteRegistrar(APIView):
         codigo = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
         asunto = 'Verificación de correo'
         mensaje = f'Hola, {nombre} {ap_paterno} {ap_materno}, tu código de verificación es: {codigo}'
-        
-        
-        # Crea el usuario
-        user = User.objects.create_user(username=usuario, password=contrasena, email=correo)
-
+    
         # Crea el cliente
         cliente = Cliente.objects.create(
             nombre=nombre,
@@ -133,10 +129,10 @@ class ClienteRegistrar(APIView):
             genero=genero,
             direccion=direccion,
             descripcion=descripcion,
-            usuario=user,
+            usuario=usuario,
             correo=correo,
-            #dinero=dinero,
-            estado=estado
+            contrasena=make_password(contrasena),
+            codigoVerificaion=codigo,
         )
         
         
@@ -151,7 +147,27 @@ class ClienteRegistrar(APIView):
             return Response({"message": "Correo enviado correctamente"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
-    
-#falta la verrifiacaion y almacena el codigo en la base de datos
         
+        
+        
+class ClienteVerificar(APIView):
+    def post(self, request):
+        usuario = request.data.get('usuario')
+        codigo = request.data.get('codigo')
+        
+        if not all([usuario, codigo]):
+            return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            cliente = Cliente.objects.get(usuario=usuario, codigoVerificaion=codigo)
+        except Cliente.DoesNotExist:
+            return Response({"error": "Usuario o código de verificación son incorrectos"}, status=status.HTTP_404_NOT_FOUND)
+        
+        cliente.codigoVerificaion = None
+        cliente.estado = 'A'
+        
+        cliente.save()
+        
+        
+        
+        return Response({"message": "Correo verificado correctamente"}, status=status.HTTP_200_OK) 
