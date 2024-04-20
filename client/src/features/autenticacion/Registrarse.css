@@ -6,7 +6,9 @@
   .login-logo-box.align-left {
     margin-left: 0; 
   }
-  
+  .title .align-left{
+    text-align: center !important; 
+  }
   .logo-img {
     width: 1000px; 
     height: 100px; 
@@ -35,8 +37,9 @@
   justify-content: center;
   align-items: center;
   gap: 5rem;
-  padding: 10 2rem;
+  padding: 0 2rem;
 }
+
 .input-field {
   width: 300px; 
   padding: 10px;

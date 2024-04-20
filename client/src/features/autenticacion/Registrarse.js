@@ -12,7 +12,7 @@ const Registrarse = () => {
   return (
     <div className='registrarse-container'>
       <div className='registrarse-left'>
-        <div className="form-section mw-100 min-vh-100 d-flex flex-column justify-content-center align-items-left">
+        <div className="form-section mw-100 min-vh-50 d-flex flex-column justify-content-center align-items-left">
           <div className="title-container">
             <h1 className="title align-left"><b>Friender</b></h1>
             <br />
@@ -29,7 +29,9 @@ const Registrarse = () => {
         </div>
       </div>
       <div className='registrarse-right'>
-        <h1 className="title align-right"><b>Regístrate</b></h1>
+      <br /><br /><br />
+        <h1 className="title align-right">Regístrate</h1>
+        <br />
         <RegistrarDatos/>
         </div>
       </div>
