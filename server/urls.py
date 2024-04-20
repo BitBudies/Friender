@@ -53,12 +53,16 @@ urlpatterns = [
     path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view()),
     path('api/amigo/solicitudes/recibidas/<int:amigo_id>/', GetSolicitudesRecibidas.as_view()),
     
-    # path('api/cliente/registrar/', ClienteRegistrar.as_view()),
-    # path('api/cliente/activar/', ClienteVerificar.as_view()),
+    #test no borrar 
+    path('api/cliente/registrar/', ClienteRegistrar.as_view()),
+    path('api/cliente/activar/', ClienteVerificar.as_view()),
     
+    #nuevas
     path('api/cliente/verificarCorreoUser/', VerificarCorreoUsuario.as_view()),
     path('api/cliente/enviarCodigos/', EnviarCodigos.as_view()),
     path('api/cliente/verificarCodigo/', VerificarCodigo.as_view()),
+    
+    
     
     
     

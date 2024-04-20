@@ -7,6 +7,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.hashers import make_password
+
+from django.contrib.auth.models import User
 
 from ..models.clienteDB import Cliente
 from ..models.fotografiaDB import Fotografia
@@ -131,18 +134,57 @@ def crearClienteConFotografias(request):
         # TODO verificar intereses al menos 1?
         
         # TODO crear cliente
-        cliente = None
+        nombre = request.data.get('nombre')
+        ap_paterno = request.data.get('ap_paterno')
+        ap_materno = request.data.get('ap_materno')
+        ci = request.data.get('ci')
+        fecha_nacimiento = request.data.get('fecha_nacimiento')
+        genero = request.data.get('genero')
+        direccion = request.data.get('direccion')
+        descripcion = request.data.get('descripcion')
+        usuario = request.data.get('username')
+        correo = request.data.get('correo')
+        contrasena = request.data.get('password')
+    
+        if not all([nombre, ap_paterno, ci, fecha_nacimiento, genero, direccion, descripcion, usuario, correo, contrasena]):
+            return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if User.objects.filter(username=usuario).exists():
+            return Response({'error': 'Un usuario con ese nombre ya existe.'}, status=400)
+        
+        user = User.objects.create_user(username=usuario, email=correo, password=contrasena)
+      
+
+        cliente = Cliente.objects.create(
+            nombre=nombre,
+            ap_paterno=ap_paterno,
+            ap_materno=ap_materno,
+            ci=ci,
+            fecha_nacimiento=fecha_nacimiento,
+            genero=genero,
+            direccion=direccion,
+            descripcion=descripcion,
+            usuario=user,
+            correo=correo,
+            contrasena=make_password(contrasena),
+            estado='A',
+        )
+        
+       
+          
         
         
         for prioridad, fileContent in request.FILES.items():
             foto = Fotografia(
                 # cliente = cliente #crear las imagenes para el cliente
-                cliente_id = 1, # TODO temporal jeje
+                cliente_id = cliente.cliente_id, # TODO temporal jeje
                 tipoImagen = 'jpeg' if fileContent.content_type == 'image/jpeg' else 'png,',
                 prioridad = prioridad,
                 imagenBase64 = fileContent.read(),
                 estado_fotografia = 'P'
             )
+            foto.save()
             print(foto)
+            
         return JsonResponse({"message": f"Se creo el cliente!"}, status=status.HTTP_201_CREATED)
     return JsonResponse({'error': 'Metodo no permitido'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)

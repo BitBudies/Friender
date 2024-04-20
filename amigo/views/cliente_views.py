@@ -153,6 +153,8 @@ class ClienteRegistrar(APIView):
             return Response({"message": "Correo enviado correctamente"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+     
+     
              
 class ClienteVerificar(APIView):
     def post(self, request):
@@ -251,3 +253,48 @@ class VerificarCodigo(APIView):
 
             
         return Response({"message": "Correo verificado correctamente"}, status=status.HTTP_200_OK)
+    
+    #Yon aqui lo de registra cliente 
+class RegistraCliente(APIView):
+    def post(self, request):
+        nombre = request.data.get('nombre')
+        ap_paterno = request.data.get('ap_paterno')
+        ap_materno = request.data.get('ap_materno')
+        ci = request.data.get('ci')
+        fecha_nacimiento = request.data.get('fecha_nacimiento')
+        genero = request.data.get('genero')
+        direccion = request.data.get('direccion')
+        descripcion = request.data.get('descripcion')
+        usuario = request.data.get('username')
+        correo = request.data.get('correo')
+        contrasena = request.data.get('password')
+       
+
+
+        # Verifica que todos los campos requeridos estén presentes
+        if not all([nombre, ap_paterno, ci, fecha_nacimiento, genero, direccion, descripcion, usuario, correo, contrasena]):
+            return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if User.objects.filter(username=usuario).exists():
+            return Response({'error': 'Un usuario con ese nombre ya existe.'}, status=400)
+        
+        user = User.objects.create_user(username=usuario, email=correo, password=contrasena)
+      
+        # Crea el cliente
+        cliente = Cliente.objects.create(
+            nombre=nombre,
+            ap_paterno=ap_paterno,
+            ap_materno=ap_materno,
+            ci=ci,
+            fecha_nacimiento=fecha_nacimiento,
+            genero=genero,
+            direccion=direccion,
+            descripcion=descripcion,
+            usuario=user,
+            correo=correo,
+            contrasena=make_password(contrasena),
+            estado='A',
+        )
+        
+        return Response({"message": "Cliente registrado correctamente"}, status=status.HTTP_200_OK)
+          
