@@ -109,3 +109,10 @@
   display: flex;
   flex-direction: column;
 }
+.para-boton {
+  position: relative;
+  display: flex;
+  width: 100%;
+  justify-content: flex-end !important;
+ align-items: right;
+}
