@@ -1,3 +1,5 @@
+
+
 import React, { useState } from 'react';
 import "./Registrarse.css";
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,7 +15,7 @@ const Registrarse = () => {
   return (
     <div className='registrarse-container'>
       <div className='registrarse-left'>
-        <div className="form-section mw-100 min-vh-50 d-flex flex-column justify-content-center align-items-left">
+        <div className="form-section mw-100 min-vh-100 d-flex flex-column justify-content-center align-items-left">
           <div className="title-container">
             <h1 className="title align-left"><b>Friender</b></h1>
             <br />
@@ -30,12 +32,6 @@ const Registrarse = () => {
         </div>
       </div>
       <div className='registrarse-right'>
-<<<<<<< HEAD
-      <br /><br /><br />
-        <h1 className="title align-right">Regístrate</h1>
-        <br />
-        <RegistrarDatos/>
-=======
         <div className="form-indicators">
           <div className={`indicator ${nForm === 0 && "active"}`}></div>
           <div className={`indicator ${nForm === 1 && "active"}`}></div>
@@ -47,7 +43,6 @@ const Registrarse = () => {
           </div>  
         </div>
         
->>>>>>> 1e59a35cf4e5a793c210ae747bbe71c682fa4cb8
         </div>
       </div>
     

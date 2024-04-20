@@ -119,7 +119,6 @@ const RegistrarDatos = () => {
             onChange={handleChange}
             style={{ width: '160px' }}
             className="form-control"
-            placeholder="----------    ▼ "
             required
           >
             
@@ -215,7 +214,7 @@ const RegistrarDatos = () => {
             style={{ width: '280px' }}
             required
           />
-          <span className="password-icon1  " onClick={toggleShowPassword1}>
+          <span className="password-icon   " onClick={toggleShowPassword1}>
             {showPassword1 ? <FaEyeSlash /> : <FaEye />}
           </span>
         </div>
