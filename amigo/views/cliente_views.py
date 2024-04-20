@@ -90,6 +90,9 @@ class ClienteListLimitPaginator(APIView):
             data["clientes"].append(cliente_data)
         return Response(data)
 
+
+
+
 class ClienteRegistrar(APIView):
     def post(self, request):
         # Obtén todos los campos de request.data
@@ -114,6 +117,8 @@ class ClienteRegistrar(APIView):
         if User.objects.filter(username=usuario).exists():
             return Response({'error': 'Un usuario con ese nombre ya existe.'}, status=400)
         
+        user = User.objects.create_user(username=usuario, email=correo, password=contrasena)
+        
         
         codigo = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
         asunto = 'Verificación de correo'
@@ -129,7 +134,7 @@ class ClienteRegistrar(APIView):
             genero=genero,
             direccion=direccion,
             descripcion=descripcion,
-            usuario=usuario,
+            usuario=user,
             correo=correo,
             contrasena=make_password(contrasena),
             codigoVerificaion=codigo,
