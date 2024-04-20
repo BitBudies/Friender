@@ -4,13 +4,19 @@ import React, { useState } from 'react';
 import "./Registrarse.css";
 import { Link, useNavigate } from 'react-router-dom';
 import RegistrarDatos from './RegistrarDatos';
+import RegistrarDatos2 from './RegistrarDatos2';
 
 
 
 const Registrarse = () => {
   
-  const [nForm,setNForm] = useState(0);
-  const navigate = useNavigate();
+  const [nForm,setNForm] = useState(1);
+
+
+  const props = {
+    setNForm,
+    nForm
+  }
 
   return (
       <div className="page regist">
@@ -31,7 +37,8 @@ const Registrarse = () => {
         <div className="toColumns"></div>
         <div className='form-registro'>
           <div className="form-carousel" style={{transform: `translate(${nForm * -50}%)`}}>
-            <RegistrarDatos/>
+            <RegistrarDatos {...props}/>
+            <RegistrarDatos2 {...props}/>
           </div>  
         </div>
         

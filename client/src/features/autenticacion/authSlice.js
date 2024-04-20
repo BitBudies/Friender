@@ -9,6 +9,9 @@ const authApi = apiSlice.injectEndpoints({
         body : data,
       })
     }),
+    getIntereses : builder.query({
+      query : () => "/intereses"
+    }),
     findEmail : builder.mutation({
       query : (data) => ({
         url : "/findEmail",
@@ -36,8 +39,14 @@ const authApi = apiSlice.injectEndpoints({
         method : "POST",
         body : data,
       })
-    })
+    }),
   }),
 });
 
-export const {useLoginMutation, useFindEmailMutation, useSendCodeMutation, useVerifyCodeMutation, useChangePassMutation} = authApi;
+export const {useLoginMutation,
+      useFindEmailMutation,
+      useSendCodeMutation,
+      useVerifyCodeMutation, 
+      useChangePassMutation,
+      useGetInteresesQuery,
+    } = authApi;

@@ -16,7 +16,7 @@ const defaultValues = {
   confirmar_contraseña: '',
 };
 
-const RegistrarDatos = () => {
+const RegistrarDatos = ({setNForm}) => {
   const [password, setPassword] = useState('');
   const [password1, setPassword1] = useState('');
   const [values, setValues] = useState(defaultValues);
@@ -305,7 +305,7 @@ const confirmarcontraValidar = (value) => {
         </div>
       </div>
       <p className="form-text form-register-text">
-        <button className="btn btn-azul">Siguiente</button>
+        <button className="btn btn-azul" onClick={() => setNForm(n => n + 1)}>Siguiente</button>
       </p>
     </div>
   );
