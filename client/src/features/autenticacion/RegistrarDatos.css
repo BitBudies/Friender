@@ -1,0 +1,39 @@
+.input-width-160 {
+    width: 160px ;
+    
+  }
+  
+  .input-width-140 {
+    width: 1555x ;
+  }
+  
+  .input-width-280 {
+    width: 280px;
+    
+  }
+  
+  .ubicacion-input {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .ubicacion-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-0%);
+    color: black;
+  }
+  
+  .password-icon {
+    position: absolute;
+    right: 10px;
+    top: 48%;
+    transform: translateY(-30%);
+  }
+  
+  .para1-boton  {
+    margin: 0% 50% ;
+    width: 10%;
+}
