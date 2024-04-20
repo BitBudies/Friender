@@ -145,22 +145,35 @@ const ResetPassword = () => {
     }, [passLoading, passIsError, passSucess, passError]);
 
     return (
-      <div className='page'>
+      <div className='page principal'>
         {step === 1 && (
-          <div>
+          <div className='step-1'>
             <h1>Recupera tu cuenta</h1>
-            <h2>Ingresa tu correo electronico para buscar tu cuenta</h2>
-            <form onSubmit={handleSubmitEmailForm}>
-              <input type="email" name="user_email" value={emailText} onChange={handleEmailChange} placeholder="Correo electrónico" required/>
-              <button type="submit" disabled={!isButtonEmailEnabled}>{
-                isEmailValid ? <p>Continuar</p>: <p>Buscar cuenta</p>}</button>
-                {supportingText.length > 0 && (
-                    <p style={{color:'red'}}>{supportingText}</p>
-                )}
-            </form>
-            <a href="/">
-              <button>Cancelar</button>
-            </a>
+            <div className='para-form'>
+              <h3>Ingresa tu correo electronico para buscar tu cuenta</h3>
+              <form onSubmit={handleSubmitEmailForm}>
+                <input type="email" name="user_email" 
+                  value={emailText} 
+                  onChange={handleEmailChange} 
+                  placeholder="Correo electrónico" 
+                  required/>
+                
+              </form>
+              <div className='botones'> 
+                <a href="/">
+                  <button className='b-cancelar btn'>Cancelar</button>
+                </a>
+                <button type="submit" 
+                    disabled={!isButtonEmailEnabled}
+                    className='b-buscar btn btn-azul'
+                    >{
+                    isEmailValid ? <p>Continuar</p>: <p>Buscar cuenta</p>}</button>
+                    {supportingText.length > 0 && (
+                        <p style={{color:'red'}}>{supportingText}</p>
+                    )}
+              </div>
+              
+            </div>
           </div>
         )}
         {step === 2 && (
@@ -168,7 +181,11 @@ const ResetPassword = () => {
             <h1>Código de verificación</h1>
             <h2>Ingresar el código de verificación.</h2>
             <form onSubmit={handleSubmitVerificationCodeForm}>
-              <input type="text" value={verificationCode} onChange={handleVerificationCodeChange} placeholder="Código de verificación" required />  
+              <input type="text" 
+                value={verificationCode} 
+                onChange={handleVerificationCodeChange} 
+                placeholder="Código de verificación" 
+                required />  
               <button type="submit">Verificar</button>
             </form>
             <button onClick={handleEnviarCodigos}>Enviar codigo</button>
@@ -178,8 +195,16 @@ const ResetPassword = () => {
           <div>
             <h2>Ingresa tu nueva contraseña</h2>
             <form onSubmit={handleSubmitPasswordForm}>
-              <input type="password" value={password} onChange={handlePasswordChange} placeholder="Contraseña" required />
-              <input type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} placeholder="Repetir contraseña" required />
+              <input type="password" 
+                value={password} 
+                onChange={handlePasswordChange} 
+                placeholder="Contraseña" 
+                required />
+              <input type="password" 
+                value={confirmPassword} 
+                onChange={handleConfirmPasswordChange} 
+                placeholder="Repetir contraseña" 
+                required />
               <button type="submit">Confirmar</button>
             </form>
           </div>
