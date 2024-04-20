@@ -70,11 +70,11 @@ const RegistrarDatos2 = ({setNForm}) => {
                     [name] : value,
                 }
                 
-              });
+            });
         }
         if(name === 'selInteres') {
             if (values.interes.indexOf(value) === -1) {
-                setValues({...values,interes : [...values.interes,value]})
+                setValues({...values,interes : [...values.interes, value]})
             }
             const selectElement = document.getElementById('selInteres');
             selectElement.style.color='#000'  
@@ -88,11 +88,6 @@ const RegistrarDatos2 = ({setNForm}) => {
                 element.value = ''; // Clear the file selection
                 return;
             }
-            
-            setTipoImagen(fileExtension);
-            setImagen(selectedFile);
-
-           
 
             setValues({...values,fotos : [...values.fotos,selectedFile]})
 
@@ -104,6 +99,7 @@ const RegistrarDatos2 = ({setNForm}) => {
     useEffect(() => {
         console.log(values);
     },[values])
+    
   return (
     <div className="form-item">
       <div className="form-2">
