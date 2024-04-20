@@ -20,8 +20,10 @@ const LogIn = () => {
   const handleBtn = async(e) => {
     e.preventDefault();
     if(username  && password){
-      const data = {usuario : username,contrasena : password};
-      await login(data);
+      const formulario = new FormData();
+      formulario.append("usuario", username);
+      formulario.append("contrasena", password);
+      await login(formulario);
     }
 
   };

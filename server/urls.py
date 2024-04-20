@@ -86,7 +86,7 @@ urlpatterns = [
     path('api/test/subirimagen', SubirFotografiaDef),
 
     # Credenciales
-    path('api/login', LoginView.as_view(), name = 'login'),
+    path('api/login', LoginView),
     path('api/test/correo', enviar_correo_prueba, name = 'correo'),
     path('api/cambiarContrasena', cambiarContrasena),
     path('api/enviarCodigoRestablecimiento', enviarCorreoCambioContrasena),
