@@ -298,7 +298,7 @@ const confirmarcontraValidar = (value) => {
             required
           />
             <p className='text-danger'>{ confirmarcontraValidar(password)}</p>
-         <span className="password-icon" onClick={toggleShowPassword1} style={{ position: 'absolute', right: '180px', top: '40%', transform: 'translateY(-30%)' }}>
+         <span className="password-icon" onClick={toggleShowPassword1} style={{ position: 'absolute', right: '180px', top: '30%', transform: 'translateY(-30%)' }}>
   {showPassword1 ? <FaEyeSlash /> : <FaEye />}
 </span>
        
