@@ -196,9 +196,9 @@ const RegistrarDatos = () => {
             style={{ width: '280px' }}
             required
           />
-          <span className="password-icon " onClick={toggleShowPassword}>
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </span>
+          <span className="password-icon" onClick={toggleShowPassword} style={{ position: 'absolute', right: '10px', top: '60%', transform: 'translateY(-30%)' }}>
+  {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+</span>
         </div>
         <div className="mb-2 input-item" style={{ marginLeft: '30px' }}>
           <label htmlFor="confirmar_contraseña" className="input-label">
@@ -214,9 +214,9 @@ const RegistrarDatos = () => {
             style={{ width: '280px' }}
             required
           />
-          <span className="password-icon   " onClick={toggleShowPassword1}>
-            {showPassword1 ? <FaEyeSlash /> : <FaEye />}
-          </span>
+         <span className="password-icon" onClick={toggleShowPassword1} style={{ position: 'absolute', right: '180px', top: '60%', transform: 'translateY(-30%)' }}>
+  {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+</span>
         </div>
       </div>
       <p className="form-text form-register-text">
