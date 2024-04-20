@@ -3,20 +3,18 @@
     margin: 10px;
   }
   
-  .login-logo-box.align-left {
-    margin-left: 0; 
-  }
-  .title .align-left{
-    text-align: center !important; 
-  }
+
   .logo-img {
-    width: 1000px; 
-    height: 100px; 
+    width: 200px !important; 
+    height: 200px !important; 
   }
+
   .registrarse-left{
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex-basis: 45%;
+    
   }
   
   .form-item{

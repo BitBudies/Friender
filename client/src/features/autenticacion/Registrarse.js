@@ -12,7 +12,8 @@ const Registrarse = () => {
   const [nForm,setNForm] = useState(0);
   const navigate = useNavigate();
 
-  return (
+  return (/*
+
     <div className='registrarse-container'>
       <div className='registrarse-left'>
         <div className="form-section mw-100 min-vh-100 d-flex flex-column justify-content-center align-items-left">
@@ -31,12 +32,22 @@ const Registrarse = () => {
           </div>
         </div>
       </div>
+      */
+      <div className="page regist">
+      <div class="registrarse-left">
+          <h1 className='mb-4'><b>Friender</b></h1>
+          <p>¡Enciende la diversión con Friender!</p>
+          <p>Alquila amigos y crea momentos
+          inolvidables.</p>
+          <img className="logo-img" src="https://cdn-icons-png.flaticon.com/512/7081/7081305.png" alt="icono-friender"></img>
+      </div>
       <div className='registrarse-right'>
         <div className="form-indicators">
           <div className={`indicator ${nForm === 0 && "active"}`}></div>
           <div className={`indicator ${nForm === 1 && "active"}`}></div>
         </div>
-        <h1 className="title align-right"><b>Regístrate</b></h1>
+        <h1 className='mb-5'>Regístrate</h1>
+        <div className="toColumns"></div>
         <div className='form-registro'>
           <div className="form-carousel" style={{transform: `translate(${nForm * -50}%)`}}>
             <RegistrarDatos/>
