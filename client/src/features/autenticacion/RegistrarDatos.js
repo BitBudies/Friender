@@ -39,6 +39,82 @@ const RegistrarDatos = () => {
     setShowPassword1(!showPassword1);
   };
 
+  const fechaValida = (value) => {
+    const selectedDate = new Date(value);
+    const currentDate = new Date();
+    let messageFecha="";
+    
+    const futureDate = new Date(currentDate);
+    futureDate.setDate(currentDate.getDate() + 14);
+
+    if (selectedDate < currentDate) {
+      messageFecha = "La fecha " + formatFecha(value) + " no es válida";
+    } else if(selectedDate >= futureDate ){
+      messageFecha = "La fecha incorrecta";
+    }
+    return messageFecha;
+  }
+
+  function formatFecha(fecha) {
+    const [year, month, day] = fecha.split("-");
+    return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${year}`;
+}
+
+const NombreValido = (value) => {
+  let messageNombre = "";
+
+  if (!value.trim()) {
+    messageNombre = "El nombre es obligatorio";
+  }
+
+  return messageNombre;
+}
+const Apellidopaterno = (value) => {
+  let messageNombre = "";
+
+  if (!value.trim()) {
+    messageNombre = "El apellido paterno es obligatorio";
+  }
+
+  return messageNombre;
+}
+
+const NombreUsuario = (value) => {
+  let messageNombre = "";
+
+  if (!value.trim()) {
+    messageNombre = "El nombre de usuario es obligatorio";
+  }
+
+  return messageNombre;
+}
+const correoValidar = (value) => {
+  let messageNombre = "";
+
+  if (!value.trim()) {
+    messageNombre = "El correo electrónico es obligatorio";
+  }
+
+  return messageNombre;
+}
+const contraseñaValidar = (value) => {
+  let messageNombre = "";
+
+  if (!value.trim()) {
+    messageNombre = "La contraseña es obligatoria";
+  }
+
+  return messageNombre;
+}
+const confirmarcontraValidar = (value) => {
+  let messageNombre = "";
+
+  if (!value.trim()) {
+    messageNombre = "Confirmar Contraseña es obligatorio";
+  }
+
+  return messageNombre;
+}
   return (
     <div className="form-item">
       <div className="input-group registro">
@@ -57,6 +133,7 @@ const RegistrarDatos = () => {
             className="form-control"
             required
           />
+           <p className='text-danger'>{NombreValido(values.nombre)}</p>
         </div>
         <div className="mb-2 input-item" style={{ marginLeft: '60px' }}>
           <label htmlFor="apellido_paterno" className="input-label">
@@ -73,6 +150,7 @@ const RegistrarDatos = () => {
             className="form-control"
             required
           />
+            <p className='text-danger'>{Apellidopaterno(values.apellido_paterno)}</p>
         </div>
         <div className="mb-2 input-item" style={{ marginLeft: '60px' }}>
           <label htmlFor="apellido_materno" className="input-label">
@@ -102,10 +180,13 @@ const RegistrarDatos = () => {
             placeholder="dd/mm/aa"
             value={values.fecha_nacimiento}
             onChange={handleChange}
+            
             style={{ width: '160px' }}
             className="form-control"
             required
           />
+            <p className='text-danger'>{fechaValida(values.fecha_nacimiento)}</p>
+
         </div>
         <div className="mb-2 input-item" style={{ marginLeft: '60px' }}>
           <label htmlFor="genero" className="input-label">
@@ -163,6 +244,7 @@ const RegistrarDatos = () => {
             className="form-control"
             required
           />
+            <p className='text-danger'>{ NombreUsuario(values.nombre_usuario)}</p>
         </div>
         <div className="mb-2 input-item" style={{ marginLeft: '30px' }}>
           <label htmlFor="correo_electronico" className="input-label">
@@ -179,6 +261,7 @@ const RegistrarDatos = () => {
             className="form-control"
             required
           />
+          <p className='text-danger'>{correoValidar(values.correo_electronico)}</p>
         </div>
       </div>
       <div className="input-group registro">
@@ -196,6 +279,7 @@ const RegistrarDatos = () => {
             style={{ width: '280px' }}
             required
           />
+            <p className='text-danger'>{ contraseñaValidar(password)}</p>
           <span className="password-icon" onClick={toggleShowPassword} style={{ position: 'absolute', right: '10px', top: '60%', transform: 'translateY(-30%)' }}>
   {showPassword? <FaEyeSlash /> : <FaEye />}
 </span>
@@ -214,6 +298,7 @@ const RegistrarDatos = () => {
             style={{ width: '280px' }}
             required
           />
+            <p className='text-danger'>{ confirmarcontraValidar(password)}</p>
          <span className="password-icon" onClick={toggleShowPassword1} style={{ position: 'absolute', right: '180px', top: '60%', transform: 'translateY(-30%)' }}>
   {showPassword1 ? <FaEyeSlash /> : <FaEye />}
 </span>
