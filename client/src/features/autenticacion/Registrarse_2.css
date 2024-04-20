@@ -38,12 +38,18 @@
     font-size: 60px;
 }
 
+.form-2{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 .toColumns {
     display: flex;
 }
 
 .interes {
-    width: 450px;
+    width: 90%;
     /* background-color: yellow; */
 }
 
@@ -76,10 +82,13 @@ select {
 
 
 .para-boton {
+    position: relative;
     display: flex;
-
+    width: 100%;
+    justify-content: space-between;
+    /* background-color: antiquewhite; */
 }
-
+/* 
 .para-boton .anterior {
     margin: 5rem 40rem 5rem 0rem;
     border: none;
@@ -88,7 +97,6 @@ select {
 }
 
 .para-boton .siguiente {
-
     margin: 5rem 20rem 5rem 0rem; 
     padding: 10px 20px;
     background-color: #007bff;   
@@ -98,4 +106,4 @@ select {
     border-radius: 10px;
     font-weight: bold;
     font-family: sans-serif;
-}
+} */

@@ -64,9 +64,11 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: center;
     gap: 1rem;
     width: 50%;
-    background-color: white;
+    height: 30rem;
+    border: 2px solid black;
   }
   
 
@@ -84,7 +86,6 @@
 .registrarse-right{
   position: relative;
   width: 50%;
-  background-color: antiquewhite;
   height: 100%;
   display: flex;
   flex-direction: column;

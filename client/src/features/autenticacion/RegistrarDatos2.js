@@ -39,7 +39,8 @@ const RegistrarDatos2 = ({setNForm}) => {
 
   return (
     <div className="form-item">
-                    <div className="toColumns">
+        <div className="form-2">
+        <div className="toColumns">
                         <section className='interes'>
                             Intereses* <br></br>
                             <select name='interes' >
@@ -70,10 +71,12 @@ const RegistrarDatos2 = ({setNForm}) => {
 
                     </div>
                     <div className='para-boton'>
-                        <button className='anterior' onClick={() => setNForm(n => n - 1)}>Anterior</button>
-                        <button className='siguiente' type='button'>Registrarse</button>
+                        <button className='btn btn-azul anterior' onClick={() => setNForm(n => n - 1)}>Anterior</button>
+                        <button className='btn siguiente' type='button'>Registrarse</button>
                     </div>
-                </div>
+        </div>
+                    
+    </div>
   )
 }
 
