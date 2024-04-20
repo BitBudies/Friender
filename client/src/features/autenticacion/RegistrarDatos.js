@@ -197,7 +197,7 @@ const RegistrarDatos = () => {
             required
           />
           <span className="password-icon" onClick={toggleShowPassword} style={{ position: 'absolute', right: '10px', top: '60%', transform: 'translateY(-30%)' }}>
-  {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+  {showPassword? <FaEyeSlash /> : <FaEye />}
 </span>
         </div>
         <div className="mb-2 input-item" style={{ marginLeft: '30px' }}>
@@ -205,7 +205,7 @@ const RegistrarDatos = () => {
             Confirmar Contraseña:
           </label>
           <input
-            type="password"
+            type={showPassword1 ? 'text' : 'password'}
             id="confirmar_contraseña"
             className="form-control"
             placeholder="Confirmar Contraseña"
