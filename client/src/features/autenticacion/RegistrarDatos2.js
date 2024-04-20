@@ -163,7 +163,7 @@ const RegistrarDatos2 = ({setNForm}) => {
 
                     </div>
                     <div className='para-boton'>
-                        <button className='btn  anterior' onClick={() => setNForm(n => n - 1)}>Anterior</button>
+                        <button className='btn btn-outline-primary anterior' onClick={() => setNForm(n => n - 1)}>Anterior</button>
                         <button className='btn btn-azul siguiente' type='button'>Registrarse</button>
                     </div>
         </div>

@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   gap: 1rem;
-  top: 0;
+  top: 3rem;
 }
 
 .form-indicators .indicator{
@@ -68,7 +68,6 @@
     gap: 1rem;
     width: 50%;
     height: 30rem;
-    border: 2px solid black;
   }
   
 
@@ -89,7 +88,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: end;
 }
 
 .input-field {

@@ -9,7 +9,7 @@ import RegistrarDatos2 from './RegistrarDatos2';
 
 const Registrarse = () => {
   
-  const [nForm,setNForm] = useState(1);
+  const [nForm,setNForm] = useState(0);
 
 
   const props = {
@@ -20,7 +20,7 @@ const Registrarse = () => {
   return (
       <div className="page regist">
       <div className="registrarse-left">
-          <h1 className='mb-4'><b>Friender</b></h1>
+          <h1 className='mb-3'><b>Friender</b></h1>
           
           <h5><p>¡Enciende la diversión con Friender!</p></h5>
           <h5><p>Alquila amigos y crea momentos</p></h5>
@@ -32,7 +32,7 @@ const Registrarse = () => {
           <div className={`indicator ${nForm === 0 && "active"}`}></div>
           <div className={`indicator ${nForm === 1 && "active"}`}></div>
         </div>
-        <h1 className='mb-5'>Regístrate</h1>
+        <h1 className='mb-2'>Regístrate</h1>
         <div className="toColumns"></div>
         <div className='form-registro'>
           <div className="form-carousel" style={{transform: `translate(${nForm * -50}%)`}}>
