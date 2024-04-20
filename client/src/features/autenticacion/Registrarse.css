@@ -1,43 +1,23 @@
-
-.form-indicators{
-  position: absolute;
-  width: 5rem;
-  height: 1rem;
+.registrarse-container{
+  position: relative;
+  width: 100vw;
+  min-height: calc(100vh - var(--navbar-height));
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  top: 3rem;
-}
-
-.form-indicators .indicator{
-  width: 1.2em;
-  height: 1.2rem;
-  border-radius: 50%;
-  border: 2px solid var(--gris);
-}
-
-.form-indicators .indicator.active{
-  background-color: black;
-}
-
-.form-registro{
-  position: relative;
-  width: 100%;
-  height: 80%;
-  overflow-x: hidden;
-  /* display: flex;
   align-items: center;
-  overflow-x: visible; */
+  gap: 5rem;
 }
 
-.form-registro .form-carousel{
-  width: 200%;
+
+.regist{
+  width: 100%;
   height: 100%;
   display: flex;
-  /* justify-content: space-around; */
-  transition: 1s;
-  transform: translateX(50%);
+  justify-content: center;
+  align-items: center;
 }
+
+
 
 
 .align-left {
@@ -59,6 +39,46 @@
     
   }
   
+  .form-indicators{
+    position: absolute;
+    width: 5rem;
+    height: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    top: 3rem;
+  }
+  
+  .form-indicators .indicator{
+    width: 1.2em;
+    height: 1.2rem;
+    border-radius: 50%;
+    border: 2px solid var(--gris);
+  }
+  
+  .form-indicators .indicator.active{
+    background-color: black;
+  }
+  
+  .form-registro{
+    position: relative;
+    width: 100%;
+    height: 80%;
+    overflow-x: hidden;
+    /* display: flex;
+    align-items: center;
+    overflow-x: visible; */
+  }
+  
+  .form-registro .form-carousel{
+    width: 200%;
+    height: 100%;
+    display: flex;
+    /* justify-content: space-around; */
+    transition: 1s;
+    transform: translateX(50%);
+  }
+
   .form-item{
     position: relative;
     display: flex;
@@ -71,15 +91,7 @@
   }
   
 
-.registrarse-container{
-  position: relative;
-  width: 100vw;
-  min-height: calc(100vh - var(--navbar-height));
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5rem;
-}
+
 
 
 .registrarse-right{

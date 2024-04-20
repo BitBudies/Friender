@@ -131,45 +131,81 @@ const RegistrarDatos2 = ({setNForm}) => {
 
   return (
     <div className="form-item">
-        <div className="form-2">
+      <div className="form-2">
         <div className="toColumns">
-                        <section className='interes'>
-                            Intereses* <br></br>
-                            <select name='selInteres' id='selInteres' onChange={handleChange}>
-                                <option value="" disabled selected hidden>Elige tus intereses</option>
-                            </select>
-                        </section>
-                        <section className='fotos'>
-                            <p>Fotos*</p>
-                            <input type='file' name='input-foto' id='input-foto' onChange={handleChange} accept='.jpg, .png, .jpeg'/>
-                        </section>
-                    </div>
-                    <div className='para-desc'>
-                        <p>Descripción*</p>
-                        <textarea className='desc-text' placeholder='Una breve descripción' rows="5" cols="90"
-                        id='descripcion' name='descripcion' onChange={handleChange} maxLength={500} value={defaultValues.descripcion}></textarea>
-                        <p className="text-muted" id="caracteres-minimo">
-                            <span className={rojoClase}>
-                                {descripcionLength < 30 ? `${descripcionLength}/30 caracteres mínimo.` : ''}
-                            </span>
-                                {descripcionLength >= 400 && `${descripcionLength}/500 caracteres máximo.`}
-                        </p>
-                    </div>
-                    <div >
-                        <input type='checkbox' id = 'checkbox' name='checkbox' onClick={handleChange} /> 
-                        <label className="form-label" htmlFor='checkbox'>
-                            Aceptar términos y condiciones
-                        </label>
-
-                    </div>
-                    <div className='para-boton'>
-                        <button className='btn btn-outline-primary anterior' onClick={() => setNForm(n => n - 1)}>Anterior</button>
-                        <button className='btn btn-azul siguiente' type='button'>Registrarse</button>
-                    </div>
+          <section className="interes">
+            Intereses* <br></br>
+            <select
+              className="form-select"
+              name="selInteres"
+              id="selInteres"
+              onChange={handleChange}
+            >
+              <option value="" disabled selected hidden>
+                Elige tus intereses
+              </option>
+            </select>
+          </section>
+          <section className="fotos">
+            <p>Fotos*</p>
+            <input
+              className="form-control"
+              type="file"
+              name="input-foto"
+              id="input-foto"
+              onChange={handleChange}
+              accept=".jpg, .png, .jpeg"
+            />
+          </section>
         </div>
-                    
+        <div className="para-desc">
+          <p>Descripción*</p>
+          <textarea
+            className="form-control"
+            placeholder="Una breve descripción"
+            rows="5"
+            cols="90"
+            id="descripcion"
+            name="descripcion"
+            onChange={handleChange}
+            maxLength={500}
+            value={defaultValues.descripcion}
+          ></textarea>
+          <p className="text-muted" id="caracteres-minimo">
+            <span className={rojoClase}>
+              {descripcionLength < 30
+                ? `${descripcionLength}/30 caracteres mínimo.`
+                : ""}
+            </span>
+            {descripcionLength >= 400 &&
+              `${descripcionLength}/500 caracteres máximo.`}
+          </p>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            id="checkbox"
+            name="checkbox"
+            onClick={handleChange}
+          />
+          <label className="form-label" htmlFor="checkbox">
+            Aceptar términos y condiciones
+          </label>
+        </div>
+        <div className="para-boton">
+          <button
+            className="btn btn-outline-primary anterior"
+            onClick={() => setNForm((n) => n - 1)}
+          >
+            Anterior
+          </button>
+          <button className="btn btn-azul siguiente" type="button">
+            Registrarse
+          </button>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
 export default RegistrarDatos2
