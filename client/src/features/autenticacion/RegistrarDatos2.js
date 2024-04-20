@@ -18,8 +18,7 @@ const RegistrarDatos2 = ({setNForm}) => {
     const [values, setValues] = useState(defaultValues);
 
     // para imagenes
-    const [clienteId, setClienteId] = useState('');
-    const [tipoImagen, setTipoImagen] = useState('');
+    
     const [imagen, setImagen] = useState(null);
     const [send] = useUploadImageMutation();
 
@@ -99,13 +98,15 @@ const RegistrarDatos2 = ({setNForm}) => {
     useEffect(() => {
         console.log(values);
     },[values])
+
     
+
   return (
     <div className="form-item">
       <div className="form-2">
         <div className="toColumns">
           <section className="interes">
-            Intereses* <br></br>
+            <p>Intereses*</p>
             <select
               className="form-select"
               name="selInteres"
@@ -152,7 +153,7 @@ const RegistrarDatos2 = ({setNForm}) => {
               `${descripcionLength}/500 caracteres máximo.`}
           </p>
         </div>
-        <div>
+        {/* <div>
           <input
             type="checkbox"
             id="checkbox"
@@ -162,7 +163,7 @@ const RegistrarDatos2 = ({setNForm}) => {
           <label className="form-label" htmlFor="checkbox">
             Aceptar términos y condiciones
           </label>
-        </div>
+        </div> */}
         <div className="para-boton">
           <button
             className="btn btn-outline-primary anterior"
