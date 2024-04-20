@@ -42,23 +42,20 @@ const RegistrarDatos = () => {
   const fechaValida = (value) => {
     const selectedDate = new Date(value);
     const currentDate = new Date();
-    let messageFecha="";
-    
-    const futureDate = new Date(currentDate);
-    futureDate.setDate(currentDate.getDate() + 14);
-
-    if (selectedDate < currentDate) {
-      messageFecha = "La fecha " + formatFecha(value) + " no es válida";
-    } else if(selectedDate >= futureDate ){
-      messageFecha = "La fecha incorrecta";
+    const eighteenYearsAgo = new Date(currentDate);
+    eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18);
+    const eightyYearsAgo = new Date(currentDate);
+    eightyYearsAgo.setFullYear(currentDate.getFullYear() - 80);
+    let messageFecha = "";
+  
+    if (selectedDate >= eighteenYearsAgo && selectedDate <= eightyYearsAgo) {
+      messageFecha = "La edad debe ser mayor a 18 y menor a 80 años";
+    } else if (selectedDate >= currentDate) {
+      messageFecha = "La fecha seleccionada es posterior a la fecha actual";
     }
     return messageFecha;
   }
 
-  function formatFecha(fecha) {
-    const [year, month, day] = fecha.split("-");
-    return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${year}`;
-}
 
 const NombreValido = (value) => {
   let messageNombre = "";
@@ -103,7 +100,6 @@ const contraseñaValidar = (value) => {
   if (!value.trim()) {
     messageNombre = "La contraseña es obligatoria";
   }
-
   return messageNombre;
 }
 const confirmarcontraValidar = (value) => {
@@ -111,10 +107,13 @@ const confirmarcontraValidar = (value) => {
 
   if (!value.trim()) {
     messageNombre = "Confirmar Contraseña es obligatorio";
+  } else if (value !== password) {
+    messageNombre = "Las contraseñas no coinciden, intente de nuevo.";
   }
 
   return messageNombre;
 }
+
   return (
     <div className="form-item">
       <div className="input-group registro">
@@ -152,7 +151,7 @@ const confirmarcontraValidar = (value) => {
           />
             <p className='text-danger'>{Apellidopaterno(values.apellido_paterno)}</p>
         </div>
-        <div className="mb-2 input-item" style={{ marginLeft: '60px' }}>
+        <div className="mb-2 input-item" style={{ marginLeft: '20px' }}>
           <label htmlFor="apellido_materno" className="input-label">
             Apellido Materno:
           </label>
@@ -280,7 +279,7 @@ const confirmarcontraValidar = (value) => {
             required
           />
             <p className='text-danger'>{ contraseñaValidar(password)}</p>
-          <span className="password-icon" onClick={toggleShowPassword} style={{ position: 'absolute', right: '10px', top: '60%', transform: 'translateY(-30%)' }}>
+          <span className="password-icon" onClick={toggleShowPassword} style={{ position: 'absolute', right: '10px', top: '48%', transform: 'translateY(-30%)' }}>
   {showPassword? <FaEyeSlash /> : <FaEye />}
 </span>
         </div>
@@ -299,7 +298,7 @@ const confirmarcontraValidar = (value) => {
             required
           />
             <p className='text-danger'>{ confirmarcontraValidar(password)}</p>
-         <span className="password-icon" onClick={toggleShowPassword1} style={{ position: 'absolute', right: '180px', top: '60%', transform: 'translateY(-30%)' }}>
+         <span className="password-icon" onClick={toggleShowPassword1} style={{ position: 'absolute', right: '180px', top: '40%', transform: 'translateY(-30%)' }}>
   {showPassword1 ? <FaEyeSlash /> : <FaEye />}
 </span>
         </div>
