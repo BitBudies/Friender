@@ -5,6 +5,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from amigo.serializers.cliente_serializer import UserTokenSerializer
 from ..serializers.login_serializer import LoginSerializer
+from ..models import Cliente
 # Para instalar
 # pip install --upgrade djangorestframework-simplejwt
 class Login(ObtainAuthToken):
@@ -26,18 +27,21 @@ class Login(ObtainAuthToken):
                 token,created = Token.objects.get_or_create(user = userData)
                 user_serializer = UserTokenSerializer(userData)
                 print(userData)
+                cliente = Cliente.objects.get(usuario=userData)
                 if created:
                     print('created')
                     return Response({
                         'token': token.key,
-                        'message': 'Inicio de sesion exitoso'
+                        'message': 'Inicio de sesion exitoso',
+                        'cliente_id': cliente.cliente_id
                     }, status= status.HTTP_201_CREATED)
                 else:
                     token.delete()
                     token = Token.objects.create(user = userData)
                     return Response({
                     'token': token.key,
-                    'message': 'Inicio de sesion exitoso'
+                    'message': 'Inicio de sesion exitoso',
+                    'cliente_id': cliente.cliente_id
                     }, status= status.HTTP_201_CREATED)
                 # return Response({"message": "Inicio de sesión exitoso"}, status=status.HTTP_200_OK)
          else:
