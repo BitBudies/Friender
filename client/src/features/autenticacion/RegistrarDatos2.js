@@ -99,14 +99,20 @@ const RegistrarDatos2 = ({setNForm}) => {
         console.log(values);
     },[values])
 
-    
+    const createLabel = () => {
+        for (const value of values.interes) {
+            const label = document.createElement('label');
+            label.setAttribute('for', values.indexOf(value));
+            label.textContent = value;
+        }
+    }
 
   return (
     <div className="form-item">
       <div className="form-2">
         <div className="toColumns">
           <section className="interes">
-            <p>Intereses*</p>
+            <p>Intereses*</p>   
             <select
               className="form-select"
               name="selInteres"
@@ -117,7 +123,15 @@ const RegistrarDatos2 = ({setNForm}) => {
                 Elige tus intereses
               </option>
             </select>
+            {
+                values.interes.length > 0 && (
+                    <div>
+                        <input/>
+                    </div>
+                )
+            }
           </section>
+
           <section className="fotos">
             <p>Fotos*</p>
             <input
