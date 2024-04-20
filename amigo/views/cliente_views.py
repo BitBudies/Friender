@@ -11,6 +11,7 @@ import random
 import string
 
 from ..models import Cliente 
+from ..models import Codigos   
 
 
 from .utils import calcular_edad
@@ -152,9 +153,7 @@ class ClienteRegistrar(APIView):
             return Response({"message": "Correo enviado correctamente"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-        
-        
+             
 class ClienteVerificar(APIView):
     def post(self, request):
         usuario = request.data.get('usuario')
@@ -176,3 +175,79 @@ class ClienteVerificar(APIView):
         
         
         return Response({"message": "Correo verificado correctamente"}, status=status.HTTP_200_OK) 
+    
+    
+    
+    
+    
+    #Nuevo -------------------------
+    
+    
+#Verifica si el usuario y correo ya existen  Funciona
+class VerificarCorreoUsuario(APIView):
+    def post(self, request):
+        usuario = request.data.get('usuario')
+        correo = request.data.get('correo')
+        
+        if not all([usuario, correo]):
+            return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if Cliente.objects.filter(usuario=usuario).exists():
+            return Response({"error": "Usuario ya existe"}, status=status.HTTP_400_BAD_REQUEST)
+        if Cliente.objects.filter(correo=correo).exists():
+            return Response({"error": "Correo ya existe"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response({"message": "Usuario y correo validos"}, status=status.HTTP_200_OK)
+
+   
+#Envia codigos de verificacion para el correo electronico  Funciona
+class EnviarCodigos(APIView):
+    def post(self, request):
+        correo = request.data.get('correo')
+        nombre = request.data.get('nombre')
+        ap_paterno = request.data.get('ap_paterno')
+        
+        if not all([correo, nombre, ap_paterno]):
+            return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        codigo = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+        asunto = 'Verificación de correo para Friender'
+        mensaje = f'Hola, {nombre} {ap_paterno}, tu código de verificación de Friender es: {codigo}'
+        
+        codigos = Codigos.objects.create(
+            correo=correo,
+            codigoVerificaion=codigo
+        )
+        
+        try:
+            send_mail(
+                asunto,
+                mensaje,
+                config('EMAIL_HOST_USER'),
+                [correo],
+                fail_silently=False,
+            )
+            return Response({"message": "Correo enviado correctamente"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+        
+        
+#Verifica si el codigo de verificacion es correcto
+class VerificarCodigo(APIView):
+    def post(self, request):
+        correo = request.data.get('correo')
+        codigo = request.data.get('codigo')
+        
+        if not all([correo, codigo]):
+            return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            codigos = Codigos.objects.get(correo=correo, codigoVerificaion=codigo)
+            codigos.delete()
+        except Codigos.DoesNotExist:
+            return Response({"error": "El codigo de verificaion son incorrectos"}, status=status.HTTP_404_NOT_FOUND)
+
+
+            
+        return Response({"message": "Correo verificado correctamente"}, status=status.HTTP_200_OK)
