@@ -27,7 +27,7 @@ from amigo.views.gusto_views import obtenerGustos
 from amigo.views.interes_views import obtenerIntereses
 from amigo.views.login_views import LoginView
 from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, GetSolicitudesRecibidas, SolicitudAlquilerDetailAPIView, VerificarSolicitudes
-from amigo.views.utils import enviar_correo_prueba
+from amigo.views.utils import enviar_correo_prueba, obtener_csrf
 from amigo.views.login import Login
 #router = routers.DefaultRouter()
 #router.register(r'solicitud', SolicitudViewSet)
@@ -57,6 +57,7 @@ urlpatterns = [
     path('api/cliente/registrar/', ClienteRegistrar.as_view()),
     path('api/cliente/activar/', ClienteVerificar.as_view()),
     path('api/test/pruebaApi', pruebaApis),
+    path('api/get/csrf', obtener_csrf),
     
     #nuevas
     path('api/cliente/verificarCorreoUser/', VerificarCorreoUsuario.as_view()),

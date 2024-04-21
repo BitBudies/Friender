@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import "./Registrarse_2.css";
-import { useGetInteresesQuery, useUploadImageMutation } from './authSlice';
+import { useGetInteresesQuery, useUploadImageMutation, useGetCsrfQuery } from './authSlice';
 
 
 const RegistrarDatos2 = ({setNForm}) => {
@@ -149,6 +149,23 @@ const RegistrarDatos2 = ({setNForm}) => {
         setPFotos(true)
     }, [pFotos])
     
+    // @kevin huayllas pinto hay que usar el csrf en todos los post
+    const {data: csrf, error, isLoading } = useGetCsrfQuery({})
+    useEffect(() => {
+      if (csrf) {
+        document.cookie = `csrftoken=${csrf.csrf_token}; path=/;`;
+      }
+    }, [csrf]);
+
+    const mandarrr = async () => {
+      const form = new FormData();
+      [1,2,3,4].forEach((interes) => {
+        form.append("intereses", interes);
+      });
+
+      send(form);
+    }
+  
   return (
     <div className="form-item">
       <div className="form-2">
@@ -236,7 +253,7 @@ const RegistrarDatos2 = ({setNForm}) => {
           >
             Anterior
           </button>
-          <button className="btn btn-azul siguiente" type="button">
+          <button className="btn btn-azul siguiente" type="button" onClick={mandarrr}>
             Registrarse
           </button>
         </div>

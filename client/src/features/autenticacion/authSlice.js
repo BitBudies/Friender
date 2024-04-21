@@ -40,16 +40,22 @@ const authApi = apiSlice.injectEndpoints({
         body : data,
       })
     }),
+    getCsrf : builder.query({
+      query : () => `/get/csrf` 
+    }),
   }),
 });
 
 const fotografiaAPI = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     uploadImage : builder.mutation({
-      query : (data) => ({
-        url: `/test/subirimagen`,
+      query : (data, csrf) => ({
+        url: `/test/pruebaApi`,
         method : "POST",
         body: data,
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken") // Obtener el token CSRF desde las cookies
+        },
       })
     }),
     getImage : builder.query({
@@ -57,6 +63,11 @@ const fotografiaAPI = apiSlice.injectEndpoints({
     })
   }),
 });
+
+function getCookie(name) {
+  const cookieValue = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+  return cookieValue ? cookieValue.pop() : "";
+}
 
 // export const {useUploadImageMutation,useGetImageQuery} = fotografiaAPI;
 
@@ -66,6 +77,7 @@ export const {useLoginMutation,
       useVerifyCodeMutation, 
       useChangePassMutation,
       useGetInteresesQuery,
+      useGetCsrfQuery,
       useUploadImageMutation,
       useGetImageQuery,
     } = authApi;
