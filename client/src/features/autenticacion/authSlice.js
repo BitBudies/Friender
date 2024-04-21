@@ -20,6 +20,9 @@ const authApi = apiSlice.injectEndpoints({
         url : "/findEmail",
         method : "POST",
         body : data,
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken") // Obtener el token CSRF desde las cookies
+        },
       })
     }),
     sendCode : builder.mutation({
