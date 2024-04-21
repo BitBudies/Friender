@@ -4,6 +4,7 @@ import "./Login.css";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { useLoginMutation } from './authSlice';
 import { useGlobalContext } from '../../context';
+import logo from '../../logo-friender.png';
 
 const LogIn = () => {
   const [username, setUsername] = useState("");
@@ -11,6 +12,7 @@ const LogIn = () => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [disableBtn,setDisableBtn] = useState(false);
+  const [disableBlockedPasswordBox, setBlockedPasswordBox] = useState(true);
   const navigate = useNavigate();
 
   const {setClientId} = useGlobalContext();
@@ -25,8 +27,17 @@ const LogIn = () => {
       formulario.append("contrasena", password);
       await login(formulario);
     }
-
   };
+
+  const handleBlockedPasswordBox = () => {
+    setBlockedPasswordBox(true);
+    setDisableBtn(true);
+    setTimeout(() => {
+      setDisableBtn(false);
+    }, 7000);
+  };
+
+  
   
   const checkLoginResponse = () => {
     if(isLoading){
@@ -53,7 +64,7 @@ const LogIn = () => {
     
     <div className="form-section mw-100 min-vh-100 d-flex flex-column justify-content-rigth align-items-center">
       <div className='login-logo-box'>
-        <img src="https://cdn-icons-png.flaticon.com/512/7081/7081305.png" alt="icono-friender"></img>
+        <img src={logo} alt="icono-friender"></img>
         <h1>Friender</h1>
       </div>
 
@@ -86,7 +97,7 @@ const LogIn = () => {
           </div>
 
           {showFeedback && (
-            <p className="text-danger mb-2" style={{ fontSize: "0.9rem",textAlign: "left",paddingLeft: "20px" }}>
+            <p className="text-danger mb-2 login-box-text-danger">
               Contraseña incorrecta
             </p>
           )}
@@ -94,6 +105,11 @@ const LogIn = () => {
           <button className={`btn btn-azul mb-2 button-login ${disableBtn && "disabled"}`} onClick={handleBtn}>
             Iniciar Sesión
           </button>
+          { disableBtn && (
+            <p className="text-danger mb-2 login-box-text-danger">
+              Intenta ingresar luego de 60 segundos.
+            </p>
+          )}
           
           <p className='form-text'>
             <Link to={"/resetPassword"}>¿Haz olvidado la contraseña?</Link>
@@ -109,6 +125,20 @@ const LogIn = () => {
           </p>
         </form>
       </div>
+      <div className={`flex-column justify-content-rigth align-items-center modal-bloqueo ${disableBlockedPasswordBox ? "hidden" : ""}`}>
+        <h2>Se impidió un inicio de sesión sospechoso</h2>
+        <br></br>
+        <p>Bloqueamos un intento de acceder a tu cuenta porque no estábamos seguros de si  realmente eras tú.</p>
+        <br></br>
+        <p>Esto sucede cuando detectamos actividades de inicio de sesión inusuales, como el intento de iniciar sesión demasiadas veces.</p>
+        <br></br>
+        <p>Tendrás que esperar 60 segundos para intentar iniciar sesión nuevamente.</p>
+        <br></br>
+        <button className={`btn btn-azul mb-2`} onClick={handleBlockedPasswordBox}>
+          Entendido
+        </button>
+      </div>
+      
     </div>
   )
 }
