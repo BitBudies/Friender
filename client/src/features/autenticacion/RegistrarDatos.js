@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import "./RegistrarDatos.css";
+import { checkPassword } from "../../hooks/checkRegex";
 
 const defaultValues = {
   nombre: "",
@@ -23,6 +24,9 @@ const RegistrarDatos = ({ setNForm }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [errors, setErrors] = useState({});
+
+
+  const checkPassword = checkPassword();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -95,11 +99,14 @@ const RegistrarDatos = ({ setNForm }) => {
             isValid = false;
           }
           break;
-          /*
+        
         case "contraseña":
           if (!value.trim()) {
             newErrors[key] = "La contraseña es obligatoria";
             isValid = false;
+          }
+          if(!checkPassword(values)){
+            newErrors[key] = "La contraseña debe tener digitos,mayúsculas,minúsculas y caracteres especiales"
           }
           break;
           case "confirmar_contraseña":
@@ -111,7 +118,7 @@ const RegistrarDatos = ({ setNForm }) => {
               isValid = false;
             }
             break;
-          */
+          
         default:
           break;
       }
