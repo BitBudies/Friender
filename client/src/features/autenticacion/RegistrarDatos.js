@@ -95,6 +95,7 @@ const RegistrarDatos = ({ setNForm }) => {
             isValid = false;
           }
           break;
+          /*
         case "contraseña":
           if (!value.trim()) {
             newErrors[key] = "La contraseña es obligatoria";
@@ -110,7 +111,7 @@ const RegistrarDatos = ({ setNForm }) => {
               isValid = false;
             }
             break;
-          
+          */
         default:
           break;
       }
