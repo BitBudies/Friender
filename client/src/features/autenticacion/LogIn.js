@@ -15,13 +15,13 @@ const LogIn = () => {
 
   const {setClientId} = useGlobalContext();
 
-  const [login, {data: response,isLoading,isSuccess,isError}] = useLoginMutation();
+  const [login, {data: response,isLoading,isSuccess,isError,error}] = useLoginMutation();
 
   const handleBtn = async(e) => {
     e.preventDefault();
     if(username  && password){
-      const data = {usuario : username,contrasena : password};
-      await login(data);
+      const formulario = {username,password};
+      await login(formulario);
     }
 
   };
@@ -31,17 +31,16 @@ const LogIn = () => {
       setDisableBtn(true);
     }
     if(isSuccess){
-      if(response.id !== '0'){
-        setClientId(1);
+        setClientId(response.id);       //as;ldjkfl;ashidf 'as
         navigate("/amigos/page/1");
-      }else{
-        setDisableBtn(false);
-        setShowFeedback(true);
-      }
+    }
+    if(isError){
+      setShowFeedback(true);
     }
   }
   
-  useEffect(checkLoginResponse,[isError, isLoading, isSuccess, navigate, response, setClientId])
+  
+  useEffect(checkLoginResponse,[isError, isLoading, isSuccess, navigate, response, setClientId,error])
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -50,12 +49,9 @@ const LogIn = () => {
   return (
     
     <div className="form-section mw-100 min-vh-100 d-flex flex-column justify-content-rigth align-items-center">
-      <h1>Friender</h1>
-      <br/>
       <div className='login-logo-box'>
-      
         <img src="https://cdn-icons-png.flaticon.com/512/7081/7081305.png" alt="icono-friender"></img>
-       
+        <h1>Friender</h1>
       </div>
 
       <div className="form-section-rigth login-box">
@@ -95,11 +91,11 @@ const LogIn = () => {
           <button className={`btn btn-azul mb-2 button-login ${disableBtn && "disabled"}`} onClick={handleBtn}>
             Iniciar Sesión
           </button>
-          {/*
+          
           <p className='form-text'>
-            <Link to={"/register"}>¿Haz olvidado la contraseña?</Link>
+            <Link to={"/resetPassword"}>¿Haz olvidado la contraseña?</Link>
           </p> 
-          */}
+          
           <div className='login-box-separator'>
             <hr></hr>
             <p>O</p>

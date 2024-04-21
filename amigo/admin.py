@@ -7,6 +7,7 @@ from .models.amigoDB import Amigo
 from .models.solicitud_alquilerDB import solicitud_alquiler
 from .models.calificacionDB import Calificacion
 from .models.fotografiaDB import Fotografia
+from .models.codigosVerificacionDB import Codigos
 
 # Register your models here.
 admin.site.register(Cliente)
@@ -16,3 +17,4 @@ admin.site.register(Calificacion)
 admin.site.register(Fotografia)
 admin.site.register(Interes)
 admin.site.register(Gusto)
+admin.site.register(Codigos)

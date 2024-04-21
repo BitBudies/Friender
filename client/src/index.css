@@ -67,6 +67,9 @@ p,span,label{
   -webkit-text-fill-color: white;
   font-size: 5%;
 }
+
+
+
 .btn-azul:hover{
   filter: brightness(1.3);
 }

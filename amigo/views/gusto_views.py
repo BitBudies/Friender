@@ -1,15 +1,10 @@
-from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from amigo.models.gusto import Gusto
+from amigo.serializers.gusto_serializer import GustoSerializer
 
-def obtener_gustos(request):
-    if request.method == 'GET':
-        gustos = Gusto.objects.all()
-        gustos_data = [{'gusto_id': gusto.gusto_id,
-                        'nombre': gusto.nombre,
-                        'descripcion': gusto.descripcion,
-                        'estado': gusto.estado,
-                        'timestamp_gusto': gusto.timestamp_gusto} 
-                       for gusto in gustos]
-        return JsonResponse({'gustos': gustos_data}, status=200)
-    else:
-        return JsonResponse({'error': 'Método no permitido'}, status=405)
+@api_view(["GET"])
+def obtenerGustos(request):
+    intereses = Gusto.objects.all().order_by('nombre')
+    serializer = GustoSerializer(intereses, many=True)
+    return Response(serializer.data, status=200)
