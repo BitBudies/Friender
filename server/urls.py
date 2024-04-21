@@ -26,11 +26,9 @@ from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, 
 from amigo.views.gusto_views import obtenerGustos
 from amigo.views.interes_views import obtenerIntereses
 from amigo.views.login_views import LoginView
-from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, GetSolicitudesRecibidas, SolicitudAlquilerDetailAPIView, VerificarSolicitudes
+from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, SolicitudAlquilerDetailAPIView, VerificarSolicitudes, obtenerSolicitudesAmigo
 from amigo.views.utils import enviar_correo_prueba, obtener_csrf
 from amigo.views.login import Login
-#router = routers.DefaultRouter()
-#router.register(r'solicitud', SolicitudViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -52,7 +50,7 @@ urlpatterns = [
     path('api/cliente/informacion', obtenerInformacionCliente),
     path('api/cliente/solicitudes/<int:cliente_id>/', GetSolicitudesCliente.as_view()),
     path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view()),
-    path('api/amigo/solicitudes/recibidas/<int:amigo_id>/', GetSolicitudesRecibidas.as_view()),
+    path('api/amigo/solicitudes/recibidas', obtenerSolicitudesAmigo),
     
     #test no borrar 
     path('api/cliente/registrar/', ClienteRegistrar.as_view()),
