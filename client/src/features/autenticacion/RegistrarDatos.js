@@ -26,7 +26,7 @@ const RegistrarDatos = ({ setNForm }) => {
   const [errors, setErrors] = useState({});
 
 
-  const checkPassword = checkPassword();
+  const checkPass = checkPassword();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -48,6 +48,17 @@ const RegistrarDatos = ({ setNForm }) => {
   const toggleShowPassword1 = () => {
     setShowPassword1(!showPassword1);
   };
+
+  const onPasswordChange = (e) => {
+    const passwordChecked = checkPass(e.target.value);
+    console.log(passwordChecked);
+          if(!passwordChecked.pass){
+            setErrors((currentErrors) => {
+              return {...currentErrors,password : passwordChecked.message}
+            });
+          }
+    setPassword(e.target.value);
+  }
 
   // Función para validar el formulario antes de pasar al siguiente paso
   const validateForm = () => {
@@ -105,9 +116,7 @@ const RegistrarDatos = ({ setNForm }) => {
             newErrors[key] = "La contraseña es obligatoria";
             isValid = false;
           }
-          if(!checkPassword(values)){
-            newErrors[key] = "La contraseña debe tener digitos,mayúsculas,minúsculas y caracteres especiales"
-          }
+          
           break;
           case "confirmar_contraseña":
             if (!value.trim()) {
@@ -292,7 +301,7 @@ const RegistrarDatos = ({ setNForm }) => {
               id="contraseña"
               placeholder="Contraseña"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => onPasswordChange(e)}
               required
             />
             <p className="text-danger">{errors.contraseña}</p>
