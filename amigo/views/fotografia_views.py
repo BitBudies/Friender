@@ -15,6 +15,7 @@ from rest_framework import status
 from django.db.models import Q
 from django.contrib.auth.models import User
 
+from amigo.models.clienteInteres import ClienteInteres
 from amigo.models.interes import Interes
 from amigo.serializers.cliente_serializer import ClienteSerializer
 from amigo.serializers.interes_serializer import InteresSerializer
@@ -165,13 +166,7 @@ def pruebaApis(request):
     if not intereses:
         return Response({"error": f"Los intereses son obligatorios"}, status=status.HTTP_400_BAD_REQUEST)
     
-    try:
-        intereses = [int(id) for id in set(intereses)]
-    except ValueError:
-        return Response({"error": "Los intereses deben ser enteros"}, status=status.HTTP_400_BAD_REQUEST)
-    
-    
-    intereses_existentes = Interes.objects.filter(interes_id__in=intereses)
+    intereses_existentes = Interes.objects.filter(nombre__in=intereses)
     if intereses_existentes.count() != len(intereses):
         return Response({"error": "No se encontro los intereses en la base de datos"}, status=status.HTTP_404_NOT_FOUND)
     #-----------------------------------imagenes--------------------------------------
@@ -201,6 +196,8 @@ def pruebaApis(request):
     usuario.set_password(cliente.contrasena)
     cliente.usuario = usuario
 
+    
+
     fotografiasTemporales = []
     for prioridad, imagen in enumerate(imagenes):
         if imagen.content_type not in ["image/jpeg", "image/png"]:
@@ -216,11 +213,21 @@ def pruebaApis(request):
             estado_fotografia="P"
         )
         fotografiasTemporales.append(foto)
-        
+    
+    interesClienteTemporales = []
+    for interes in intereses_existentes:
+        interesCliente = ClienteInteres(
+            cliente=cliente,
+            interes=interes
+        )
+        interesClienteTemporales.append(interesCliente)
     usuario.save()
     cliente.save()
     for fotito in fotografiasTemporales:
         fotito.save()
+    for interesClienteC in interesClienteTemporales:
+        interesClienteC.save()
+    
     
     return Response({"message": f"Se creo el usuario"}, status=status.HTTP_200_OK)
 

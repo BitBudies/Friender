@@ -25,8 +25,10 @@ const LogIn = () => {
   const handleBtn = async(e) => {
     e.preventDefault();
     if(username  && password){
-      const formulario = {username,password};
-      await login(formulario);
+      const form = new FormData()
+      form.append("username_or_email", username);
+      form.append("password", password);
+      await login(form);
     }
   };
 
