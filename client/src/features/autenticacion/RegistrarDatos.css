@@ -45,20 +45,21 @@
   .ubicacion-icon {
     position: absolute;
     right: 10px;
-    top: 50%;
+    top: 20%;
     transform: translateY(-0%);
     color: black;
   }
   
-  .password-icon {
-    position: absolute;
-    right: 10px;
-    top: 48%;
+
+  .step-3 .password-icon{
+    position: relative;
+    right: 7%;
+    top: 48% !important;
     transform: translateY(-30%);
   }
   
   .para1-boton {
-    margin: 0% 50%;
+    margin: 0% 55%;
     width: 10%;
   }
   

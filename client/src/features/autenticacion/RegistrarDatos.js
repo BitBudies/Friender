@@ -22,7 +22,7 @@ const RegistrarDatos = ({ setNForm }) => {
   const [values, setValues] = useState(defaultValues);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
-  const [errors, setErrors] = useState({}); 
+  const [errors, setErrors] = useState({});
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -30,7 +30,7 @@ const RegistrarDatos = ({ setNForm }) => {
       ...values,
       [name]: value,
     });
-    
+
     setErrors({
       ...errors,
       [name]: "",
@@ -66,23 +66,20 @@ const RegistrarDatos = ({ setNForm }) => {
           }
           break;
         case "fecha_nacimiento":
-          const messageFecha = fechaValida(value);
-          if (messageFecha) {
-            newErrors[key] = messageFecha;
-            isValid = false;
-          }
+          // Validar fecha de nacimiento
           break;
-         
         case "genero":
           if (!value) {
             newErrors[key] = "El género es obligatorio";
             isValid = false;
           }
           break;
-         
         case "nombre_usuario":
           if (!value.trim()) {
             newErrors[key] = "El nombre de usuario es obligatorio";
+            isValid = false;
+          } else if (value.length < 5 || value.length > 20) {
+            newErrors[key] = "La longitud del nombre de usuario debe ser de 5 a 20 caracteres.";
             isValid = false;
           }
           break;
@@ -92,11 +89,12 @@ const RegistrarDatos = ({ setNForm }) => {
             isValid = false;
           }
           break;
-          case "ubicacion":
-            if (!value) {
-              newErrors[key] = "La ubicación es obligatorio";
-              isValid = false;
-            }
+        case "ubicacion":
+          if (!value) {
+            newErrors[key] = "La ubicación es obligatoria";
+            isValid = false;
+          }
+          break;
           /*
         case "contraseña":
           if (!value.trim()) {
@@ -104,18 +102,18 @@ const RegistrarDatos = ({ setNForm }) => {
             isValid = false;
           }
           break;
-          
-        case "confirmar_contraseña":
-          if (!value.trim()) {
-            newErrors[key] = "Confirmar Contraseña es obligatorio";
-            isValid = false;
-          } else if (value !== password) {
-            newErrors[key] = "Las contraseñas no coinciden, intente de nuevo.";
-            isValid = false;
-          }
-          break;
+          case "confirmar_contraseña":
+            if (!value.trim()) {
+              newErrors[key] = "Confirmar contraseña es obligatorio";
+              isValid = false;
+            } else if (value !== password) {
+              newErrors[key] = "Las contraseñas no coinciden, intente de nuevo.";
+              isValid = false;
+            }
+            break;
+          */
         default:
-          break;*/
+          break;
       }
     });
 
@@ -131,16 +129,10 @@ const RegistrarDatos = ({ setNForm }) => {
     }
   };
 
-  // Función para validar la fecha de nacimiento
-  const fechaValida = (value) => {
-    // Implementa la lógica de validación de fecha aquí
-    return "";
-  };
-
   return (
     <div className="form-item">
       <div className="input-group registro">
-        <div className="input-item">
+      <div className="input-item">
           <label htmlFor="nombre" className="input-label">
             Nombre:
           </label>
@@ -280,50 +272,51 @@ const RegistrarDatos = ({ setNForm }) => {
           <p className="text-danger input-width-30">{errors.correo_electronico}</p>
         </div>
       </div>
+
       <div className="input-group registro">
         <div className="mb-2 password-input">
           <label htmlFor="contraseña" className="input-label">
             Contraseña:
           </label>
           <div className="mb-2 password-input">
-          <input
-            type={showPassword ? "text" : "password"}
-            className="form-control input1fv-width-70"
-            id="contraseña"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-       <p className="text-danger">{errors.contraseña}</p>
-          <span className="password-icon " onClick={toggleShowPassword}>
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </span>
-        </div></div>
+            <input
+              type={showPassword ? "text" : "password"}
+              className="form-control input1fv-width-70"
+              id="contraseña"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <p className="text-danger">{errors.contraseña}</p>
+            <span className="password-icon " onClick={toggleShowPassword}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
+        </div>
         <div className="mb-2 input-item">
           <label htmlFor="confirmar_contraseña" className="input-label input-width-30">
             Confirmar Contraseña:
           </label>
           <div className="mb-2 password-input">
-          <input
-            type={showPassword1 ? "text" : "password"}
-            id="confirmar_contraseña"
-            className="form-control input-width-280"
-            placeholder="Confirmar Contraseña"
-            value={password1}
-            onChange={(e) => setPassword1(e.target.value)}
-            required
-          />
-          <span className="password-icon" onClick={toggleShowPassword1}>
-                    {showPassword1 ? <FaEyeSlash /> : <FaEye />}
-                  </span>
-                </div>
-          <p className="text-danger input-width-30">{errors.confirmar_contraseña}</p>
-         
+            <input
+              type={showPassword1 ? "text" : "password"}
+              id="confirmar_contraseña"
+              className="form-control input-width-280"
+              placeholder="Confirmar Contraseña"
+              value={password1}
+              onChange={(e) => setPassword1(e.target.value)}
+              required
+            />
+            <p className="text-danger input-width-30">{errors.confirmar_contraseña}</p>
+            <span className="password-icon" onClick={toggleShowPassword1}>
+              {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
         </div>
       </div>
       <div className="para1-boton">
-        <button className="btn btn-outline-primary" onClick={handleSubmit} >
+        <button className="btn btn-outline-primary" onClick={handleSubmit}>
           Siguiente
         </button>
       </div>
