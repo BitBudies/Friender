@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import "./resetPassword.css"
 import { useFindEmailMutation, useSendCodeMutation, useVerifyCodeMutation, useChangePassMutation } from './authSlice';
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 const ResetPassword = () => {
     const [step, setStep] = useState(3); // control de pagina
+    const [submitClicked, setSubmitClicked] = useState(false);
+
     // ------------------------------Buscar email------------------------------
     const [emailText, setEmailText] = useState("");
     const [supportingText, setSupportingText] = useState("");
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [isButtonEmailEnabled, setIsButtonEmailEnabled] = useState(false);
-    const [findEmail, {data: response, isLoading,isSuccess,isError, error: errorsito}] = useFindEmailMutation()
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword1, setShowPassword1] = useState(false);
+    const [findEmail, {data: response, isLoading,isSuccess,isError, error: errorsito}] = useFindEmailMutation();
+
     const handleEmailChange = (e) => {
         setIsEmailValid(false);
         setUsuario("");
@@ -19,6 +25,15 @@ const ResetPassword = () => {
             setIsButtonEmailEnabled(true);
         }
     };
+
+    const toggleShowPassword = () => {
+      setShowPassword(!showPassword);
+    };
+
+    const toggleShowPassword1 = () => {
+      setShowPassword1(!showPassword1);
+    };
+
     const handleSubmitEmailForm = (e) => {
         e.preventDefault();
         if (isEmailValid) {
@@ -33,6 +48,7 @@ const ResetPassword = () => {
             }
         }
     };
+
     const checkEmailResponse = () => {
         if (isLoading) {
             setIsButtonEmailEnabled(false)
@@ -47,6 +63,7 @@ const ResetPassword = () => {
             setSupportingText(errorsito.data.error)
         }
     }
+
     useEffect(checkEmailResponse,[isError, isLoading, isSuccess, response])
 
     // ------------------------------verificacion codigos------------------------------
@@ -77,6 +94,8 @@ const ResetPassword = () => {
 
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
     // Funciones para manejar los cambios en los formularios
     const handleVerificationCodeChange = (e) => setVerificationCode(e.target.value);
@@ -100,6 +119,7 @@ const ResetPassword = () => {
           console.log(error);
         }
     };
+
     useEffect(() => {
       if (verLoading) {
         console.log("Cargando..."); // Log mientras se carga
@@ -117,7 +137,27 @@ const ResetPassword = () => {
     
     const handleSubmitPasswordForm = (e) => {
         e.preventDefault();
-        if(password===confirmPassword) {
+        setSubmitClicked(true);
+        let isValid = true;
+        const newErrors = {};
+
+        if (!password.trim()) {
+          newErrors['contraseña'] = "La contraseña es obligatoria";
+          isValid = false;
+        }
+
+        if (!confirmPassword.trim()) {
+          newErrors['confirmar_contraseña'] = "Confirmar contraseña es obligatorio";
+          isValid = false;
+        } else if (confirmPassword !== password) {
+          newErrors['confirmar_contraseña'] = "Las contraseñas no coinciden, intente de nuevo.";
+          isValid = false;
+        }
+       
+        setPasswordError(newErrors['contraseña'] || "");
+        setConfirmPasswordError(newErrors['confirmar_contraseña'] || "");
+
+        if (isValid) {
           console.log(`ahora cambiamos contras`);
           console.log(`correo: ${emailText}, codigo: ${verificationCode}`);
           try {
@@ -129,7 +169,6 @@ const ResetPassword = () => {
           } catch (error) {
             console.log(error);
           }
-
         }
     };
 
@@ -157,18 +196,19 @@ const ResetPassword = () => {
                   onChange={handleEmailChange} 
                   placeholder="Correo electrónico" 
                   required/>
-              <div className='botones'> 
-                <a href="/">
-                  <button className='b-cancelar btn'>Cancelar</button>
-                </a>
-                <button type="submit" 
-                    disabled={!isButtonEmailEnabled}
-                    className='b-buscar btn btn-azul'>{
-                    isEmailValid ? <p>Continuar</p>: <p>Buscar cuenta</p>}</button>
-                    {supportingText.length > 0 && (
-                        <p style={{color:'red'}}>{supportingText}</p>
-                    )}
-              </div>
+                <div className='botones'> 
+                  <a href="/">
+                    <button className='b-cancelar btn'>Cancelar</button>
+                  </a>
+                  <button type="submit" 
+                      disabled={!isButtonEmailEnabled}
+                      className='b-buscar btn btn-azul'>
+                      {isEmailValid ? <p>Continuar</p>: <p>Buscar cuenta</p>}
+                  </button>
+                  {supportingText.length > 0 && (
+                      <p style={{color:'red'}}>{supportingText}</p>
+                  )}
+                </div>
               </form>
             </div>
           </div>
@@ -178,17 +218,15 @@ const ResetPassword = () => {
             <h1>Código de verificación</h1>
             <h3>Ingresar el código de verificación.</h3>
             <form onSubmit={handleSubmitVerificationCodeForm}>
-
               <input type="text" 
                 value={verificationCode} 
                 onChange={handleVerificationCodeChange} 
                 placeholder="Código de verificación" 
                 required />  
               <button type="submit" className='btn btn-azul'>Verificar</button>
-
             </form>
             <div className='b-enviar'>
-              <button onClick={handleEnviarCodigos} className='btn btn-azul'>Enviar codigo</button>
+              <button onClick={handleEnviarCodigos} className='btn btn-azul'>Enviar código</button>
             </div>
           </div>
         )}
@@ -199,21 +237,34 @@ const ResetPassword = () => {
             </div>
             <div className='para-form'>
               <form onSubmit={handleSubmitPasswordForm}>
-                <input type="password" 
-                  className='cont'
-                  value={password} 
-                  onChange={handlePasswordChange} 
-                  placeholder="Contraseña" 
-                  required />
-                <input type="password" 
-                  className='rep-cont'
-                  value={confirmPassword} 
-                  onChange={handleConfirmPasswordChange} 
-                  placeholder="Repetir contraseña" 
-                  required />
+                <div className="mb-2 password-input">
+                  <input type={showPassword ? "text" : "password"} 
+                    className='cont'
+                    value={password} 
+                    onChange={handlePasswordChange} 
+                    placeholder="Contraseña" 
+                    required 
+                  />
+                  <span className="password-icon" onClick={toggleShowPassword}>
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </span>
+                  {submitClicked && passwordError && <p style={{color: 'red'}}>{passwordError}</p>}
+                </div>
+                <div className="mb-2 password-input">
+                  <input type={showPassword1 ? "text" : "password"} 
+                    className='rep-cont'
+                    value={confirmPassword} 
+                    onChange={handleConfirmPasswordChange} 
+                    placeholder="Repetir contraseña" 
+                    required 
+                  />
+                  <span className="password-icon" onClick={toggleShowPassword1}>
+                    {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+                  </span>
+                  {submitClicked && confirmPasswordError && <p style={{color: 'red'}}>{confirmPasswordError}</p>}
+                </div>
                 <div className='b-confirm'>  
-                <button type="submit"
-                  className='btn btn-azul'>Confirmar</button>
+                  <button type="submit" className='btn btn-azul'>Confirmar</button>
                 </div>
               </form>
             </div>
@@ -221,11 +272,11 @@ const ResetPassword = () => {
         )}
         {step === 4 && (
           <div>
-            <h1>Se restablecio correctamente la contraseña</h1>
+            <h1>Se restableció correctamente la contraseña</h1>
           </div>
         )}
       </div>
     );
-  };
-  
-  export default ResetPassword;
+};
+
+export default ResetPassword;

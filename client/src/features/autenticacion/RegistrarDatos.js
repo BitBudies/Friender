@@ -193,6 +193,7 @@ const RegistrarDatos = ({ setNForm }) => {
           <label htmlFor="fecha_nacimiento" className="input-label ">
             Fecha de Nacimiento:
           </label>
+          
           <input
             type="date"
             id="fecha_nacimiento"
