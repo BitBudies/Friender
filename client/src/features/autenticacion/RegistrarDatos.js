@@ -109,13 +109,6 @@ const RegistrarDatos = ({ setNForm }) => {
             newErrors[key] = "La ubicación es obligatoria";
             isValid = false;
           }
-          break;
-        
-        case "contraseña":
-          if (!value.trim()) {
-            newErrors[key] = "La contraseña es obligatoria";
-            isValid = false;
-          }
           
           break;
           case "confirmar_contraseña":
