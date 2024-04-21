@@ -53,11 +53,16 @@ select {
     justify-content: space-between;
 }
 
-.para-labels {
-    display: flex;
-    flex-direction: column;
+.interes .para-labels {
+    margin: 5px;
 }
 
-.para-fotos {
+.fotos .para-fotos {
+    margin-top: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.x-image {
     display: flex;
 }

@@ -239,7 +239,7 @@ const ResetPassword = () => {
     <div className="page principal">
       {step === 1 && (
         <div className="step-1">
-          <h1>Recupera tu cuenta</h1>
+          <h1>Restablecer contraseña</h1>
           <div className="para-form">
             <h3>Ingresa tu correo electronico para buscar tu cuenta</h3>
             <input

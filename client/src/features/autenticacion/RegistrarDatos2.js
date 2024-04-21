@@ -83,10 +83,14 @@ const RegistrarDatos2 = ({setNForm}) => {
                     }
                 });
                 const container = document.getElementById('para-labels'); 
-                const label = document.createElement('label');
-                label.setAttribute('for', value);
-                label.textContent = value;
-                container.appendChild(label);
+                const element = document.createElement('div');
+                element.innerHTML = `
+                    <div class='x-interes'>
+                        <strong> ${value} </strong>
+                    </div>
+                `;
+                container.appendChild(element);
+
             }
             const selectElement = document.getElementById('selInteres');
             selectElement.style.color='#000'  
@@ -103,7 +107,7 @@ const RegistrarDatos2 = ({setNForm}) => {
             const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
             if (['jpg', 'png', 'jpeg'].indexOf(fileExtension) === -1) {
                 alert('Solo se permiten archivos JPG, JPEG y PNG.');
-                element.value = ''; // Clear the file selection
+                element.value = ''; 
                 return;
             }
             if (selectedFile.size > 200000){
@@ -111,13 +115,9 @@ const RegistrarDatos2 = ({setNForm}) => {
                 element.value = '';
                 return;
             }
-            console.log(selectedFile.size)
 
             setPFotos(true)
             setValues({...values,fotos : [...values.fotos,selectedFile]})
-            
-            
-
 
             const container = document.getElementById('para-fotos'); 
             const reader =  new FileReader();
@@ -131,7 +131,7 @@ const RegistrarDatos2 = ({setNForm}) => {
             }
             reader.readAsDataURL(selectedFile)
             container.appendChild(imageElement);
-
+            
         }
     };
 
@@ -149,6 +149,28 @@ const RegistrarDatos2 = ({setNForm}) => {
         setPFotos(true)
     }, [pFotos])
     
+   
+    //DOM events
+    if (pLabels){
+        document.getElementById('para-labels').addEventListener('click', function(e) {
+            // Aqui tiene que quitar elementos del useState 
+            const contenido = e.target.textContent
+            const index = values.interes.indexOf(contenido)
+
+            e.target.remove()
+            // SetState(list => list.filter((_,index) => Index! == index)
+        });
+    }
+    if (pFotos){
+        document.getElementById('para-fotos').addEventListener('click', function (e) {
+            // Aqui tiene que quitar elementos del useState
+
+            e.target.remove()
+            const element = document.getElementById('input-foto');
+            element.value = '';
+        });
+    }
+
   return (
     <div className="form-item">
       <div className="form-2">
@@ -165,14 +187,9 @@ const RegistrarDatos2 = ({setNForm}) => {
                 Elige tus intereses
               </option>
             </select>
-            {
-                pLabels && (
-                    
-                    <div className='para-labels' id='para-labels'>
-                        
-                    </div>
-                )
-            }
+            <div className='para-labels' id='para-labels'>
+                        {/* se llena dinamicamente */}
+            </div>
           </section>
 
           <section className="fotos">
@@ -185,14 +202,9 @@ const RegistrarDatos2 = ({setNForm}) => {
               onChange={handleChange}
               accept=".jpg, .png, .jpeg"
             />
-            {
-                pFotos && (
-                    
-                    <div className='para-fotos' id='para-fotos'>
-                        
-                    </div>
-                )
-            }
+            <div className='para-fotos' id='para-fotos'>
+                        {/* se llena dinamicamente */}
+            </div>
           </section>
         </div>
         <div className="para-desc">
