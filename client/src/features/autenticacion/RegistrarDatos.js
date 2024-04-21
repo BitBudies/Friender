@@ -72,12 +72,14 @@ const RegistrarDatos = ({ setNForm }) => {
             isValid = false;
           }
           break;
+         
         case "genero":
           if (!value) {
             newErrors[key] = "El género es obligatorio";
             isValid = false;
           }
           break;
+         
         case "nombre_usuario":
           if (!value.trim()) {
             newErrors[key] = "El nombre de usuario es obligatorio";
@@ -90,6 +92,11 @@ const RegistrarDatos = ({ setNForm }) => {
             isValid = false;
           }
           break;
+          case "ubicacion":
+            if (!value) {
+              newErrors[key] = "La ubicación es obligatorio";
+              isValid = false;
+            }
           /*
         case "contraseña":
           if (!value.trim()) {
@@ -144,13 +151,13 @@ const RegistrarDatos = ({ setNForm }) => {
             placeholder="Nombre"
             value={values.nombre}
             onChange={handleChange}
-            className="form-control input-width-160"
+            className="form-control input1m-width-70"
             required
           />
           <p className="text-danger">{errors.nombre}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="apellido_paterno" className="input-label">
+          <label htmlFor="apellido_paterno" className="input-label  input1-width-70 ">
             Apellido Paterno:
           </label>
           <input
@@ -163,10 +170,10 @@ const RegistrarDatos = ({ setNForm }) => {
             className="form-control input-width-160"
             required
           />
-          <p className="text-danger">{errors.apellido_paterno}</p>
+          <p className="text-danger input1-width-70">{errors.apellido_paterno}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="apellido_materno" className="input-label">
+          <label htmlFor="apellido_materno" className="input-label  input1-width-70">
             Apellido Materno:
           </label>
           <input
@@ -178,11 +185,12 @@ const RegistrarDatos = ({ setNForm }) => {
             onChange={handleChange}
             className="form-control input-width-160"
           />
+         
         </div>
       </div>
       <div className="input-group registro">
         <div className="mb-2 input-item">
-          <label htmlFor="fecha_nacimiento" className="input-label">
+          <label htmlFor="fecha_nacimiento" className="input-label ">
             Fecha de Nacimiento:
           </label>
           <input
@@ -192,13 +200,13 @@ const RegistrarDatos = ({ setNForm }) => {
             placeholder="dd/mm/aa"
             value={values.fecha_nacimiento}
             onChange={handleChange}
-            className="form-control input-width-160"
+            className="form-control input1f-width-70"
             required
           />
           <p className="text-danger">{errors.fecha_nacimiento}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="genero" className="input-label">
+          <label htmlFor="genero" className="input-label input1-width-70" >
             Género:
           </label>
           <select
@@ -216,10 +224,10 @@ const RegistrarDatos = ({ setNForm }) => {
             <option value="femenino">Femenino</option>
             <option value="otro">Otro</option>
           </select>
-          <p className="text-danger">{errors.genero}</p>
+          <p className="text-danger input1-width-70">{errors.genero}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="ubicacion" className="input-label">
+          <label htmlFor="ubicacion" className="input-label input1-width-70">
             Ubicación:
           </label>
           <div className="ubicacion-input">
@@ -234,6 +242,7 @@ const RegistrarDatos = ({ setNForm }) => {
             />
             <FaLocationDot className="ubicacion-icon" />
           </div>
+          <p className="text-danger input1-width-70">{errors.ubicacion}</p>
         </div>
       </div>
       <div className="input-group registro">
@@ -248,13 +257,13 @@ const RegistrarDatos = ({ setNForm }) => {
             placeholder="Usuario"
             value={values.nombre_usuario}
             onChange={handleChange}
-            className="form-control input-width-280"
+            className="form-control input1fv-width-70"
             required
           />
           <p className="text-danger">{errors.nombre_usuario}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="correo_electronico" className="input-label">
+          <label htmlFor="correo_electronico" className="input-label input-width-30">
             Correo Electrónico:
           </label>
           <input
@@ -267,7 +276,7 @@ const RegistrarDatos = ({ setNForm }) => {
             className="form-control input-width-280"
             required
           />
-          <p className="text-danger">{errors.correo_electronico}</p>
+          <p className="text-danger input-width-30">{errors.correo_electronico}</p>
         </div>
       </div>
       <div className="input-group registro">
@@ -277,20 +286,20 @@ const RegistrarDatos = ({ setNForm }) => {
           </label>
           <input
             type={showPassword ? "text" : "password"}
-            className="form-control input-width-280"
+            className="form-control input1fv-width-70"
             id="contraseña"
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          
-          <span className="password-icon" onClick={toggleShowPassword}>
+          <p className="text-danger">{errors.contraseña}</p>
+          <span className="password-icon " onClick={toggleShowPassword}>
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </span>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="confirmar_contraseña" className="input-label">
+          <label htmlFor="confirmar_contraseña" className="input-label input-width-30">
             Confirmar Contraseña:
           </label>
           <input
@@ -302,7 +311,7 @@ const RegistrarDatos = ({ setNForm }) => {
             onChange={(e) => setPassword1(e.target.value)}
             required
           />
-         
+          <p className="text-danger input-width-30">{errors.confirmar_contraseña}</p>
           {/* <span className="password-icon" onClick={toggleShowPassword1}>
             {showPassword1 ? <FaEyeSlash /> : <FaEye />}
           </span> */}

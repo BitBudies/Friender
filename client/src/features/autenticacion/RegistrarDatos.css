@@ -1,17 +1,41 @@
-.input-width-160 {
-    width: 160px ;
+.input-group {
+    margin-bottom: 10px; 
     
   }
   
+  .input-width-160 {
+    width: 160px !important;
+    margin-Left: 60px;
+  }
+  
+  .input1-width-70 {
+    margin-Left: 70px !important;
+  }
+
+  .input1m-width-70{
+    width: 160px !important;
+  }
+
+  .input-width-30 {
+    margin-Left: 30px !important;
+  }
+
   .input-width-140 {
-    width: 1555x ;
+    width: 160px !important;
   }
   
+  .input1f-width-70{
+    width: 160px
+
+  }
   .input-width-280 {
-    width: 280px;
-    
+    width: 280px !important;
+    margin-Left: 20px;
   }
-  
+  .input1fv-width-70{
+    width: 280px !important;
+
+  }
   .ubicacion-input {
     display: flex;
     align-items: center;
@@ -33,7 +57,8 @@
     transform: translateY(-30%);
   }
   
-  .para1-boton  {
-    margin: 0% 50% ;
+  .para1-boton {
+    margin: 0% 50%;
     width: 10%;
-}
+  }
+  
