@@ -32,7 +32,7 @@ const RegistrarDatos2 = ({setNForm}) => {
         }
         if (isSuccess){
             const mySelect = document.getElementById('selInteres');
-            for (const item of data.intereses) {
+            for (const item of data) {
                 const option = document.createElement('option');
                 option.value = item.nombre;
                 option.text = item.nombre;

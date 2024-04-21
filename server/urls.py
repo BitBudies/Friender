@@ -22,7 +22,7 @@ from drf_yasg import openapi
 from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
 from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, ClienteRegistrar, ClienteVerificar,VerificarCorreoUsuario, EnviarCodigos, VerificarCodigo
 from amigo.views.edicion_views import cambiarContrasena, enviarCorreoCambioContrasena, findEmail, verificarCodigoCambioContrasena
-from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef
+from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef, pruebaApis
 from amigo.views.gusto_views import obtenerGustos
 from amigo.views.interes_views import obtenerIntereses
 from amigo.views.login_views import LoginView
@@ -56,6 +56,7 @@ urlpatterns = [
     #test no borrar 
     path('api/cliente/registrar/', ClienteRegistrar.as_view()),
     path('api/cliente/activar/', ClienteVerificar.as_view()),
+    path('api/test/pruebaApi', pruebaApis),
     
     #nuevas
     path('api/cliente/verificarCorreoUser/', VerificarCorreoUsuario.as_view()),
