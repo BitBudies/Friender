@@ -20,10 +20,7 @@ const RegistrarDatos2 = ({setNForm}) => {
     const [pFotos, setPFotos] = useState(false)
 
     // para imagenes
-    
-    const [imagen, setImagen] = useState(null);
     const [send] = useUploadImageMutation();
-
 
     // para el select de los intereses
     const checkInteres = () => {
