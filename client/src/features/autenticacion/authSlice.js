@@ -4,7 +4,7 @@ const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login : builder.mutation({
       query : (data) => ({
-        url : "/login",
+        url : "/cliente/login",
         method : "POST",
         body : data,
       })
@@ -40,8 +40,36 @@ const authApi = apiSlice.injectEndpoints({
         body : data,
       })
     }),
+    getCsrf : builder.query({
+      query : () => `/get/csrf` 
+    }),
   }),
 });
+
+const fotografiaAPI = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    uploadImage : builder.mutation({
+      query : (data, csrf) => ({
+        url: `/test/pruebaApi`,
+        method : "POST",
+        body: data,
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken") // Obtener el token CSRF desde las cookies
+        },
+      })
+    }),
+    getImage : builder.query({
+      query : (fotografia_id) => `/fotografia/${fotografia_id}`,
+    })
+  }),
+});
+
+function getCookie(name) {
+  const cookieValue = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+  return cookieValue ? cookieValue.pop() : "";
+}
+
+// export const {useUploadImageMutation,useGetImageQuery} = fotografiaAPI;
 
 export const {useLoginMutation,
       useFindEmailMutation,
@@ -49,4 +77,7 @@ export const {useLoginMutation,
       useVerifyCodeMutation, 
       useChangePassMutation,
       useGetInteresesQuery,
+      useGetCsrfQuery,
+      useUploadImageMutation,
+      useGetImageQuery,
     } = authApi;

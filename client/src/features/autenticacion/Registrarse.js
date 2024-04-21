@@ -1,6 +1,4 @@
-
-
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "./Registrarse.css";
 import { Link, useNavigate } from 'react-router-dom';
 import RegistrarDatos from './RegistrarDatos';
@@ -9,14 +7,12 @@ import logo from '../../logo-friender.png';
 
 
 const Registrarse = () => {
-  
-  const [nForm,setNForm] = useState(1);
-
+  const [nForm, setNForm] = useState(1);
 
   const props = {
     setNForm,
-    nForm
-  }
+    nForm,
+  };
 
   return (
       <div className="page regist">
@@ -26,7 +22,7 @@ const Registrarse = () => {
           <h5><p>¡Enciende la diversión con Friender!</p></h5>
           <h5><p>Alquila amigos y crea momentos</p></h5>
           <h5><p>inolvidables.</p></h5>
-          <img className="logo-img" src={logo} alt="icono-friender"></img>
+          <img className="logo-img" src="https://cdn-icons-png.flaticon.com/512/7081/7081305.png" alt="icono-friender"></img>
       </div>
       <div className='registrarse-right'>
         <div className="form-indicators">
@@ -44,8 +40,8 @@ const Registrarse = () => {
         
         </div>
       </div>
-    
+    </div>
   );
-}
+};
 
 export default Registrarse;

@@ -1,69 +1,39 @@
-.regist {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-}
-
-.regist .left {
-    flex-basis: 45%;
-    /* background-color: blue; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-}
-
-.left h1 {
-    font-size: 50px;
-}
-
-.left p {
-    /* display: block; */
-    text-align: center;
-    width: 50%;
-    font-size: 20px;
-}
-
-.left p:last-child {
-    width: 40%;
-}
-
-.regist .right {
-    flex-basis: 55%;
-    /* background-color: lightblue; */
-}
-
-.right h1 {
-    font-size: 60px;
-}
 
 .form-2{
     position: relative;
-    width: 100%;
+    /* min-width: 500px; */
+    width: auto;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    margin-left: 1rem;
 }
 
 .toColumns {
     display: flex;
+    flex-direction: column;
 }
 
 .interes {
-    width: 90%;
+    width: 40%;
     /* background-color: yellow; */
 }
 
 .fotos {
-    width: 450px;
+    width: 40%;
+    height: 50%;
     /* background-color: green; */
 }
 
 select {
     color: #999;
-    padding-left: 10px;
-    padding-right: 150px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px 150px 5px 10px;
+}
+
+.para-desc{
+    width: 100%;
 }
 
 .desc-text {
@@ -76,33 +46,18 @@ select {
 }
 
 
-.para-desc {
-    margin: 20px 0px;
-}
-
-
 .para-boton {
+    width: 100%;
     position: relative;
     display: flex;
-    width: 100%;
     justify-content: space-between;
 }
-/* 
-.para-boton .anterior {
-    margin: 5rem 40rem 5rem 0rem;
-    border: none;
-    color: #007bff;
-    background-color: #f8f9fa
+
+.para-labels {
+    display: flex;
+    flex-direction: column;
 }
 
-.para-boton .siguiente {
-    margin: 5rem 20rem 5rem 0rem; 
-    padding: 10px 20px;
-    background-color: #007bff;   
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
-    font-weight: bold;
-    font-family: sans-serif;
-} */
+.para-fotos {
+    display: flex;
+}

@@ -7,3 +7,4 @@ from .fotografiaDB import Fotografia
 from .gusto import Gusto
 from .interes import Interes
 from .solicitud_alquilerDB import solicitud_alquiler
+from .codigosVerificacionDB import Codigos

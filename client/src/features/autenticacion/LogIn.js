@@ -17,14 +17,12 @@ const LogIn = () => {
 
   const {setClientId} = useGlobalContext();
 
-  const [login, {data: response,isLoading,isSuccess,isError}] = useLoginMutation();
+  const [login, {data: response,isLoading,isSuccess,isError,error}] = useLoginMutation();
 
   const handleBtn = async(e) => {
     e.preventDefault();
     if(username  && password){
-      const formulario = new FormData();
-      formulario.append("usuario", username);
-      formulario.append("contrasena", password);
+      const formulario = {username,password};
       await login(formulario);
     }
   };
@@ -44,17 +42,16 @@ const LogIn = () => {
       setDisableBtn(true);
     }
     if(isSuccess){
-      if(response.id !== '0'){
-        setClientId(1);
+        setClientId(response.id);       //as;ldjkfl;ashidf 'as
         navigate("/amigos/page/1");
-      }else{
-        setDisableBtn(false);
-        setShowFeedback(true);
-      }
+    }
+    if(isError){
+      setShowFeedback(true);
     }
   }
   
-  useEffect(checkLoginResponse,[isError, isLoading, isSuccess, navigate, response, setClientId])
+  
+  useEffect(checkLoginResponse,[isError, isLoading, isSuccess, navigate, response, setClientId,error])
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
