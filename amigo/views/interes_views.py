@@ -1,16 +1,10 @@
-from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from amigo.models.interes import Interes
+from amigo.serializers.interes_serializer import InteresSerializer
 
+@api_view(["GET"])
 def obtenerIntereses(request):
-    if request.method == 'GET':
-        intereses = Interes.objects.all().order_by('nombre')
-        intereses_data = [{'interes_id': interes.interes_id,
-                           'nombre': interes.nombre,
-                           'descripcion': interes.descripcion,
-                           'estado': interes.estado,
-                           'timestamp_interes': interes.timestamp_interes} 
-                          for interes in intereses]
-        return JsonResponse({'intereses': intereses_data}, status=200)
-    else:
-        return JsonResponse({'error': 'Método no permitido'}, status=405)
-    
+    intereses = Interes.objects.all().order_by('nombre')
+    serializer = InteresSerializer(intereses, many=True)
+    return Response(serializer.data, status=200)

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Link } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa";
 import "./NavBar.css"
@@ -13,6 +13,8 @@ import useIsAuthenticated from '../hooks/isAuthenticated';
 const NavBar = () => {
 
   const {goToBeginning} = useGlobalContext();
+  /*false --> Muestra iniciar sesión;  true --> Muestra el icono del perfil*/
+  const [userLoged, setUserLoged] = useState(false);
   const navigate = useNavigate();
 
   const isAuthenticated = useIsAuthenticated();
@@ -43,7 +45,7 @@ const NavBar = () => {
               <li className='nav-item'>
                 <NavLink to={"/"} className={"nav-link nav-item"} onClick={ handleAmigosClick}>Home</NavLink>
               </li>
-              <li className='nav-item'>
+              <li className={`nav-item ${userLoged ? "" : "hidden"}`}>
                 <button 
                   className={`nav-link nav-item ${isActive && "active"}`}
                   onClick={handleAmigosClick}
@@ -51,6 +53,11 @@ const NavBar = () => {
               </li>
           </ul>
           <div className='nav-item dropdown '>
+            <div className={`${userLoged ? "hidden" : ""}`}>
+            <Link to={"/login"} className='btn btn-azul'>Iniciar Sesión</Link>
+            <Link to={"/registrar"} className='btn btn-azul navbar-register-btn'>Registrarse</Link>
+            </div>
+            <div className={`${userLoged ? "" : "hidden"}`}>
             <span className="nav-link dropdown-toggle profile-icon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i><FaUserCircle/></i>
             </span>
@@ -65,14 +72,14 @@ const NavBar = () => {
                 </>
               :
               <>
-                <li><Link className="dropdown-item" to={"/login"}>Iniciar Sesion</Link></li>
-                {/* <li><hr className="dropdown-divider"/></li>
-                <li><button className="dropdown-item ">Cerrar Sesión</button></li> */}
+                <li><Link className="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
+                <li><button className="dropdown-item ">Cerrar Sesión</button></li>
+                 {/*<li><hr className="dropdown-divider"/></li>
+                 */}
               </>
-              }
-
-              
+              }              
             </ul>
+            </div>
           </div>
         </div>
       </div>

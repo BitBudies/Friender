@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import "./Registrarse_2.css";
-import { useGetInteresesQuery, useUploadImageMutation } from './authSlice';
+import { useGetInteresesQuery, useUploadImageMutation, useGetCsrfQuery } from './authSlice';
 
 
 const RegistrarDatos2 = ({setNForm}) => {
@@ -32,7 +32,7 @@ const RegistrarDatos2 = ({setNForm}) => {
         }
         if (isSuccess){
             const mySelect = document.getElementById('selInteres');
-            for (const item of data.intereses) {
+            for (const item of data) {
                 const option = document.createElement('option');
                 option.value = item.nombre;
                 option.text = item.nombre;
@@ -171,6 +171,37 @@ const RegistrarDatos2 = ({setNForm}) => {
         });
     }
 
+    // @kevin huayllas pinto hay que usar el csrf en todos los post
+    const {data: csrf, error, isLoading } = useGetCsrfQuery({})
+    useEffect(() => {
+      if (csrf) {
+        document.cookie = `csrftoken=${csrf.csrf_token}; path=/;`;
+      }
+    }, [csrf]);
+
+    const mandarrr = async () => {
+      const form = new FormData();
+      form.append("nombre", "jhon");
+      form.append("ap_paterno", "gutierrez");
+      form.append("ap_materno", "hinojosa");
+      form.append("ci", "12345678");
+      form.append("fecha_nacimiento", "1200-01-01");
+      form.append("genero", "O");
+      form.append("direccion", "avenida las nieves");
+      form.append("descripcion", "descripcion de jhon");
+      form.append("usuario", "yon1234");
+      form.append("correo", "jhondeycraft776@gmail.com");
+      form.append("contrasena", "yon1234");
+      const interes = [1,2,3,4,5]
+      values.fotos.forEach((it) => {
+        form.append("imagenes", it)
+      })
+      interes.forEach((it) => {
+        form.append("intereses", it)
+      })
+      send(form);
+    }
+  
   return (
     <div className="form-item">
       <div className="form-2">
@@ -248,7 +279,7 @@ const RegistrarDatos2 = ({setNForm}) => {
           >
             Anterior
           </button>
-          <button className="btn btn-azul siguiente" type="button">
+          <button className="btn btn-azul siguiente" type="button" onClick={mandarrr}>
             Registrarse
           </button>
         </div>
