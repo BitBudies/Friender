@@ -4,6 +4,7 @@ import "./Login.css";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { useLoginMutation } from './authSlice';
 import { useGlobalContext } from '../../context';
+import NavBar from '../../Components/NavBar.js';
 import logo from '../../logo-friender.png';
 
 const LogIn = () => {
@@ -12,7 +13,9 @@ const LogIn = () => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [disableBtn,setDisableBtn] = useState(false);
+  const [disableBtnLoading,setDisableBtnLoading] = useState(false);
   const [disableBlockedPasswordBox, setBlockedPasswordBox] = useState(true);
+
   const navigate = useNavigate();
 
   const {setClientId} = useGlobalContext();
@@ -39,7 +42,7 @@ const LogIn = () => {
   
   const checkLoginResponse = () => {
     if(isLoading){
-      setDisableBtn(true);
+      setDisableBtnLoading(true);
     }
     if(isSuccess){
         setClientId(response.id);       //as;ldjkfl;ashidf 'as
@@ -99,7 +102,7 @@ const LogIn = () => {
             </p>
           )}
           
-          <button className={`btn btn-azul mb-2 button-login ${disableBtn && "disabled"}`} onClick={handleBtn}>
+          <button className={`btn btn-azul mb-2 button-login ${disableBtnLoading && "disabled"} ${disableBtn && "disabled"}`} onClick={handleBtn}>
             Iniciar Sesión
           </button>
           { disableBtn && (
