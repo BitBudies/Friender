@@ -27,6 +27,9 @@ const authApi = apiSlice.injectEndpoints({
         url : "/enviarCodigoRestablecimiento",
         method : "POST",
         body : data,
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken") // Obtener el token CSRF desde las cookies
+        },
       })
     }),
     verifyCode : builder.mutation({
@@ -34,6 +37,9 @@ const authApi = apiSlice.injectEndpoints({
         url : "/verificarCodigosRestablecimiento",
         method : "POST",
         body : data,
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken") // Obtener el token CSRF desde las cookies
+        },
       })
     }),
     changePass : builder.mutation({
@@ -41,6 +47,9 @@ const authApi = apiSlice.injectEndpoints({
         url : "/cambiarContrasena",
         method : "POST",
         body : data,
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken") // Obtener el token CSRF desde las cookies
+        },
       })
     }),
     getCsrf : builder.query({

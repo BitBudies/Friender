@@ -100,8 +100,6 @@ urlpatterns = [
     path('api/cambiarContrasena', cambiarContrasena),
     path('api/enviarCodigoRestablecimiento', enviarCorreoCambioContrasena),
     path('api/verificarCodigosRestablecimiento', verificarCodigoCambioContrasena),
-    
-    
     path('api/findEmail', findEmail),
 
     #ducumentacion de la API
