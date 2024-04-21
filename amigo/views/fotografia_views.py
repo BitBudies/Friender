@@ -4,7 +4,7 @@ from django.db.models import Avg
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 
-from django.http import QueryDict
+from django.db.models import Q
 from rest_framework.views import APIView
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password
@@ -158,10 +158,12 @@ def SubirFotografiaDef(request):
 
 @api_view(["POST"])
 def pruebaApis(request):
+    print(request.POST)
+    print(request.FILES)
     #clienteSerializer = ClienteSerializer(data=request.POST)
     intereses = request.POST.getlist("intereses", [])
     if not intereses:
-        return Response({"error": f"Los intereses son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": f"Los intereses son obligatorios"}, status=status.HTTP_400_BAD_REQUEST)
     
     try:
         intereses = [int(id) for id in set(intereses)]
@@ -172,20 +174,55 @@ def pruebaApis(request):
     intereses_existentes = Interes.objects.filter(interes_id__in=intereses)
     if intereses_existentes.count() != len(intereses):
         return Response({"error": "No se encontro los intereses en la base de datos"}, status=status.HTTP_404_NOT_FOUND)
-    print(intereses)
-    print(len(intereses))
-    return Response({"message": f"Los intereses pasan {intereses}"}, status=status.HTTP_200_OK)
-    interesSerializer = InteresSerializer(data=request.POST)
-    if interesSerializer.is_valid():
-        print("datos validos")
-        cliente = Cliente(**interesSerializer.validated_data)
-        print(cliente)
-    else:
-        return Response({"error": interesSerializer.errors}, status=status.HTTP_200_OK)
-    return Response(
-        {"hola": "como estas", "segundo": "es lo segundo"}, status=status.HTTP_200_OK
-    )
+    #-----------------------------------imagenes--------------------------------------
 
+    imagenes = request.FILES.getlist("imagenes", [])
+    if not imagenes:
+        return Response({"error": f"Las imagenes son obligatorias"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    # ------------------------------------cliente---------------------------------------
+    
+    clienteSerializado = ClienteSerializer(data=request.POST)
+    if not clienteSerializado.is_valid():
+        print(clienteSerializado.errors)
+        return Response({"error": clienteSerializado.errors}, status=status.HTTP_400_BAD_REQUEST)
+    
+    cliente = Cliente(**clienteSerializado.validated_data)
+    if User.objects.filter(Q(username=cliente.usuario) | Q(email=cliente.correo)).exists():
+        return Response(
+            {"error": "El nombre de usuario o el correo ya están en uso."},
+            status=400
+        )
+    
+    #print(usuario.password)
+    #print(make_password(cliente.contrasena)) son lo mismo
+    
+    usuario = User(username=cliente.usuario, email=cliente.correo)
+    usuario.set_password(cliente.contrasena)
+    cliente.usuario = usuario
+
+    fotografiasTemporales = []
+    for prioridad, imagen in enumerate(imagenes):
+        if imagen.content_type not in ["image/jpeg", "image/png"]:
+            return Response(
+                {"error": "Solo se permiten imágenes JPEG o PNG."},
+                status=400
+            )
+        foto = Fotografia(
+            cliente = cliente,
+            tipoImagen="jpeg" if imagen.content_type == "image/jpeg" else "png,",
+            prioridad=prioridad,
+            imagenBase64=imagen.read(),
+            estado_fotografia="P"
+        )
+        fotografiasTemporales.append(foto)
+        
+    usuario.save()
+    cliente.save()
+    for fotito in fotografiasTemporales:
+        fotito.save()
+    
+    return Response({"message": f"Se creo el usuario"}, status=status.HTTP_200_OK)
 
 @csrf_exempt
 @api_view(["POST"])

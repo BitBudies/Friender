@@ -159,10 +159,24 @@ const RegistrarDatos2 = ({setNForm}) => {
 
     const mandarrr = async () => {
       const form = new FormData();
-      [1,2,3,4].forEach((interes) => {
-        form.append("intereses", interes);
-      });
-
+      form.append("nombre", "jhon");
+      form.append("ap_paterno", "gutierrez");
+      form.append("ap_materno", "hinojosa");
+      form.append("ci", "12345678");
+      form.append("fecha_nacimiento", "1200-01-01");
+      form.append("genero", "O");
+      form.append("direccion", "avenida las nieves");
+      form.append("descripcion", "descripcion de jhon");
+      form.append("usuario", "yon1234");
+      form.append("correo", "jhondeycraft776@gmail.com");
+      form.append("contrasena", "yon1234");
+      const interes = [1,2,3,4,5]
+      values.fotos.forEach((it) => {
+        form.append("imagenes", it)
+      })
+      interes.forEach((it) => {
+        form.append("intereses", it)
+      })
       send(form);
     }
   
