@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Cliente(models.Model):
     GENERO_OPCIONES = (
@@ -19,14 +20,11 @@ class Cliente(models.Model):
     genero = models.CharField(max_length=1, choices=GENERO_OPCIONES)
     direccion = models.CharField(max_length=100)
     descripcion = models.TextField(max_length=255)
-    usuario = models.CharField(max_length=20)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     correo = models.CharField(max_length=100)
-    contrasena = models.CharField(max_length=255)
     codigoVerificaion = models.CharField(max_length=5, null=True, blank=True)
-    
+
     dinero = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    
-    
     estado = models.CharField(max_length=1, choices=ESTADO_OPCIONES, default='I')
     timestamp_registro = models.DateTimeField(auto_now_add=True)
     
