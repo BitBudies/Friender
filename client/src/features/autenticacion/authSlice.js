@@ -7,6 +7,9 @@ const authApi = apiSlice.injectEndpoints({
         url : "/cliente/login",
         method : "POST",
         body : data,
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken") // Obtener el token CSRF desde las cookies
+        },
       })
     }),
     getIntereses : builder.query({
