@@ -4,10 +4,14 @@ import { useGetAmigoByIdQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
 import "./PerfilAmigo.css";
 import Formulario from '../solicitudes/Formulario';
+import { useCookies } from 'react-cookie';
 
 const PerfilAmigo = () => {
+  const [cookies] = useCookies(['token']);
+  const token = cookies.token;
+
   const { id_amigo } = useParams();
-  const { data: amigo, isFetching, isSuccess } = useGetAmigoByIdQuery(id_amigo);
+  const { data: amigo, isFetching, isSuccess } = useGetAmigoByIdQuery({id_amigo, token});
   const [showForm,setShowForm] = useState(false)
   const [formStatus,setFormStatus] = useState({sent : false, message: '',show: false})
 

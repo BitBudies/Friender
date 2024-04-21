@@ -12,7 +12,7 @@ const amigoApi = apiSlice.injectEndpoints({
     }),
     //"Authorization": `Token ${getCookie("token")}`
     getAmigoById: builder.query({
-      query: (id_amigo, token) => ({
+      query: ({id_amigo, token}) => ({
         url: `/amigo/${id_amigo}`,
         headers: {
           Authorization: `Token ${token}`, // Ejemplo de cómo agregar un token de autorización
@@ -21,12 +21,5 @@ const amigoApi = apiSlice.injectEndpoints({
     }),
   }),
 });
-
-function getCookie(name) {
-  const cookieValue = document.cookie.match(
-    "(^|;)\\s*" + name + "\\s*=\\s*([^;]+)"
-  );
-  return cookieValue ? cookieValue.pop() : "";
-}
 
 export const { useGetAmigosQuery, useGetAmigoByIdQuery } = amigoApi;
