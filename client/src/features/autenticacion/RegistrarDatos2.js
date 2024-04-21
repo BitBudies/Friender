@@ -22,7 +22,7 @@ const RegistrarDatos2 = ({setNForm}) => {
     // para imagenes
     
     const [imagen, setImagen] = useState(null);
-    const [send] = useUploadImageMutation();
+    const [send, {data: respuesta, isFetching: carganding, isSuccess: correctito, isError: errosito, error: responseerror}] = useUploadImageMutation();
 
 
     // para el select de los intereses
@@ -170,16 +170,18 @@ const RegistrarDatos2 = ({setNForm}) => {
       form.append("usuario", "yon1234");
       form.append("correo", "jhondeycraft776@gmail.com");
       form.append("contrasena", "yon1234");
-      const interes = [1,2,3,4,5]
       values.fotos.forEach((it) => {
         form.append("imagenes", it)
       })
-      interes.forEach((it) => {
+      values.interes.forEach((it) => {
         form.append("intereses", it)
       })
       send(form);
     }
   
+    useEffect(() => { 
+      console.log(responseerror);
+    }, [responseerror])
   return (
     <div className="form-item">
       <div className="form-2">
