@@ -285,6 +285,7 @@ const RegistrarDatos = ({ setNForm }) => {
           <label htmlFor="contraseña" className="input-label">
             Contraseña:
           </label>
+          <div className="mb-2 password-input">
           <input
             type={showPassword ? "text" : "password"}
             className="form-control input1fv-width-70"
@@ -294,15 +295,16 @@ const RegistrarDatos = ({ setNForm }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <p className="text-danger">{errors.contraseña}</p>
+       <p className="text-danger">{errors.contraseña}</p>
           <span className="password-icon " onClick={toggleShowPassword}>
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </span>
-        </div>
+        </div></div>
         <div className="mb-2 input-item">
           <label htmlFor="confirmar_contraseña" className="input-label input-width-30">
             Confirmar Contraseña:
           </label>
+          <div className="mb-2 password-input">
           <input
             type={showPassword1 ? "text" : "password"}
             id="confirmar_contraseña"
@@ -312,10 +314,12 @@ const RegistrarDatos = ({ setNForm }) => {
             onChange={(e) => setPassword1(e.target.value)}
             required
           />
+          <span className="password-icon" onClick={toggleShowPassword1}>
+                    {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+                  </span>
+                </div>
           <p className="text-danger input-width-30">{errors.confirmar_contraseña}</p>
-          {/* <span className="password-icon" onClick={toggleShowPassword1}>
-            {showPassword1 ? <FaEyeSlash /> : <FaEye />}
-          </span> */}
+         
         </div>
       </div>
       <div className="para1-boton">

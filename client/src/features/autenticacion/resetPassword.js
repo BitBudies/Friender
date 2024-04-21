@@ -243,7 +243,7 @@ const ResetPassword = () => {
                     value={password} 
                     onChange={handlePasswordChange} 
                     placeholder="Contraseña" 
-                    required 
+                   
                   />
                   <span className="password-icon" onClick={toggleShowPassword}>
                     {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -256,7 +256,7 @@ const ResetPassword = () => {
                     value={confirmPassword} 
                     onChange={handleConfirmPasswordChange} 
                     placeholder="Repetir contraseña" 
-                    required 
+                 
                   />
                   <span className="password-icon" onClick={toggleShowPassword1}>
                     {showPassword1 ? <FaEyeSlash /> : <FaEye />}
@@ -277,6 +277,6 @@ const ResetPassword = () => {
         )}
       </div>
     );
-};
-
+  };
+  
 export default ResetPassword;
