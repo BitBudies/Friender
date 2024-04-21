@@ -20,7 +20,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
-from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, ClienteRegistrar, ClienteVerificar,VerificarCorreoUsuario, EnviarCodigos, VerificarCodigo
+from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, ClienteRegistrar, ClienteVerificar,VerificarCorreoUsuario, EnviarCodigos, VerificarCodigo, obtenerInformacionCliente
 from amigo.views.edicion_views import cambiarContrasena, enviarCorreoCambioContrasena, findEmail, verificarCodigoCambioContrasena
 from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef, pruebaApis
 from amigo.views.gusto_views import obtenerGustos
@@ -49,6 +49,7 @@ urlpatterns = [
 
     # Cliente
     path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view()),
+    path('api/cliente/informacion', obtenerInformacionCliente),
     path('api/cliente/solicitudes/<int:cliente_id>/', GetSolicitudesCliente.as_view()),
     path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view()),
     path('api/amigo/solicitudes/recibidas/<int:amigo_id>/', GetSolicitudesRecibidas.as_view()),

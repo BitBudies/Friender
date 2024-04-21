@@ -7,8 +7,23 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse
 from django.utils.encoding import force_str
+
+from django.shortcuts import get_object_or_404
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+
+from rest_framework.response import Response
+from rest_framework import status
+
+
 import random
 import string
+
+from amigo.serializers.cliente_serializer import ClienteSerializer
+
+
+
 
 from ..models import Cliente 
 from ..models import Codigos   
@@ -298,3 +313,13 @@ class RegistraCliente(APIView):
         
         return Response({"message": "Cliente registrado correctamente"}, status=status.HTTP_200_OK)
           
+@api_view(["GET"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def obtenerInformacionCliente(request):
+    user = request.user
+    cliente = get_object_or_404(Cliente, user=user)
+    serializer = ClienteSerializer(cliente)
+    data = serializer.data
+    data["nombre_completo"] = cliente.getFullName()
+    return Response(data, status=status.HTTP_200_OK)
