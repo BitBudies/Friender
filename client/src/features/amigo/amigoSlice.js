@@ -3,17 +3,19 @@ import { apiSlice } from "../api/apiSlice";
 const amigoApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAmigos: builder.query({
-      query: ({ pagina, limite }) => ({
+      query: ({ pagina, limite, token }) => ({
         url: `/amigos/pagina/${pagina}/limite/${limite}`,
-        providesTags: ["Amigo"],
+        headers: {
+          Authorization: `Token ${token}`, // Ejemplo de cómo agregar un token de autorización
+        },
       }),
     }),
     //"Authorization": `Token ${getCookie("token")}`
     getAmigoById: builder.query({
-      query: (id_amigo) => ({
+      query: (id_amigo, token) => ({
         url: `/amigo/${id_amigo}`,
         headers: {
-          Authorization: `Token ${getCookie("token")}`, // Ejemplo de cómo agregar un token de autorización
+          Authorization: `Token ${token}`, // Ejemplo de cómo agregar un token de autorización
         },
       }),
     }),

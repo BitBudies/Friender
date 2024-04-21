@@ -6,8 +6,10 @@ import { useLoginMutation } from './authSlice';
 import { useGlobalContext } from '../../context';
 import NavBar from '../../Components/NavBar.js';
 import logo from '../../logo-friender.png';
+import { useCookies } from 'react-cookie';
 
 const LogIn = () => {
+  const [cookies, setCookie] = useCookies(['token']);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showFeedback, setShowFeedback] = useState(false);
@@ -48,7 +50,7 @@ const LogIn = () => {
     }
     if(isSuccess){
         setClientId(response.id);       //as;ldjkfl;ashidf 'as
-        document.cookie = `token=${response.token}; path=/;`;
+        setCookie('token', response.token);
         navigate("/amigos/page/1");
     }
     if(isError){
