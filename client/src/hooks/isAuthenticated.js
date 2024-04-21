@@ -1,8 +1,10 @@
-import { useGlobalContext } from '../context'
+import { useGlobalContext } from "../context";
+import { useCookies  } from "react-cookie";
 
 const useIsAuthenticated = () => {
-const {clientId} = useGlobalContext();
-  return !(clientId === '0') 
-}
+  const [cookies] = useCookies(["token"]);
+  const token = cookies.token;
+  return token !== undefined;
+};
 
-export default useIsAuthenticated
+export default useIsAuthenticated;

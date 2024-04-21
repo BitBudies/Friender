@@ -9,22 +9,28 @@ import { useLocation } from 'react-router-dom';
 import { useGlobalContext } from '../context';
 import { useNavigate } from 'react-router-dom';
 import useIsAuthenticated from '../hooks/isAuthenticated';
+import { useCookies } from 'react-cookie';
 
 const NavBar = () => {
-
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const {goToBeginning} = useGlobalContext();
   /*false --> Muestra iniciar sesión;  true --> Muestra el icono del perfil*/
-  const [userLoged, setUserLoged] = useState(false);
+
   const navigate = useNavigate();
 
   const isAuthenticated = useIsAuthenticated();
-
+  const [userLoged, setUserLoged] = useState(isAuthenticated);
   const location = useLocation();
   const isActive = location.pathname.startsWith('/amigos/page/');
   const isTestJhon = location.pathname === '/test/jhon';
   if (isTestJhon) {
     return null;
   }
+  const handleCloseSession = () => {
+    removeCookie("token")
+    navigate("/")
+    window.location.reload();
+}
   
   const handleAmigosClick = () => {
       if(!isActive){
@@ -68,12 +74,12 @@ const NavBar = () => {
                 <>
                   <li><Link className="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
                   <li><hr className="dropdown-divider"/></li>
-                  <li><button className="dropdown-item ">Cerrar Sesión</button></li>
+                  <li><button className="dropdown-item "onClick={handleCloseSession}>Cerrar Sesión</button></li>
                 </>
               :
               <>
                 <li><Link className="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
-                <li><button className="dropdown-item ">Cerrar Sesión</button></li>
+                <li><button className="dropdown-item " onClick={handleCloseSession}>Cerrar Sesión</button></li>
                  {/*<li><hr className="dropdown-divider"/></li>
                  */}
               </>
