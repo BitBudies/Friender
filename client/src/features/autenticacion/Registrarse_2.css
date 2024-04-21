@@ -13,6 +13,7 @@
 
 .toColumns {
     display: flex;
+    flex-direction: column;
 }
 
 .interes {
@@ -22,6 +23,7 @@
 
 .fotos {
     width: 40%;
+    height: 50%;
     /* background-color: green; */
 }
 
@@ -50,14 +52,12 @@ select {
     display: flex;
     justify-content: space-between;
 }
-/* 
-.para-boton .anterior {
-    margin: 5rem 40rem 5rem 0rem;
-    border: none;
-    color: #007bff;
-    background-color: #f8f9fa
-}*/
 
-/* .para-boton .siguiente {
-    margin: 0% 13%; 
-}  */
+.para-labels {
+    display: flex;
+    flex-direction: column;
+}
+
+.para-fotos {
+    display: flex;
+}

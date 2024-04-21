@@ -16,6 +16,8 @@ const RegistrarDatos2 = ({setNForm}) => {
     const {data,isFetching,isSuccess} = useGetInteresesQuery();
     const [descripcionLength, setDescripcionLength] = useState(0); // Estado para longitud de descripción
     const [values, setValues] = useState(defaultValues);
+    const [pLabels, setPLabels] = useState(false)
+    const [pFotos, setPFotos] = useState(false)
 
     // para imagenes
     
@@ -68,18 +70,35 @@ const RegistrarDatos2 = ({setNForm}) => {
                     ...currentValues,
                     [name] : value,
                 }
-                
             });
         }
         if(name === 'selInteres') {
+            
             if (values.interes.indexOf(value) === -1) {
-                setValues({...values,interes : [...values.interes, value]})
+                setPLabels(true);
+                setValues((currentValues) => {
+                    return {
+                        ...currentValues,
+                        interes : [...currentValues.interes, value]
+                    }
+                });
+                const container = document.getElementById('para-labels'); 
+                const label = document.createElement('label');
+                label.setAttribute('for', value);
+                label.textContent = value;
+                container.appendChild(label);
             }
             const selectElement = document.getElementById('selInteres');
             selectElement.style.color='#000'  
         }
         if (name === 'input-foto'){
             const element = document.getElementById('input-foto');
+            if (values.fotos.length === 7) {
+                alert('Se permite un máximo de 7 imágenes');
+                element.value = '';
+                return;
+            }
+            
             const selectedFile = e.target.files[0];
             const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
             if (['jpg', 'png', 'jpeg'].indexOf(fileExtension) === -1) {
@@ -87,8 +106,31 @@ const RegistrarDatos2 = ({setNForm}) => {
                 element.value = ''; // Clear the file selection
                 return;
             }
+            if (selectedFile.size > 200000){
+                alert('Su imagen es muy pesada, máximo 200kB');
+                element.value = '';
+                return;
+            }
+            console.log(selectedFile.size)
 
+            setPFotos(true)
             setValues({...values,fotos : [...values.fotos,selectedFile]})
+            
+            
+
+
+            const container = document.getElementById('para-fotos'); 
+            const reader =  new FileReader();
+        
+            const imageElement = document.createElement('img')
+            reader.onload = function (e) {
+                imageElement.src = e.target.result;
+                imageElement.alt = 'Imagen'; 
+                imageElement.width = '100';
+                imageElement.height = '100'; 
+            }
+            reader.readAsDataURL(selectedFile)
+            container.appendChild(imageElement);
 
         }
     };
@@ -99,14 +141,14 @@ const RegistrarDatos2 = ({setNForm}) => {
         console.log(values);
     },[values])
 
-    const createLabel = () => {
-        for (const value of values.interes) {
-            const label = document.createElement('label');
-            label.setAttribute('for', values.indexOf(value));
-            label.textContent = value;
-        }
-    }
+    useEffect(() => {
+        setPLabels(true)
+    }, [pLabels])
 
+    useEffect(() => {
+        setPFotos(true)
+    }, [pFotos])
+    
   return (
     <div className="form-item">
       <div className="form-2">
@@ -124,9 +166,10 @@ const RegistrarDatos2 = ({setNForm}) => {
               </option>
             </select>
             {
-                values.interes.length > 0 && (
-                    <div>
-                        <input/>
+                pLabels && (
+                    
+                    <div className='para-labels' id='para-labels'>
+                        
                     </div>
                 )
             }
@@ -142,6 +185,14 @@ const RegistrarDatos2 = ({setNForm}) => {
               onChange={handleChange}
               accept=".jpg, .png, .jpeg"
             />
+            {
+                pFotos && (
+                    
+                    <div className='para-fotos' id='para-fotos'>
+                        
+                    </div>
+                )
+            }
           </section>
         </div>
         <div className="para-desc">
@@ -150,7 +201,7 @@ const RegistrarDatos2 = ({setNForm}) => {
             className="form-control"
             placeholder="Una breve descripción"
             rows="5"
-            cols="50"
+            cols="90"
             id="descripcion"
             name="descripcion"
             onChange={handleChange}
