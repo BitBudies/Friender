@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -8,45 +9,43 @@ from ..serializers.login_serializer import LoginSerializer
 from ..models import Cliente
 # Para instalar
 # pip install --upgrade djangorestframework-simplejwt
-class Login(ObtainAuthToken):
-    def post(self,request,*args,**kwargs):
-        
-         username = request.data.get('username')
-         password = request.data.get('password')
-         print(username,password)
-         login_serializer = self.serializer_class(data = request.data, context = {'request':request})
 
-        #  if not all([username, password]):
-        #     return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
-         
-         userObject = authenticate(username=username, password=password)
-         if userObject is not None:
-            # El usuario existe y la contraseña es correcta
-             #login_serializer = self.serializer_class(data = request.data, context = {'request':request})
-             if login_serializer.is_valid():
-                userData = login_serializer.validated_data['user']
-                print(userData)
-                token,created = Token.objects.get_or_create(user = userData)
-                user_serializer = UserTokenSerializer(userData)
-                print(userData)
-                cliente = Cliente.objects.get(usuario=userData)
+class Login(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        username_or_email = request.data.get('username_or_email')
+        password = request.data.get('password')
+        
+        if username_or_email and password:
+            user = authenticate(username=username_or_email, password=password)
+            if user is None:
+                # Si la autenticación con el nombre de usuario falla, intentar autenticar utilizando el correo electrónico
+                try:
+                    user = User.objects.get(email=username_or_email)
+                    user = authenticate(username=user.username, password=password)
+                except User.DoesNotExist:
+                    pass
+            
+            # Verificar si la autenticación fue exitosa
+            if user is not None:
+                token, created = Token.objects.get_or_create(user=user)
+                cliente = Cliente.objects.get(usuario=user)
                 if created:
-                    print('created')
                     return Response({
                         'token': token.key,
-                        'message': 'Inicio de sesion exitoso',
+                        'message': 'Inicio de sesión exitoso',
                         'cliente_id': cliente.cliente_id
-                    }, status= status.HTTP_201_CREATED)
+                    }, status=status.HTTP_201_CREATED)
                 else:
                     token.delete()
-                    token = Token.objects.create(user = userData)
+                    token = Token.objects.create(user=user)
                     return Response({
-                    'token': token.key,
-                    'message': 'Inicio de sesion exitoso',
-                    'cliente_id': cliente.cliente_id
-                    }, status= status.HTTP_201_CREATED)
-                # return Response({"message": "Inicio de sesión exitoso"}, status=status.HTTP_200_OK)
-         else:
-            return Response({"error": "Nombre de usuario o contraseña incorrectos"}, status=status.HTTP_404_NOT_FOUND)
+                        'token': token.key,
+                        'message': 'Inicio de sesión exitoso',
+                        'cliente_id': cliente.cliente_id
+                    }, status=status.HTTP_201_CREATED)
+            else:
+                return Response({"error": "Nombre de usuario, correo electrónico o contraseña incorrectos"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({"error": "Faltan campos requeridos"}, status=status.HTTP_400_BAD_REQUEST)
 
     
