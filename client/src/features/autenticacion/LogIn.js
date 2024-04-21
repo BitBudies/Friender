@@ -48,6 +48,7 @@ const LogIn = () => {
     }
     if(isSuccess){
         setClientId(response.id);       //as;ldjkfl;ashidf 'as
+        document.cookie = `token=${response.token}; path=/;`;
         navigate("/amigos/page/1");
     }
     if(isError){

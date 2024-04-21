@@ -8,6 +8,8 @@ from rest_framework import status
 from amigo.models.fotografiaDB import Fotografia
 from ..models import Amigo, Calificacion 
 from .utils import calcular_edad
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
 class AmigoDetailById(APIView):
     def get(self, _, amigo_id):
@@ -53,6 +55,8 @@ class AmigoDetailById(APIView):
         return Response(data)
 
 class AmigoListLimitPaginator(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request, page_number = 1, limite=10):
         if limite <= 0:
             return Response({"error": "El límite debe ser mayor que 0"}, status=status.HTTP_200_OK)
