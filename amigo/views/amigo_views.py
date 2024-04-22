@@ -8,25 +8,25 @@ from rest_framework import status
 from amigo.models.fotografiaDB import Fotografia
 from ..models import Amigo, Calificacion 
 from .utils import calcular_edad
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from django.shortcuts import get_object_or_404
 
 class AmigoDetailById(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, _, amigo_id):
-        try:
-            amigo = Amigo.objects.get(amigo_id=amigo_id)
-        except Amigo.DoesNotExist:
-            return Response({"error": "Amigo no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        amigo = get_object_or_404(Amigo, pk=amigo_id)
         calificaciones_amigo = Calificacion.objects.filter(amigo=amigo, emisor="cliente")
         if not calificaciones_amigo.exists():
             promedio_calificaciones = 0
         else:
-            # se calcula el promedio de las puntuaciones
             promedio_calificaciones = calificaciones_amigo.aggregate(Avg('puntuacion'))['puntuacion__avg']
         
         fotografiaAmigo = Fotografia.objects.filter(cliente=amigo.cliente, prioridad=0).first()
         imagenBase64 = None
         if fotografiaAmigo:
             imagenBase64 = base64.b64encode(fotografiaAmigo.imagenBase64).decode('utf-8')
-            
         
         data = {
             "amigo_id": amigo.amigo_id,
@@ -41,7 +41,7 @@ class AmigoDetailById(APIView):
             "genero": amigo.cliente.genero,
             "direccion": amigo.cliente.direccion,
             "descripcion": amigo.cliente.descripcion,
-            "usuario": amigo.cliente.usuario,
+            "usuario": amigo.cliente.user.username,
             "correo": amigo.cliente.correo,
             "dinero_amigo": amigo.dinero,
             "estado_amigo" : amigo.estado,
@@ -53,6 +53,8 @@ class AmigoDetailById(APIView):
         return Response(data)
 
 class AmigoListLimitPaginator(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request, page_number = 1, limite=10):
         if limite <= 0:
             return Response({"error": "El límite debe ser mayor que 0"}, status=status.HTTP_200_OK)

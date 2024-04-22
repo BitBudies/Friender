@@ -5,6 +5,7 @@
 
 .login-logo-box{
     text-align: center;
+    margin-top: 90px;
     margin-bottom: 25px;
 }
 
@@ -83,13 +84,37 @@
     padding-right: 42px;
 }
 
+.modal-bloqueo{
+    width: 350px;
+    display: flex;
+    position: absolute;
+    margin-top: 90px;
+    background-color: aliceblue;
+    text-align: center;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px 1px var(--gris);
+}
+
+.hidden{
+    display: none !important;
+}
+
+.login-box-text-danger{
+    font-size: 0.9rem;
+    text-align: left;
+    padding-left: 20px;
+}
+
 @media screen and (max-width : 380px) {
     .login-box{
         width: 90%;
-        margin-top: 15%;
         padding: 1rem;
     }
-    .login-logo-box{
-        display: none;
+    .login-logo-box img{
+        width: 50px;
     }
-  }
+    .modal-bloqueo{
+        width: 90%;
+    }
+}

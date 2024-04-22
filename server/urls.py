@@ -20,14 +20,15 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
-from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, ClienteRegistrar
-from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef
+from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, ClienteRegistrar, ClienteVerificar,VerificarCorreoUsuario, EnviarCodigos, VerificarCodigo, obtenerInformacionCliente
+from amigo.views.edicion_views import cambiarContrasena, enviarCorreoCambioContrasena, findEmail, verificarCodigoCambioContrasena
+from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef, pruebaApis
+from amigo.views.gusto_views import obtenerGustos
+from amigo.views.interes_views import obtenerIntereses
 from amigo.views.login_views import LoginView
-from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, GetSolicitudesRecibidas, SolicitudAlquilerDetailAPIView, VerificarSolicitudes
-from amigo.views.utils import enviar_correo_prueba
-
-#router = routers.DefaultRouter()
-#router.register(r'solicitud', SolicitudViewSet)
+from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, SolicitudAlquilerDetailAPIView, VerificarSolicitudes, obtenerSolicitudesAmigo
+from amigo.views.utils import enviar_correo_prueba, obtener_csrf
+from amigo.views.login import Login
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -46,14 +47,27 @@ urlpatterns = [
 
     # Cliente
     path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view()),
+    path('api/cliente/informacion', obtenerInformacionCliente),
     path('api/cliente/solicitudes/<int:cliente_id>/', GetSolicitudesCliente.as_view()),
     path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view()),
-    path('api/amigo/solicitudes/recibidas/<int:amigo_id>/', GetSolicitudesRecibidas.as_view()),
+    path('api/amigo/solicitudes/recibidas', obtenerSolicitudesAmigo),
     
+    #test no borrar 
     path('api/cliente/registrar/', ClienteRegistrar.as_view()),
+    path('api/cliente/activar/', ClienteVerificar.as_view()),
+    path('api/test/pruebaApi', pruebaApis),
+    path('api/get/csrf', obtener_csrf),
     
-    #path('api/cliente/<uidb64>/<token>/',views.activate , ClienteRegistrar.as_view()),
+    #nuevas
+    path('api/cliente/verificarCorreoUser/', VerificarCorreoUsuario.as_view()),
+    path('api/cliente/enviarCodigos/', EnviarCodigos.as_view()),
+    path('api/cliente/verificarCodigo/', VerificarCodigo.as_view()),
     
+    
+    
+    
+    
+    path('api/cliente/login', Login.as_view()),
     # probando postsssss
     path('api/solicitud', EnviarSolicitud.as_view()),
     
@@ -67,6 +81,11 @@ urlpatterns = [
     path('api/solicitud/informacion/<int:solicitud_alquiler_id>', SolicitudAlquilerDetailAPIView.as_view()),
     path('api/solicitud/verificar/<int:cliente_idR>/<int:amigo_idR>/', VerificarSolicitudes.as_view()),
    
+    #Interes
+    path('api/intereses', obtenerIntereses),
+    
+    #Gustos
+    path('api/gustos', obtenerGustos),
     
     #Fotografias
     path('api/fotografia/<int:fotografia_id>', FotografiaPorID.as_view()),
@@ -75,9 +94,12 @@ urlpatterns = [
     path('api/test/subirimagen', SubirFotografiaDef),
 
     # Credenciales
-    path('api/login', LoginView.as_view(), name = 'login'),
+    path('api/login', LoginView),
     path('api/test/correo', enviar_correo_prueba, name = 'correo'),
-    
+    path('api/cambiarContrasena', cambiarContrasena),
+    path('api/enviarCodigoRestablecimiento', enviarCorreoCambioContrasena),
+    path('api/verificarCodigosRestablecimiento', verificarCodigoCambioContrasena),
+    path('api/findEmail', findEmail),
 
     #ducumentacion de la API
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), 

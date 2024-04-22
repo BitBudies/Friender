@@ -5,6 +5,7 @@ import { useGetAmigosQuery } from './amigoSlice';
 import Loading from '../../Components/Loading';
 import { FaUser } from "react-icons/fa";
 import { useGlobalContext } from '../../context';
+import { useCookies } from 'react-cookie';
 
 const calificacionEstrellas = (calificacion) => {
     const numEstrellas = Math.round(calificacion);
@@ -13,13 +14,17 @@ const calificacionEstrellas = (calificacion) => {
 };
 
 const ListaAmigos = () => {
+    const [cookies] = useCookies(['token']);
+    const token = cookies.token;
+
     const {n_page} = useParams();
 
     const {pageRef,goToBeginning} = useGlobalContext();
 
     const {data:amigos, isFetching, isSuccess} = useGetAmigosQuery({
         pagina: n_page,
-        limite: 24
+        limite: 24,
+        token
     });
 
    

@@ -22,6 +22,9 @@
     font-size: 2rem;
 }
 
+.navbar-register-btn{
+    margin-left: 10px;
+}
 
 .navbar-nav {
     display: flex;

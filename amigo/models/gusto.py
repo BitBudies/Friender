@@ -12,4 +12,4 @@ class Gusto(models.Model):
     timestamp_gusto = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.gusto_id}"
+        return f"{self.gusto_id} - {self.nombre} - {self.estado}"

@@ -1,18 +1,25 @@
 import { apiSlice } from "../api/apiSlice";
 
 const amigoApi = apiSlice.injectEndpoints({
-  
   endpoints: (builder) => ({
-    getAmigos : builder.query({
-      query : ({pagina, limite}) => `/amigos/pagina/${pagina}/limite/${limite}`,
-      providesTags : ["Amigo"]
+    getAmigos: builder.query({
+      query: ({ pagina, limite, token }) => ({
+        url: `/amigos/pagina/${pagina}/limite/${limite}`,
+        headers: {
+          Authorization: `Token ${token}`, // Ejemplo de cómo agregar un token de autorización
+        },
+      }),
     }),
-    getAmigoById : builder.query({
-      query : (id_amigo) => `/amigo/${id_amigo}`,
-      providesTags : ["Amigo"]
-    })
+    //"Authorization": `Token ${getCookie("token")}`
+    getAmigoById: builder.query({
+      query: ({id_amigo, token}) => ({
+        url: `/amigo/${id_amigo}`,
+        headers: {
+          Authorization: `Token ${token}`, // Ejemplo de cómo agregar un token de autorización
+        },
+      }),
+    }),
   }),
 });
 
-export const {useGetAmigosQuery,useGetAmigoByIdQuery} =
-  amigoApi;
+export const { useGetAmigosQuery, useGetAmigoByIdQuery } = amigoApi;
