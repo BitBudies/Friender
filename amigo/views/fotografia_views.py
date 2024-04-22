@@ -24,6 +24,7 @@ from ..models.clienteDB import Cliente
 from ..models.fotografiaDB import Fotografia
 
 
+
 class FotografiaPorID(APIView):
     def get(self, request, fotografia_id):
         try:
@@ -304,7 +305,7 @@ def crearClienteConFotografias(request):
             {"error": "Todos los campos son requeridos"},
             status=status.HTTP_400_BAD_REQUEST,
         )
-
+      
     if User.objects.filter(Q(username=usuario) | Q(correo=correo)).exists():
         return Response(
             {"error": "El nombre de usuario o el correo ya están en uso."}, status=400
