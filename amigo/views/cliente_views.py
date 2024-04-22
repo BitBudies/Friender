@@ -211,7 +211,7 @@ class ClienteVerificar(APIView):
     #Nuevo -------------------------
     
     
-#Verifica si el usuario y correo ya existen  Funciona
+#Verifica si el usuario y correo ya existen 
 class VerificarCorreoUsuario(APIView):
     def post(self, request):
         usuario = request.data.get('usuario')
@@ -233,7 +233,7 @@ class VerificarCorreoUsuario(APIView):
         return Response({"message": "Usuario y correo validos"}, status=status.HTTP_200_OK)
 
    
-#Envia codigos de verificacion para el correo electronico  Funciona
+#Envia codigos de verificacion para el correo electronico 
 class EnviarCodigos(APIView):
     def post(self, request):
         correo = request.data.get('correo')
@@ -248,9 +248,14 @@ class EnviarCodigos(APIView):
                 {"error": "El correo no es valido."}, status=400
             )
             
+           #comentado para hacer pruebas de los codigos 
+            
+        # if Codigos.objects.filter(correo=correo).exists():
+        #     return Response({"mensage": "el correo ya tiene unos codigos activos"}, status=status.HTTP_400_BAD_REQUEST)
+            
         codigo = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
         asunto = f'Tu código: {codigo}'
-        mensaje = f'Hola, :{nombre} {ap_paterno}, \n tu código de verificación de Friender es: {codigo} . \n Usalo para acceder a tu cuenta. \n Si no solicitaste esto, simplemente ignora este mensaje. \n Saludos, \n El equipo de Friender'
+        mensaje = f'Hola: {nombre} {ap_paterno}, \nTu código de verificación de Friender es: {codigo} . \n\n Usalo para acceder a tu cuenta. \n Si no solicitaste esto, simplemente ignora este mensaje. \n\n Saludos, \n El equipo de Friender'
         
         codigos = Codigos.objects.create(
             correo=correo,
@@ -270,7 +275,6 @@ class EnviarCodigos(APIView):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
         
-        
 #Verifica si el codigo de verificacion es correcto
 class VerificarCodigo(APIView):
     def post(self, request):
@@ -279,16 +283,18 @@ class VerificarCodigo(APIView):
         
         if not all([correo, codigo]):
             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
-        
         try:
             codigos = Codigos.objects.get(correo=correo, codigoVerificaion=codigo)
             codigos.delete()
         except Codigos.DoesNotExist:
             return Response({"error": "El codigo de verificaion son incorrectos"}, status=status.HTTP_404_NOT_FOUND)
-
-
-            
+        
         return Response({"message": "Correo verificado correctamente"}, status=status.HTTP_200_OK)
+    
+    
+    
+    
+    
     
     #Yon aqui lo de registra cliente 
 class RegistraCliente(APIView):
