@@ -283,6 +283,12 @@ class VerificarCodigo(APIView):
         
         if not all([correo, codigo]):
             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if  not correo_valido(correo):
+            return Response(
+                {"error": "El correo no es valido."}, status=400
+            )
+        
         try:
             codigos = Codigos.objects.get(correo=correo, codigoVerificaion=codigo)
             codigos.delete()
