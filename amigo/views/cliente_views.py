@@ -16,6 +16,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework import status
 
+from utils import correo_valido
 
 import random
 import string
@@ -208,6 +209,8 @@ class VerificarCorreoUsuario(APIView):
         
         if not all([usuario, correo]):
             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
+         
+       
         
         if Cliente.objects.filter(usuario=usuario).exists():
             return Response({"error": "Usuario ya existe"}, status=status.HTTP_400_BAD_REQUEST)
@@ -227,9 +230,10 @@ class EnviarCodigos(APIView):
         if not all([correo, nombre, ap_paterno]):
             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
         
+            
         codigo = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
-        asunto = 'Verificación de correo para Friender'
-        mensaje = f'Hola, {nombre} {ap_paterno}, tu código de verificación de Friender es: {codigo}'
+        asunto = f'Tu código: {codigo}'
+        mensaje = f'Hola, :{nombre} {ap_paterno}, \n tu código de verificación de Friender es: {codigo} . \n Usalo para acceder a tu cuenta. \n Si no solicitaste esto, simplemente ignora este mensaje. \n Saludos, \n El equipo de Friender'
         
         codigos = Codigos.objects.create(
             correo=correo,
@@ -264,9 +268,7 @@ class VerificarCodigo(APIView):
             codigos.delete()
         except Codigos.DoesNotExist:
             return Response({"error": "El codigo de verificaion son incorrectos"}, status=status.HTTP_404_NOT_FOUND)
-
-
-            
+ 
         return Response({"message": "Correo verificado correctamente"}, status=status.HTTP_200_OK)
     
     #Yon aqui lo de registra cliente 
