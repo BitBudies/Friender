@@ -210,7 +210,10 @@ class VerificarCorreoUsuario(APIView):
         if not all([usuario, correo]):
             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
          
-       
+        if  not correo_valido(correo):
+            return Response(
+                {"error": "El correo no es valido."}, status=400
+            )
         
         if Cliente.objects.filter(usuario=usuario).exists():
             return Response({"error": "Usuario ya existe"}, status=status.HTTP_400_BAD_REQUEST)
@@ -230,6 +233,10 @@ class EnviarCodigos(APIView):
         if not all([correo, nombre, ap_paterno]):
             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
         
+        if  not correo_valido(correo):
+            return Response(
+                {"error": "El correo no es valido."}, status=400
+            )
             
         codigo = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
         asunto = f'Tu código: {codigo}'
@@ -268,7 +275,9 @@ class VerificarCodigo(APIView):
             codigos.delete()
         except Codigos.DoesNotExist:
             return Response({"error": "El codigo de verificaion son incorrectos"}, status=status.HTTP_404_NOT_FOUND)
- 
+
+
+            
         return Response({"message": "Correo verificado correctamente"}, status=status.HTTP_200_OK)
     
     #Yon aqui lo de registra cliente 
