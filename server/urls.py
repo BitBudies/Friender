@@ -29,7 +29,7 @@ from amigo.views.login_views import LoginView
 from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, SolicitudAlquilerDetailAPIView, VerificarSolicitudes, obtenerSolicitudesAmigo
 from amigo.views.utils import enviar_correo_prueba, obtener_csrf
 from amigo.views.login import Login
-
+from amigo.views.cerrarSesion import Logout
 schema_view = get_schema_view(
     openapi.Info(
         title="Documentacion de la API 🐸",
@@ -68,6 +68,7 @@ urlpatterns = [
     
     
     path('api/cliente/login', Login.as_view()),
+    path('api/cliente/cerrarSesion', Logout.as_view()),
     # probando postsssss
     path('api/solicitud', EnviarSolicitud.as_view()),
     
