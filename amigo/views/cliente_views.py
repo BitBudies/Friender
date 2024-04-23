@@ -1,3 +1,4 @@
+import base64
 from django.db.models import Avg
 from django.core.paginator import Paginator
 from rest_framework.views import APIView
@@ -24,6 +25,7 @@ import re
 import random
 import string
 
+from amigo.models.fotografiaDB import Fotografia
 from amigo.serializers.cliente_serializer import ClienteSerializer
 
 
@@ -346,7 +348,13 @@ class RegistraCliente(APIView):
 def obtenerInformacionCliente(request):
     user = request.user
     cliente = get_object_or_404(Cliente, user=user)
+    fotografiaAmigo = Fotografia.objects.filter(cliente=cliente, prioridad=0).first()
+    imagenBase64 = None
+    if fotografiaAmigo:
+        imagenBase64 = base64.b64encode(fotografiaAmigo.imagenBase64).decode('utf-8')
+    
     serializer = ClienteSerializer(cliente)
     data = serializer.data
     data["nombre_completo"] = cliente.getFullName()
+    data["imagenBase64"] = imagenBase64
     return Response(data, status=status.HTTP_200_OK)
