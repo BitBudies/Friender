@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import RegistrarDatos from './RegistrarDatos';
 import RegistrarDatos2 from './RegistrarDatos2';
 import logo from '../../logo-friender.png';
+import { RegistrarDatos15 } from "./RegistrarDatos15";
 
 
 const Registrarse = () => {
@@ -28,12 +29,14 @@ const Registrarse = () => {
         <div className="form-indicators">
           <div className={`indicator ${nForm === 0 && "active"}`}></div>
           <div className={`indicator ${nForm === 1 && "active"}`}></div>
+          <div className={`indicator ${nForm === 2 && "active"}`}></div>
         </div>
         <h1 className='mb-5'>Regístrate</h1>
         <div className="toColumns"></div>
         <div className='form-registro'>
-          <div className="form-carousel" style={{transform: `translate(${nForm * -50}%)`}}>
+          <div className="form-carousel" style={{transform: `translate(${nForm * -33.33}%)`}}>
             <RegistrarDatos {...props}/>
+            <RegistrarDatos15 {...props}/>
             <RegistrarDatos2 {...props}/>
           </div>  
         </div>

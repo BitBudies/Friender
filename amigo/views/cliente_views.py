@@ -44,14 +44,9 @@ from django.contrib.auth.tokens import default_token_generator
 
 from decouple import config
 
+from .utils import correo_valido
 
-def correo_valido(correo):
-    regex_correo = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
-    if(re.search(regex_correo,correo)):
-            return True
-    else:
-            return False
-
+ 
 class ClienteDetailById(APIView):
     def get(self, request, cliente_id):
         try:
@@ -206,9 +201,8 @@ class ClienteVerificar(APIView):
     
     
     
-    
-    
     #Nuevo -------------------------
+    
     
     
 #Verifica si el usuario y correo ya existen 

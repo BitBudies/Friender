@@ -17,6 +17,7 @@ import Registrarse from './features/autenticacion/Registrarse';
 import useIsAuthenticated from './hooks/isAuthenticated';
 import ResetPassword from './features/autenticacion/resetPassword';
 import RecuperarCuenta from './features/autenticacion/RecuperarCuenta';
+import { RegistrarDatos15 } from './features/autenticacion/RegistrarDatos15';
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           <Route path="/test/jhon" element={<Jhon/>} />
           <Route path="/resetPassword" element={<ResetPassword/>}/>
           <Route path="/registrar" element={<Registrarse/>}/>
+          <Route path="/registrarse" element={<RegistrarDatos15/>}/>
           <Route path="/recuperar" element={<RecuperarCuenta/>}/>
           <Route path='/*' element={<Default/>}/>
         </Routes>

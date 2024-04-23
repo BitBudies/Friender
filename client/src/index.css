@@ -68,7 +68,15 @@ p,span,label{
   font-size: 5%;
 }
 
+.btn-verde{
+  background-image: linear-gradient(var(--verde),var(--verde),var(--verde));
+  -webkit-text-fill-color: white;
+  font-size: 5%;
+}
 
+.btn-verde:hover{
+  filter: brightness(1.3);
+}
 
 .btn-azul:hover{
   filter: brightness(1.3);
