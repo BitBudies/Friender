@@ -1,7 +1,10 @@
 
+import base64
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+
+from amigo.models.fotografiaDB import Fotografia
 
 from ..models import Cliente, Amigo, solicitud_alquiler
 from ..serializers.solicitud_alquiler_serializer import solicitud_alquiler
@@ -207,6 +210,12 @@ def obtenerSolicitudesAmigo(request):
         lugar_solicitud = solicitud.lugar
         fecha_solicitud = solicitud.fecha_inicio
         duracion_solicitud = solicitud.minutos
+        
+        # Obtener la foto del cliente
+        fotografia_amigo = Fotografia.objects.filter(cliente=solicitud.cliente, prioridad=0).first()
+        imagen_base64 = None
+        if fotografia_amigo:
+            imagen_base64 = base64.b64encode(fotografia_amigo.imagenBase64).decode('utf-8')
         solicitud_data = {
             "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
             "nombre_cliente": nombre_cliente,
@@ -220,6 +229,7 @@ def obtenerSolicitudesAmigo(request):
             "cliente": solicitud.cliente.cliente_id,
             "timestamp_registro": solicitud.timestamp_registro,
             "hora_inicio": solicitud.hora_inicio,
+            "imagenBase64": imagen_base64
         }
         
         data["solicitudes_recibidas"].append(solicitud_data)
