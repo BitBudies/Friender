@@ -208,8 +208,8 @@ def obtenerSolicitudesAmigo(request):
             amigo=solicitud.amigo, emisor="cliente"
         ).aggregate(Avg("puntuacion"))["puntuacion__avg"]
         lugar_solicitud = solicitud.lugar
-        fecha_solicitud = solicitud.fecha_inicio
-        duracion_solicitud = solicitud.minutos
+        #fecha_solicitud = solicitud.fecha_inicio
+        #duracion_solicitud = solicitud.minutos
         
         # Obtener la foto del cliente
         fotografia_amigo = Fotografia.objects.filter(cliente=solicitud.cliente, prioridad=0).first()
