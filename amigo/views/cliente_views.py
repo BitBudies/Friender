@@ -17,6 +17,10 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
+import re
+
+
+
 import random
 import string
 
@@ -40,6 +44,13 @@ from django.contrib.auth.tokens import default_token_generator
 
 from decouple import config
 
+
+def correo_valido(correo):
+    regex_correo = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+    if(re.search(regex_correo,correo)):
+            return True
+    else:
+            return False
 
 class ClienteDetailById(APIView):
     def get(self, request, cliente_id):
@@ -200,7 +211,7 @@ class ClienteVerificar(APIView):
     #Nuevo -------------------------
     
     
-#Verifica si el usuario y correo ya existen  Funciona
+#Verifica si el usuario y correo ya existen 
 class VerificarCorreoUsuario(APIView):
     def post(self, request):
         usuario = request.data.get('usuario')
@@ -208,16 +219,21 @@ class VerificarCorreoUsuario(APIView):
         
         if not all([usuario, correo]):
             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
+         
+        if  not correo_valido(correo):
+            return Response(
+                {"error": "El correo no es valido."}, status=400
+            )
         
-        if Cliente.objects.filter(usuario=usuario).exists():
+        if User.objects.filter(username=usuario).exists():
             return Response({"error": "Usuario ya existe"}, status=status.HTTP_400_BAD_REQUEST)
-        if Cliente.objects.filter(correo=correo).exists():
+        if User.objects.filter(email=correo).exists():
             return Response({"error": "Correo ya existe"}, status=status.HTTP_400_BAD_REQUEST)
         
         return Response({"message": "Usuario y correo validos"}, status=status.HTTP_200_OK)
 
    
-#Envia codigos de verificacion para el correo electronico  Funciona
+#Envia codigos de verificacion para el correo electronico 
 class EnviarCodigos(APIView):
     def post(self, request):
         correo = request.data.get('correo')
@@ -227,9 +243,19 @@ class EnviarCodigos(APIView):
         if not all([correo, nombre, ap_paterno]):
             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
         
+        if  not correo_valido(correo):
+            return Response(
+                {"error": "El correo no es valido."}, status=400
+            )
+            
+           #comentado para hacer pruebas de los codigos 
+            
+        # if Codigos.objects.filter(correo=correo).exists():
+        #     return Response({"mensage": "el correo ya tiene unos codigos activos"}, status=status.HTTP_400_BAD_REQUEST)
+            
         codigo = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
-        asunto = 'Verificación de correo para Friender'
-        mensaje = f'Hola, {nombre} {ap_paterno}, tu código de verificación de Friender es: {codigo}'
+        asunto = f'Tu código: {codigo}'
+        mensaje = f'Hola: {nombre} {ap_paterno}, \nTu código de verificación de Friender es: {codigo} . \n\n Usalo para acceder a tu cuenta. \n Si no solicitaste esto, simplemente ignora este mensaje. \n\n Saludos, \n El equipo de Friender'
         
         codigos = Codigos.objects.create(
             correo=correo,
@@ -249,7 +275,6 @@ class EnviarCodigos(APIView):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
         
-        
 #Verifica si el codigo de verificacion es correcto
 class VerificarCodigo(APIView):
     def post(self, request):
@@ -259,15 +284,23 @@ class VerificarCodigo(APIView):
         if not all([correo, codigo]):
             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
         
+        if  not correo_valido(correo):
+            return Response(
+                {"error": "El correo no es valido."}, status=400
+            )
+        
         try:
             codigos = Codigos.objects.get(correo=correo, codigoVerificaion=codigo)
             codigos.delete()
         except Codigos.DoesNotExist:
             return Response({"error": "El codigo de verificaion son incorrectos"}, status=status.HTTP_404_NOT_FOUND)
-
-
-            
+        
         return Response({"message": "Correo verificado correctamente"}, status=status.HTTP_200_OK)
+    
+    
+    
+    
+    
     
     #Yon aqui lo de registra cliente 
 class RegistraCliente(APIView):
