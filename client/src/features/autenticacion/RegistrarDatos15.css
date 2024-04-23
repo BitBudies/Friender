@@ -1,0 +1,19 @@
+.verificar {
+    display: flex;
+    gap: 10px;
+    margin: 1rem 0rem;
+}
+
+.verificar input {
+    height: 40px;
+    width: 18rem;
+}
+
+
+
+.avanzar {
+    display: flex;
+    width: 50rem;
+    margin-top: 20rem;
+    justify-content: space-between;
+}
