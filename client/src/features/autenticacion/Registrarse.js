@@ -34,7 +34,7 @@ const Registrarse = () => {
         <h1 className='mb-5'>Regístrate</h1>
         <div className="toColumns"></div>
         <div className='form-registro'>
-          <div className="form-carousel" style={{transform: `translate(${nForm * -50}%)`}}>
+          <div className="form-carousel" style={{transform: `translate(${nForm * -33.33}%)`}}>
             <RegistrarDatos {...props}/>
             <RegistrarDatos15 {...props}/>
             <RegistrarDatos2 {...props}/>

@@ -80,11 +80,11 @@
   }
   
   .form-registro .form-carousel{
-    width: 200%;
+    width: 300%;
     height: 100%;
     display: flex;
     gap: 0rem;
-    /* justify-content: space-around; */
+    justify-content: space-around;
     transition: 1s;
   }
 
@@ -95,7 +95,7 @@
     align-items: flex-start;
     justify-content: center;
     gap: 1rem;
-    width: 50%;
+    width: 100%;
     height: fit-content;
   }
   
@@ -141,5 +141,6 @@
   .form-item{
     display: flex;
     justify-content: center;
+    border: 2px solid black;
   }
 }

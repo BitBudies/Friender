@@ -5,14 +5,12 @@ export const RegistrarDatos15 = ({setNForm}) => {
 
 
     const handleSubmit = () => {
-        // if (validateForm()) {
-
             setNForm((n) => n + 1);
-        // }
       };  
   return (
     
-    <div className='page'>
+    <div className='form-item'>
+        <div className="verificar-correo-container">
         <p>Verificar Correo *</p>
         <form>
             <div className='verificar'>
@@ -26,7 +24,9 @@ export const RegistrarDatos15 = ({setNForm}) => {
             <button className='btn btn-verde'>
                 Verificar
             </button>
-            <div className='avanzar'>
+              
+        </form>
+        <div className='avanzar'>
                 <button className='btn' onClick={() => setNForm((n) => n - 1)}>
                     Anterior
                 </button>
@@ -37,9 +37,8 @@ export const RegistrarDatos15 = ({setNForm}) => {
                     Siguiente
                 </button> 
             </div>
-            
-            
-        </form>
+        </div>
+        
     </div>
   )
 }
