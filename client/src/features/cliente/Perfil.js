@@ -3,7 +3,7 @@ import "./Perfil.css";
 import { useGlobalContext } from "../../context";
 import { GiReturnArrow } from "react-icons/gi";
 import { useCookies } from "react-cookie";
-import {useGetClienteInfoQuery} from "./clienteSlice"
+import { useGetClienteInfoQuery } from "./clienteSlice";
 
 import SolicitudesPendientes from "../solicitudes/SolicitudesPendientes";
 
@@ -29,19 +29,27 @@ const Perfil = () => {
   const token = cookies.token;
   const [currentOption, setCurrentOption] = useState(1);
   const [showContent, setShowContent] = useState(false);
-  const {data: informacion, isFetching, isSuccess, isError, error: responseError} = useGetClienteInfoQuery(token);
-  const [nombreCompleto, setNombreCompleto] = useState('')
+  const {
+    data: informacion,
+    isFetching,
+    isSuccess,
+    isError,
+    error: responseError,
+  } = useGetClienteInfoQuery(token);
+  const [nombreCompleto, setNombreCompleto] = useState("");
+  const [imagenBase64, setImagenBase64] = useState("");
 
   useEffect(() => {
     if (isSuccess) {
       console.log(informacion);
-      setNombreCompleto(informacion.nombre_completo)
+      setNombreCompleto(informacion.nombre_completo);
+      setImagenBase64(informacion.imagenBase64);
       //nombre_completo = informacion.nombre_completo
     }
     if (isError) {
       console.log(responseError);
     }
-  }, [isSuccess, isError])
+  }, [isSuccess, isError]);
 
   const handleOptionClick = (id) => {
     setCurrentOption(id);
@@ -72,7 +80,9 @@ const Perfil = () => {
             <div className="profile-image">
               <div
                 className="image"
-                style={{ backgroundImage: "url(/images/user.jpeg)" }}
+                style={{
+                  backgroundImage: `url(${imagenBase64 ? `data:image/jpeg;base64,${imagenBase64}` : "/images/user.jpeg"})`,
+                }}
               ></div>
             </div>
             <h4>{nombreCompleto}</h4>

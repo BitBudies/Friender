@@ -19,6 +19,7 @@ const RegistrarDatos2 = ({setNForm}) => {
     const [values, setValues] = useState(defaultValues);
     const [pLabels, setPLabels] = useState(false)
     const [pFotos, setPFotos] = useState(false)
+    const [previeImage,setPreviewImage] = useState('');
 
     // para imagenes
     const [send, {data: respuesta, isFetching: carganding, isSuccess: correctito, isError: errosito, error: responseerror}] = useUploadImageMutation();
@@ -125,10 +126,12 @@ const RegistrarDatos2 = ({setNForm}) => {
             const imageElement = document.createElement('img')
             imageElement.id = 'cFoto'
             reader.onload = function (e) {
+                const index = values.fotos.length;
                 imageElement.src = e.target.result;
                 imageElement.alt = 'Imagen'; 
                 imageElement.width = '100';
                 imageElement.height = '100'; 
+                imageElement.onclick = () => previewImageBtn(selectedFile);
 
                 const cbuton = document.createElement('button');
                 cbuton.className = 'para-cerrar';
@@ -142,6 +145,16 @@ const RegistrarDatos2 = ({setNForm}) => {
         }
     };
 
+    const previewImageBtn = (file) => {
+      const reader =  new FileReader();
+            reader.onload = function (e) {
+                setPreviewImage(e.target.result);
+                  
+            }
+
+            reader.readAsDataURL(file)    
+    }
+
     const rojoClase = descripcionLength < 30 ? 'texto-rojo' : '';
 
     useEffect(() => {
@@ -154,37 +167,38 @@ const RegistrarDatos2 = ({setNForm}) => {
 
     useEffect(() => {
         setPFotos(true)
-    }, [pFotos])
+        console.log(values);
+    }, [pFotos,values])
     
    
     //DOM events
-    if (pLabels){
-        document.getElementById('para-labels').addEventListener('click', function(e) {
-            // Aqui tiene que quitar elementos del useState 
-            const contenido = e.target.textContent
-            const index = values.interes.indexOf(contenido)
+    // if (pLabels){
+    //     document.getElementById('para-labels').addEventListener('click', function(e) {
+    //         // Aqui tiene que quitar elementos del useState 
+    //         const contenido = e.target.textContent
+    //         const index = values.interes.indexOf(contenido)
 
-            e.target.remove()
-            // SetState(list => list.filter((_,index) => Index! == index)
-        });
-    }
-    if (pFotos){
-        document.getElementById('para-fotos').addEventListener('click', function (e) {
-            if (e.target.id === 'para-cerrar'){
-              // Aqui tiene que quitar elementos del useState
-              e.target.parentElement.remove()
-            }
-            if (e.target.id === 'cFoto'){
-              console.log(e.target.id)
-              const cpimag = e.target.cloneNode()
-              const imageElement = document.createElement('img')
-              imageElement.src = cpimag.src
+    //         e.target.remove()
+    //         // SetState(list => list.filter((_,index) => Index! == index)
+    //     });
+    // }
+    // if (pFotos){
+    //     document.getElementById('para-fotos').addEventListener('click', function (e) {
+    //         if (e.target.id === 'para-cerrar'){
+    //           // Aqui tiene que quitar elementos del useState
+    //           e.target.parentElement.remove()
+    //         }
+    //         if (e.target.id === 'cFoto'){
+    //           console.log(e.target.id)
+    //           const cpimag = e.target.cloneNode()
+    //           const imageElement = document.createElement('img')
+    //           imageElement.src = cpimag.src
               
-              const container = document.getElementById('preview')
-              container.appendChild(imageElement);
-            }
-        });
-    }
+    //           const container = document.getElementById('preview')
+    //           container.appendChild(imageElement);
+    //         }
+    //     });
+    // }
 
     // @kevin huayllas pinto hay que usar el csrf en todos los post
     const {data: csrf, error, isLoading } = useGetCsrfQuery({})
@@ -257,12 +271,19 @@ const RegistrarDatos2 = ({setNForm}) => {
             <div className='para-fotos' id='para-fotos'>
                         {/* se llena dinamicamente */}
             </div>
-
-            <div className='preview' id='preview'>
-              <div className='close-btn' >
+            {
+              previeImage &&
+              <div className='preview' id='preview'>
+              <div className='close-btn' onClick={() => setPreviewImage('')}>
+                Cerrar
                 {/* onClick={togglePopup} */}
               </div>
+              <div className='image-preview' style={{backgroundImage : `url(${previeImage})`}}>
+
+              </div>
             </div>
+            }
+            
           </section>
         </div>
         <div className="para-desc">
