@@ -17,29 +17,36 @@ class Login(ObtainAuthToken):
         password = request.data.get("password")
 
         if not (username_or_email and password):
+            print("Faltan campos requeridos")
             return Response(
                 {"error": "Faltan campos requeridos"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         user = authenticate(username=username_or_email, password=password)
+        print(user)
         if not user:
             # Si la autenticación con el nombre de usuario falla, intentar autenticar utilizando el correo electrónico
             try:
                 user = User.objects.get(email=username_or_email)
                 user = authenticate(username=user.username, password=password)
             except User.DoesNotExist:
-                pass
-
+                print("No existe el correo")
+                return Response(
+                    {"error": "No existe el correo"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
         # Verificar si la autenticación fue exitosa
         if not user:
             if not User.objects.filter(username=username_or_email).exists() and not User.objects.filter(email=username_or_email).exists():
                 self.incrementoFallo(request)
                 self.verificarIntento(request)
-                return Response({"error": "Username omcorreo incorrecto"}, status=status.HTTP_400_BAD_REQUEST)
+                print("username o correo electronico")
+                return Response({"error": "Username o correo incorrecto"}, status=status.HTTP_400_BAD_REQUEST)
             else:
                 self.incrementoFallo(request)
                 self.verificarIntento(request)
+                print("contrasena incorrecta")
                 return Response({"error": "Contraseña incorrecta"}, status=status.HTTP_400_BAD_REQUEST)
 
         token, created = Token.objects.get_or_create(user=user)

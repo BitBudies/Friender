@@ -7,6 +7,9 @@ const solicitudApi = apiSlice.injectEndpoints({
         url: "/solicitud",
         method: "POST",
         body: data,
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken") // Obtener el token CSRF desde las cookies
+        },
       }),
     }),
     getSolicitudes: builder.query({
@@ -34,6 +37,12 @@ const solicitudApi = apiSlice.injectEndpoints({
     }),
   }),
 });
+
+function getCookie(name) {
+  const cookieValue = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+  return cookieValue ? cookieValue.pop() : "";
+}
+
 
 export const {
   useEnviarSolicitudMutation,

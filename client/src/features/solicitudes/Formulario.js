@@ -14,7 +14,6 @@ const defaultValues = {
 
 
 const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStatus}) => {
-
   const {clientId : cliente_id} = useGlobalContext();
   const [formData,setFormData] = useState(defaultValues);
 
@@ -27,6 +26,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
 
   const handleSubmit = async() => {
     setDisableBtn(true);
+    const cliente_id = 4
     const body = {amigo_id, cliente_id,...formData,precio: formData.duracion * precio}
     await send(body)
   }
