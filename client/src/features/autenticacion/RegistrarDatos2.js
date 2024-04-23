@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import "./Registrarse_2.css";
 import { useGetInteresesQuery, useUploadImageMutation, useGetCsrfQuery } from './authSlice';
+import { LiaFileUploadSolid } from "react-icons/lia";
 
 
 const RegistrarDatos2 = ({setNForm}) => {
@@ -118,17 +119,26 @@ const RegistrarDatos2 = ({setNForm}) => {
 
             const container = document.getElementById('para-fotos'); 
             const reader =  new FileReader();
-        
+            
+            const divFoto = document.createElement('div');
+            divFoto.className = 'x-foto'
             const imageElement = document.createElement('img')
+            imageElement.id = 'cFoto'
             reader.onload = function (e) {
                 imageElement.src = e.target.result;
                 imageElement.alt = 'Imagen'; 
                 imageElement.width = '100';
                 imageElement.height = '100'; 
+
+                const cbuton = document.createElement('button');
+                cbuton.className = 'para-cerrar';
+                cbuton.id = 'para-cerrar';
+                cbuton.textContent = 'X';
+                divFoto.appendChild(imageElement);
+                divFoto.appendChild(cbuton);
             }
             reader.readAsDataURL(selectedFile)
-            container.appendChild(imageElement);
-            
+            container.appendChild(divFoto);
         }
     };
 
@@ -160,11 +170,19 @@ const RegistrarDatos2 = ({setNForm}) => {
     }
     if (pFotos){
         document.getElementById('para-fotos').addEventListener('click', function (e) {
-            // Aqui tiene que quitar elementos del useState
-
-            e.target.remove()
-            const element = document.getElementById('input-foto');
-            element.value = '';
+            if (e.target.id === 'para-cerrar'){
+              // Aqui tiene que quitar elementos del useState
+              e.target.parentElement.remove()
+            }
+            if (e.target.id === 'cFoto'){
+              console.log(e.target.id)
+              const cpimag = e.target.cloneNode()
+              const imageElement = document.createElement('img')
+              imageElement.src = cpimag.src
+              
+              const container = document.getElementById('preview')
+              container.appendChild(imageElement);
+            }
         });
     }
 
@@ -202,12 +220,12 @@ const RegistrarDatos2 = ({setNForm}) => {
       console.log(responseerror);
     }, [responseerror])
   return (
-    <div className="form-item">
-      <div className="form-2">
+    <div className="form-item popup">
+      <div className="form-2 overlay">
         <div className="toColumns">
           <section className="interes">
             <p>Intereses*</p>   
-            <select
+            <select 
               className="form-select"
               name="selInteres"
               id="selInteres"
@@ -224,16 +242,26 @@ const RegistrarDatos2 = ({setNForm}) => {
 
           <section className="fotos">
             <p>Fotos*</p>
-            <input
-              className="form-control"
-              type="file"
-              name="input-foto"
-              id="input-foto"
-              onChange={handleChange}
-              accept=".jpg, .png, .jpeg"
-            />
+            <div className='div-file'>
+              <p id='selec-archivo'>Seleccionar archivo</p>
+              <LiaFileUploadSolid size={25} className='upload-icon'/>
+              <input
+                className="form-control"
+                type="file"
+                name="input-foto"
+                id="input-foto"
+                onChange={handleChange}
+                accept=".jpg, .png, .jpeg"
+              />
+            </div>
             <div className='para-fotos' id='para-fotos'>
                         {/* se llena dinamicamente */}
+            </div>
+
+            <div className='preview' id='preview'>
+              <div className='close-btn' >
+                {/* onClick={togglePopup} */}
+              </div>
             </div>
           </section>
         </div>
