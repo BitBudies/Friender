@@ -10,6 +10,7 @@ import time
 # Para instalar
 # pip install --upgrade djangorestframework-simplejwt
 
+#jhon no borres xddd
 
 class Login(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
