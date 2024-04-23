@@ -1,33 +1,36 @@
-import React,{useEffect, useState} from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-import { useLoginMutation } from './authSlice';
-import { useGlobalContext } from '../../context';
-import NavBar from '../../Components/NavBar.js';
-import logo from '../../logo-friender.png';
-import { useCookies } from 'react-cookie';
+import { useLoginMutation } from "./authSlice";
+import { useGlobalContext } from "../../context";
+import NavBar from "../../Components/NavBar.js";
+import logo from "../../logo-friender.png";
+import { useCookies } from "react-cookie";
 
 const LogIn = () => {
-  const [cookies, setCookie] = useCookies(['token']);
+  const [cookies, setCookie] = useCookies(["token"]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [feedbackText, setFeedbackText] = useState("");
+
   const [showFeedback, setShowFeedback] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [disableBtn,setDisableBtn] = useState(false);
-  const [disableBtnLoading,setDisableBtnLoading] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(false);
+  const [disableBtnLoading, setDisableBtnLoading] = useState(false);
   const [disableBlockedPasswordBox, setBlockedPasswordBox] = useState(true);
 
   const navigate = useNavigate();
 
-  const {setClientId} = useGlobalContext();
+  const { setClientId } = useGlobalContext();
 
-  const [login, {data: response,isLoading,isSuccess,isError,error}] = useLoginMutation();
+  const [login, { data: response, isLoading, isSuccess, isError, error: responseError }] =
+    useLoginMutation();
 
-  const handleBtn = async(e) => {
+  const handleBtn = async (e) => {
     e.preventDefault();
-    if(username  && password){
-      const form = new FormData()
+    if (username && password) {
+      const form = new FormData();
       form.append("username_or_email", username);
       form.append("password", password);
       await login(form);
@@ -42,40 +45,45 @@ const LogIn = () => {
     }, 7000);
   };
 
-  
-  
-  const checkLoginResponse = () => {
-    if(isLoading){
+  useEffect(() => {
+    if (isLoading) {
       setDisableBtnLoading(true);
+      setShowFeedback(false);
     }
-    if(isSuccess){
-        setClientId(response.id);       //as;ldjkfl;ashidf 'as
-        setCookie('token', response.token);
-        navigate("/amigos/page/1");
+    if (isSuccess) {
+      console.log(response);
+      setClientId(response.id); //as;ldjkfl;ashidf 'as
+      setCookie("token", response.token);
+      navigate("/amigos/page/1");
     }
-    if(isError){
+    if (isError) {
+      setDisableBtnLoading(false);
       setShowFeedback(true);
+      console.log(responseError);
+      setFeedbackText(responseError.data.error);
     }
-  }
-  
-  
-  useEffect(checkLoginResponse,[isError, isLoading, isSuccess, navigate, response, setClientId,error])
+  }, [
+    isError,
+    isLoading,
+    isSuccess
+  ]);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
   return (
-    
     <div className="form-section mw-100 min-vh-100 d-flex flex-column justify-content-rigth align-items-center">
-      <div className='login-logo-box'>
+      <div className="login-logo-box">
         <img src={logo} alt="icono-friender"></img>
         <h1>Friender</h1>
       </div>
 
       <div className="form-section-rigth login-box">
-        <p className="mb-4 fw-bold login-box-title">Inicia sesión en Friender</p>
-        <form className='login-form'>
+        <p className="mb-4 fw-bold login-box-title">
+          Inicia sesión en Friender
+        </p>
+        <form className="login-form">
           <div className="mb-2">
             <input
               type="text"
@@ -83,7 +91,7 @@ const LogIn = () => {
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value.trim())}
-              placeholder='Correo electrónico'
+              placeholder="Correo electrónico"
             />
           </div>
 
@@ -94,7 +102,7 @@ const LogIn = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder='Contraseña'
+              placeholder="Contraseña"
             />
             <span className="password-icon" onClick={toggleShowPassword}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -103,24 +111,29 @@ const LogIn = () => {
 
           {showFeedback && (
             <p className="text-danger mb-2 login-box-text-danger">
-              Contraseña incorrecta
+              {feedbackText}
             </p>
           )}
-          
-          <button className={`btn btn-azul mb-2 button-login ${disableBtnLoading && "disabled"} ${disableBtn && "disabled"}`} onClick={handleBtn}>
+
+          <button
+            className={`btn btn-azul mb-2 button-login ${
+              disableBtnLoading && "disabled"
+            } ${disableBtn && "disabled"}`}
+            onClick={handleBtn}
+          >
             Iniciar Sesión
           </button>
-          { disableBtn && (
+          {disableBtn && (
             <p className="text-danger mb-2 login-box-text-danger">
               Intenta ingresar luego de 60 segundos.
             </p>
           )}
-          
-          <p className='form-text'>
+
+          <p className="form-text">
             <Link to={"/resetPassword"}>¿Haz olvidado la contraseña?</Link>
-          </p> 
-          
-          <div className='login-box-separator'>
+          </p>
+
+          <div className="login-box-separator">
             <hr></hr>
             <p>O</p>
             <hr></hr>
@@ -130,22 +143,37 @@ const LogIn = () => {
           </p>
         </form>
       </div>
-      <div className={`flex-column justify-content-rigth align-items-center modal-bloqueo ${disableBlockedPasswordBox ? "hidden" : ""}`}>
+      <div
+        className={`flex-column justify-content-rigth align-items-center modal-bloqueo ${
+          disableBlockedPasswordBox ? "hidden" : ""
+        }`}
+      >
         <h2>Se impidió un inicio de sesión sospechoso</h2>
         <br></br>
-        <p>Bloqueamos un intento de acceder a tu cuenta porque no estábamos seguros de si  realmente eras tú.</p>
+        <p>
+          Bloqueamos un intento de acceder a tu cuenta porque no estábamos
+          seguros de si realmente eras tú.
+        </p>
         <br></br>
-        <p>Esto sucede cuando detectamos actividades de inicio de sesión inusuales, como el intento de iniciar sesión demasiadas veces.</p>
+        <p>
+          Esto sucede cuando detectamos actividades de inicio de sesión
+          inusuales, como el intento de iniciar sesión demasiadas veces.
+        </p>
         <br></br>
-        <p>Tendrás que esperar 60 segundos para intentar iniciar sesión nuevamente.</p>
+        <p>
+          Tendrás que esperar 60 segundos para intentar iniciar sesión
+          nuevamente.
+        </p>
         <br></br>
-        <button className={`btn btn-azul mb-2`} onClick={handleBlockedPasswordBox}>
+        <button
+          className={`btn btn-azul mb-2`}
+          onClick={handleBlockedPasswordBox}
+        >
           Entendido
         </button>
       </div>
-      
     </div>
-  )
-}
+  );
+};
 
-export default LogIn
+export default LogIn;
