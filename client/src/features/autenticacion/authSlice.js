@@ -65,8 +65,26 @@ const authApi = apiSlice.injectEndpoints({
         },
       })
     }),
-    
-
+    sendCodeRegist : builder.mutation({
+      query : (data) => ({
+        url : "/cliente/enviarCodigos",
+        method : "POST",
+        body : data,
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken") // Obtener el token CSRF desde las cookies
+        },
+      })
+    }),
+    verifyCodeRegist : builder.mutation({
+      query : (data) => ({
+        url : "/cliente/verificarCodigo",
+        method : "POST",
+        body : data,
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken") // Obtener el token CSRF desde las cookies
+        },
+      })
+    }),
     getCsrf : builder.query({
       query : () => `/get/csrf` 
     }),
@@ -93,7 +111,7 @@ const fotografiaAPI = apiSlice.injectEndpoints({
 
 function getCookie(name) {
   const cookieValue = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
-  console.log(cookieValue)
+  // console.log(cookieValue)
   return cookieValue ? cookieValue.pop() : "";
 }
 
@@ -109,4 +127,6 @@ export const {useLoginMutation,
       useUploadImageMutation,
       useRegist1Mutation,
       useGetImageQuery,
+      useSendCodeRegistMutation,
+      useVerifyCodeRegistMutation,
     } = authApi;
