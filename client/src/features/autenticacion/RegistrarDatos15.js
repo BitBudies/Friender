@@ -11,7 +11,7 @@ export const RegistrarDatos15 = ({setNForm}) => {
     const [nombre,setNombre] = useState('Ricardo')
     const [paterno,setPaterno] = useState('Rojas')
 
-    const [isButtonVerificarEnabled, setIsButtonVerificarEnabled] = useState(false);
+    const [btnEnabled,setBtnEnabled] = useState(false);
     const [verificationCode, setVerificationCode] = useState("");
     const [supportingText, setSupportingText] = useState("");
 
@@ -61,7 +61,7 @@ export const RegistrarDatos15 = ({setNForm}) => {
         } else if (codeSucess) {
           console.log(dataCodigo); // Log si la solicitud fue exitosa
         }
-      }, [codeLoading, codeIsError, codeSucess, errorCodigo]);
+      }, [codeLoading, codeIsError, codeSucess, errorCodigo, dataCodigo]);
 
     const handleVerificationCodeChange = (e) => {
       setSupportingText("");
@@ -92,11 +92,12 @@ export const RegistrarDatos15 = ({setNForm}) => {
       console.log("Error:", verError.data.error); // Log en caso de error
       setSupportingText(verError.data.error);
     } else if (verSucess) {
+      setBtnEnabled(true);
       setSupportingText("");
       console.log(verData); // Log si la solicitud fue exitosa
       
     }
-  }, [verLoading, verIsError, verSucess, verError]);
+  }, [verLoading, verIsError, verSucess, verError, verData, setNForm]);
     
   return (
     
@@ -132,9 +133,7 @@ export const RegistrarDatos15 = ({setNForm}) => {
                     Anterior
                 </button>
                 <button 
-                    className='btn btn-azul disable'
-                    onClick={setNForm((n) => n + 1)}
-                    
+                    className={`btn btn-azul ${!btnEnabled && "disabled"}`}
                     >
                     Siguiente
                 </button> 
