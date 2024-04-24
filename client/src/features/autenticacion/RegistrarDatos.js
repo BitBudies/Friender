@@ -340,7 +340,7 @@ const RegistrarDatos = ({ setNForm }) => {
         </div>
       </div>
       <div className="para1-boton">
-        <button className="btn btn-outline-primary" onClick={handleSubmit}>
+        <button className={`btn btn-outline-primary ${isLoading && "disabled"}`} onClick={handleSubmit}>
           Siguiente
         </button>
       </div>
