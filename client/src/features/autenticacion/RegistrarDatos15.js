@@ -46,10 +46,10 @@ export const RegistrarDatos15 = ({setNForm}) => {
           formulario.append("nombre", nombre);
           formulario.append("ap_paterno", paterno);
           sendCode(formulario);
-          alert("Se envio correctamente los codigos a:"+{correo});
+          
         } catch (error) {
           console.log(error);
-          alert("Ha ocurrido un error al enviar el código.");
+          
         }
     };
 
@@ -114,19 +114,27 @@ export const RegistrarDatos15 = ({setNForm}) => {
             onChange={handleVerificationCodeChange}
             className='form-control'
             />
+            
             <button 
                 className="btn btn-azul"
                 onClick={handleEnviarCodigos}>
                 Enviar Código
             </button>
             </div>
-            <button 
-                className={`btn btn-verde ${verificationCode.length !== 5 && "disabled"}`}
-                onClick={handleSubmitVerificationCodeForm}>
-                Verificar
-            </button>
-              
+            
+            
         </form>
+        <p className='msj-confirm' style={{color: 'green'}}>
+            {verSucess ? `Correo verificado exitosamente.` : ``}
+        </p>
+        <p className='msj-confirm' style={{color: 'red'}}>
+            {verIsError ? `Código de verificación incorrecto.` : ``}
+        </p>
+        <button 
+            className={`btn btn-verde ${verificationCode.length !== 5 && "disabled"}`}
+            onClick={handleSubmitVerificationCodeForm}>
+            Verificar
+        </button>
         <div className='avanzar'>
                 <button className='btn btn-outline-primary anterior' 
                     onClick={() => setNForm((n) => n - 1)}
