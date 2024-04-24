@@ -70,7 +70,7 @@ export const RegistrarDatos15 = ({setNForm}) => {
         <div className="verificar-correo-container">
         <p>Su correo es: ,</p>
         <p>por favor haga click en "Enviar Código".</p>
-        <p>Verificar Correo *</p>
+        <p className='required-label'>Verificar Correo</p>
         <form>
             <div className='verificar'>
             <input 

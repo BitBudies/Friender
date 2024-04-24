@@ -141,11 +141,11 @@ const ResetPassword = () => {
   // Función para manejar el envío del formulario de código de verificación
   const handleSubmitVerificationCodeForm = (e) => {
     e.preventDefault();
-    console.log("aqui verificamos los codigos");
+    console.log("aqui verificamos los códigos");
     try {
       const formulario = new FormData();
       formulario.append("correo", emailText);
-      formulario.append("codigo", verificationCode);
+      formulario.append("código", verificationCode);
       verifyCode(formulario);
     } catch (error) {
       console.log(error);
@@ -193,7 +193,7 @@ const ResetPassword = () => {
     }
 
     if (!confirmPassword.trim()) {
-      newErrors["confirmar_contraseña"] = "Confirmar contraseña es obligatorio";
+      newErrors["confirmar_contraseña"] = "Confirmar la contraseña es obligatorio";
       isValid = false;
     } else if (confirmPassword !== password) {
       newErrors["confirmar_contraseña"] =
@@ -215,7 +215,7 @@ const ResetPassword = () => {
       try {
         const formulario = new FormData();
         formulario.append("correo", emailText);
-        formulario.append("codigo", verificationCode);
+        formulario.append("código", verificationCode);
         formulario.append("nuevaContrasena", confirmPassword);
         changePass(formulario);
       } catch (error) {
@@ -243,6 +243,7 @@ const ResetPassword = () => {
           <div className="para-form">
             <h3>Ingresa tu correo electrónico o nombre de usuario</h3>
             <h3>para buscar tu cuenta.</h3>
+            <h3>Ingresa tu correo electrónico para buscar tu cuenta</h3>
             <input
               type="email"
               name="user_email"

@@ -152,7 +152,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
         <h2>Solicitud de Encuentro</h2>
         <div className='form-box'>
           <div className='form-item-alquilar'>
-            <label className="form-label" htmlFor="fecha">Fecha</label>
+            <label className="form-label required-label" htmlFor="fecha">Fecha</label>
             <input  className="form-control" 
             type="date" data-date= "" data-date-format="DD MM YYYY"
             id="fecha" name="fecha_inicio" 
@@ -162,26 +162,26 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
           </div>
           
           <div className='form-item-alquilar'>
-            <label htmlFor="hora" className='form-label'>Hora</label>
+            <label htmlFor="hora" className='form-label required-label'>Hora</label>
             <input className="form-control" type="time" id="hora" name="hora_inicio" placeholder="00:00" required
             value={formData.hora_inicio} onChange={handleChange}/>
           </div>
         </div>
         <div className='form-box'>
           <div id="duration-input" className='form-item-alquilar'>
-            <label htmlFor="duracion" className='form-label'>Duración (hrs)</label>
+            <label htmlFor="duracion" className='form-label required-label'>Duración (hrs)</label>
             <input className="form-control" type="number" id="duracion" name="duracion" min="1" max="8" required
             value={formData.duracion} onChange={handleChange }/>
             <p className='text-danger'>{duracionValida(formData.duracion)}</p>
           </div>
             <div id="direction-input" className='form-item-alquilar'>
-            <label htmlFor="direccion" className='form-label'>Dirección</label>
+            <label htmlFor="direccion" className='form-label required-label'>Dirección</label>
             <input className="form-control" type="text" id="direccion" name="lugar" required
             value={formData.lugar} onChange={handleChange }/>
           </div>
         </div>
         <div className='form-item-alquilar w-100'>
-          <label htmlFor="descripcion" className='form-label'>Descripción</label>
+          <label htmlFor="descripcion" className='form-label required-label'>Descripción</label>
           <textarea className="form-control" id="descripcion" name="descripcion" rows="5" cols="50" required
           value={formData.descripcion} onChange={handleChange } maxLength={500}></textarea>
           <p className="text-muted" id="caracteres-minimo">
