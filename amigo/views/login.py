@@ -40,8 +40,8 @@ class Login(ObtainAuthToken):
                 return Response({"error": "Username omcorreo incorrecto"}, status=status.HTTP_400_BAD_REQUEST)
             else:
                 self.incrementoFallo(request)
-                return self.verificarIntento(request)
-                #return Response({"error": "Contraseña incorrecta"}, status=status.HTTP_400_BAD_REQUEST)
+                self.verificarIntento(request)
+                return Response({"error": "Contraseña incorrecta"}, status=status.HTTP_400_BAD_REQUEST)
 
         token, created = Token.objects.get_or_create(user=user)
         # cliente = Cliente.objects.get(user=user)
@@ -70,3 +70,4 @@ class Login(ObtainAuthToken):
             request.session['login_failed_attempts'] = 0  # Reiniciar el contador de intentos fallidos
             return Response
         return Response({"error": "contraseña incorrecta"}, status=status.HTTP_404_NOT_FOUND)
+    
