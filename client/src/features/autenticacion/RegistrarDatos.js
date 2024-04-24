@@ -126,7 +126,6 @@ const RegistrarDatos = ({ setNForm }) => {
               newErrors[key] = "Confirmar contraseña es obligatorio";
               isValid = false;
             } else if (value !== password) {
-              console.log(value,"|",password)
               newErrors[key] = "Las contraseñas no coinciden, intente de nuevo.";
               isValid = false;
             }
@@ -149,12 +148,9 @@ const RegistrarDatos = ({ setNForm }) => {
       const data = {usuario: values.nombre_usuario, correo: values.correo_electronico}
       send(data);
     }
-
-
   };
 
   useEffect(() => {
-    console.log(isSuccess);
     if(isSuccess){
       setNForm(1);
       reset();
