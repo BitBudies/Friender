@@ -95,7 +95,7 @@ export const RegistrarDatos15 = ({setNForm}) => {
       setBtnEnabled(true);
       setSupportingText("");
       console.log(verData); // Log si la solicitud fue exitosa
-      setNForm((n) => n + 1);
+      
     }
   }, [verLoading, verIsError, verSucess, verError, verData, setNForm]);
     
