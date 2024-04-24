@@ -141,6 +141,7 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
                 </button>
                 <button 
                     className={`btn btn-azul ${!btnEnabled && "disabled"}`}
+                    onClick={() => setNForm((n) => n + 1)}
                     >
                     Siguiente
                 </button> 
