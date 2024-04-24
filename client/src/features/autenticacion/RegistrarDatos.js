@@ -38,7 +38,7 @@ const RegistrarDatos = ({ setNForm }) => {
       ...values,
       [name]: value,
     });
-
+    console.log(name)
     setErrors({
       ...errors,
       [name]: "",
@@ -331,10 +331,11 @@ const RegistrarDatos = ({ setNForm }) => {
             <input
               type={showPassword1 ? "text" : "password"}
               id="confirmar_contraseña"
+              name="confirmar_contraseña"
               className="form-control input-width-280"
               placeholder="Confirmar Contraseña"
-              value={password1}
-              onChange={(e) => setPassword1(e.target.value)}
+              value={values.confirmar_contraseña}
+              onChange={handleChange}
               required
               disabled={!passwordStatus.pass}
             />
