@@ -112,6 +112,7 @@ export const RegistrarDatos15 = ({setNForm}) => {
             placeholder='Codigo de verificación'
             type="text"
             onChange={handleVerificationCodeChange}
+            className='form-control'
             />
             <button 
                 className="btn btn-azul"
