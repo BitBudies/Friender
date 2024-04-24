@@ -28,7 +28,7 @@ const RegistrarDatos = ({ setNForm }) => {
   const [errors, setErrors] = useState({});
   const [passwordStatus,setPasswordStatus] = useState({pass : false, message : ""})
 
-  const [send, {data: response, isLoading, isSuccess, isError, error: responseError }] = useRegist1Mutation();
+  const [send, {data: response, isLoading, isSuccess, isError, error: responseError, }] = useRegist1Mutation();
 
   const checkPass = checkPassword();
 
@@ -145,14 +145,16 @@ const RegistrarDatos = ({ setNForm }) => {
 
   const handleSubmit = async () => {
 
-    validateForm();
-    const data = {usuario: values.nombre_usuario, correo: values.correo_electronico}
+    if(validateForm()){
+      const data = {usuario: values.nombre_usuario, correo: values.correo_electronico}
+      send(data);
+    }
 
-    send(data);
 
   };
 
   useEffect(() => {
+    console.log(isSuccess);
     if(isSuccess){
       if(validateForm()){
         setNForm(1)
