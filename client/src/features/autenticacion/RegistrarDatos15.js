@@ -7,10 +7,13 @@ export const RegistrarDatos15 = ({setNForm}) => {
     const handleSubmit = () => {
             setNForm((n) => n + 1);
       };  
+    const co = "ricardo.rojas.carvajal@gmail.com"
   return (
     
     <div className='form-item'>
         <div className="verificar-correo-container">
+        <p>Su correo es: {co},</p>
+        <p>por favor haga click en "Enviar Código".</p>
         <p className='required-label'>Verificar Correo</p>
         <form>
             <div className='verificar'>
@@ -27,7 +30,9 @@ export const RegistrarDatos15 = ({setNForm}) => {
               
         </form>
         <div className='avanzar'>
-                <button className='btn' onClick={() => setNForm((n) => n - 1)}>
+                <button className='btn btn-outline-primary anterior' 
+                    onClick={() => setNForm((n) => n - 1)}
+                >
                     Anterior
                 </button>
                 <button 

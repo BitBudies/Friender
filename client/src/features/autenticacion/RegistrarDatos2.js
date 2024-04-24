@@ -8,11 +8,11 @@ const RegistrarDatos2 = ({setNForm}) => {
 
     const defaultValues = {
         interes: [],
-        fotos: [],
-        // fotosNombres: [],
+        // fotos: [],
         descripcion: '',
         terminos: false,
       };
+    
     
     const {data,isFetching,isSuccess} = useGetInteresesQuery();
     const [descripcionLength, setDescripcionLength] = useState(0); // Estado para longitud de descripción
@@ -20,6 +20,11 @@ const RegistrarDatos2 = ({setNForm}) => {
     const [pLabels, setPLabels] = useState(false)
     const [pFotos, setPFotos] = useState(false)
     const [previeImage,setPreviewImage] = useState('');
+    const [fotos, setFotos] = useState([])
+    const [validating, setValidatig] = useState(false)
+    const [pesado, setPesado] = useState(false)
+    const [formato, setFormato] = useState(false)
+    let contador = 1
 
     // para imagenes
     const [send, {data: respuesta, isFetching: carganding, isSuccess: correctito, isError: errosito, error: responseerror}] = useUploadImageMutation();
@@ -84,64 +89,66 @@ const RegistrarDatos2 = ({setNForm}) => {
                 const container = document.getElementById('para-labels'); 
                 const element = document.createElement('div');
                 element.innerHTML = `
-                    <div class='x-interes'>
-                        <strong> ${value} </strong>
-                    </div>
+                    <strong> ${value} </strong>
                 `;
+                element.onclick = () => {element.remove()};
                 container.appendChild(element);
-
             }
-            const selectElement = document.getElementById('selInteres');
-            selectElement.style.color='#000'  
         }
         if (name === 'input-foto'){
-            const element = document.getElementById('input-foto');
-            if (values.fotos.length === 7) {
-                alert('Se permite un máximo de 7 imágenes');
-                element.value = '';
+            setPesado(false)
+            setFormato(false)
+            if (fotos.length === 6) {
                 return;
             }
             
             const selectedFile = e.target.files[0];
             const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
             if (['jpg', 'png', 'jpeg'].indexOf(fileExtension) === -1) {
-                alert('Solo se permiten archivos JPG, JPEG y PNG.');
-                element.value = ''; 
+                setFormato(true)
                 return;
             }
             if (selectedFile.size > 200000){
-                alert('Su imagen es muy pesada, máximo 200kB');
-                element.value = '';
+                setPesado(true)
                 return;
             }
 
             setPFotos(true)
-            setValues({...values,fotos : [...values.fotos,selectedFile]})
-
+            // setValues({...values,fotos : [...values.fotos,selectedFile]})
+            
             const container = document.getElementById('para-fotos'); 
             const reader =  new FileReader();
             
             const divFoto = document.createElement('div');
-            divFoto.className = 'x-foto'
-            const imageElement = document.createElement('img')
-            imageElement.id = 'cFoto'
+            divFoto.className = 'x-foto';
+            const imageElement = document.createElement('img');
+            imageElement.id = 'cFoto';
             reader.onload = function (e) {
-                const index = values.fotos.length;
+                // const index = fotos.length;
+                // console.log(index)
                 imageElement.src = e.target.result;
                 imageElement.alt = 'Imagen'; 
                 imageElement.width = '100';
                 imageElement.height = '100'; 
                 imageElement.onclick = () => previewImageBtn(selectedFile);
-
+                
                 const cbuton = document.createElement('button');
                 cbuton.className = 'para-cerrar';
                 cbuton.id = 'para-cerrar';
                 cbuton.textContent = 'X';
+                cbuton.onclick = () => {
+                  divFoto.remove();
+                  
+                  }
                 divFoto.appendChild(imageElement);
                 divFoto.appendChild(cbuton);
             }
+          
             reader.readAsDataURL(selectedFile)
             container.appendChild(divFoto);
+
+            setFotos([...fotos, {id:selectedFile.name, file:selectedFile}]);
+            console.log(selectedFile)
         }
     };
 
@@ -149,13 +156,12 @@ const RegistrarDatos2 = ({setNForm}) => {
       const reader =  new FileReader();
             reader.onload = function (e) {
                 setPreviewImage(e.target.result);
-                  
             }
-
             reader.readAsDataURL(file)    
     }
 
     const rojoClase = descripcionLength < 30 ? 'texto-rojo' : '';
+    const rojoClaseFoto = fotos.length === 0 || fotos.length === 6 ? 'texto-rojo' : '';
 
     useEffect(() => {
         console.log(values);
@@ -169,37 +175,13 @@ const RegistrarDatos2 = ({setNForm}) => {
         setPFotos(true)
         console.log(values);
     }, [pFotos,values])
+
+    useEffect(() => {
+      setFotos(fotos);
+      console.log(fotos);
+    },[fotos])
     
-   
-    //DOM events
-    // if (pLabels){
-    //     document.getElementById('para-labels').addEventListener('click', function(e) {
-    //         // Aqui tiene que quitar elementos del useState 
-    //         const contenido = e.target.textContent
-    //         const index = values.interes.indexOf(contenido)
-
-    //         e.target.remove()
-    //         // SetState(list => list.filter((_,index) => Index! == index)
-    //     });
-    // }
-    // if (pFotos){
-    //     document.getElementById('para-fotos').addEventListener('click', function (e) {
-    //         if (e.target.id === 'para-cerrar'){
-    //           // Aqui tiene que quitar elementos del useState
-    //           e.target.parentElement.remove()
-    //         }
-    //         if (e.target.id === 'cFoto'){
-    //           console.log(e.target.id)
-    //           const cpimag = e.target.cloneNode()
-    //           const imageElement = document.createElement('img')
-    //           imageElement.src = cpimag.src
-              
-    //           const container = document.getElementById('preview')
-    //           container.appendChild(imageElement);
-    //         }
-    //     });
-    // }
-
+    
     // @kevin huayllas pinto hay que usar el csrf en todos los post
     const {data: csrf, error, isLoading } = useGetCsrfQuery({})
     useEffect(() => {
@@ -209,6 +191,7 @@ const RegistrarDatos2 = ({setNForm}) => {
     }, [csrf]);
 
     const mandarrr = async () => {
+      setValidatig(true)
       const form = new FormData();
       form.append("nombre", "jhon");
       form.append("ap_paterno", "gutierrez");
@@ -221,7 +204,8 @@ const RegistrarDatos2 = ({setNForm}) => {
       form.append("usuario", "yon1234");
       form.append("correo", "jhondeycraft776@gmail.com");
       form.append("contrasena", "yon1234");
-      values.fotos.forEach((it) => {
+      // Corregir esto de las fotos
+      fotos.forEach((it) => {
         form.append("imagenes", it)
       })
       values.interes.forEach((it) => {
@@ -233,6 +217,7 @@ const RegistrarDatos2 = ({setNForm}) => {
     useEffect(() => { 
       console.log(responseerror);
     }, [responseerror])
+
   return (
     <div className="form-item popup">
       <div className="form-2 overlay">
@@ -271,17 +256,34 @@ const RegistrarDatos2 = ({setNForm}) => {
             <div className='para-fotos' id='para-fotos'>
                         {/* se llena dinamicamente */}
             </div>
+            <p className="text-muted" id="min-max-fotos">
+              <span className={rojoClaseFoto}>
+                {fotos.length === 0 && validating
+                  ? `Mínimo 1 fotografías.`
+                  : 
+                    fotos.length === 6 &&
+                    `Máximo 6 fotografías`}
+                {pesado
+                  ? `Imágenes de máximo 200kB.`
+                  : '' 
+                }
+                {formato
+                  ? `Sólo se permiten subir imágenes en formato jpg, jpeg, png.`
+                  : '' 
+                }
+              </span>
+              
+            </p>
             {
               previeImage &&
               <div className='preview' id='preview'>
-              <div className='close-btn' onClick={() => setPreviewImage('')}>
-                Cerrar
-                {/* onClick={togglePopup} */}
-              </div>
-              <div className='image-preview' style={{backgroundImage : `url(${previeImage})`}}>
+                <div className='close-btn' onClick={() => setPreviewImage('')}>
+                  <p>Cerrar</p>
+                </div>
+                <div className='image-preview' style={{backgroundImage : `url(${previeImage})`}}>
 
+                </div>
               </div>
-            </div>
             }
             
           </section>
@@ -327,7 +329,9 @@ const RegistrarDatos2 = ({setNForm}) => {
           >
             Anterior
           </button>
-          <button className="btn btn-azul siguiente" type="button" onClick={mandarrr}>
+          <button className="btn btn-azul siguiente" 
+            type="button" 
+            onClick={mandarrr}>
             Registrarse
           </button>
         </div>
