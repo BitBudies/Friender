@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import "./RegistrarDatos.css";
@@ -64,7 +64,7 @@ const RegistrarDatos = ({ setNForm }) => {
   }
 
   // Función para validar el formulario antes de pasar al siguiente paso
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     const newErrors = {};
     let isValid = true;
 
@@ -133,7 +133,7 @@ const RegistrarDatos = ({ setNForm }) => {
     setErrors(newErrors);
 
     return isValid;
-  };
+  },[password, values]);
 
   const handleSubmit = async () => {
     console.log(values.nombre_usuario);
@@ -143,10 +143,15 @@ const RegistrarDatos = ({ setNForm }) => {
 
     send(data);
 
-    if (validateForm()) {
-      setNForm((n) => n + 1);
-    }
   };
+
+  useEffect(() => {
+    if(isSuccess){
+      if(validateForm){
+        setNForm(n => n +1)
+      }
+    }
+  },[response, isLoading, isSuccess, setNForm, validateForm])
 
   return (
     <div className="form-item">
