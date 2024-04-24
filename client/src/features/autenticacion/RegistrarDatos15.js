@@ -94,7 +94,7 @@ export const RegistrarDatos15 = ({setNForm}) => {
     } else if (verSucess) {
       setSupportingText("");
       console.log(verData); // Log si la solicitud fue exitosa
-      setNForm((n) => n + 1);
+      
     }
   }, [verLoading, verIsError, verSucess, verError]);
     
@@ -132,7 +132,9 @@ export const RegistrarDatos15 = ({setNForm}) => {
                     Anterior
                 </button>
                 <button 
-                    className='btn btn-azul'
+                    className='btn btn-azul disable'
+                    onClick={setNForm((n) => n + 1)}
+                    
                     >
                     Siguiente
                 </button> 
