@@ -11,11 +11,11 @@ export const RegistrarDatos15 = ({setNForm}) => {
     
     <div className='form-item'>
         <div className="verificar-correo-container">
-        <p>Verificar Correo *</p>
+        <p className='required-label'>Verificar Correo</p>
         <form>
             <div className='verificar'>
-            <input 
-            placeholder='Codigo de verificación'
+            <input className='verificar-codigo-input'
+            placeholder='Código de verificación'
             />
             <button className='btn btn-azul'>
                 Enviar Código

@@ -238,7 +238,7 @@ const RegistrarDatos2 = ({setNForm}) => {
       <div className="form-2 overlay">
         <div className="toColumns">
           <section className="interes">
-            <p>Intereses*</p>   
+            <p className='required-label'>Intereses</p>   
             <select 
               className="form-select"
               name="selInteres"
@@ -255,7 +255,7 @@ const RegistrarDatos2 = ({setNForm}) => {
           </section>
 
           <section className="fotos">
-            <p>Fotos*</p>
+            <p className='required-label'>Fotos</p>
             <div className='div-file'>
               <p id='selec-archivo'>Seleccionar archivo</p>
               <LiaFileUploadSolid size={25} className='upload-icon'/>
@@ -287,7 +287,7 @@ const RegistrarDatos2 = ({setNForm}) => {
           </section>
         </div>
         <div className="para-desc">
-          <p>Descripción*</p>
+          <p className='required-label'>Descripción</p>
           <textarea
             className="form-control"
             placeholder="Una breve descripción"
