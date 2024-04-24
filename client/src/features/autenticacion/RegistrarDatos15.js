@@ -5,11 +5,8 @@ import {
     useSendCodeRegistMutation,
   } from "./authSlice";
 
-export const RegistrarDatos15 = ({setNForm}) => {
+export const RegistrarDatos15 = ({setNForm,data}) => {
 
-    const [correo,setCorreo] = useState('ricardorc26@est.fcyt.umss.edu.bo')
-    const [nombre,setNombre] = useState('Ricardo')
-    const [paterno,setPaterno] = useState('Rojas')
 
     const [btnEnabled,setBtnEnabled] = useState(false);
     const [verificationCode, setVerificationCode] = useState("");
@@ -41,12 +38,13 @@ export const RegistrarDatos15 = ({setNForm}) => {
     const handleEnviarCodigos = (e) => {
         e.preventDefault()
         try {
+          const {correo_electronico,nombre,apellido_paterno} = data;
           const formulario = new FormData();
-          formulario.append("correo", correo);
+          formulario.append("correo", correo_electronico);
           formulario.append("nombre", nombre);
-          formulario.append("ap_paterno", paterno);
+          formulario.append("ap_paterno", apellido_paterno);
           sendCode(formulario);
-          alert("Se envio correctamente los codigos a:"+{correo});
+          alert("Se envio correctamente los codigos a:"+ { correo_electronico });
         } catch (error) {
           console.log(error);
           alert("Ha ocurrido un error al enviar el código.");
@@ -75,7 +73,7 @@ export const RegistrarDatos15 = ({setNForm}) => {
     console.log("aqui verificamos los códigos");
     try {
       const formulario = new FormData();
-      formulario.append("correo", correo);
+      formulario.append("correo", data.correo_electronico);
       formulario.append("codigo", verificationCode);
       verifyCode(formulario);
       
@@ -103,7 +101,7 @@ export const RegistrarDatos15 = ({setNForm}) => {
     
     <div className='form-item'>
         <div className="verificar-correo-container">
-        <p>Su correo es: {correo},</p>
+        <p>Su correo es: {data.correo_electronico},</p>
         <p>por favor haga click en "Enviar Código".</p>
         <p className='required-label'>Verificar Correo</p>
         <form>
