@@ -26,6 +26,7 @@ const RegistrarDatos = ({ setNForm }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [errors, setErrors] = useState({});
+  const [passwordStatus,setPasswordStatus] = useState({pass : false, message : ""})
 
   const [send, {data: response, isLoading, isSuccess, isError, error: responseError }] = useRegist1Mutation();
 
@@ -54,11 +55,12 @@ const RegistrarDatos = ({ setNForm }) => {
 
   const onPasswordChange = (e) => {
     const passwordChecked = checkPass(e.target.value);
-    console.log(passwordChecked);
+    const {pass,message} = passwordChecked;
           if(!passwordChecked.pass){
-            setErrors((currentErrors) => {
-              return {...currentErrors,password : passwordChecked.message}
-            });
+            console.log(pass,message)
+            setPasswordStatus({...passwordStatus,pass, message})
+          }else{
+            setPasswordStatus({...passwordStatus,pass : true})
           }
     setPassword(e.target.value);
   }
@@ -115,10 +117,11 @@ const RegistrarDatos = ({ setNForm }) => {
           
           break;
           case "confirmar_contraseña":
-            if (!value.trim()) {
+            if (!value.trim().length === 0) {
               newErrors[key] = "Confirmar contraseña es obligatorio";
               isValid = false;
             } else if (value !== password) {
+              console.log(value,"|",password)
               newErrors[key] = "Las contraseñas no coinciden, intente de nuevo.";
               isValid = false;
             }
@@ -147,8 +150,8 @@ const RegistrarDatos = ({ setNForm }) => {
 
   useEffect(() => {
     if(isSuccess){
-      if(validateForm){
-        setNForm(n => n +1)
+      if(validateForm()){
+        setNForm(1)
       }
     }
   },[response, isLoading, isSuccess, setNForm, validateForm])
@@ -312,7 +315,9 @@ const RegistrarDatos = ({ setNForm }) => {
               onChange={(e) => onPasswordChange(e)}
               required
             />
-            <p className="text-danger">{errors.contraseña}</p>
+            {!passwordStatus.pass && passwordStatus.message &&
+              <p className="text-danger mw-100">{passwordStatus.message}</p>
+            }
             <span className="password-icon " onClick={toggleShowPassword}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
@@ -329,6 +334,7 @@ const RegistrarDatos = ({ setNForm }) => {
               className="form-control input-width-280"
               placeholder="Confirmar Contraseña"
               value={password1}
+              enabled={false}
               onChange={(e) => setPassword1(e.target.value)}
               required
             />
