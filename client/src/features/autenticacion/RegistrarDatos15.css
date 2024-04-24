@@ -1,0 +1,26 @@
+.verificar-correo-container{
+    position: relative;
+    width: 100%;
+}
+
+.verificar {
+    display: flex;
+    gap: 10px;
+    margin: 1rem 0rem;
+}
+
+.verificar input {
+    height: 40px;
+    /* width: 18rem; */
+}
+
+
+
+.avanzar {
+    position: relative;
+    display: flex;
+    width: 100%;
+    background-color: red;
+    margin-top: 20rem;
+    justify-content: space-between;
+}

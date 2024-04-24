@@ -17,7 +17,8 @@ import Registrarse from './features/autenticacion/Registrarse';
 import useIsAuthenticated from './hooks/isAuthenticated';
 import ResetPassword from './features/autenticacion/resetPassword';
 import RecuperarCuenta from './features/autenticacion/RecuperarCuenta';
-
+import { RegistrarDatos15 } from './features/autenticacion/RegistrarDatos15';
+import {DayezaPractica} from './features/autenticacion/DayezaPractica';
 
 function App() {
   const {clientId,setUserData} = useGlobalContext();
@@ -51,7 +52,9 @@ function App() {
           <Route path="/test/jhon" element={<Jhon/>} />
           <Route path="/resetPassword" element={<ResetPassword/>}/>
           <Route path="/registrar" element={<Registrarse/>}/>
+          <Route path="/registrarse" element={<RegistrarDatos15/>}/>
           <Route path="/recuperar" element={<RecuperarCuenta/>}/>
+          <Route path="/practica" element={<DayezaPractica/>}/>
           <Route path='/*' element={<Default/>}/>
         </Routes>
         <Alert/>

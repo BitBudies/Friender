@@ -160,6 +160,7 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
             value={formData.fecha_inicio} onChange={handleChange}/>
             <p className='text-danger'>{fechaValida(formData.fecha_inicio)}</p>
           </div>
+          
           <div className='form-item-alquilar'>
             <label htmlFor="hora" className='form-label'>Hora</label>
             <input className="form-control" type="time" id="hora" name="hora_inicio" placeholder="00:00" required

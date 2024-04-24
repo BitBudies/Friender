@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import "./Registrarse_2.css";
 import { useGetInteresesQuery, useUploadImageMutation, useGetCsrfQuery } from './authSlice';
+import { LiaFileUploadSolid } from "react-icons/lia";
 
 
 const RegistrarDatos2 = ({setNForm}) => {
@@ -18,6 +19,7 @@ const RegistrarDatos2 = ({setNForm}) => {
     const [values, setValues] = useState(defaultValues);
     const [pLabels, setPLabels] = useState(false)
     const [pFotos, setPFotos] = useState(false)
+    const [previeImage,setPreviewImage] = useState('');
 
     // para imagenes
     const [send, {data: respuesta, isFetching: carganding, isSuccess: correctito, isError: errosito, error: responseerror}] = useUploadImageMutation();
@@ -118,19 +120,40 @@ const RegistrarDatos2 = ({setNForm}) => {
 
             const container = document.getElementById('para-fotos'); 
             const reader =  new FileReader();
-        
+            
+            const divFoto = document.createElement('div');
+            divFoto.className = 'x-foto'
             const imageElement = document.createElement('img')
+            imageElement.id = 'cFoto'
             reader.onload = function (e) {
+                const index = values.fotos.length;
                 imageElement.src = e.target.result;
                 imageElement.alt = 'Imagen'; 
                 imageElement.width = '100';
                 imageElement.height = '100'; 
+                imageElement.onclick = () => previewImageBtn(selectedFile);
+
+                const cbuton = document.createElement('button');
+                cbuton.className = 'para-cerrar';
+                cbuton.id = 'para-cerrar';
+                cbuton.textContent = 'X';
+                divFoto.appendChild(imageElement);
+                divFoto.appendChild(cbuton);
             }
             reader.readAsDataURL(selectedFile)
-            container.appendChild(imageElement);
-            
+            container.appendChild(divFoto);
         }
     };
+
+    const previewImageBtn = (file) => {
+      const reader =  new FileReader();
+            reader.onload = function (e) {
+                setPreviewImage(e.target.result);
+                  
+            }
+
+            reader.readAsDataURL(file)    
+    }
 
     const rojoClase = descripcionLength < 30 ? 'texto-rojo' : '';
 
@@ -144,29 +167,38 @@ const RegistrarDatos2 = ({setNForm}) => {
 
     useEffect(() => {
         setPFotos(true)
-    }, [pFotos])
+        console.log(values);
+    }, [pFotos,values])
     
    
     //DOM events
-    if (pLabels){
-        document.getElementById('para-labels').addEventListener('click', function(e) {
-            // Aqui tiene que quitar elementos del useState 
-            const contenido = e.target.textContent
-            const index = values.interes.indexOf(contenido)
+    // if (pLabels){
+    //     document.getElementById('para-labels').addEventListener('click', function(e) {
+    //         // Aqui tiene que quitar elementos del useState 
+    //         const contenido = e.target.textContent
+    //         const index = values.interes.indexOf(contenido)
 
-            e.target.remove()
-            // SetState(list => list.filter((_,index) => Index! == index)
-        });
-    }
-    if (pFotos){
-        document.getElementById('para-fotos').addEventListener('click', function (e) {
-            // Aqui tiene que quitar elementos del useState
-
-            e.target.remove()
-            const element = document.getElementById('input-foto');
-            element.value = '';
-        });
-    }
+    //         e.target.remove()
+    //         // SetState(list => list.filter((_,index) => Index! == index)
+    //     });
+    // }
+    // if (pFotos){
+    //     document.getElementById('para-fotos').addEventListener('click', function (e) {
+    //         if (e.target.id === 'para-cerrar'){
+    //           // Aqui tiene que quitar elementos del useState
+    //           e.target.parentElement.remove()
+    //         }
+    //         if (e.target.id === 'cFoto'){
+    //           console.log(e.target.id)
+    //           const cpimag = e.target.cloneNode()
+    //           const imageElement = document.createElement('img')
+    //           imageElement.src = cpimag.src
+              
+    //           const container = document.getElementById('preview')
+    //           container.appendChild(imageElement);
+    //         }
+    //     });
+    // }
 
     // @kevin huayllas pinto hay que usar el csrf en todos los post
     const {data: csrf, error, isLoading } = useGetCsrfQuery({})
@@ -202,12 +234,12 @@ const RegistrarDatos2 = ({setNForm}) => {
       console.log(responseerror);
     }, [responseerror])
   return (
-    <div className="form-item">
-      <div className="form-2">
+    <div className="form-item popup">
+      <div className="form-2 overlay">
         <div className="toColumns">
           <section className="interes">
             <p>Intereses*</p>   
-            <select
+            <select 
               className="form-select"
               name="selInteres"
               id="selInteres"
@@ -224,17 +256,34 @@ const RegistrarDatos2 = ({setNForm}) => {
 
           <section className="fotos">
             <p>Fotos*</p>
-            <input
-              className="form-control"
-              type="file"
-              name="input-foto"
-              id="input-foto"
-              onChange={handleChange}
-              accept=".jpg, .png, .jpeg"
-            />
+            <div className='div-file'>
+              <p id='selec-archivo'>Seleccionar archivo</p>
+              <LiaFileUploadSolid size={25} className='upload-icon'/>
+              <input
+                className="form-control"
+                type="file"
+                name="input-foto"
+                id="input-foto"
+                onChange={handleChange}
+                accept=".jpg, .png, .jpeg"
+              />
+            </div>
             <div className='para-fotos' id='para-fotos'>
                         {/* se llena dinamicamente */}
             </div>
+            {
+              previeImage &&
+              <div className='preview' id='preview'>
+              <div className='close-btn' onClick={() => setPreviewImage('')}>
+                Cerrar
+                {/* onClick={togglePopup} */}
+              </div>
+              <div className='image-preview' style={{backgroundImage : `url(${previeImage})`}}>
+
+              </div>
+            </div>
+            }
+            
           </section>
         </div>
         <div className="para-desc">
