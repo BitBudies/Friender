@@ -205,12 +205,13 @@ const RegistrarDatos2 = ({setNForm}) => {
       form.append("correo", "jhondeycraft776@gmail.com");
       form.append("contrasena", "yon1234");
       // Corregir esto de las fotos
-      fotos.forEach((it) => {
-        form.append("imagenes", it)
-      })
-      values.interes.forEach((it) => {
-        form.append("intereses", it)
-      })
+      // fotos.forEach((it) => {
+      //   form.append("imagenes", it)
+      // })
+      // values.interes.forEach((it) => {
+      //   form.append("intereses", it)
+      // })
+      console.log(form)
       send(form);
     }
   

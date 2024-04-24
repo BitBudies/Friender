@@ -3,6 +3,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import "./RegistrarDatos.css";
 import { checkPassword } from "../../hooks/checkRegex";
+import {useRegist1Mutation} from './authSlice';
+
 
 const defaultValues = {
   nombre: "",
@@ -25,6 +27,7 @@ const RegistrarDatos = ({ setNForm }) => {
   const [showPassword1, setShowPassword1] = useState(false);
   const [errors, setErrors] = useState({});
 
+  const [send, {data: response, isLoading, isSuccess, isError, error: responseError }] = useRegist1Mutation();
 
   const checkPass = checkPassword();
 
@@ -132,7 +135,14 @@ const RegistrarDatos = ({ setNForm }) => {
     return isValid;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    console.log(values.nombre_usuario);
+    console.log(values.correo_electronico);
+
+    const data = {usuario: values.nombre_usuario, correo: values.correo_electronico}
+
+    send(data);
+
     if (validateForm()) {
       setNForm((n) => n + 1);
     }

@@ -55,6 +55,18 @@ const authApi = apiSlice.injectEndpoints({
         },
       })
     }),
+    regist1 : builder.mutation({
+      query: (data) => ({
+        url : "/cliente/verificarCorreoUser",
+        method : "POST",
+        body : data,
+        headers : {
+          "X-CSRFToken": getCookie("csrftoken") // Obtener el token CSRF desde las cookies
+        },
+      })
+    }),
+    
+
     getCsrf : builder.query({
       query : () => `/get/csrf` 
     }),
@@ -81,6 +93,7 @@ const fotografiaAPI = apiSlice.injectEndpoints({
 
 function getCookie(name) {
   const cookieValue = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+  console.log(cookieValue)
   return cookieValue ? cookieValue.pop() : "";
 }
 
@@ -94,5 +107,6 @@ export const {useLoginMutation,
       useGetInteresesQuery,
       useGetCsrfQuery,
       useUploadImageMutation,
+      useRegist1Mutation,
       useGetImageQuery,
     } = authApi;
