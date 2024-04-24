@@ -114,13 +114,13 @@ export const RegistrarDatos15 = ({setNForm}) => {
             onChange={handleVerificationCodeChange}
             />
             <button 
-                className='btn btn-azul'
+                className="btn btn-azul"
                 onClick={handleEnviarCodigos}>
                 Enviar Código
             </button>
             </div>
             <button 
-                className='btn btn-verde'
+                className={`btn btn-verde ${verificationCode.length !== 5 && "disabled"}`}
                 onClick={handleSubmitVerificationCodeForm}>
                 Verificar
             </button>
