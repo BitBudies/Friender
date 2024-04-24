@@ -69,4 +69,4 @@ class Login(ObtainAuthToken):
             cache.set('blocked_user_' + request.session.session_key, True, timeout=60)  # Bloquear usuario por 60 segundos
             request.session['login_failed_attempts'] = 0  # Reiniciar el contador de intentos fallidos
             return Response
-        return Response({"error": "contraseña incorrecta"}, status=status.HTTP_404_BAD_REQUEST)
+        return Response({"error": "contraseña incorrecta"}, status=status.HTTP_404_NOT_FOUND)
