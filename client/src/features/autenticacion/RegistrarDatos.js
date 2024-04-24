@@ -70,6 +70,11 @@ const RegistrarDatos = ({ setNForm }) => {
     const newErrors = {};
     let isValid = true;
 
+    if(!password.length){
+      setPasswordStatus({pass : false, message : "El campo contraseña es obligatorio"})
+      isValid = false;
+    }
+
     // Validar cada campo y almacenar los errores
     Object.entries(values).forEach(([key, value]) => {
       switch (key) {
@@ -139,9 +144,8 @@ const RegistrarDatos = ({ setNForm }) => {
   },[password, values]);
 
   const handleSubmit = async () => {
-    console.log(values.nombre_usuario);
-    console.log(values.correo_electronico);
 
+    validateForm();
     const data = {usuario: values.nombre_usuario, correo: values.correo_electronico}
 
     send(data);
