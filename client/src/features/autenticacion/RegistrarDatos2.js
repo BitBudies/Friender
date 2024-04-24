@@ -21,6 +21,9 @@ const RegistrarDatos2 = ({setNForm}) => {
     const [pFotos, setPFotos] = useState(false)
     const [previeImage,setPreviewImage] = useState('');
     const [fotos, setFotos] = useState([])
+    const [validating, setValidatig] = useState(false)
+    const [pesado, setPesado] = useState(false)
+    const [formato, setFormato] = useState(false)
     let contador = 1
 
     // para imagenes
@@ -93,19 +96,20 @@ const RegistrarDatos2 = ({setNForm}) => {
             }
         }
         if (name === 'input-foto'){
+            setPesado(false)
+            setFormato(false)
             if (fotos.length === 6) {
-                alert('Se permite un máximo de 6 imágenes');
                 return;
             }
             
             const selectedFile = e.target.files[0];
             const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
             if (['jpg', 'png', 'jpeg'].indexOf(fileExtension) === -1) {
-                alert('Solo se permiten archivos JPG, JPEG y PNG.');
+                setFormato(true)
                 return;
             }
             if (selectedFile.size > 200000){
-                alert('Su imagen es muy pesada, máximo 200kB');
+                setPesado(true)
                 return;
             }
 
@@ -157,6 +161,7 @@ const RegistrarDatos2 = ({setNForm}) => {
     }
 
     const rojoClase = descripcionLength < 30 ? 'texto-rojo' : '';
+    const rojoClaseFoto = fotos.length === 0 || fotos.length === 6 ? 'texto-rojo' : '';
 
     useEffect(() => {
         console.log(values);
@@ -186,6 +191,7 @@ const RegistrarDatos2 = ({setNForm}) => {
     }, [csrf]);
 
     const mandarrr = async () => {
+      setValidatig(true)
       const form = new FormData();
       form.append("nombre", "jhon");
       form.append("ap_paterno", "gutierrez");
@@ -250,6 +256,24 @@ const RegistrarDatos2 = ({setNForm}) => {
             <div className='para-fotos' id='para-fotos'>
                         {/* se llena dinamicamente */}
             </div>
+            <p className="text-muted" id="min-max-fotos">
+              <span className={rojoClaseFoto}>
+                {fotos.length === 0 && validating
+                  ? `Mínimo 1 fotografías.`
+                  : 
+                    fotos.length === 6 &&
+                    `Máximo 6 fotografías`}
+                {pesado
+                  ? `Imágenes de máximo 200kB.`
+                  : '' 
+                }
+                {formato
+                  ? `Sólo se permiten subir imágenes en formato jpg, jpeg, png.`
+                  : '' 
+                }
+              </span>
+              
+            </p>
             {
               previeImage &&
               <div className='preview' id='preview'>
@@ -305,7 +329,9 @@ const RegistrarDatos2 = ({setNForm}) => {
           >
             Anterior
           </button>
-          <button className="btn btn-azul siguiente" type="button" onClick={mandarrr}>
+          <button className="btn btn-azul siguiente" 
+            type="button" 
+            onClick={mandarrr}>
             Registrarse
           </button>
         </div>
