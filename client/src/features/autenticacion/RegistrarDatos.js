@@ -334,9 +334,9 @@ const RegistrarDatos = ({ setNForm }) => {
               className="form-control input-width-280"
               placeholder="Confirmar Contraseña"
               value={password1}
-              enabled={false}
               onChange={(e) => setPassword1(e.target.value)}
               required
+              disabled={!passwordStatus.pass}
             />
             <p className="text-danger input-width-30">{errors.confirmar_contraseña}</p>
             <span className="password-icon" onClick={toggleShowPassword1}>
