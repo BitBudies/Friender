@@ -59,7 +59,7 @@ const NavBar = () => {
               </li>
           </ul>
           <div className='nav-item dropdown '>
-            <div className={`${userLoged ? "hidden" : ""}`}>
+            <div className={`navbar-right-side ${userLoged ? "hidden" : ""}`}>
             <Link to={"/login"} className='btn btn-azul'>Iniciar Sesión</Link>
             <Link to={"/registrar"} className='btn btn-azul navbar-register-btn'>Registrarse</Link>
             </div>

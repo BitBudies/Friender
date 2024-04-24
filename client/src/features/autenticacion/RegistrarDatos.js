@@ -3,6 +3,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import "./RegistrarDatos.css";
 import { checkPassword } from "../../hooks/checkRegex";
+import {useRegist1Mutation} from './authSlice';
+
 
 const defaultValues = {
   nombre: "",
@@ -25,6 +27,7 @@ const RegistrarDatos = ({ setNForm }) => {
   const [showPassword1, setShowPassword1] = useState(false);
   const [errors, setErrors] = useState({});
 
+  const [send, {data: response, isLoading, isSuccess, isError, error: responseError }] = useRegist1Mutation();
 
   const checkPass = checkPassword();
 
@@ -132,7 +135,14 @@ const RegistrarDatos = ({ setNForm }) => {
     return isValid;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    console.log(values.nombre_usuario);
+    console.log(values.correo_electronico);
+
+    const data = {usuario: values.nombre_usuario, correo: values.correo_electronico}
+
+    send(data);
+
     if (validateForm()) {
       setNForm((n) => n + 1);
     }
@@ -142,8 +152,8 @@ const RegistrarDatos = ({ setNForm }) => {
     <div className="form-item">
       <div className="input-group registro">
       <div className="input-item">
-          <label htmlFor="nombre" className="input-label">
-            Nombre:
+          <label htmlFor="nombre" className="input-label required-label">
+            Nombre
           </label>
           <input
             type="text"
@@ -158,8 +168,8 @@ const RegistrarDatos = ({ setNForm }) => {
           <p className="text-danger">{errors.nombre}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="apellido_paterno" className="input-label  input1-width-70 ">
-            Apellido Paterno:
+          <label htmlFor="apellido_paterno" className="input-label required-label  input1-width-70 ">
+            Apellido Paterno
           </label>
           <input
             type="text"
@@ -174,8 +184,8 @@ const RegistrarDatos = ({ setNForm }) => {
           <p className="text-danger input1-width-70">{errors.apellido_paterno}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="apellido_materno" className="input-label  input1-width-70">
-            Apellido Materno:
+          <label htmlFor="apellido_materno" className="input-label input1-width-70">
+            Apellido Materno
           </label>
           <input
             type="text"
@@ -191,8 +201,8 @@ const RegistrarDatos = ({ setNForm }) => {
       </div>
       <div className="input-group registro">
         <div className="mb-2 input-item">
-          <label htmlFor="fecha_nacimiento" className="input-label ">
-            Fecha de Nacimiento:
+          <label htmlFor="fecha_nacimiento" className="input-label required-label ">
+            Fecha de Nacimiento
           </label>
           
           <input
@@ -208,8 +218,8 @@ const RegistrarDatos = ({ setNForm }) => {
           <p className="text-danger">{errors.fecha_nacimiento}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="genero" className="input-label input1-width-70" >
-            Género:
+          <label htmlFor="genero" className="input-label required-label input1-width-70" >
+            Género
           </label>
           <select
             id="genero"
@@ -229,8 +239,8 @@ const RegistrarDatos = ({ setNForm }) => {
           <p className="text-danger input1-width-70">{errors.genero}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="ubicacion" className="input-label input1-width-70">
-            Ubicación:
+          <label htmlFor="ubicacion" className="input-label required-label input1-width-70">
+            Ubicación
           </label>
           <div className="ubicacion-input">
             <input
@@ -249,8 +259,8 @@ const RegistrarDatos = ({ setNForm }) => {
       </div>
       <div className="input-group registro">
         <div className="mb-2 input-item">
-          <label htmlFor="nombre_usuario" className="input-label">
-            Nombre de Usuario:
+          <label htmlFor="nombre_usuario" className="input-label required-label">
+            Nombre de Usuario
           </label>
           <input
             type="text"
@@ -265,8 +275,8 @@ const RegistrarDatos = ({ setNForm }) => {
           <p className="text-danger">{errors.nombre_usuario}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="correo_electronico" className="input-label input-width-30">
-            Correo Electrónico:
+          <label htmlFor="correo_electronico" className="input-label required-label input-width-30">
+            Correo Electrónico
           </label>
           <input
             type="email"
@@ -284,8 +294,8 @@ const RegistrarDatos = ({ setNForm }) => {
 
       <div className="input-group registro">
         <div className="mb-2 password-input">
-          <label htmlFor="contraseña" className="input-label">
-            Contraseña:
+          <label htmlFor="contraseña" className="input-label required-label">
+            Contraseña
           </label>
           <div className="mb-2 password-input">
             <input
@@ -304,8 +314,8 @@ const RegistrarDatos = ({ setNForm }) => {
           </div>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="confirmar_contraseña" className="input-label input-width-30">
-            Confirmar Contraseña:
+          <label htmlFor="confirmar_contraseña" className="input-label required-label input-width-30">
+            Confirmar Contraseña
           </label>
           <div className="mb-2 password-input">
             <input

@@ -29,6 +29,7 @@
   .logo-img {
     width: 180px !important; 
     height: 200px !important; 
+    margin-top: 25px;
   }
 
   .registrarse-left{
@@ -58,7 +59,7 @@
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin-bottom: 1rem;
+    margin: 1rem;
   }
   
   .form-indicators .indicator{

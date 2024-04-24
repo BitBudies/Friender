@@ -17,6 +17,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework import status
 
+from django.views.decorators.csrf import csrf_exempt
 
 import re
 
@@ -208,24 +209,28 @@ class ClienteVerificar(APIView):
     
     
 #Verifica si el usuario y correo ya existen 
+# @csrf_exempt
+# @api_view(["POST"])
+# def VerificarCorreoUsuario(request):
 class VerificarCorreoUsuario(APIView):
     def post(self, request):
+        # print(request.POST)
         usuario = request.data.get('usuario')
         correo = request.data.get('correo')
-        
+
         if not all([usuario, correo]):
             return Response({"error": "Todos los campos son requeridos"}, status=status.HTTP_400_BAD_REQUEST)
-         
+
         if  not correo_valido(correo):
             return Response(
                 {"error": "El correo no es valido."}, status=400
             )
-        
+
         if User.objects.filter(username=usuario).exists():
             return Response({"error": "Usuario ya existe"}, status=status.HTTP_400_BAD_REQUEST)
         if User.objects.filter(email=correo).exists():
             return Response({"error": "Correo ya existe"}, status=status.HTTP_400_BAD_REQUEST)
-        
+
         return Response({"message": "Usuario y correo validos"}, status=status.HTTP_200_OK)
 
    

@@ -38,6 +38,15 @@
     }
 }
 
+@media screen and (max-width: 768px) {
+    .navbar-right-side{
+        margin: 15px 0;
+    }
+    .dropdown{
+        margin: 10px 0 15px 0;
+    }
+}
+
 .nav-link.active{
     border-bottom: 3px solid white;
 }

@@ -54,7 +54,7 @@
 }
 
 
-label::after {
+.required-label::after {
     content: "*";
     color: var(--red);
   }

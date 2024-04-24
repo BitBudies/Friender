@@ -57,6 +57,7 @@ class Login(ObtainAuthToken):
             },
             status=status.HTTP_201_CREATED,
         )
+    
     def incrementoFallo(self, request):
         if 'login_failed_attempts' not in request.session:
             request.session['login_failed_attempts'] = 1
@@ -65,8 +66,11 @@ class Login(ObtainAuthToken):
 
     def verificarIntento(self, request):
         if 'login_failed_attempts' in request.session and request.session['login_failed_attempts'] == 3:
-            time.sleep(60)  # Esperar 60 segundos
+
+            # time.sleep(60)  # Esperar 60 segundos
             request.session['login_failed_attempts'] = 0  # Reiniciar el contador de intentos fallidos
+            return Response({"mensaje": "1"}, status=status.HTTP_200_OK)
+            
         return Response({"error": "Nombre de usuario, correo electrónico o contraseña incorrectos"}, status=status.HTTP_404_NOT_FOUND)
 
     
