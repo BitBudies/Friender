@@ -241,7 +241,8 @@ const ResetPassword = () => {
         <div className="step-1">
           <h1>Restablecer contraseña</h1>
           <div className="para-form">
-            <h3>Ingresa tu correo electronico para buscar tu cuenta</h3>
+            <h3>Ingresa tu correo electrónico o nombre de usuario</h3>
+            <h3>para buscar tu cuenta.</h3>
             <input
               type="email"
               name="user_email"
@@ -308,6 +309,7 @@ const ResetPassword = () => {
           </div>
           <div className="para-form">
             <div className="mb-2 password-input">
+              <p>Contraseña*</p>
               <input
                 type={showPassword ? "text" : "password"}
                 className="cont"
@@ -321,14 +323,16 @@ const ResetPassword = () => {
               {submitClicked && passwordError && (
                 <p style={{ color: "red" }}>{passwordError}</p>
               )}
+              <p style={{color: '#999'}}>Mínimo 8 caracteres*</p>
             </div>
             <div className="mb-2 password-input">
+            <p>Confirmar Contraseña*</p>
               <input
                 type={showPassword1 ? "text" : "password"}
                 className="rep-cont"
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
-                placeholder="Repetir contraseña"
+                placeholder="Confirmar contraseña"
               />
               <span className="password-icon" onClick={toggleShowPassword1}>
                 {showPassword1 ? <FaEyeSlash /> : <FaEye />}
