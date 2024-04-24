@@ -7,6 +7,8 @@ import {
   useChangePassMutation,
 } from "./authSlice";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { checkPassword } from "../../hooks/checkRegex";
+
 
 const ResetPassword = () => {
   const [step, setStep] = useState(1); // control de pagina
@@ -23,6 +25,8 @@ const ResetPassword = () => {
     findEmail,
     { data: response, isLoading, isSuccess, isError, error: errorsito },
   ] = useFindEmailMutation();
+
+  const checkPass = checkPassword();
 
   const handleEmailChange = (e) => {
     setIsEmailValid(false);
@@ -165,6 +169,7 @@ const ResetPassword = () => {
       goToNextStep();
     }
   }, [verLoading, verIsError, verSucess, verError]);
+
 
   //PASSWORD CONFIRMATION
   const [
