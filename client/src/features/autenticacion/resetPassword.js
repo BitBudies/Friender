@@ -10,7 +10,7 @@ import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { checkPassword } from "../../hooks/checkRegex";
 
 const ResetPassword = () => {
-  const [step, setStep] = useState(3); // control de pagina
+  const [step, setStep] = useState(1); // control de pagina
   const [submitClicked, setSubmitClicked] = useState(false);
 
   // ------------------------------Buscar email------------------------------
