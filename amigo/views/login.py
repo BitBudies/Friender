@@ -38,7 +38,7 @@ class Login(ObtainAuthToken):
             if not User.objects.filter(username=username_or_email).exists() and not User.objects.filter(email=username_or_email).exists():
                 #self.incrementoFallo(request)
                 #self.verificarIntento(request)
-                return Response({"error": "Username omcorreo incorrecto"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": "Username o correo incorrecto"}, status=status.HTTP_400_BAD_REQUEST)
             else:
                 self.incrementoFallo(request)
                 #self.verificarIntento(request)
