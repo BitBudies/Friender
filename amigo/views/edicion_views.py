@@ -1,5 +1,8 @@
+from django.utils import timezone
 import random
 import string
+
+from amigo.models.codigosVerificacionDB import Codigos
 from ..models.clienteDB import Cliente
 from decouple import config
 from rest_framework.decorators import api_view
@@ -7,24 +10,28 @@ from rest_framework import status
 from django.core.mail import send_mail
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-
+from django.shortcuts import get_object_or_404
 
 @api_view(["POST"])
 def findEmail(request):
-    correo = request.POST.get("correo", None)
-    if not correo:
+    user_or_email = request.POST.get("user_or_email", None)
+    if not user_or_email:
         return Response(
-            {"error": "Correo no encontrado en los parametros"},
+            {"error": "El correo o nombre es obligatorio"},
             status=status.HTTP_400_BAD_REQUEST,
         )
     try:
-        user = User.objects.get(email=correo)
+        user = User.objects.get(email=user_or_email)
     except User.DoesNotExist:
-        return Response(
-            {"error": "Correo no encontrado en la base de datos"},
-            status=status.HTTP_404_NOT_FOUND,
-        )
-    return Response({"usuario": f"{user.username}"}, status=status.HTTP_200_OK)
+        try:
+            user = User.objects.get(username=user_or_email)
+        except User.DoesNotExist:
+            return Response(
+                {"error": "No se encontró una cuenta asociada al email"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        
+    return Response({"usuario": user.username}, status=status.HTTP_200_OK)
 
 
 @api_view(["POST"])
@@ -50,61 +57,90 @@ def cambiarContrasena(request):
             {"error": "Credenciales no validas"}, status=status.HTTP_404_NOT_FOUND
         )
     return Response(
-        {"message": f"Se establecio correctamente la contrasena de {cliente.user}"},
+        {"message": f"Se establecio correctamente la contrasena de {user.username}"},
         status=status.HTTP_200_OK,
     )
 
 
 @api_view(["POST"])
 def enviarCorreoCambioContrasena(request):
-    correo = request.POST.get("correo", None)
-    if not correo:
+    usuario = request.POST.get("usuario", None)
+    if not usuario:
         return Response(
-            {"error": f"Correo no encontrado en los parametros"},
+            {"error": f"Usuario no encontrado en los parametros"},
             status=status.HTTP_400_BAD_REQUEST,
         )
     try:
-        codigoVerificaion = "".join(
-            random.choices(string.ascii_uppercase + string.digits, k=5)
-        )
-        cliente = Cliente.objects.get(correo=correo)
-
-        send_mail(
-            "Restablecer contraseña",
-            f"El codigo para restablecer su contraseña es: {codigoVerificaion}",
-            config("EMAIL_HOST_USER"),
-            [correo],
-            fail_silently=False,
-        )
-        cliente.codigoVerificaion = codigoVerificaion
-        cliente.save()
-
-    except Cliente.DoesNotExist:
+        usuario = User.objects.get(username=usuario)
+    except User.DoesNotExist:
         return Response(
             {"error": "No existe el correo"}, status=status.HTTP_404_NOT_FOUND
         )
-    except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    print(f"Se envio correctamente el correo a {cliente.user}")
+    
+    codigoToken = Codigos.objects.filter(correo=usuario.email).first()
+    if codigoToken:
+        tiempo_transcurrido = timezone.now() - codigoToken.timestamp_registro
+        if tiempo_transcurrido.total_seconds() < 60:
+            tiempo_restante = 60 - int(tiempo_transcurrido.total_seconds())
+            return Response(
+                {"error": f"Debe esperar {tiempo_restante} segundos antes de enviar otro codigo."},
+                status=status.HTTP_429_TOO_MANY_REQUESTS,
+            )
+    
+    codigoVerificaion = "".join(
+            random.choices(string.ascii_uppercase + string.digits, k=5)
+        )
+    
+    if codigoToken:
+        codigoToken.codigoVerificacion = codigoVerificaion
+        codigoToken.timestamp_registro = timezone.now()
+    else:
+        codigoToken = Codigos(
+            correo=usuario.email,
+            codigoVerificacion=codigoVerificaion,
+            timestamp_registro=timezone.now()
+        )
+
+    
+
+
+    
+    send_mail(
+        "Restablecer contraseña",
+        f"El codigo para restablecer su contraseña es: {codigoVerificaion}",
+        config("EMAIL_HOST_USER"),
+        [usuario.email],
+        fail_silently=False,
+    )
+
+    print(codigoVerificaion)
+    codigoToken.save()
+    
+    
+    print(f"Se envio correctamente el correo a {usuario.username}")
     return Response(
-        {"message": f"Se envio correctamente el correo a {cliente.user}"},
+        {"message": f"Se envio correctamente el correo a {usuario.username}"},
         status=status.HTTP_200_OK,
     )
 
-
 @api_view(["POST"])
 def verificarCodigoCambioContrasena(request):
-    for field in ["correo", "codigo"]:
+    for field in ["usuario", "codigo"]:
         if field not in request.POST:
             return Response(
                 {"error": f"{field} no encontrado en el body"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+    cliente, user = None, None
     try:
-        Cliente.objects.get(
-            correo=request.POST["correo"], codigoVerificaion=request.POST["codigo"]
-        )
+        cliente = Cliente.objects.get(codigoVerificaion=request.POST["codigo"])
+        user = User.objects.get(username=request.POST["usuario"])
     except Cliente.DoesNotExist:
+        pass
+    except User.DoesNotExist:
+        pass
+        
+    if not cliente or not user or (cliente.user != user):
         return Response(
             {"error": "El codigo no es correcto o expiro"},
             status=status.HTTP_404_NOT_FOUND,
