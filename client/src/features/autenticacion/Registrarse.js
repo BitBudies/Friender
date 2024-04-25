@@ -33,7 +33,6 @@ const Registrarse = () => {
           <div className={`indicator ${nForm === 2 && "active"}`}></div>
         </div>
         <h1 className='mb-3'>Regístrate</h1>
-        <div className="toColumns"></div>
         <div className='form-registro'>
           <div className="form-carousel" style={{transform: `translate(${nForm * -33.33}%)`}}>
             <RegistrarDatos {...props}/>
