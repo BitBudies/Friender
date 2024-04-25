@@ -19,7 +19,7 @@ const defaultValues = {
   confirmar_contraseña: "",
 };
 
-const RegistrarDatos = ({ setNForm }) => {
+const RegistrarDatos = ({ setNForm, data , setData}) => {
   const [password, setPassword] = useState("");
   const [password1, setPassword1] = useState("");
   const [values, setValues] = useState(defaultValues);
@@ -157,9 +157,10 @@ const RegistrarDatos = ({ setNForm }) => {
     console.log(isSuccess);
     if(isSuccess){
       setNForm(1);
+      setData({...data,...values,contraseña : values.confirmar_contraseña})
       reset();
     }
-  },[response, isLoading, isSuccess, setNForm, validateForm, reset])
+  },[response, isLoading, isSuccess, setNForm, validateForm, reset, setData, data, values])
 
   return (
     <div className="form-item">
