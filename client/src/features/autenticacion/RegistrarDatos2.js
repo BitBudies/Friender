@@ -188,7 +188,7 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
       form.append("contrasena", info.contraseña);
       // Corregir esto de las fotos
       fotos.forEach((it) => {
-        form.append("imagenes", it)
+        form.append("imagenes", it.file)
       })
       values.interes.forEach((it) => {
         form.append("intereses", it)
