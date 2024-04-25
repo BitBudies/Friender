@@ -107,7 +107,7 @@ def enviarCorreoCambioContrasena(request):
     else:
         codigoToken = Codigos(
             correo=usuario.email,
-            codigoVerificacion=codigoVerificaion,
+            codigoVerificaion=codigoVerificaion,
             timestamp_registro=timezone.now()
         )
 
