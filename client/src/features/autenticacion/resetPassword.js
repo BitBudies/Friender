@@ -9,8 +9,6 @@ import {
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { checkPassword } from "../../hooks/checkRegex";
 
-
-
 const ResetPassword = () => {
   const [step, setStep] = useState(1); // control de pagina
   const [submitClicked, setSubmitClicked] = useState(false);
@@ -186,6 +184,14 @@ const ResetPassword = () => {
     }
   }, [verLoading, verIsError, verSucess, verError]);
 
+  useEffect(() => {
+    if (step === 4) {
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 2000);
+    }
+  }, [step]);
+
 
   //PASSWORD CONFIRMATION
   const [
@@ -232,10 +238,10 @@ const ResetPassword = () => {
 
     if (isValid) {
       console.log(`ahora cambiamos contras`);
-      console.log(`correo: ${emailText}, codigo: ${verificationCode}`);
+      console.log(`correo: ${emailText}, codigo: ${verificationCode}, usuario: ${usuario}`);
       try {
         const formulario = new FormData();
-        formulario.append("correo", emailText);
+        formulario.append("usuario", usuario);
         formulario.append("codigo", verificationCode);
         formulario.append("nuevaContrasena", confirmPassword);
         changePass(formulario);
@@ -263,8 +269,9 @@ const ResetPassword = () => {
         <div className="step-1">
           <h1>Restablecer contraseña</h1>
           <div className="para-form">
-            <h3>Ingresa tu correo electrónico o nombre de usuario</h3>
+            <h3>Ingresa tu correo electrónico</h3>
             <h3>para buscar tu cuenta.</h3>
+            {/* <h3>Ingresa tu correo electrónico para buscar tu cuenta</h3> */}
             <input
               type="email"
               name="user_email"
@@ -298,7 +305,7 @@ const ResetPassword = () => {
       {step === 2 && (
         <div className="step-2 step-1">
           <h1>Código de verificación</h1>
-          <h3>Ingrese el código de verificación</h3>
+          <h3>Ingresar el código de verificación.</h3>
           <div>
           <input
             type="text"
@@ -337,6 +344,7 @@ const ResetPassword = () => {
           <div className="para-form">
             <div className="mb-2 password-input">
               <p>Contraseña*</p>
+              <div className={passwordStatus.pass ? 'password-match' : 'password-no-match'} > 
               <input
                 type={showPassword ? "text" : "password"}
                 className="cont"
@@ -346,28 +354,37 @@ const ResetPassword = () => {
               />
               <span className="password-icon" onClick={toggleShowPassword}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
+              </span></div>
               {submitClicked && passwordError && (
                 <p style={{ color: "red" }}>{passwordError}</p>
               )}
+              {!passwordStatus.pass && passwordStatus.message &&
+                <p className="text-danger mw-100">{passwordStatus.message}</p>
+              }
               <p style={{color: '#999'}}>Mínimo 8 caracteres*</p>
 
             </div>
             <div className="mb-2 password-input">
             <p>Confirmar Contraseña*</p>
-              <input
-                type={showPassword1 ? "text" : "password"}
-                className="rep-cont"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
-                placeholder="Confirmar contraseña"
-              />
-              <span className="password-icon" onClick={toggleShowPassword1}>
-                {showPassword1 ? <FaEyeSlash /> : <FaEye />}
-              </span>
+              <div className={passwordStatus.pass && confirmPassword === password ? 'password-match' : 'password-no-match'} >
+                <input
+                  type={showPassword1 ? "text" : "password"}
+                  className="rep-cont"
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+                  placeholder="Confirmar contraseña"
+                  disabled={!passwordStatus.pass}
+                />
+                <span className="password-icon" onClick={toggleShowPassword1}>
+                  {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
+              {/* Para mensaje de que las contrase;as no son iguales */}
               {submitClicked && confirmPasswordError && (
                 <p style={{ color: "red" }}>{confirmPasswordError}</p>
               )}
+              
+
             </div>
             <div className="b-confirm">
               <button type="submit" className="btn btn-azul" onClick={handleSubmitPasswordForm}>

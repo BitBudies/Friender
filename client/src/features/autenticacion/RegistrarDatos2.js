@@ -2,7 +2,7 @@ import React,{useEffect, useState} from 'react'
 import "./Registrarse_2.css";
 import { useGetInteresesQuery, useUploadImageMutation, useGetCsrfQuery } from './authSlice';
 import { LiaFileUploadSolid } from "react-icons/lia";
-
+import { useNavigate } from 'react-router-dom';
 
 const RegistrarDatos2 = ({setNForm,data : info}) => {
 
@@ -13,7 +13,8 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
         terminos: false,
       };
     
-    
+    const navigate = useNavigate();
+
     const {data,isFetching,isSuccess} = useGetInteresesQuery();
     const [descripcionLength, setDescripcionLength] = useState(0); // Estado para longitud de descripción
     const [values, setValues] = useState(defaultValues);
@@ -188,17 +189,21 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
       form.append("contrasena", info.contraseña);
       // Corregir esto de las fotos
       fotos.forEach((it) => {
-        form.append("imagenes", it)
+        form.append("imagenes", it.file)
       })
       values.interes.forEach((it) => {
         form.append("intereses", it)
       })
       console.log(form)
       send(form);
+
     }
   
     useEffect(() => { 
       console.log(responseerror,respuesta,carganding,correctito);
+      if (correctito){
+        navigate('/login')
+      }
     }, [carganding, correctito, responseerror, respuesta])
 
   return (

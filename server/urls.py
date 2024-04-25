@@ -74,7 +74,7 @@ urlpatterns = [
     path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator.as_view()),
 
     # Solicitud
-    path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud.as_view()),
+    path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud),
     path('api/solicitud/rechazar/<int:solicitud_alquiler_id>', RechazarSolicitud.as_view()),
     path('api/solicitud/informacion/<int:solicitud_alquiler_id>', SolicitudAlquilerDetailAPIView.as_view()),
     path('api/solicitud/verificar/<int:cliente_idR>/<int:amigo_idR>/', VerificarSolicitudes.as_view()),
