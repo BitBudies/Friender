@@ -21,7 +21,7 @@ def findEmail(request):
         user = User.objects.get(email=correo)
     except User.DoesNotExist:
         return Response(
-            {"error": "Correo no encontrado en la base de datos"},
+            {"error": "No se encontró una cuenta asociada al email"},
             status=status.HTTP_404_NOT_FOUND,
         )
     return Response({"usuario": f"{user.username}"}, status=status.HTTP_200_OK)
