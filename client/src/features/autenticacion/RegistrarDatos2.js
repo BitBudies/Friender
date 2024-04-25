@@ -4,7 +4,7 @@ import { useGetInteresesQuery, useUploadImageMutation, useGetCsrfQuery } from '.
 import { LiaFileUploadSolid } from "react-icons/lia";
 
 
-const RegistrarDatos2 = ({setNForm, info}) => {
+const RegistrarDatos2 = ({setNForm,data : info}) => {
 
     const defaultValues = {
         interes: [],
@@ -28,7 +28,7 @@ const RegistrarDatos2 = ({setNForm, info}) => {
     
 
     // para imagenes
-    const [send, {data: respuesta, isFetching: carganding, isSuccess: correctito, isError: errosito, error: responseerror}] = useUploadImageMutation();
+    const [send, {data: respuesta, isFetching: carganding, isSuccess: correctito, isError: errorsito, error: responseerror}] = useUploadImageMutation();
 
     // para el select de los intereses
     const checkInteres = () => {
@@ -187,19 +187,19 @@ const RegistrarDatos2 = ({setNForm, info}) => {
       form.append("correo", info.correo_electronico);
       form.append("contrasena", info.contraseña);
       // Corregir esto de las fotos
-      // fotos.forEach((it) => {
-      //   form.append("imagenes", it)
-      // })
-      // values.interes.forEach((it) => {
-      //   form.append("intereses", it)
-      // })
-      // console.log(form)
-      // send(form);
+      fotos.forEach((it) => {
+        form.append("imagenes", it)
+      })
+      values.interes.forEach((it) => {
+        form.append("intereses", it)
+      })
+      console.log(form)
+      send(form);
     }
   
     useEffect(() => { 
-      console.log(responseerror);
-    }, [responseerror])
+      console.log(responseerror,respuesta,carganding,correctito);
+    }, [carganding, correctito, responseerror, respuesta])
 
   return (
     <div className="form-item popup">
