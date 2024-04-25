@@ -8,6 +8,7 @@ import {
 } from "./authSlice";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 
+
 const ResetPassword = () => {
   const [step, setStep] = useState(1); // control de pagina
   const [submitClicked, setSubmitClicked] = useState(false);
@@ -48,7 +49,7 @@ const ResetPassword = () => {
       goToNextStep();
     } else {
       const formulario = new FormData();
-      formulario.append("correo", emailText);
+      formulario.append("user_or_email", emailText);
       try {
         findEmail(formulario);
       } catch (error) {
@@ -65,6 +66,7 @@ const ResetPassword = () => {
       setIsEmailValid(true);
       setIsButtonEmailEnabled(true);
       setUsuario(response.usuario);
+      goToNextStep()
     }
     if (isError) {
       setIsEmailValid(false);
@@ -97,19 +99,19 @@ const ResetPassword = () => {
   ] = useVerifyCodeMutation();
   const [usuario, setUsuario] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
+  const [sendCodesButton, setSendCodesButton] = useState(false)
 
   const handleEnviarCodigos = (e) => {
     try {
       const formulario = new FormData();
-      formulario.append("correo", emailText);
+      formulario.append("usuario", usuario);
       sendCode(formulario);
-      alert("Se envio correctamente los codigos");
     } catch (error) {
       console.log(error);
       alert("Ha ocurrido un error al enviar el código.");
     }
   };
-
+  // aaaa odio a los qas, usuario o email maximo de 255 chars
   useEffect(() => {
     if (codeLoading) {
       console.log("Cargando..."); // Log mientras se carga
@@ -144,8 +146,8 @@ const ResetPassword = () => {
     console.log("aqui verificamos los códigos");
     try {
       const formulario = new FormData();
-      formulario.append("correo", emailText);
-      formulario.append("código", verificationCode);
+      formulario.append("usuario", usuario);
+      formulario.append("codigo", verificationCode);
       verifyCode(formulario);
     } catch (error) {
       console.log(error);
@@ -235,6 +237,7 @@ const ResetPassword = () => {
     }
   }, [passLoading, passIsError, passSucess, passError]);
 
+  // aaaa odio a los qas, si el correo existe llevarlo a step 2 directamente
   return (
     <div className="page principal">
       {step === 1 && (
@@ -243,7 +246,6 @@ const ResetPassword = () => {
           <div className="para-form">
             <h3>Ingresa tu correo electrónico o nombre de usuario</h3>
             <h3>para buscar tu cuenta.</h3>
-            <h3>Ingresa tu correo electrónico para buscar tu cuenta</h3>
             <input
               type="email"
               name="user_email"
@@ -252,6 +254,9 @@ const ResetPassword = () => {
               placeholder="Correo electrónico"
               required
             />
+            {
+              // aaaa odio a los qas, buscar y no hay nada en el correo o usuario ->>> "El campo obligatorio"
+            }
             {supportingText.length > 0 && (
               <p style={{ color: "red" }}>{supportingText}</p>
             )}
@@ -274,7 +279,7 @@ const ResetPassword = () => {
       {step === 2 && (
         <div className="step-2 step-1">
           <h1>Código de verificación</h1>
-          <h3>Ingresar el código de verificación.</h3>
+          <h3>Ingrese el código de verificación</h3>
           <div>
           <input
             type="text"
@@ -283,7 +288,7 @@ const ResetPassword = () => {
             placeholder="Código de verificación"
             required
           />
-          <button
+          <button 
             className="btn btn-azul"
             onClick={handleSubmitVerificationCodeForm}
             disabled={verificationCode.length < 5 || supportingText != ""}
@@ -295,9 +300,11 @@ const ResetPassword = () => {
               <p style={{ color: "red" }}>{supportingText}</p>
             )}
           
-         
+         {
+          // aaaa odio a los qas, No ingrese ningún carácter en el campo -> "Introduzca el código de verificación proporcionado"
+         }
           <div className="b-enviar">
-            <button onClick={handleEnviarCodigos} className="btn btn-azul">
+            <button onClick={handleEnviarCodigos} className="btn btn-azul" disabled={sendCodesButton}> 
               Enviar código
             </button>
           </div>
@@ -357,6 +364,8 @@ const ResetPassword = () => {
       )}
     </div>
   );
+
+  // aaaa odio a los qas, despues de 2 segundos del step 4 llevarlos a /login
 };
 
 export default ResetPassword;
