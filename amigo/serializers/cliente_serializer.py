@@ -4,7 +4,6 @@ from ..models.clienteDB import Cliente
 class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cliente
-        fields = '__all__'
         exclude = ['user']
 
 class UserTokenSerializer(serializers.ModelSerializer):

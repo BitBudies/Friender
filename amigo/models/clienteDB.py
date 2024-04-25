@@ -12,7 +12,7 @@ class Cliente(models.Model):
     cliente_id = models.BigAutoField(primary_key=True)
     nombre = models.CharField(max_length=20)
     ap_paterno = models.CharField(max_length=20)
-    ap_materno = models.CharField(max_length=20)
+    ap_materno = models.CharField(max_length=20, null=True)
     ci = models.IntegerField()
     fecha_nacimiento = models.DateField()
     genero = models.CharField(max_length=1, choices=GENERO_OPCIONES)
