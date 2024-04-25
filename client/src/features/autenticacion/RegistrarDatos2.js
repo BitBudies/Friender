@@ -202,7 +202,7 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
     useEffect(() => { 
       console.log(responseerror,respuesta,carganding,correctito);
       if (correctito){
-        navigate('/home')
+        navigate('/login')
       }
     }, [carganding, correctito, responseerror, respuesta])
 
