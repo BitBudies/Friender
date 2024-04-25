@@ -11,7 +11,7 @@ import { checkPassword } from "../../hooks/checkRegex";
 
 
 const ResetPassword = () => {
-  const [step, setStep] = useState(1); // control de pagina
+  const [step, setStep] = useState(3); // control de pagina
   const [submitClicked, setSubmitClicked] = useState(false);
 
   // ------------------------------Buscar email------------------------------
@@ -26,6 +26,7 @@ const ResetPassword = () => {
     { data: response, isLoading, isSuccess, isError, error: errorsito },
   ] = useFindEmailMutation();
 
+  const [passwordStatus,setPasswordStatus] = useState({pass : false, message : ""})
   const checkPass = checkPassword();
 
   const handleEmailChange = (e) => {
@@ -135,7 +136,18 @@ const ResetPassword = () => {
     setVerificationCode(e.target.value);
   }
     
-  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const onPasswordChange = (e) => {
+    const passwordChecked = checkPass(e.target.value);
+    const {pass,message} = passwordChecked;
+    if(!passwordChecked.pass){
+      console.log(pass,message)
+      setPasswordStatus({...passwordStatus,pass, message})
+    }else{
+      setPasswordStatus({...passwordStatus,pass : true})
+    }
+    setPassword(e.target.value);
+  };
+
   const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
 
   // cambio de paginas
@@ -320,7 +332,7 @@ const ResetPassword = () => {
                 type={showPassword ? "text" : "password"}
                 className="cont"
                 value={password}
-                onChange={handlePasswordChange}
+                onChange={onPasswordChange}
                 placeholder="Contraseña"
               />
               <span className="password-icon" onClick={toggleShowPassword}>
@@ -330,6 +342,7 @@ const ResetPassword = () => {
                 <p style={{ color: "red" }}>{passwordError}</p>
               )}
               <p style={{color: '#999'}}>Mínimo 8 caracteres*</p>
+
             </div>
             <div className="mb-2 password-input">
             <p>Confirmar Contraseña*</p>

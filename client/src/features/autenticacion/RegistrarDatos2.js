@@ -4,7 +4,7 @@ import { useGetInteresesQuery, useUploadImageMutation, useGetCsrfQuery } from '.
 import { LiaFileUploadSolid } from "react-icons/lia";
 
 
-const RegistrarDatos2 = ({setNForm}) => {
+const RegistrarDatos2 = ({setNForm, info}) => {
 
     const defaultValues = {
         interes: [],
@@ -24,7 +24,8 @@ const RegistrarDatos2 = ({setNForm}) => {
     const [validating, setValidatig] = useState(false)
     const [pesado, setPesado] = useState(false)
     const [formato, setFormato] = useState(false)
-    let contador = 1
+    const [contador, setContador] = useState(0)
+    
 
     // para imagenes
     const [send, {data: respuesta, isFetching: carganding, isSuccess: correctito, isError: errosito, error: responseerror}] = useUploadImageMutation();
@@ -47,23 +48,6 @@ const RegistrarDatos2 = ({setNForm}) => {
 
     useEffect(checkInteres,[data, isFetching, isSuccess])
     
-    const interesField = (value) => {
-        let messageNombre = "";
-      
-        if (!value.trim()) {
-          messageNombre = "Mínimo un interes";
-        }
-        return messageNombre;
-    }
-    
-    const fotoField = (value) => {
-        let messageNombre = "";
-      
-        if (!value.trim()) {
-          messageNombre = "Mínimo 1 foto";
-        }
-        return messageNombre;
-    }
 
     const handleChange = (e) => {
         let { name, value } = e.target;
@@ -124,8 +108,6 @@ const RegistrarDatos2 = ({setNForm}) => {
             const imageElement = document.createElement('img');
             imageElement.id = 'cFoto';
             reader.onload = function (e) {
-                // const index = fotos.length;
-                // console.log(index)
                 imageElement.src = e.target.result;
                 imageElement.alt = 'Imagen'; 
                 imageElement.width = '100';
@@ -138,7 +120,7 @@ const RegistrarDatos2 = ({setNForm}) => {
                 cbuton.textContent = 'X';
                 cbuton.onclick = () => {
                   divFoto.remove();
-                  
+                  console.log(selectedFile.name)
                   }
                 divFoto.appendChild(imageElement);
                 divFoto.appendChild(cbuton);
@@ -193,17 +175,17 @@ const RegistrarDatos2 = ({setNForm}) => {
     const mandarrr = async () => {
       setValidatig(true)
       const form = new FormData();
-      form.append("nombre", "jhon");
-      form.append("ap_paterno", "gutierrez");
-      form.append("ap_materno", "hinojosa");
+      form.append("nombre", info.nombre);
+      form.append("ap_paterno", info.apellido_paterno);
+      form.append("ap_materno", info.apellido_materno);
       form.append("ci", "12345678");
-      form.append("fecha_nacimiento", "1200-01-01");
-      form.append("genero", "O");
-      form.append("direccion", "avenida las nieves");
+      form.append("fecha_nacimiento", info.fecha_nacimiento);
+      form.append("genero", info.genero);
+      form.append("direccion", info.ubicacion);
       form.append("descripcion", "descripcion de jhon");
-      form.append("usuario", "yon1234");
-      form.append("correo", "jhondeycraft776@gmail.com");
-      form.append("contrasena", "yon1234");
+      form.append("usuario", info.nombre_usuario);
+      form.append("correo", info.correo_electronico);
+      form.append("contrasena", info.contraseña);
       // Corregir esto de las fotos
       // fotos.forEach((it) => {
       //   form.append("imagenes", it)
@@ -211,8 +193,8 @@ const RegistrarDatos2 = ({setNForm}) => {
       // values.interes.forEach((it) => {
       //   form.append("intereses", it)
       // })
-      console.log(form)
-      send(form);
+      // console.log(form)
+      // send(form);
     }
   
     useEffect(() => { 

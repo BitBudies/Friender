@@ -63,3 +63,12 @@
     width: 10%;
   }
   
+  .password-match input,
+  .password-match input:focus {
+    border: 1px solid green; 
+  }
+
+  .password-no-match input,
+  .password-no-match input:focus {
+    border: 1px solid red !important;
+  }
