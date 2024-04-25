@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import "./RegistrarDatos.css";
 import { checkPassword } from "../../hooks/checkRegex";
+import {useRegist1Mutation} from './authSlice';
+
 
 const defaultValues = {
   nombre: "",
@@ -17,14 +19,16 @@ const defaultValues = {
   confirmar_contraseña: "",
 };
 
-const RegistrarDatos = ({ setNForm }) => {
+const RegistrarDatos = ({ setNForm, data , setData}) => {
   const [password, setPassword] = useState("");
   const [password1, setPassword1] = useState("");
   const [values, setValues] = useState(defaultValues);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [errors, setErrors] = useState({});
+  const [passwordStatus,setPasswordStatus] = useState({pass : false, message : ""})
 
+  const [send, {data: response, isLoading, isSuccess, isError, error: responseError, reset}] = useRegist1Mutation();
 
   const checkPass = checkPassword();
 
@@ -34,7 +38,7 @@ const RegistrarDatos = ({ setNForm }) => {
       ...values,
       [name]: value,
     });
-
+    console.log(name)
     setErrors({
       ...errors,
       [name]: "",
@@ -51,20 +55,41 @@ const RegistrarDatos = ({ setNForm }) => {
 
   const onPasswordChange = (e) => {
     const passwordChecked = checkPass(e.target.value);
-    console.log(passwordChecked);
+    const {pass,message} = passwordChecked;
           if(!passwordChecked.pass){
-            setErrors((currentErrors) => {
-              return {...currentErrors,password : passwordChecked.message}
-            });
+            console.log(pass,message)
+            setPasswordStatus({...passwordStatus,pass, message})
+          }else{
+            setPasswordStatus({...passwordStatus,pass : true})
           }
     setPassword(e.target.value);
   }
 
   // Función para validar el formulario antes de pasar al siguiente paso
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     const newErrors = {};
     let isValid = true;
 
+    if(!password.length){
+      setPasswordStatus({pass : false, message : "El campo contraseña es obligatorio"})
+      isValid = false;
+    }
+
+    if (!values.fecha_nacimiento.trim()) {
+      newErrors.fecha_nacimiento = "La fecha es obligatoria";
+      isValid = false;
+    } else {
+      const birthDate = new Date(values.fecha_nacimiento);
+      const currentDate = new Date();
+      const minAge = 18;
+      const maxAge = 80;
+
+      
+      if (isNaN(birthDate) || birthDate > currentDate || birthDate.getFullYear() > currentDate.getFullYear() - minAge || birthDate.getFullYear() < currentDate.getFullYear() - maxAge) {
+        newErrors.fecha_nacimiento = "Debe ser mayor de edad";
+        isValid = false;
+      }
+    }
     // Validar cada campo y almacenar los errores
     Object.entries(values).forEach(([key, value]) => {
       switch (key) {
@@ -79,9 +104,6 @@ const RegistrarDatos = ({ setNForm }) => {
             newErrors[key] = "El apellido paterno es obligatorio";
             isValid = false;
           }
-          break;
-        case "fecha_nacimiento":
-          // Validar fecha de nacimiento
           break;
         case "genero":
           if (!value) {
@@ -104,6 +126,12 @@ const RegistrarDatos = ({ setNForm }) => {
             isValid = false;
           }
           break;
+          case "fecha_nacimiento":
+            if (!value.trim()) {
+              newErrors[key] = "La fecha es obligatoria";
+              isValid = false;
+            }
+            break;
         case "ubicacion":
           if (!value) {
             newErrors[key] = "La ubicación es obligatoria";
@@ -112,10 +140,11 @@ const RegistrarDatos = ({ setNForm }) => {
           
           break;
           case "confirmar_contraseña":
-            if (!value.trim()) {
+            if (!value.trim().length === 0) {
               newErrors[key] = "Confirmar contraseña es obligatorio";
               isValid = false;
             } else if (value !== password) {
+              console.log(value,"|",password)
               newErrors[key] = "Las contraseñas no coinciden, intente de nuevo.";
               isValid = false;
             }
@@ -130,20 +159,33 @@ const RegistrarDatos = ({ setNForm }) => {
     setErrors(newErrors);
 
     return isValid;
+  },[password, values,values.fecha_nacimiento]);
+
+  const handleSubmit = async () => {
+
+    if(validateForm()){
+      const data = {usuario: values.nombre_usuario, correo: values.correo_electronico}
+      send(data);
+    }
+
+
   };
 
-  const handleSubmit = () => {
-    if (validateForm()) {
-      setNForm((n) => n + 1);
+  useEffect(() => {
+    console.log(isSuccess);
+    if(isSuccess){
+      setNForm(1);
+      setData({...data,...values,contraseña : values.confirmar_contraseña})
+      reset();
     }
-  };
+  },[response, isLoading, isSuccess, setNForm, validateForm, reset, setData, data, values])
 
   return (
     <div className="form-item">
       <div className="input-group registro">
       <div className="input-item">
-          <label htmlFor="nombre" className="input-label">
-            Nombre:
+          <label htmlFor="nombre" className="input-label required-label">
+            Nombre
           </label>
           <input
             type="text"
@@ -158,8 +200,8 @@ const RegistrarDatos = ({ setNForm }) => {
           <p className="text-danger">{errors.nombre}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="apellido_paterno" className="input-label  input1-width-70 ">
-            Apellido Paterno:
+          <label htmlFor="apellido_paterno" className="input-label required-label  input1-width-70 ">
+            Apellido Paterno
           </label>
           <input
             type="text"
@@ -174,8 +216,8 @@ const RegistrarDatos = ({ setNForm }) => {
           <p className="text-danger input1-width-70">{errors.apellido_paterno}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="apellido_materno" className="input-label  input1-width-70">
-            Apellido Materno:
+          <label htmlFor="apellido_materno" className="input-label input1-width-70">
+            Apellido Materno
           </label>
           <input
             type="text"
@@ -191,10 +233,9 @@ const RegistrarDatos = ({ setNForm }) => {
       </div>
       <div className="input-group registro">
         <div className="mb-2 input-item">
-          <label htmlFor="fecha_nacimiento" className="input-label ">
-            Fecha de Nacimiento:
+          <label htmlFor="fecha_nacimiento" className="input-label required-label ">
+            Fecha de Nacimiento
           </label>
-          
           <input
             type="date"
             id="fecha_nacimiento"
@@ -208,8 +249,8 @@ const RegistrarDatos = ({ setNForm }) => {
           <p className="text-danger">{errors.fecha_nacimiento}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="genero" className="input-label input1-width-70" >
-            Género:
+          <label htmlFor="genero" className="input-label required-label input1-width-70" >
+            Género
           </label>
           <select
             id="genero"
@@ -229,8 +270,8 @@ const RegistrarDatos = ({ setNForm }) => {
           <p className="text-danger input1-width-70">{errors.genero}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="ubicacion" className="input-label input1-width-70">
-            Ubicación:
+          <label htmlFor="ubicacion" className="input-label required-label input1-width-70">
+            Ubicación
           </label>
           <div className="ubicacion-input">
             <input
@@ -249,8 +290,8 @@ const RegistrarDatos = ({ setNForm }) => {
       </div>
       <div className="input-group registro">
         <div className="mb-2 input-item">
-          <label htmlFor="nombre_usuario" className="input-label">
-            Nombre de Usuario:
+          <label htmlFor="nombre_usuario" className="input-label required-label">
+            Nombre de Usuario
           </label>
           <input
             type="text"
@@ -265,8 +306,8 @@ const RegistrarDatos = ({ setNForm }) => {
           <p className="text-danger">{errors.nombre_usuario}</p>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="correo_electronico" className="input-label input-width-30">
-            Correo Electrónico:
+          <label htmlFor="correo_electronico" className="input-label required-label input-width-30">
+            Correo Electrónico
           </label>
           <input
             type="email"
@@ -284,48 +325,56 @@ const RegistrarDatos = ({ setNForm }) => {
 
       <div className="input-group registro">
         <div className="mb-2 password-input">
-          <label htmlFor="contraseña" className="input-label">
-            Contraseña:
+          <label htmlFor="contraseña" className="input-label required-label">
+            Contraseña
           </label>
           <div className="mb-2 password-input">
-            <input
-              type={showPassword ? "text" : "password"}
-              className="form-control input1fv-width-70"
-              id="contraseña"
-              placeholder="Contraseña"
-              value={password}
-              onChange={(e) => onPasswordChange(e)}
-              required
-            />
-            <p className="text-danger">{errors.contraseña}</p>
-            <span className="password-icon " onClick={toggleShowPassword}>
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
+            <div className={passwordStatus.pass ? 'password-match' : 'password-no-match'} > 
+              <input
+                type={showPassword ? "text" : "password"}
+                className="form-control input1fv-width-70"
+                id="contraseña"
+                placeholder="Contraseña"
+                value={password}
+                onChange={(e) => onPasswordChange(e)}
+                required
+              />
+              {!passwordStatus.pass && passwordStatus.message &&
+                <p className="text-danger mw-100">{passwordStatus.message}</p>
+              }
+              <span className="password-icon " onClick={toggleShowPassword}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
           </div>
         </div>
         <div className="mb-2 input-item">
-          <label htmlFor="confirmar_contraseña" className="input-label input-width-30">
-            Confirmar Contraseña:
+          <label htmlFor="confirmar_contraseña" className="input-label required-label input-width-30">
+            Confirmar Contraseña
           </label>
           <div className="mb-2 password-input">
-            <input
-              type={showPassword1 ? "text" : "password"}
-              id="confirmar_contraseña"
-              className="form-control input-width-280"
-              placeholder="Confirmar Contraseña"
-              value={password1}
-              onChange={(e) => setPassword1(e.target.value)}
-              required
-            />
-            <p className="text-danger input-width-30">{errors.confirmar_contraseña}</p>
-            <span className="password-icon" onClick={toggleShowPassword1}>
-              {showPassword1 ? <FaEyeSlash /> : <FaEye />}
-            </span>
+            <div className={passwordStatus.pass && values.confirmar_contraseña === password ? 'password-match' : 'password-no-match'} >
+              <input
+                type={showPassword1 ? "text" : "password"}
+                id="confirmar_contraseña"
+                name="confirmar_contraseña"
+                className="form-control input-width-280"
+                placeholder="Confirmar Contraseña"
+                value={values.confirmar_contraseña}
+                onChange={handleChange}
+                required
+                disabled={!passwordStatus.pass}
+              />
+              <p className="text-danger input-width-30">{errors.confirmar_contraseña}</p>
+              <span className="password-icon" onClick={toggleShowPassword1}>
+                {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
           </div>
         </div>
       </div>
       <div className="para1-boton">
-        <button className="btn btn-outline-primary" onClick={handleSubmit}>
+        <button className={`btn btn-outline-primary ${isLoading && "disabled"}`} onClick={handleSubmit}>
           Siguiente
         </button>
       </div>

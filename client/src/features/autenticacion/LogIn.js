@@ -19,6 +19,7 @@ const LogIn = () => {
   const [disableBtn, setDisableBtn] = useState(false);
   const [disableBtnLoading, setDisableBtnLoading] = useState(false);
   const [disableBlockedPasswordBox, setBlockedPasswordBox] = useState(true);
+  const [contadorBloqueo, setContadorBloqueo] = useState(0);
 
   const navigate = useNavigate();
 
@@ -39,16 +40,19 @@ const LogIn = () => {
 
   const handleBlockedPasswordBox = () => {
     setBlockedPasswordBox(true);
-    setDisableBtn(true);
+    /*setDisableBtn(true);
     setTimeout(() => {
       setDisableBtn(false);
-    }, 7000);
+    }, 7000);*/
   };
 
   useEffect(() => {
     if (isLoading) {
       setDisableBtnLoading(true);
       setShowFeedback(false);
+      if(contadorBloqueo == 2){
+        setBlockedPasswordBox(false); //Mostrar Modal de Penalizacion
+      }
     }
     if (isSuccess) {
       console.log(response);
@@ -59,7 +63,15 @@ const LogIn = () => {
     if (isError) {
       setDisableBtnLoading(false);
       setShowFeedback(true);
-      console.log(responseError);
+      if(responseError.data.intentos_fallidos == "0"){
+        setContadorBloqueo(0);
+      }
+      if(responseError.data.intentos_fallidos == "1"){
+        setContadorBloqueo(1);
+      }
+      if(responseError.data.intentos_fallidos == "2"){
+        setContadorBloqueo(2);
+      }
       setFeedbackText(responseError.data.error);
     }
   }, [
@@ -79,7 +91,7 @@ const LogIn = () => {
         <h1>Friender</h1>
       </div>
 
-      <div className="form-section-rigth login-box">
+      <div className={`form-section-rigth login-box ${disableBlockedPasswordBox ? "" : "hidden"}`}>
         <p className="mb-4 fw-bold login-box-title">
           Inicia sesión en Friender
         </p>

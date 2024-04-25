@@ -59,7 +59,17 @@
   }
   
   .para1-boton {
-    margin: 0% 55%;
-    width: 10%;
+    width: 100%;
+    text-align: end;
+    padding-left: 40px;
   }
   
+  .password-match input,
+  .password-match input:focus {
+    border: 1px solid green; 
+  }
+
+  .password-no-match input,
+  .password-no-match input:focus {
+    border: 1px solid red !important;
+  }

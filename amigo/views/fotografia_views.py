@@ -162,6 +162,8 @@ def SubirFotografiaDef(request):
 def pruebaApis(request):
     print(request.POST)
     print(request.FILES)
+    
+    
     #clienteSerializer = ClienteSerializer(data=request.POST)
     intereses = request.POST.getlist("intereses", [])
     if not intereses:
@@ -171,20 +173,33 @@ def pruebaApis(request):
     if intereses_existentes.count() != len(intereses):
         return Response({"error": "No se encontro los intereses en la base de datos"}, status=status.HTTP_404_NOT_FOUND)
     #-----------------------------------imagenes--------------------------------------
+    print(intereses,"intereses")
+
+    
 
     imagenes = request.FILES.getlist("imagenes", [])
     if not imagenes:
         return Response({"error": f"Las imagenes son obligatorias"}, status=status.HTTP_400_BAD_REQUEST)
     
     # ------------------------------------cliente---------------------------------------
+    jeje = request.POST.copy()
+    print(jeje)
+    jeje['genero'] = "O"
+    if jeje['genero'] == "Masculino":
+        jeje['genero'] = "M"
+    elif jeje['genero'] == "Femenino":
+        jeje['genero'] = "F"
+    elif jeje['genero'] == "Otro":
+        jeje['genero'] = "O"
     
-    clienteSerializado = ClienteSerializer(data=request.POST)
+    
+    clienteSerializado = ClienteSerializer(data=jeje)
     if not clienteSerializado.is_valid():
         print(clienteSerializado.errors)
         return Response({"error": clienteSerializado.errors}, status=status.HTTP_400_BAD_REQUEST)
     
     cliente = Cliente(**clienteSerializado.validated_data)
-    if User.objects.filter(Q(username=cliente.usuario) | Q(email=cliente.correo)).exists():
+    if User.objects.filter(Q(username=jeje["usuario"]) | Q(email=cliente.correo)).exists():
         return Response(
             {"error": "El nombre de usuario o el correo ya están en uso."},
             status=400
@@ -193,11 +208,9 @@ def pruebaApis(request):
     #print(usuario.password)
     #print(make_password(cliente.contrasena)) son lo mismo
     
-    usuario = User(username=cliente.usuario, email=cliente.correo)
-    usuario.set_password(cliente.contrasena)
-    cliente.usuario = usuario
-
-    
+    usuario = User(username=jeje["usuario"], email=cliente.correo)
+    usuario.set_password(jeje["contrasena"])
+    cliente.user = usuario
 
     fotografiasTemporales = []
     for prioridad, imagen in enumerate(imagenes):

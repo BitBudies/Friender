@@ -5,14 +5,15 @@
 
 .verificar {
     display: flex;
-    gap: 10px;
-    margin: 1rem 0rem;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .verificar input {
-    height: 40px;
+    width: 15rem;
     /* width: 18rem; */
 }
+
 
 
 
@@ -20,7 +21,6 @@
     position: relative;
     display: flex;
     width: 100%;
-    background-color: red;
-    margin-top: 20rem;
+    margin-top: 8rem;
     justify-content: space-between;
 }

@@ -7,6 +7,7 @@ import {
   useChangePassMutation,
 } from "./authSlice";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { checkPassword } from "../../hooks/checkRegex";
 
 const ResetPassword = () => {
   const [step, setStep] = useState(1); // control de pagina
@@ -23,6 +24,9 @@ const ResetPassword = () => {
     findEmail,
     { data: response, isLoading, isSuccess, isError, error: errorsito },
   ] = useFindEmailMutation();
+
+  const [passwordStatus,setPasswordStatus] = useState({pass : false, message : ""})
+  const checkPass = checkPassword();
 
   const handleEmailChange = (e) => {
     setIsEmailValid(false);
@@ -48,7 +52,7 @@ const ResetPassword = () => {
       goToNextStep();
     } else {
       const formulario = new FormData();
-      formulario.append("correo", emailText);
+      formulario.append("user_or_email", emailText);
       try {
         findEmail(formulario);
       } catch (error) {
@@ -65,6 +69,7 @@ const ResetPassword = () => {
       setIsEmailValid(true);
       setIsButtonEmailEnabled(true);
       setUsuario(response.usuario);
+      goToNextStep()
     }
     if (isError) {
       setIsEmailValid(false);
@@ -97,23 +102,25 @@ const ResetPassword = () => {
   ] = useVerifyCodeMutation();
   const [usuario, setUsuario] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
+  const [sendCodesButton, setSendCodesButton] = useState(false)
 
   const handleEnviarCodigos = (e) => {
     try {
       const formulario = new FormData();
-      formulario.append("correo", emailText);
+      formulario.append("usuario", usuario);
       sendCode(formulario);
-      alert("Se envio correctamente los codigos");
+      // alert("Se envio correctamente los codigos");
     } catch (error) {
       console.log(error);
-      alert("Ha ocurrido un error al enviar el código.");
+      // alert("Ha ocurrido un error al enviar el código.");
     }
   };
-
+  // aaaa odio a los qas, usuario o email maximo de 255 chars
   useEffect(() => {
     if (codeLoading) {
       console.log("Cargando..."); // Log mientras se carga
     } else if (codeIsError) {
+      setSupportingText(errorCodigo.data.error)
       console.log("Error:", errorCodigo.data.error); // Log en caso de error
     } else if (codeSucess) {
       console.log(dataCodigo); // Log si la solicitud fue exitosa
@@ -131,7 +138,18 @@ const ResetPassword = () => {
     setVerificationCode(e.target.value);
   }
     
-  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const onPasswordChange = (e) => {
+    const passwordChecked = checkPass(e.target.value);
+    const {pass,message} = passwordChecked;
+    if(!passwordChecked.pass){
+      console.log(pass,message)
+      setPasswordStatus({...passwordStatus,pass, message})
+    }else{
+      setPasswordStatus({...passwordStatus,pass : true})
+    }
+    setPassword(e.target.value);
+  };
+
   const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
 
   // cambio de paginas
@@ -141,10 +159,10 @@ const ResetPassword = () => {
   // Función para manejar el envío del formulario de código de verificación
   const handleSubmitVerificationCodeForm = (e) => {
     e.preventDefault();
-    console.log("aqui verificamos los codigos");
+    console.log("aqui verificamos los códigos");
     try {
       const formulario = new FormData();
-      formulario.append("correo", emailText);
+      formulario.append("usuario", usuario);
       formulario.append("codigo", verificationCode);
       verifyCode(formulario);
     } catch (error) {
@@ -165,6 +183,15 @@ const ResetPassword = () => {
       goToNextStep();
     }
   }, [verLoading, verIsError, verSucess, verError]);
+
+  useEffect(() => {
+    if (step === 4) {
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 2000);
+    }
+  }, [step]);
+
 
   //PASSWORD CONFIRMATION
   const [
@@ -193,7 +220,7 @@ const ResetPassword = () => {
     }
 
     if (!confirmPassword.trim()) {
-      newErrors["confirmar_contraseña"] = "Confirmar contraseña es obligatorio";
+      newErrors["confirmar_contraseña"] = "Confirmar la contraseña es obligatorio";
       isValid = false;
     } else if (confirmPassword !== password) {
       newErrors["confirmar_contraseña"] =
@@ -211,10 +238,10 @@ const ResetPassword = () => {
 
     if (isValid) {
       console.log(`ahora cambiamos contras`);
-      console.log(`correo: ${emailText}, codigo: ${verificationCode}`);
+      console.log(`correo: ${emailText}, codigo: ${verificationCode}, usuario: ${usuario}`);
       try {
         const formulario = new FormData();
-        formulario.append("correo", emailText);
+        formulario.append("usuario", usuario);
         formulario.append("codigo", verificationCode);
         formulario.append("nuevaContrasena", confirmPassword);
         changePass(formulario);
@@ -235,13 +262,16 @@ const ResetPassword = () => {
     }
   }, [passLoading, passIsError, passSucess, passError]);
 
+  // aaaa odio a los qas, si el correo existe llevarlo a step 2 directamente
   return (
     <div className="page principal">
       {step === 1 && (
         <div className="step-1">
           <h1>Restablecer contraseña</h1>
           <div className="para-form">
-            <h3>Ingresa tu correo electronico para buscar tu cuenta</h3>
+            <h3>Ingresa tu correo electrónico</h3>
+            <h3>para buscar tu cuenta.</h3>
+            {/* <h3>Ingresa tu correo electrónico para buscar tu cuenta</h3> */}
             <input
               type="email"
               name="user_email"
@@ -250,11 +280,14 @@ const ResetPassword = () => {
               placeholder="Correo electrónico"
               required
             />
+            {
+              // aaaa odio a los qas, buscar y no hay nada en el correo o usuario ->>> "El campo obligatorio"
+            }
             {supportingText.length > 0 && (
               <p style={{ color: "red" }}>{supportingText}</p>
             )}
             <div className="botones">
-              <a href="/">
+              <a href="/login">
                 <button className="b-cancelar btn">Cancelar</button>
               </a>
               <button
@@ -281,7 +314,7 @@ const ResetPassword = () => {
             placeholder="Código de verificación"
             required
           />
-          <button
+          <button 
             className="btn btn-azul"
             onClick={handleSubmitVerificationCodeForm}
             disabled={verificationCode.length < 5 || supportingText != ""}
@@ -293,9 +326,11 @@ const ResetPassword = () => {
               <p style={{ color: "red" }}>{supportingText}</p>
             )}
           
-         
+         {
+          // aaaa odio a los qas, No ingrese ningún carácter en el campo -> "Introduzca el código de verificación proporcionado"
+         }
           <div className="b-enviar">
-            <button onClick={handleEnviarCodigos} className="btn btn-azul">
+            <button onClick={handleEnviarCodigos} className="btn btn-azul" disabled={sendCodesButton}> 
               Enviar código
             </button>
           </div>
@@ -308,34 +343,48 @@ const ResetPassword = () => {
           </div>
           <div className="para-form">
             <div className="mb-2 password-input">
+              <p>Contraseña*</p>
+              <div className={passwordStatus.pass ? 'password-match' : 'password-no-match'} > 
               <input
                 type={showPassword ? "text" : "password"}
                 className="cont"
                 value={password}
-                onChange={handlePasswordChange}
+                onChange={onPasswordChange}
                 placeholder="Contraseña"
               />
               <span className="password-icon" onClick={toggleShowPassword}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
+              </span></div>
               {submitClicked && passwordError && (
                 <p style={{ color: "red" }}>{passwordError}</p>
               )}
+              {!passwordStatus.pass && passwordStatus.message &&
+                <p className="text-danger mw-100">{passwordStatus.message}</p>
+              }
+              <p style={{color: '#999'}}>Mínimo 8 caracteres*</p>
+
             </div>
             <div className="mb-2 password-input">
-              <input
-                type={showPassword1 ? "text" : "password"}
-                className="rep-cont"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
-                placeholder="Repetir contraseña"
-              />
-              <span className="password-icon" onClick={toggleShowPassword1}>
-                {showPassword1 ? <FaEyeSlash /> : <FaEye />}
-              </span>
+            <p>Confirmar Contraseña*</p>
+              <div className={passwordStatus.pass && confirmPassword === password ? 'password-match' : 'password-no-match'} >
+                <input
+                  type={showPassword1 ? "text" : "password"}
+                  className="rep-cont"
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+                  placeholder="Confirmar contraseña"
+                  disabled={!passwordStatus.pass}
+                />
+                <span className="password-icon" onClick={toggleShowPassword1}>
+                  {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
+              {/* Para mensaje de que las contrase;as no son iguales */}
               {submitClicked && confirmPasswordError && (
                 <p style={{ color: "red" }}>{confirmPasswordError}</p>
               )}
+              
+
             </div>
             <div className="b-confirm">
               <button type="submit" className="btn btn-azul" onClick={handleSubmitPasswordForm}>
@@ -352,6 +401,8 @@ const ResetPassword = () => {
       )}
     </div>
   );
+
+  // aaaa odio a los qas, despues de 2 segundos del step 4 llevarlos a /login
 };
 
 export default ResetPassword;
