@@ -12,7 +12,7 @@ import { checkPassword } from "../../hooks/checkRegex";
 
 
 const ResetPassword = () => {
-  const [step, setStep] = useState(3); // control de pagina
+  const [step, setStep] = useState(1); // control de pagina
   const [submitClicked, setSubmitClicked] = useState(false);
 
   // ------------------------------Buscar email------------------------------
@@ -122,6 +122,7 @@ const ResetPassword = () => {
     if (codeLoading) {
       console.log("Cargando..."); // Log mientras se carga
     } else if (codeIsError) {
+      setSupportingText(errorCodigo.data.error)
       console.log("Error:", errorCodigo.data.error); // Log en caso de error
     } else if (codeSucess) {
       console.log(dataCodigo); // Log si la solicitud fue exitosa
@@ -279,7 +280,7 @@ const ResetPassword = () => {
               <p style={{ color: "red" }}>{supportingText}</p>
             )}
             <div className="botones">
-              <a href="/">
+              <a href="/login">
                 <button className="b-cancelar btn">Cancelar</button>
               </a>
               <button
