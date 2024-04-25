@@ -9,10 +9,8 @@ import {
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { checkPassword } from "../../hooks/checkRegex";
 
-
-
 const ResetPassword = () => {
-  const [step, setStep] = useState(3); // control de pagina
+  const [step, setStep] = useState(1); // control de pagina
   const [submitClicked, setSubmitClicked] = useState(false);
 
   // ------------------------------Buscar email------------------------------
@@ -231,10 +229,10 @@ const ResetPassword = () => {
 
     if (isValid) {
       console.log(`ahora cambiamos contras`);
-      console.log(`correo: ${emailText}, codigo: ${verificationCode}`);
+      console.log(`correo: ${emailText}, codigo: ${verificationCode}, usuario: ${usuario}`);
       try {
         const formulario = new FormData();
-        formulario.append("correo", emailText);
+        formulario.append("usuario", usuario);
         formulario.append("codigo", verificationCode);
         formulario.append("nuevaContrasena", confirmPassword);
         changePass(formulario);
