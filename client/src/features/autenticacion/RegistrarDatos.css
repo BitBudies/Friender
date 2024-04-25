@@ -64,3 +64,12 @@
     padding-left: 40px;
   }
   
+  .password-match input,
+  .password-match input:focus {
+    border: 1px solid green; 
+  }
+
+  .password-no-match input,
+  .password-no-match input:focus {
+    border: 1px solid red !important;
+  }
