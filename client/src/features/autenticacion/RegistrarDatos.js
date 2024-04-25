@@ -159,7 +159,7 @@ const RegistrarDatos = ({ setNForm, data , setData}) => {
     setErrors(newErrors);
 
     return isValid;
-  },[password, values,values.fecha_nacimiento]);
+  },[password, values]);
 
   const handleSubmit = async () => {
 
