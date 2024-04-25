@@ -75,6 +75,21 @@ const RegistrarDatos = ({ setNForm, data , setData}) => {
       isValid = false;
     }
 
+    if (!values.fecha_nacimiento.trim()) {
+      newErrors.fecha_nacimiento = "La fecha es obligatoria";
+      isValid = false;
+    } else {
+      const birthDate = new Date(values.fecha_nacimiento);
+      const currentDate = new Date();
+      const minAge = 18;
+      const maxAge = 80;
+
+      /*
+      if (isNaN(birthDate) || birthDate > currentDate || birthDate.getFullYear() > currentDate.getFullYear() - minAge || birthDate.getFullYear() < currentDate.getFullYear() - maxAge) {
+        newErrors.fecha_nacimiento = "Debe ser mayor de edad";
+        isValid = false;
+      }*/
+    }
     // Validar cada campo y almacenar los errores
     Object.entries(values).forEach(([key, value]) => {
       switch (key) {
@@ -89,9 +104,6 @@ const RegistrarDatos = ({ setNForm, data , setData}) => {
             newErrors[key] = "El apellido paterno es obligatorio";
             isValid = false;
           }
-          break;
-        case "fecha_nacimiento":
-          // Validar fecha de nacimiento
           break;
         case "genero":
           if (!value) {
@@ -114,6 +126,12 @@ const RegistrarDatos = ({ setNForm, data , setData}) => {
             isValid = false;
           }
           break;
+          case "fecha_nacimiento":
+            if (!value.trim()) {
+              newErrors[key] = "La fecha es obligatoria";
+              isValid = false;
+            }
+            break;
         case "ubicacion":
           if (!value) {
             newErrors[key] = "La ubicación es obligatoria";
@@ -141,7 +159,7 @@ const RegistrarDatos = ({ setNForm, data , setData}) => {
     setErrors(newErrors);
 
     return isValid;
-  },[password, values]);
+  },[password, values,values.fecha_nacimiento]);
 
   const handleSubmit = async () => {
 
@@ -218,7 +236,6 @@ const RegistrarDatos = ({ setNForm, data , setData}) => {
           <label htmlFor="fecha_nacimiento" className="input-label required-label ">
             Fecha de Nacimiento
           </label>
-          
           <input
             type="date"
             id="fecha_nacimiento"
