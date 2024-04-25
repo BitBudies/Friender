@@ -7,6 +7,8 @@ import {
   useChangePassMutation,
 } from "./authSlice";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { checkPassword } from "../../hooks/checkRegex";
+
 
 
 const ResetPassword = () => {
@@ -24,6 +26,8 @@ const ResetPassword = () => {
     findEmail,
     { data: response, isLoading, isSuccess, isError, error: errorsito },
   ] = useFindEmailMutation();
+
+  const checkPass = checkPassword();
 
   const handleEmailChange = (e) => {
     setIsEmailValid(false);
@@ -106,9 +110,10 @@ const ResetPassword = () => {
       const formulario = new FormData();
       formulario.append("usuario", usuario);
       sendCode(formulario);
+      // alert("Se envio correctamente los codigos");
     } catch (error) {
       console.log(error);
-      alert("Ha ocurrido un error al enviar el código.");
+      // alert("Ha ocurrido un error al enviar el código.");
     }
   };
   // aaaa odio a los qas, usuario o email maximo de 255 chars
@@ -168,6 +173,7 @@ const ResetPassword = () => {
     }
   }, [verLoading, verIsError, verSucess, verError]);
 
+
   //PASSWORD CONFIRMATION
   const [
     changePass,
@@ -217,7 +223,7 @@ const ResetPassword = () => {
       try {
         const formulario = new FormData();
         formulario.append("correo", emailText);
-        formulario.append("código", verificationCode);
+        formulario.append("codigo", verificationCode);
         formulario.append("nuevaContrasena", confirmPassword);
         changePass(formulario);
       } catch (error) {

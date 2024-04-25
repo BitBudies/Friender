@@ -19,7 +19,7 @@ const defaultValues = {
   confirmar_contraseña: "",
 };
 
-const RegistrarDatos = ({ setNForm }) => {
+const RegistrarDatos = ({ setNForm,setData }) => {
   const [password, setPassword] = useState("");
   const [password1, setPassword1] = useState("");
   const [values, setValues] = useState(defaultValues);
@@ -28,7 +28,7 @@ const RegistrarDatos = ({ setNForm }) => {
   const [errors, setErrors] = useState({});
   const [passwordStatus,setPasswordStatus] = useState({pass : false, message : ""})
 
-  const [send, {data: response, isLoading, isSuccess, isError, error: responseError }] = useRegist1Mutation();
+  const [send, {data: response, isLoading, isSuccess, isError, error: responseError, reset}] = useRegist1Mutation();
 
   const checkPass = checkPassword();
 
@@ -38,7 +38,7 @@ const RegistrarDatos = ({ setNForm }) => {
       ...values,
       [name]: value,
     });
-
+    console.log(name)
     setErrors({
       ...errors,
       [name]: "",
@@ -69,6 +69,11 @@ const RegistrarDatos = ({ setNForm }) => {
   const validateForm = useCallback(() => {
     const newErrors = {};
     let isValid = true;
+
+    if(!password.length){
+      setPasswordStatus({pass : false, message : "El campo contraseña es obligatorio"})
+      isValid = false;
+    }
 
     // Validar cada campo y almacenar los errores
     Object.entries(values).forEach(([key, value]) => {
@@ -121,7 +126,6 @@ const RegistrarDatos = ({ setNForm }) => {
               newErrors[key] = "Confirmar contraseña es obligatorio";
               isValid = false;
             } else if (value !== password) {
-              console.log(value,"|",password)
               newErrors[key] = "Las contraseñas no coinciden, intente de nuevo.";
               isValid = false;
             }
@@ -139,22 +143,20 @@ const RegistrarDatos = ({ setNForm }) => {
   },[password, values]);
 
   const handleSubmit = async () => {
-    console.log(values.nombre_usuario);
-    console.log(values.correo_electronico);
 
-    const data = {usuario: values.nombre_usuario, correo: values.correo_electronico}
-
-    send(data);
-
+    if(validateForm()){
+      const data = {usuario: values.nombre_usuario, correo: values.correo_electronico}
+      send(data);
+    }
   };
 
   useEffect(() => {
     if(isSuccess){
-      if(validateForm()){
-        setNForm(1)
-      }
+      setNForm(1);
+      setData({...values,contraseña : values.confirmar_contraseña});
+      reset();
     }
-  },[response, isLoading, isSuccess, setNForm, validateForm])
+  },[response, isLoading, isSuccess, setNForm, validateForm, reset, setData, values])
 
   return (
     <div className="form-item">
@@ -331,12 +333,13 @@ const RegistrarDatos = ({ setNForm }) => {
             <input
               type={showPassword1 ? "text" : "password"}
               id="confirmar_contraseña"
+              name="confirmar_contraseña"
               className="form-control input-width-280"
               placeholder="Confirmar Contraseña"
-              value={password1}
-              enabled={false}
-              onChange={(e) => setPassword1(e.target.value)}
+              value={values.confirmar_contraseña}
+              onChange={handleChange}
               required
+              disabled={!passwordStatus.pass}
             />
             <p className="text-danger input-width-30">{errors.confirmar_contraseña}</p>
             <span className="password-icon" onClick={toggleShowPassword1}>
