@@ -30,4 +30,4 @@ class Cliente(models.Model):
         return f"{self.cliente_id} {self.nombre} {self.ap_paterno} {self.ap_materno}"
 
     def getFullName(self):
-        return f"{self.nombre.capitalize()} {self.ap_paterno.capitalize()} {self.ap_materno.capitalize()}"
+        return f"{self.nombre.capitalize()} {self.ap_paterno.capitalize()} {self.ap_materno.capitalize() if self.ap_materno else ''}"
