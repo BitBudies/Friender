@@ -58,68 +58,110 @@ const SolicitudDetalles = () => {
         return <Loading />
     } else if (isSuccess) {
         return (
-            <>
-                <div id='solicitud_detalles' className='page'>
-                    <div className='solicitud-detalles-center'>
-                        <div className='cliente-info'>
-                            <div className='profile-image' style={{ backgroundImage: `url(${pictures[pictures.length - 3]})` }}></div>
-                            <h3>{solicitud.nombre_cliente}</h3>
-                            <p>Edad: {solicitud.edad_cliente} años</p>
-                            <span className='text-warning'>★★★☆☆</span>
-                            <Link to={`/amigos/${solicitud.cliente}`} className='btn btn-azul btn-lg'>Ver Perfil</Link>
-                        </div>
-                        <div className='solicitud-details'>
-                            <div className='title'>
-                                <h1>Detalles de la solicitud</h1>
-                            </div>
-                            <div className='details'>
-                                <p><strong>Fecha: </strong> {formatFecha(solicitud.fecha_inicio)}</p>
-                                <p><strong>Hora: </strong> {solicitud.hora_inicio.slice(0, 5)}</p>
-                                <p><strong>Tiempo: </strong> {solicitud.minutos} {solicitud.minutos === 1 ? "hr" : "hrs"}</p>
-                                <p><strong>Lugar: </strong> {solicitud.lugar} <span><FaMapMarkerAlt /></span> </p>
-                                <p><strong>Descripción:</strong></p>
-                                <p>{solicitud.descripcion}</p>
-                            </div>
-                            <div className='footer'>
-                                <p className='fw-light text-secondary'> Fecha solicitud: {formatDateTime(solicitud.timestamp_registro)}</p>
-                                <h5>Total: {solicitud.precio * solicitud.minutos} Bs </h5>
-                                <div className='btns'>
-                                    <button
-                                        onClick={() => setModalAttributes(
-                                            {
-                                                ...modalAttributes,
-                                                show: true,
-                                                type : 1,
-                                            }
-                                        )}
-                                        className={`btn btn-success btn-lg ${!enableBtn && "disabled"}`}
-                                    >Aceptar</button>
-                                    <button
-                                        className={`btn btn-danger btn-lg ${!enableBtn && "disabled"}`}
-                                        onClick={() => setModalAttributes(
-                                            {
-                                                ...modalAttributes,
-                                                show: true,
-                                                type : 2,
-                                            }
-                                        )}
-                                    >
-                                        Rechazar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <Modal
-                    attributes={modalAttributes}
-                    onConfirm={handleAccept}
-                    onReject={handleCancel}
-                    onClose={() => setModalAttributes({...modalAttributes,show : false})}
-                />
+          <>
+            <div id="solicitud_detalles" className="page">
+              <div className="solicitud-detalles-center">
+                <div className="cliente-info">
+                  <div
+                    className="profile-image"
+                    style={{
+                        backgroundImage: `url(${
+                          solicitud.imagenBase64
+                            ? `data:image/jpeg;base64,${solicitud.imagenBase64}`
+                            : "/images/user.jpeg"
+                        })`,
+                      }}
+                  ></div>
+                  
+                  <h3>{solicitud.nombre_cliente}</h3>
+                  <p>Edad: {solicitud.edad_cliente} años</p>
+                  <span className="text-warning">★★★☆☆</span>
+                  <Link
+                    to={`/amigos/${solicitud.cliente}`}
+                    className="btn btn-azul btn-lg"
+                  >
+                    Ver Perfil
+                  </Link>
                 </div>
-                
-            </>
-        )
+                <div className="solicitud-details">
+                  <div className="title">
+                    <h1>Detalles de la solicitud</h1>
+                  </div>
+                  <div className="details">
+                    <p>
+                      <strong>Fecha: </strong>{" "}
+                      {formatFecha(solicitud.fecha_inicio)}
+                    </p>
+                    <p>
+                      <strong>Hora: </strong>{" "}
+                      {solicitud.hora_inicio.slice(0, 5)}
+                    </p>
+                    <p>
+                      <strong>Tiempo: </strong> {solicitud.minutos}{" "}
+                      {solicitud.minutos === 1 ? "hr" : "hrs"}
+                    </p>
+                    <p>
+                      <strong>Lugar: </strong> {solicitud.lugar}{" "}
+                      <span>
+                        <FaMapMarkerAlt />
+                      </span>{" "}
+                    </p>
+                    <p>
+                      <strong>Descripción:</strong>
+                    </p>
+                    <p>{solicitud.descripcion}</p>
+                  </div>
+                  <div className="footer">
+                    <p className="fw-light text-secondary">
+                      {" "}
+                      Fecha solicitud:{" "}
+                      {formatDateTime(solicitud.timestamp_registro)}
+                    </p>
+                    <h5>Total: {solicitud.precio * solicitud.minutos} Bs </h5>
+                    <div className="btns">
+                      <button
+                        onClick={() =>
+                          setModalAttributes({
+                            ...modalAttributes,
+                            show: true,
+                            type: 1,
+                          })
+                        }
+                        className={`btn btn-success btn-lg ${
+                          !enableBtn && "disabled"
+                        }`}
+                      >
+                        Aceptar
+                      </button>
+                      <button
+                        className={`btn btn-danger btn-lg ${
+                          !enableBtn && "disabled"
+                        }`}
+                        onClick={() =>
+                          setModalAttributes({
+                            ...modalAttributes,
+                            show: true,
+                            type: 2,
+                          })
+                        }
+                      >
+                        Rechazar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <Modal
+                attributes={modalAttributes}
+                onConfirm={handleAccept}
+                onReject={handleCancel}
+                onClose={() =>
+                  setModalAttributes({ ...modalAttributes, show: false })
+                }
+              />
+            </div>
+          </>
+        );
     }
 }
 

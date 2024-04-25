@@ -27,12 +27,18 @@ const solicitudApi = apiSlice.injectEndpoints({
       query: (id_solicitud) => ({
         url: `/solicitud/aceptar/${id_solicitud}`,
         method: "POST",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken") // Obtener el token CSRF desde las cookies
+        },
       }),
     }),
     rechazarSolicitud: builder.mutation({
       query: (id_solicitud) => ({
         url: `/solicitud/rechazar/${id_solicitud}`,
         method: "POST",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken") // Obtener el token CSRF desde las cookies
+        },
       }),
     }),
   }),
