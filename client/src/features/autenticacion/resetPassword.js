@@ -107,10 +107,10 @@ const ResetPassword = () => {
       const formulario = new FormData();
       formulario.append("correo", emailText);
       sendCode(formulario);
-      alert("Se envio correctamente los codigos");
+      // alert("Se envio correctamente los codigos");
     } catch (error) {
       console.log(error);
-      alert("Ha ocurrido un error al enviar el código.");
+      // alert("Ha ocurrido un error al enviar el código.");
     }
   };
 
@@ -149,7 +149,7 @@ const ResetPassword = () => {
     try {
       const formulario = new FormData();
       formulario.append("correo", emailText);
-      formulario.append("código", verificationCode);
+      formulario.append("codigo", verificationCode);
       verifyCode(formulario);
     } catch (error) {
       console.log(error);
@@ -220,7 +220,7 @@ const ResetPassword = () => {
       try {
         const formulario = new FormData();
         formulario.append("correo", emailText);
-        formulario.append("código", verificationCode);
+        formulario.append("codigo", verificationCode);
         formulario.append("nuevaContrasena", confirmPassword);
         changePass(formulario);
       } catch (error) {

@@ -11,6 +11,7 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
     const [btnEnabled,setBtnEnabled] = useState(false);
     const [verificationCode, setVerificationCode] = useState("");
     const [supportingText, setSupportingText] = useState("");
+    const [segundo, setSegundo] = useState(60)
 
     const [
         sendCode,
@@ -38,11 +39,14 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
     const handleEnviarCodigos = (e) => {
         e.preventDefault()
         try {
-          const {correo_electronico,nombre,apellido_paterno} = data;
+          // const {correo_electronico,nombre,apellido_paterno} = data;
           const formulario = new FormData();
-          formulario.append("correo", correo_electronico);
-          formulario.append("nombre", nombre);
-          formulario.append("ap_paterno", apellido_paterno);
+          // formulario.append("correo", correo_electronico);
+          // formulario.append("nombre", nombre);
+          // formulario.append("ap_paterno", apellido_paterno);
+          formulario.append("correo", "ricardorc26@est.fcyt.umss.edu.bo");
+          formulario.append("nombre", "asdf");
+          formulario.append("ap_paterno", "asd");
           sendCode(formulario);
           
         } catch (error) {
@@ -97,6 +101,19 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
     }
   }, [verLoading, verIsError, verSucess, verError, verData, setNForm]);
     
+  const countdown = () => {
+    if (segundo > 0) {
+        setSegundo(segundo-1); // Update 'segundo' using a callback
+        setTimeout(countdown, 1000); // Call countdown function again after 1 second
+    } else {
+        console.log("Countdown finished!"); // Handle countdown completion
+    }
+  };
+
+  useEffect(() => {
+    setSegundo(segundo-1)
+  },[segundo]);
+
   return (
     
     <div className='form-item'>
@@ -122,6 +139,9 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
             
             
         </form>
+        <p className='msj-confirm' style={{color: 'red'}}>
+            {/* {codeSucess ? `${segundo}` : ``} */}
+        </p>    
         <p className='msj-confirm' style={{color: 'green'}}>
             {verSucess ? `Correo verificado exitosamente.` : ``}
         </p>

@@ -8,7 +8,7 @@ import { RegistrarDatos15 } from "./RegistrarDatos15";
 
 
 const Registrarse = () => {
-  const [nForm, setNForm] = useState(0);
+  const [nForm, setNForm] = useState(1);
   const [data,setData] = useState({});
   const props = {
     setNForm,
