@@ -5,18 +5,16 @@
 
 .verificar {
     display: flex;
-    gap: 10px;
-    margin: 1rem 0rem;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .verificar input {
-    height: 40px;
+    width: 15rem;
     /* width: 18rem; */
 }
 
-.verificar-codigo-input{
-    padding: .375rem .75rem;
-}
+
 
 
 .avanzar {

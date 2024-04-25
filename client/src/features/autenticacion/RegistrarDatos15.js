@@ -5,15 +5,13 @@ import {
     useSendCodeRegistMutation,
   } from "./authSlice";
 
-export const RegistrarDatos15 = ({setNForm}) => {
+export const RegistrarDatos15 = ({setNForm,data}) => {
 
-    const [correo,setCorreo] = useState('ricardorc26@est.fcyt.umss.edu.bo')
-    const [nombre,setNombre] = useState('Ricardo')
-    const [paterno,setPaterno] = useState('Rojas')
 
     const [btnEnabled,setBtnEnabled] = useState(false);
     const [verificationCode, setVerificationCode] = useState("");
     const [supportingText, setSupportingText] = useState("");
+    const [segundo, setSegundo] = useState(60)
 
     const [
         sendCode,
@@ -41,15 +39,19 @@ export const RegistrarDatos15 = ({setNForm}) => {
     const handleEnviarCodigos = (e) => {
         e.preventDefault()
         try {
+          // const {correo_electronico,nombre,apellido_paterno} = data;
           const formulario = new FormData();
-          formulario.append("correo", correo);
-          formulario.append("nombre", nombre);
-          formulario.append("ap_paterno", paterno);
+          // formulario.append("correo", correo_electronico);
+          // formulario.append("nombre", nombre);
+          // formulario.append("ap_paterno", apellido_paterno);
+          formulario.append("correo", "ricardorc26@est.fcyt.umss.edu.bo");
+          formulario.append("nombre", "asdf");
+          formulario.append("ap_paterno", "asd");
           sendCode(formulario);
-          alert("Se envio correctamente los codigos a:"+{correo});
+          
         } catch (error) {
           console.log(error);
-          alert("Ha ocurrido un error al enviar el código.");
+          
         }
     };
 
@@ -75,7 +77,7 @@ export const RegistrarDatos15 = ({setNForm}) => {
     console.log("aqui verificamos los códigos");
     try {
       const formulario = new FormData();
-      formulario.append("correo", correo);
+      formulario.append("correo", data.correo_electronico);
       formulario.append("codigo", verificationCode);
       verifyCode(formulario);
       
@@ -99,11 +101,24 @@ export const RegistrarDatos15 = ({setNForm}) => {
     }
   }, [verLoading, verIsError, verSucess, verError, verData, setNForm]);
     
+  const countdown = () => {
+    if (segundo > 0) {
+        setSegundo(segundo-1); // Update 'segundo' using a callback
+        setTimeout(countdown, 1000); // Call countdown function again after 1 second
+    } else {
+        console.log("Countdown finished!"); // Handle countdown completion
+    }
+  };
+
+  useEffect(() => {
+    setSegundo(segundo-1)
+  },[segundo]);
+
   return (
     
     <div className='form-item'>
         <div className="verificar-correo-container">
-        <p>Su correo es: {correo},</p>
+        <p>Su correo es: {data.correo_electronico},</p>
         <p>por favor haga click en "Enviar Código".</p>
         <p className='required-label'>Verificar Correo</p>
         <form>
@@ -112,20 +127,32 @@ export const RegistrarDatos15 = ({setNForm}) => {
             placeholder='Codigo de verificación'
             type="text"
             onChange={handleVerificationCodeChange}
+            className='form-control'
             />
+            
             <button 
-                className='btn btn-azul'
+                className="btn btn-azul"
                 onClick={handleEnviarCodigos}>
                 Enviar Código
             </button>
             </div>
-            <button 
-                className='btn btn-verde'
-                onClick={handleSubmitVerificationCodeForm}>
-                Verificar
-            </button>
-              
+            
+            
         </form>
+        <p className='msj-confirm' style={{color: 'red'}}>
+            {/* {codeSucess ? `${segundo}` : ``} */}
+        </p>    
+        <p className='msj-confirm' style={{color: 'green'}}>
+            {verSucess ? `Correo verificado exitosamente.` : ``}
+        </p>
+        <p className='msj-confirm' style={{color: 'red'}}>
+            {verIsError ? `Código de verificación incorrecto.` : ``}
+        </p>
+        <button 
+            className={`btn btn-verde ${verificationCode.length !== 5 && "disabled"}`}
+            onClick={handleSubmitVerificationCodeForm}>
+            Verificar
+        </button>
         <div className='avanzar'>
                 <button className='btn btn-outline-primary anterior' 
                     onClick={() => setNForm((n) => n - 1)}
@@ -134,6 +161,7 @@ export const RegistrarDatos15 = ({setNForm}) => {
                 </button>
                 <button 
                     className={`btn btn-azul ${!btnEnabled && "disabled"}`}
+                    onClick={() => setNForm((n) => n + 1)}
                     >
                     Siguiente
                 </button> 

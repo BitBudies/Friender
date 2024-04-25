@@ -8,18 +8,19 @@ import { RegistrarDatos15 } from "./RegistrarDatos15";
 
 
 const Registrarse = () => {
-  const [nForm, setNForm] = useState(2);
-
+  const [nForm, setNForm] = useState(1);
+  const [data,setData] = useState({});
   const props = {
     setNForm,
     nForm,
+    data,
+    setData
   };
 
   return (
       <div className="page regist">
       <div class="registrarse-left">
           <h1 className='mb-4'><b>Friender</b></h1>
-          
           <h5><p>¡Enciende la diversión con Friender!</p></h5>
           <h5><p>Alquila amigos y crea momentos</p></h5>
           <h5><p>inolvidables.</p></h5>
