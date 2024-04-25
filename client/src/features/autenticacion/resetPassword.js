@@ -12,7 +12,7 @@ import { checkPassword } from "../../hooks/checkRegex";
 
 
 const ResetPassword = () => {
-  const [step, setStep] = useState(1); // control de pagina
+  const [step, setStep] = useState(3); // control de pagina
   const [submitClicked, setSubmitClicked] = useState(false);
 
   // ------------------------------Buscar email------------------------------
@@ -350,24 +350,33 @@ const ResetPassword = () => {
               {submitClicked && passwordError && (
                 <p style={{ color: "red" }}>{passwordError}</p>
               )}
+              {!passwordStatus.pass && passwordStatus.message &&
+                <p className="text-danger mw-100">{passwordStatus.message}</p>
+              }
               <p style={{color: '#999'}}>Mínimo 8 caracteres*</p>
 
             </div>
             <div className="mb-2 password-input">
             <p>Confirmar Contraseña*</p>
-              <input
-                type={showPassword1 ? "text" : "password"}
-                className="rep-cont"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
-                placeholder="Confirmar contraseña"
-              />
-              <span className="password-icon" onClick={toggleShowPassword1}>
-                {showPassword1 ? <FaEyeSlash /> : <FaEye />}
-              </span>
+              <div className={passwordStatus.pass && confirmPassword === password ? 'password-match' : 'password-no-match'} >
+                <input
+                  type={showPassword1 ? "text" : "password"}
+                  className="rep-cont"
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+                  placeholder="Confirmar contraseña"
+                  disabled={!passwordStatus.pass}
+                />
+                <span className="password-icon" onClick={toggleShowPassword1}>
+                  {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
+              {/* Para mensaje de que las contrase;as no son iguales */}
               {submitClicked && confirmPasswordError && (
                 <p style={{ color: "red" }}>{confirmPasswordError}</p>
               )}
+              
+
             </div>
             <div className="b-confirm">
               <button type="submit" className="btn btn-azul" onClick={handleSubmitPasswordForm}>
