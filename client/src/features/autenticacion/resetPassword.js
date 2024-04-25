@@ -186,6 +186,14 @@ const ResetPassword = () => {
     }
   }, [verLoading, verIsError, verSucess, verError]);
 
+  useEffect(() => {
+    if (step === 4) {
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 2000);
+    }
+  }, [step]);
+
 
   //PASSWORD CONFIRMATION
   const [
@@ -263,8 +271,9 @@ const ResetPassword = () => {
         <div className="step-1">
           <h1>Restablecer contraseña</h1>
           <div className="para-form">
-            <h3>Ingresa tu correo electrónico o nombre de usuario</h3>
+            <h3>Ingresa tu correo electrónico</h3>
             <h3>para buscar tu cuenta.</h3>
+            {/* <h3>Ingresa tu correo electrónico para buscar tu cuenta</h3> */}
             <input
               type="email"
               name="user_email"
@@ -298,7 +307,7 @@ const ResetPassword = () => {
       {step === 2 && (
         <div className="step-2 step-1">
           <h1>Código de verificación</h1>
-          <h3>Ingrese el código de verificación</h3>
+          <h3>Ingresar el código de verificación.</h3>
           <div>
           <input
             type="text"

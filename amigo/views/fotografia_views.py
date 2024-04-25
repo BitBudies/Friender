@@ -171,6 +171,9 @@ def pruebaApis(request):
     if intereses_existentes.count() != len(intereses):
         return Response({"error": "No se encontro los intereses en la base de datos"}, status=status.HTTP_404_NOT_FOUND)
     #-----------------------------------imagenes--------------------------------------
+    print(intereses,"intereses")
+
+    
 
     imagenes = request.FILES.getlist("imagenes", [])
     if not imagenes:
