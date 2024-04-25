@@ -10,7 +10,7 @@ import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { checkPassword } from "../../hooks/checkRegex";
 
 const ResetPassword = () => {
-  const [step, setStep] = useState(1); // control de pagina
+  const [step, setStep] = useState(3); // control de pagina
   const [submitClicked, setSubmitClicked] = useState(false);
 
   // ------------------------------Buscar email------------------------------
@@ -344,6 +344,7 @@ const ResetPassword = () => {
           <div className="para-form">
             <div className="mb-2 password-input">
               <p>Contraseña*</p>
+              <div className={passwordStatus.pass ? 'password-match' : 'password-no-match'} > 
               <input
                 type={showPassword ? "text" : "password"}
                 className="cont"
@@ -353,7 +354,7 @@ const ResetPassword = () => {
               />
               <span className="password-icon" onClick={toggleShowPassword}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
+              </span></div>
               {submitClicked && passwordError && (
                 <p style={{ color: "red" }}>{passwordError}</p>
               )}
