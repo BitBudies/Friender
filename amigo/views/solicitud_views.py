@@ -236,23 +236,23 @@ def obtenerSolicitudesAmigo(request):
 
     return Response(data)
 
-
-class AcceptSolicitud(APIView):
-    def post(self, request, solicitud_alquiler_id):
-        try:
-            # Solo aceptar solicitud si esta en estado Enviado
-            solicitud = solicitud_alquiler.objects.get(
-                pk=solicitud_alquiler_id, estado_solicitud="E"
-            )
-        except solicitud_alquiler.DoesNotExist:
-            return Response(
-                {"error": "Solicitud no encontrada o no esta enviada"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-        # Agregar control para que solo el amigo pueda cambiar la solicitud
-        solicitud.estado_solicitud = "A"
-        solicitud.save()
-        return Response({"mensaje": "Solicitud aceptada correctamente"})
+@api_view(["POST"])
+def AcceptSolicitud(request, solicitud_alquiler_id):
+    print(f"alguien quiere aceptar una solicitud {solicitud_alquiler_id}")
+    try:
+        # Solo aceptar solicitud si esta en estado Enviado
+        solicitud = solicitud_alquiler.objects.get(
+            pk=solicitud_alquiler_id, estado_solicitud="E"
+        )
+    except solicitud_alquiler.DoesNotExist:
+        return Response(
+            {"error": "Solicitud no encontrada o no esta enviada"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+    # Agregar control para que solo el amigo pueda cambiar la solicitud
+    solicitud.estado_solicitud = "A"
+    solicitud.save()
+    return Response({"mensaje": "Solicitud aceptada correctamente"})
 
 
 class RechazarSolicitud(APIView):
@@ -276,6 +276,10 @@ class RechazarSolicitud(APIView):
 class SolicitudAlquilerDetailAPIView(APIView):
     def get(self, request, solicitud_alquiler_id):
         solicitud = get_object_or_404(solicitud_alquiler, pk=solicitud_alquiler_id)
+        fotografia_amigo = Fotografia.objects.filter(cliente=solicitud.cliente, prioridad=0).first()
+        imagen_base64 = None
+        if fotografia_amigo:
+            imagen_base64 = base64.b64encode(fotografia_amigo.imagenBase64).decode('utf-8')
         data = {
             "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
             "cliente": solicitud.cliente.cliente_id,  # Cambia esto si deseas el nombre del cliente
@@ -292,6 +296,7 @@ class SolicitudAlquilerDetailAPIView(APIView):
             "timestamp_registro": solicitud.timestamp_registro.strftime(
                 "%Y-%m-%d %H:%M:%S"
             ),
+            "imagenBase64": imagen_base64
         }
         return Response(data)
 
