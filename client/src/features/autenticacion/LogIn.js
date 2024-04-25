@@ -59,7 +59,9 @@ const LogIn = () => {
     if (isError) {
       setDisableBtnLoading(false);
       setShowFeedback(true);
-      console.log(responseError);
+      //Cambios AQUI
+      console.log("Mi valor es: " + response);
+      //Hasta AQUI
       setFeedbackText(responseError.data.error);
     }
   }, [

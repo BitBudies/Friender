@@ -243,7 +243,7 @@ const ResetPassword = () => {
           <div className="para-form">
             <h3>Ingresa tu correo electrónico o nombre de usuario</h3>
             <h3>para buscar tu cuenta.</h3>
-            <h3>Ingresa tu correo electrónico para buscar tu cuenta</h3>
+            {/* <h3>Ingresa tu correo electrónico para buscar tu cuenta</h3> */}
             <input
               type="email"
               name="user_email"
