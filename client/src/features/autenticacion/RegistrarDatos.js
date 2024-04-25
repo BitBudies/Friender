@@ -84,11 +84,11 @@ const RegistrarDatos = ({ setNForm, data , setData}) => {
       const minAge = 18;
       const maxAge = 80;
 
-      /*
+      
       if (isNaN(birthDate) || birthDate > currentDate || birthDate.getFullYear() > currentDate.getFullYear() - minAge || birthDate.getFullYear() < currentDate.getFullYear() - maxAge) {
         newErrors.fecha_nacimiento = "Debe ser mayor de edad";
         isValid = false;
-      }*/
+      }
     }
     // Validar cada campo y almacenar los errores
     Object.entries(values).forEach(([key, value]) => {
