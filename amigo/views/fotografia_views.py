@@ -1,28 +1,12 @@
 import base64
-import os
-from django.db.models import Avg
-from django.core.paginator import Paginator
 from django.http import JsonResponse
-
-from django.db.models import Q
 from rest_framework.views import APIView
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-
-from django.db.models import Q
-from django.contrib.auth.models import User
-
-from amigo.models.clienteInteres import ClienteInteres
-from amigo.models.interes import Interes
-from amigo.serializers.cliente_serializer import ClienteSerializer
-from amigo.serializers.interes_serializer import InteresSerializer
-
 from ..models.clienteDB import Cliente
 from ..models.fotografiaDB import Fotografia
-
 
 
 class FotografiaPorID(APIView):
@@ -156,117 +140,4 @@ def SubirFotografiaDef(request):
             "message": f"Se guardo correctamente la imagen {tipoooo}, id: {fotografiaNew.fotografia_id}"
         },
         status=status.HTTP_201_CREATED,
-    )
-
-
-@csrf_exempt
-@api_view(["POST"])
-def crearClienteConFotografias(request):
-
-    # --------------------------------------------verificar archivos----------------------------------------------
-    imagenesSize = len(request.FILES)
-    if imagenesSize < 1 or imagenesSize > 7:
-        return JsonResponse(
-            {"error": f"Se debe de subir de 1 a 7 imagenes"},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
-
-    for _, fileContent in request.FILES.items():
-        fileTipe = fileContent.content_type
-        if fileTipe != "image/jpeg" and fileTipe != "image/png":
-            return JsonResponse(
-                {"error": f"Solo se admiten imagenes jpeg, jpg y png"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-    # --------------------------------------------verificar archivos----------------------------------------------
-
-    for field in [
-        "nombre",
-        "apellidoPaterno",
-        "apellidoMaterno",
-        "fechaNacimiento",
-        "genero",
-        "ubicacion",
-        "usuario",
-        "correo",
-        "contrasena",
-        "descripcion",
-        "intereses",
-    ]:
-        if field not in request.POST or not request.POST[field]:
-            return JsonResponse(
-                {"error": f"El parametro: {field} es obligatorio"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-    # TODO verificar intereses al menos 1?
-
-    # TODO crear cliente
-    nombre = request.data.get("nombre")
-    ap_paterno = request.data.get("ap_paterno")
-    ap_materno = request.data.get("ap_materno")
-    ci = request.data.get("ci")
-    fecha_nacimiento = request.data.get("fecha_nacimiento")
-    genero = request.data.get("genero")
-    direccion = request.data.get("direccion")
-    descripcion = request.data.get("descripcion")
-    usuario = request.data.get("username")
-    correo = request.data.get("correo")
-    contrasena = request.data.get("password")
-
-    if not all(
-        [
-            nombre,
-            ap_paterno,
-            ci,
-            fecha_nacimiento,
-            genero,
-            direccion,
-            descripcion,
-            usuario,
-            correo,
-            contrasena,
-        ]
-    ):
-        return Response(
-            {"error": "Todos los campos son requeridos"},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
-      
-    if User.objects.filter(Q(username=usuario) | Q(correo=correo)).exists():
-        return Response(
-            {"error": "El nombre de usuario o el correo ya están en uso."}, status=400
-        )
-
-    user = User.objects.create_user(username=usuario, email=correo, password=contrasena)
-
-    cliente = Cliente.objects.create(
-        nombre=nombre,
-        ap_paterno=ap_paterno,
-        ap_materno=ap_materno,
-        ci=ci,
-        fecha_nacimiento=fecha_nacimiento,
-        genero=genero,
-        direccion=direccion,
-        descripcion=descripcion,
-        usuario=user,
-        correo=correo,
-        contrasena=make_password(contrasena),
-        estado="A",
-    )
-
-    for prioridad, fileContent in request.FILES.items():
-        foto = Fotografia(
-            # cliente = cliente #crear las imagenes para el cliente
-            cliente_id=cliente.cliente_id,  # TODO temporal jeje
-            tipoImagen="jpeg" if fileContent.content_type == "image/jpeg" else "png,",
-            prioridad=prioridad,
-            imagenBase64=fileContent.read(),
-            estado_fotografia="P",
-        )
-        foto.save()
-        print(foto)
-
-    return JsonResponse(
-        {"message": f"Se creo el cliente!"}, status=status.HTTP_201_CREATED
     )
