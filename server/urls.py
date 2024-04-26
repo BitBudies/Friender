@@ -67,7 +67,7 @@ urlpatterns = [
     path('api/cliente/logout', Logout.as_view()),
     path('api/cliente/login', Login.as_view()),
     # probando postsssss
-    path('api/solicitud', EnviarSolicitud.as_view()),
+    path('api/solicitud', EnviarSolicitud),
     
     # Amigo
     path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view()),
