@@ -27,7 +27,7 @@ from amigo.views.gusto_views import obtenerGustos
 from amigo.views.interes_views import obtenerIntereses
 from amigo.views.login_views import LoginView
 from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, SolicitudAlquilerDetailAPIView, VerificarSolicitudes, obtenerSolicitudesAmigo
-from amigo.views.utils import enviar_correo_prueba, obtener_csrf
+from amigo.views.utils import obtener_csrf
 from amigo.views.login import Login
 from amigo.views.cerrarSesion import Logout
 
@@ -93,7 +93,6 @@ urlpatterns = [
 
     # Credenciales
     path('api/login', LoginView),
-    path('api/test/correo', enviar_correo_prueba, name = 'correo'),
     path('api/cambiarContrasena', cambiarContrasena),
     path('api/enviarCodigoRestablecimiento', enviarCorreoCambioContrasena),
     path('api/verificarCodigosRestablecimiento', verificarCodigoCambioContrasena),

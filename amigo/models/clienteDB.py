@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from datetime import date
 
 class Cliente(models.Model):
     GENERO_OPCIONES = (
@@ -31,3 +31,8 @@ class Cliente(models.Model):
 
     def getFullName(self):
         return f"{self.nombre.capitalize()} {self.ap_paterno.capitalize()} {self.ap_materno.capitalize() if self.ap_materno else ''}"
+    
+    def calcular_edad(self,):
+        today = date.today()
+        age = today.year - self.fecha_nacimiento.year - ((today.month, today.day) < (self.fecha_nacimiento.month, self.fecha_nacimiento.day))
+        return age

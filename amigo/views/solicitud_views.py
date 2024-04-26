@@ -9,7 +9,6 @@ from ..models import Cliente, Amigo, solicitud_alquiler
 from ..serializers.solicitud_alquiler_serializer import solicitud_alquiler
 from ..models.solicitud_alquilerDB import solicitud_alquiler
 from ..models.calificacionDB import Calificacion
-from .utils import calcular_edad
 from datetime import date
 from datetime import timedelta
 from django.db.models import Avg
@@ -26,6 +25,7 @@ from rest_framework.authentication import TokenAuthentication
 
 def parseDate(year, month, day):
     return year * 365 + month * 30 + day
+
 
 @api_view(["POST"])
 @authentication_classes([TokenAuthentication])
@@ -140,7 +140,7 @@ class GetSolicitudesCliente(APIView):
             )
         data = {
             "cliente_id": cliente.cliente_id,
-            "nombre_completo": f"{cliente.nombre} {cliente.ap_paterno} {cliente.ap_materno}".title(),
+            "nombre_completo": cliente.getFullName(),
             "nombre": cliente.nombre.title(),
             "ap_paterno": cliente.ap_paterno.title(),
             "ap_materno": cliente.ap_materno.title(),
@@ -282,10 +282,10 @@ class SolicitudAlquilerDetailAPIView(APIView):
             )
         data = {
             "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
-            "cliente": solicitud.cliente.cliente_id,  # Cambia esto si deseas el nombre del cliente
-            "nombre_cliente": f"{solicitud.cliente.nombre} {solicitud.cliente.ap_paterno} {solicitud.cliente.ap_materno}".title(),
-            "edad_cliente": calcular_edad(solicitud.cliente.fecha_nacimiento),
-            "amigo": solicitud.amigo.amigo_id,  # Cambia esto si deseas el nombre del amigo
+            "cliente": solicitud.cliente.cliente_id,
+            "nombre_cliente": solicitud.cliente.getFullName(),
+            "edad_cliente": solicitud.cliente.calcular_edad(),
+            "amigo": solicitud.amigo.amigo_id,
             "lugar": solicitud.lugar,
             "descripcion": solicitud.descripcion,
             "fecha_inicio": solicitud.fecha_inicio,
@@ -299,8 +299,6 @@ class SolicitudAlquilerDetailAPIView(APIView):
             "imagenBase64": imagen_base64,
         }
         return Response(data)
-
-    # dar cliente y amigo , si existen solicitudes enviadas devuelve true sino false
 
 
 class VerificarSolicitudes(APIView):

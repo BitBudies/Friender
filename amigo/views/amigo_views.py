@@ -7,7 +7,6 @@ from rest_framework import status
 
 from amigo.models.fotografiaDB import Fotografia
 from ..models import Amigo, Calificacion 
-from .utils import calcular_edad
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from django.shortcuts import get_object_or_404
@@ -31,13 +30,13 @@ class AmigoDetailById(APIView):
         data = {
             "amigo_id": amigo.amigo_id,
             "precio_amigo": amigo.precio,
-            "nombre_completo": f"{amigo.cliente.nombre} {amigo.cliente.ap_paterno} {amigo.cliente.ap_materno}".title(),
+            "nombre_completo": amigo.cliente.getFullName(),
             "nombre": amigo.cliente.nombre.title(),
             "ap_paterno": amigo.cliente.ap_paterno.title(),
             "ap_materno": amigo.cliente.ap_materno.title(),
             "ci": amigo.cliente.ci,
             "fecha_nacimiento": amigo.cliente.fecha_nacimiento,
-            "edad": calcular_edad(amigo.cliente.fecha_nacimiento),
+            "edad": amigo.cliente.calcular_edad(),
             "genero": amigo.cliente.genero,
             "direccion": amigo.cliente.direccion,
             "descripcion": amigo.cliente.descripcion,
@@ -92,12 +91,12 @@ class AmigoListLimitPaginator(APIView):
             amigo_data = {
                 "amigo_id": amigo.amigo_id,
                 "precio_amigo": amigo.precio,
-                "nombre_completo": f"{amigo.cliente.nombre.title()} {amigo.cliente.ap_paterno.title()} {amigo.cliente.ap_materno.title()}",
+                "nombre_completo": amigo.cliente.getFullName(),
                 "nombre": amigo.cliente.nombre.title(),
                 "ap_paterno": amigo.cliente.ap_paterno.title(),
                 "ap_materno": amigo.cliente.ap_materno.title(),
                 "fecha_nacimiento": amigo.cliente.fecha_nacimiento,
-                "edad": calcular_edad(amigo.cliente.fecha_nacimiento),
+                "edad": amigo.cliente.calcular_edad(),
                 "genero": amigo.cliente.genero,
                 "direccion": amigo.cliente.direccion,
                 "descripcion": amigo.cliente.descripcion,

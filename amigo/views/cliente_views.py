@@ -36,9 +36,6 @@ from ..models import Cliente
 from ..models import Codigos   
 
 
-from .utils import calcular_edad
-
-
 from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -58,17 +55,17 @@ class ClienteDetailById(APIView):
             return Response({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
         data = {
             "cliente_id": cliente.cliente_id,
-            "nombre_completo": f"{cliente.nombre} {cliente.ap_paterno} {cliente.ap_materno}".title(),
+            "nombre_completo": cliente.getFullName(),
             "nombre": cliente.nombre.title(),
             "ap_paterno": cliente.ap_paterno.title(),
             "ap_materno": cliente.ap_materno.title(),
             "ci": cliente.ci,
             "fecha_nacimiento": cliente.fecha_nacimiento,
-            "edad": calcular_edad(cliente.fecha_nacimiento),
+            "edad": cliente.calcular_edad(),
             "genero": cliente.genero,
             "direccion": cliente.direccion,
             "descripcion": cliente.descripcion,
-            "usuario": cliente.usuario,
+            "usuario": cliente.user.username,
             "correo": cliente.correo,
             "dinero": cliente.dinero,
             "estado": cliente.estado,
@@ -101,12 +98,12 @@ class ClienteListLimitPaginator(APIView):
         for cliente in page_obj:
             cliente_data = {
                 "cliente_id": cliente.cliente_id,
-                "nombre_completo": f"{cliente.nombre} {cliente.ap_paterno} {cliente.ap_materno}".title(),
+                "nombre_completo": cliente.getFullName(),
                 "nombre": cliente.nombre.title(),
                 "ap_paterno": cliente.ap_paterno.title(),
                 "ap_materno": cliente.ap_materno.title(),
                 "fecha_nacimiento": cliente.fecha_nacimiento,
-                "edad": calcular_edad(cliente.fecha_nacimiento),
+                "edad": cliente.calcular_edad(),
                 "genero": cliente.genero,
                 "descripcion": cliente.descripcion,
                 "dinero": cliente.dinero,
