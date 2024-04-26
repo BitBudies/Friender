@@ -20,9 +20,9 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
-from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, ClienteRegistrar, ClienteVerificar,VerificarCorreoUsuario, EnviarCodigos, VerificarCodigo, obtenerInformacionCliente
+from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, RegistrarCliente,VerificarCorreoUsuario, EnviarCodigos, VerificarCodigo, obtenerInformacionCliente
 from amigo.views.edicion_views import cambiarContrasena, enviarCorreoCambioContrasena, findEmail, verificarCodigoCambioContrasena
-from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef, pruebaApis
+from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef
 from amigo.views.gusto_views import obtenerGustos
 from amigo.views.interes_views import obtenerIntereses
 from amigo.views.login_views import LoginView
@@ -47,16 +47,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Cliente
-    path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view()),
+    path('api/cliente/<int:cliente_id>/', ClienteDetailById),
     path('api/cliente/informacion', obtenerInformacionCliente),
     path('api/cliente/solicitudes/<int:cliente_id>/', GetSolicitudesCliente.as_view()),
     path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view()),
     path('api/amigo/solicitudes/recibidas', obtenerSolicitudesAmigo),
     
     #test no borrar 
-    path('api/cliente/registrar/', ClienteRegistrar.as_view()),
-    path('api/cliente/activar/', ClienteVerificar.as_view()),
-    path('api/test/pruebaApi', pruebaApis),
+    path('api/test/pruebaApi', RegistrarCliente),
     path('api/get/csrf', obtener_csrf),
     
     #nuevas
