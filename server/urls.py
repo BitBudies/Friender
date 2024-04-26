@@ -70,8 +70,8 @@ urlpatterns = [
     path('api/solicitud', EnviarSolicitud),
     
     # Amigo
-    path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view()),
-    path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator.as_view()),
+    path('api/amigo/<int:amigo_id>/', AmigoDetailById),
+    path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator),
 
     # Solicitud
     path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud),
