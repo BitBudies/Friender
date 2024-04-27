@@ -85,7 +85,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
     if (!password.length) {
       setPasswordStatus({
         pass: false,
-        message: "El campo contraseña es obligatorio",
+        message:  "El campo Contraseña es obligatorio" ,
       });
       isValid = false;
     }

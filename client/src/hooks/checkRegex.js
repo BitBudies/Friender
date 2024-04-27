@@ -6,7 +6,7 @@ const checkPassword = () => {
             return {pass : false,message : "La contraseña debe ser mayor a 8 caracteres"}
         }
         if (!password.match(/[a-z]/g)){
-            return {pass : false, message : "La contraseña debe tener al menos un carácter"}
+            return {pass : false, message : "La contraseña debe tener al menos una letra en minúscula"}
         }
         if (!password.match(/[A-Z]/g)){
             return {pass : false, message : "La contraseña debe tener al menos una mayúscula"}
