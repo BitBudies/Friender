@@ -9,4 +9,4 @@ class ClienteInteres(models.Model):
     interes = models.ForeignKey(Interes, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.clienteInteres_id}"
+        return f"A {self.cliente.getFullName} le interesa {self.interes.nombre}"

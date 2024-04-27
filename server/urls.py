@@ -20,14 +20,14 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
-from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, ClienteRegistrar, ClienteVerificar,VerificarCorreoUsuario, EnviarCodigos, VerificarCodigo, obtenerInformacionCliente
+from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, RegistrarCliente,VerificarCorreoUsuario, EnviarCodigos, VerificarCodigo, obtenerInformacionCliente
 from amigo.views.edicion_views import cambiarContrasena, enviarCorreoCambioContrasena, findEmail, verificarCodigoCambioContrasena
-from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef, pruebaApis
+from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef
 from amigo.views.gusto_views import obtenerGustos
 from amigo.views.interes_views import obtenerIntereses
 from amigo.views.login_views import LoginView
 from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, SolicitudAlquilerDetailAPIView, VerificarSolicitudes, obtenerSolicitudesAmigo
-from amigo.views.utils import enviar_correo_prueba, obtener_csrf
+from amigo.views.utils import obtener_csrf
 from amigo.views.login import Login
 from amigo.views.cerrarSesion import Logout
 
@@ -47,16 +47,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Cliente
-    path('api/cliente/<int:cliente_id>/', ClienteDetailById.as_view()),
+    path('api/cliente/<int:cliente_id>/', ClienteDetailById),
     path('api/cliente/informacion', obtenerInformacionCliente),
     path('api/cliente/solicitudes/<int:cliente_id>/', GetSolicitudesCliente.as_view()),
     path('api/clientes/pagina/<int:page_number>/limite/<int:limite>', ClienteListLimitPaginator.as_view()),
     path('api/amigo/solicitudes/recibidas', obtenerSolicitudesAmigo),
     
     #test no borrar 
-    path('api/cliente/registrar/', ClienteRegistrar.as_view()),
-    path('api/cliente/activar/', ClienteVerificar.as_view()),
-    path('api/test/pruebaApi', pruebaApis),
+    path('api/test/pruebaApi', RegistrarCliente),
     path('api/get/csrf', obtener_csrf),
     
     #nuevas
@@ -67,14 +65,14 @@ urlpatterns = [
     path('api/cliente/logout', Logout.as_view()),
     path('api/cliente/login', Login.as_view()),
     # probando postsssss
-    path('api/solicitud', EnviarSolicitud.as_view()),
+    path('api/solicitud', EnviarSolicitud),
     
     # Amigo
-    path('api/amigo/<int:amigo_id>/', AmigoDetailById.as_view()),
-    path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator.as_view()),
+    path('api/amigo/<int:amigo_id>/', AmigoDetailById),
+    path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator),
 
     # Solicitud
-    path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud.as_view()),
+    path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud),
     path('api/solicitud/rechazar/<int:solicitud_alquiler_id>', RechazarSolicitud.as_view()),
     path('api/solicitud/informacion/<int:solicitud_alquiler_id>', SolicitudAlquilerDetailAPIView.as_view()),
     path('api/solicitud/verificar/<int:cliente_idR>/<int:amigo_idR>/', VerificarSolicitudes.as_view()),
@@ -93,7 +91,6 @@ urlpatterns = [
 
     # Credenciales
     path('api/login', LoginView),
-    path('api/test/correo', enviar_correo_prueba, name = 'correo'),
     path('api/cambiarContrasena', cambiarContrasena),
     path('api/enviarCodigoRestablecimiento', enviarCorreoCambioContrasena),
     path('api/verificarCodigosRestablecimiento', verificarCodigoCambioContrasena),
