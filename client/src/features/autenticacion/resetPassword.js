@@ -352,7 +352,7 @@ const ResetPassword = () => {
                 onChange={onPasswordChange}
                 placeholder="Contraseña"
               />
-              <span className="password-icon" onClick={toggleShowPassword}>
+              <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span></div>
               {submitClicked && passwordError && (
@@ -375,7 +375,7 @@ const ResetPassword = () => {
                   placeholder="Confirmar contraseña"
                   disabled={!passwordStatus.pass}
                 />
-                <span className="password-icon" onClick={toggleShowPassword1}>
+                <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword}>
                   {showPassword1 ? <FaEyeSlash /> : <FaEye />}
                 </span>
               </div>

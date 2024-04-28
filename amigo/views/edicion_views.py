@@ -17,7 +17,7 @@ def findEmail(request):
     user_or_email = request.POST.get("user_or_email", None)
     if not user_or_email:
         return Response(
-            {"error": "El correo o nombre es obligatorio"},
+            {"error": "El campo es obligatorio"},
             status=status.HTTP_400_BAD_REQUEST,
         )
     try:
