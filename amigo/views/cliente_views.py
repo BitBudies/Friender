@@ -26,6 +26,7 @@ from ..models import Cliente
 from ..models import Codigos
 from django.core.mail import send_mail
 from .utils import correo_valido
+from django.utils import timezone
 
 
 @api_view(["GET"])
@@ -156,11 +157,18 @@ class EnviarCodigos(APIView):
 
         # comentado para hacer pruebas de los codigos
 
-        if Codigos.objects.filter(correo=correo).exists():
-            return Response({"mensage": "el correo ya tiene unos codigos activos"}, status=status.HTTP_400_BAD_REQUEST)
+        codigoExistente = Codigos.objects.filter(correo=correo).first()
+        if codigoExistente:
+            tiempo = timezone.now() - codigoExistente.timestamp_registro
+            if tiempo.total_seconds() < 60:
+                tiempoRestante =  60 - int(tiempo.total_seconds())
+                return Response(
+                    {"error": f"Debe esperar {tiempoRestante} segundos para enviar otro codigo de verificacion"},
+                    status=status.HTTP_429_TOO_MANY_REQUESTS,
+                )
         
         
-
+        
         codigo = "".join(random.choices(string.ascii_uppercase + string.digits, k=5))
         asunto = f"Tu código: {codigo}"
         mensaje = f"Hola: {nombre} {ap_paterno}, \nTu código de verificación de Friender es: {codigo} . \n\n Usalo para acceder a tu cuenta. \n Si no solicitaste esto, simplemente ignora este mensaje. \n\n Saludos, \n El equipo de Friender"
