@@ -19,6 +19,7 @@ import ResetPassword from './features/autenticacion/resetPassword';
 import RecuperarCuenta from './features/autenticacion/RecuperarCuenta';
 import { RegistrarDatos15 } from './features/autenticacion/RegistrarDatos15';
 import {DayezaPractica} from './features/autenticacion/DayezaPractica';
+import NewPassword from './features/autenticacion/newPassword'
 
 function App() {
   const {clientId,setUserData} = useGlobalContext();
@@ -46,6 +47,7 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='/amigos/page/:n_page' element={<ListaAmigos/>}/>
           <Route path='/amigos/:id_amigo' element={<PerfilAmigo/>}/>
+          <Route path='/new-password/:tokencito' element={<NewPassword/>}/>
           <Route path='/login' element= {<LogIn/>}/>
           <Route path='/perfil' element={<Perfil/>}/>
           <Route path='/usuario/solicitud_pendiente/:id_solicitud' element={<SolicitudDetalles/>}/>

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import date
 
 
 class Cliente(models.Model):
@@ -30,4 +31,16 @@ class Cliente(models.Model):
         return f"{self.cliente_id} {self.nombre} {self.ap_paterno} {self.ap_materno}"
 
     def getFullName(self):
-        return f"{self.nombre.capitalize()} {self.ap_paterno.capitalize()} {self.ap_materno.capitalize()}"
+        return f"{self.nombre.capitalize()} {self.ap_paterno.capitalize()} {self.ap_materno.capitalize() if self.ap_materno else ''}"
+
+    def calcular_edad(self):
+        today = date.today()
+        age = (
+            today.year
+            - self.fecha_nacimiento.year
+            - (
+                (today.month, today.day)
+                < (self.fecha_nacimiento.month, self.fecha_nacimiento.day)
+            )
+        )
+        return age

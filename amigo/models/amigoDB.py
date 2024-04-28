@@ -1,12 +1,9 @@
 from django.db import models
 from .clienteDB import Cliente
 
+
 class Amigo(models.Model):
-    ESTADOS_AMIGO = (
-        ('A', 'Activo'),
-        ('O', 'Ocupado'),
-        ('I', 'Inactivo')
-    )
+    ESTADOS_AMIGO = (("A", "Activo"), ("O", "Ocupado"), ("I", "Inactivo"))
     amigo_id = models.BigAutoField(primary_key=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     precio = models.BigIntegerField()

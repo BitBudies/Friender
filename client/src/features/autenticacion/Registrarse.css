@@ -1,4 +1,4 @@
-.registrarse-container{
+/* .registrarse-container{
   position: relative;
   width: 100vw;
   min-height: calc(100vh - var(--navbar-height));
@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
   gap: 5rem;
-}
+} */
 
 
 .regist{
@@ -15,6 +15,7 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  border: 2px solid black;
 }
 
 
@@ -43,8 +44,10 @@
 
   .registrarse-right{
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 50%;
-    height: 100%;
   }
 
   .registrarse-right-container{
@@ -84,7 +87,6 @@
     width: 300%;
     height: 100%;
     display: flex;
-    gap: 0rem;
     justify-content: space-around;
     transition: 1s;
   }

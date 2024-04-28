@@ -3,6 +3,7 @@ import "./Formulario.css"
 import { RxCross2 } from "react-icons/rx";
 import { useEnviarSolicitudMutation } from './solicitudesSlice';
 import {useGlobalContext} from "../../context"
+import { useCookies } from "react-cookie";
 
 const defaultValues = {
   fecha_inicio : '',
@@ -14,6 +15,8 @@ const defaultValues = {
 
 
 const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStatus}) => {
+  const [cookies] = useCookies(["token"]);
+  const token = cookies.token;
   const {clientId : cliente_id} = useGlobalContext();
   const [formData,setFormData] = useState(defaultValues);
 
@@ -26,9 +29,8 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
 
   const handleSubmit = async() => {
     setDisableBtn(true);
-    const cliente_id = 4
-    const body = {amigo_id, cliente_id,...formData,precio: formData.duracion * precio}
-    await send(body)
+    const body = {amigo_id,...formData,precio: formData.duracion * precio}
+    await send({data:body, token:token})
   }
 
   const handleChange = (e) => {

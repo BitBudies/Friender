@@ -1,4 +1,3 @@
-
 import base64
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -10,7 +9,6 @@ from ..models import Cliente, Amigo, solicitud_alquiler
 from ..serializers.solicitud_alquiler_serializer import solicitud_alquiler
 from ..models.solicitud_alquilerDB import solicitud_alquiler
 from ..models.calificacionDB import Calificacion
-from .utils import calcular_edad
 from datetime import date
 from datetime import timedelta
 from django.db.models import Avg
@@ -29,113 +27,106 @@ def parseDate(year, month, day):
     return year * 365 + month * 30 + day
 
 
-class EnviarSolicitud(APIView):
-    def post(self, request, format=None):
-        datos_recibidos = request.data
+@api_view(["POST"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def EnviarSolicitud(request):
+    user = request.user
+    cliente = get_object_or_404(Cliente, user=user)
+    datos_recibidos = request.data
 
-        required_fields = [
-            "cliente_id",
-            "amigo_id",
-            "lugar",
-            "descripcion",
-            "fecha_inicio",
-            "hora_inicio",
-            "duracion",
-            "precio",
-        ]
-        for field in required_fields:
-            if field not in datos_recibidos:
-                return Response(
-                    {"error": f"El campo {field} es requerido"},
-                    status=status.HTTP_200_OK,
-                )
-
-        # Verificar si el cliente existe
-        try:
-            cliente = Cliente.objects.get(pk=datos_recibidos["cliente_id"])
-        except Cliente.DoesNotExist:
+    required_fields = [
+        "amigo_id",
+        "lugar",
+        "descripcion",
+        "fecha_inicio",
+        "hora_inicio",
+        "duracion",
+        "precio",
+    ]
+    for field in required_fields:
+        if field not in datos_recibidos:
             return Response(
-                {"error": "El cliente no existe"}, status=status.HTTP_404_NOT_FOUND
+                {"error": f"El campo {field} es requerido"},
+                status=status.HTTP_200_OK,
             )
 
-        # Verificar si el amigo existe
-        try:
-            amigo = Amigo.objects.get(pk=datos_recibidos["amigo_id"])
-        except Amigo.DoesNotExist:
-            return Response(
-                {"error": "El amigo no existe"}, status=status.HTTP_400_BAD_REQUEST
-            )
-        # Verificar que la duracion sea mayor a cero
-        duracion = int(datos_recibidos["duracion"])
-        if duracion <= 0:
-            return Response(
-                {"error": "La duración debe ser mayor a 0"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        # Verificar que maximo sea 8 horas
-        # duracion_horas = int(datos_recibidos['duracion'])
-        if int(datos_recibidos["duracion"]) > 8:
-            return Response(
-                {"error": "La duración máxima permitida es de 8 horas"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        descripcion = datos_recibidos["descripcion"]
-        if len(descripcion) < 30:
-            return Response(
-                {"error": "La descripción debe tener al menos 30 caracteres"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        elif len(descripcion) > 500:
-            return Response(
-                {"error": "La descripción no puede tener más de 500 caracteres"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        # Verificar que sea fecha valida
-
-        fecha_ini = date.fromisoformat(datos_recibidos["fecha_inicio"])
-        today = date.today()
-
-        valido = fecha_ini > today
-
-        if not valido:
-            return Response(
-                {"error": f"La fecha {fecha_ini} no es válida"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-
-        today_14 = today + timedelta(days=14)
-
-        if fecha_ini > today_14:
-            return Response(
-                {"error": f"La fecha {fecha_ini} no debe pasar los 14 días"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-
-        try:
-            nueva_solicitud = solicitud_alquiler(
-                cliente_id=cliente.cliente_id,
-                amigo_id=amigo.amigo_id,
-                lugar=datos_recibidos["lugar"],
-                descripcion=datos_recibidos["descripcion"],
-                fecha_inicio=datos_recibidos["fecha_inicio"],
-                hora_inicio=datos_recibidos["hora_inicio"],
-                minutos=datos_recibidos["duracion"],
-                precio=datos_recibidos["precio"],
-                estado_solicitud="E",
-            )
-            nueva_solicitud.save()
-        except Exception as e:
-            return Response(
-                {f"Ocurrio un error: {e}"}, status=status.HTTP_404_NOT_FOUND
-            )
-
-        # Devolver una respuesta correcta
+    # Verificar si el amigo existe
+    try:
+        amigo = Amigo.objects.get(pk=datos_recibidos["amigo_id"])
+    except Amigo.DoesNotExist:
         return Response(
-            {"mensaje": "El formulario ha sido enviado correctamente"},
-            status=status.HTTP_201_CREATED,
+            {"error": "El amigo no existe"}, status=status.HTTP_400_BAD_REQUEST
         )
+    # Verificar que la duracion sea mayor a cero
+    duracion = int(datos_recibidos["duracion"])
+    if duracion <= 0:
+        return Response(
+            {"error": "La duración debe ser mayor a 0"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    # Verificar que maximo sea 8 horas
+    # duracion_horas = int(datos_recibidos['duracion'])
+    if int(datos_recibidos["duracion"]) > 8:
+        return Response(
+            {"error": "La duración máxima permitida es de 8 horas"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    descripcion = datos_recibidos["descripcion"]
+    if len(descripcion) < 30:
+        return Response(
+            {"error": "La descripción debe tener al menos 30 caracteres"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    elif len(descripcion) > 500:
+        return Response(
+            {"error": "La descripción no puede tener más de 500 caracteres"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    # Verificar que sea fecha valida
+
+    fecha_ini = date.fromisoformat(datos_recibidos["fecha_inicio"])
+    today = date.today()
+
+    valido = fecha_ini > today
+
+    if not valido:
+        return Response(
+            {"error": f"La fecha {fecha_ini} no es válida"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    today_14 = today + timedelta(days=14)
+
+    if fecha_ini > today_14:
+        return Response(
+            {"error": f"La fecha {fecha_ini} no debe pasar los 14 días"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    try:
+        nueva_solicitud = solicitud_alquiler(
+            cliente=cliente,
+            amigo=amigo,
+            lugar=datos_recibidos["lugar"],
+            descripcion=datos_recibidos["descripcion"],
+            fecha_inicio=datos_recibidos["fecha_inicio"],
+            hora_inicio=datos_recibidos["hora_inicio"],
+            minutos=datos_recibidos["duracion"],
+            precio=datos_recibidos["precio"],
+            estado_solicitud="E",
+        )
+        nueva_solicitud.save()
+    except Exception as e:
+        return Response({f"Ocurrio un error: {e}"}, status=status.HTTP_404_NOT_FOUND)
+
+    # Devolver una respuesta correcta
+    return Response(
+        {"mensaje": "El formulario ha sido enviado correctamente"},
+        status=status.HTTP_201_CREATED,
+    )
 
 
 class GetSolicitudesCliente(APIView):
@@ -149,7 +140,7 @@ class GetSolicitudesCliente(APIView):
             )
         data = {
             "cliente_id": cliente.cliente_id,
-            "nombre_completo": f"{cliente.nombre} {cliente.ap_paterno} {cliente.ap_materno}".title(),
+            "nombre_completo": cliente.getFullName(),
             "nombre": cliente.nombre.title(),
             "ap_paterno": cliente.ap_paterno.title(),
             "ap_materno": cliente.ap_materno.title(),
@@ -208,14 +199,18 @@ def obtenerSolicitudesAmigo(request):
             amigo=solicitud.amigo, emisor="cliente"
         ).aggregate(Avg("puntuacion"))["puntuacion__avg"]
         lugar_solicitud = solicitud.lugar
-        #fecha_solicitud = solicitud.fecha_inicio
-        #duracion_solicitud = solicitud.minutos
-        
+        # fecha_solicitud = solicitud.fecha_inicio
+        # duracion_solicitud = solicitud.minutos
+
         # Obtener la foto del cliente
-        fotografia_amigo = Fotografia.objects.filter(cliente=solicitud.cliente, prioridad=0).first()
+        fotografia_amigo = Fotografia.objects.filter(
+            cliente=solicitud.cliente, prioridad=0
+        ).first()
         imagen_base64 = None
         if fotografia_amigo:
-            imagen_base64 = base64.b64encode(fotografia_amigo.imagenBase64).decode('utf-8')
+            imagen_base64 = base64.b64encode(fotografia_amigo.imagenBase64).decode(
+                "utf-8"
+            )
         solicitud_data = {
             "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
             "nombre_cliente": nombre_cliente,
@@ -229,12 +224,13 @@ def obtenerSolicitudesAmigo(request):
             "cliente": solicitud.cliente.cliente_id,
             "timestamp_registro": solicitud.timestamp_registro,
             "hora_inicio": solicitud.hora_inicio,
-            "imagenBase64": imagen_base64
+            "imagenBase64": imagen_base64,
         }
-        
+
         data["solicitudes_recibidas"].append(solicitud_data)
 
     return Response(data)
+
 
 @api_view(["POST"])
 def AcceptSolicitud(request, solicitud_alquiler_id):
@@ -276,16 +272,20 @@ class RechazarSolicitud(APIView):
 class SolicitudAlquilerDetailAPIView(APIView):
     def get(self, request, solicitud_alquiler_id):
         solicitud = get_object_or_404(solicitud_alquiler, pk=solicitud_alquiler_id)
-        fotografia_amigo = Fotografia.objects.filter(cliente=solicitud.cliente, prioridad=0).first()
+        fotografia_amigo = Fotografia.objects.filter(
+            cliente=solicitud.cliente, prioridad=0
+        ).first()
         imagen_base64 = None
         if fotografia_amigo:
-            imagen_base64 = base64.b64encode(fotografia_amigo.imagenBase64).decode('utf-8')
+            imagen_base64 = base64.b64encode(fotografia_amigo.imagenBase64).decode(
+                "utf-8"
+            )
         data = {
             "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
-            "cliente": solicitud.cliente.cliente_id,  # Cambia esto si deseas el nombre del cliente
-            "nombre_cliente": f"{solicitud.cliente.nombre} {solicitud.cliente.ap_paterno} {solicitud.cliente.ap_materno}".title(),
-            "edad_cliente": calcular_edad(solicitud.cliente.fecha_nacimiento),
-            "amigo": solicitud.amigo.amigo_id,  # Cambia esto si deseas el nombre del amigo
+            "cliente": solicitud.cliente.cliente_id,
+            "nombre_cliente": solicitud.cliente.getFullName(),
+            "edad_cliente": solicitud.cliente.calcular_edad(),
+            "amigo": solicitud.amigo.amigo_id,
             "lugar": solicitud.lugar,
             "descripcion": solicitud.descripcion,
             "fecha_inicio": solicitud.fecha_inicio,
@@ -296,11 +296,9 @@ class SolicitudAlquilerDetailAPIView(APIView):
             "timestamp_registro": solicitud.timestamp_registro.strftime(
                 "%Y-%m-%d %H:%M:%S"
             ),
-            "imagenBase64": imagen_base64
+            "imagenBase64": imagen_base64,
         }
         return Response(data)
-
-    # dar cliente y amigo , si existen solicitudes enviadas devuelve true sino false
 
 
 class VerificarSolicitudes(APIView):

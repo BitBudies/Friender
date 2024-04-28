@@ -16,7 +16,7 @@ const PerfilAmigo = () => {
     data: amigo,
     isFetching,
     isSuccess,
-  } = useGetAmigoByIdQuery({ id_amigo, token });
+  } = useGetAmigoByIdQuery({ id_amigo:id_amigo, token:token });
   const [showForm, setShowForm] = useState(false);
   const [formStatus, setFormStatus] = useState({
     sent: false,
