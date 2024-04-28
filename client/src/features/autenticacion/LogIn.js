@@ -50,9 +50,7 @@ const LogIn = () => {
     if (isLoading) {
       setDisableBtnLoading(true);
       setShowFeedback(false);
-      if(contadorBloqueo == 2){
-        setBlockedPasswordBox(false); //Mostrar Modal de Penalizacion
-      }
+      
     }
     if (isSuccess) {
       console.log(response);
@@ -71,6 +69,9 @@ const LogIn = () => {
       }
       if(responseError.data.intentos_fallidos == "2"){
         setContadorBloqueo(2);
+      }
+      if(contadorBloqueo == 2){
+        setBlockedPasswordBox(false); //Mostrar Modal de Penalizacion
       }
       setFeedbackText(responseError.data.error);
     }
