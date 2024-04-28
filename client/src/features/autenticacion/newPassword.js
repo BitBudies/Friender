@@ -1,32 +1,49 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./resetPassword.css";
-import {
-  useFindEmailMutation,
-  useSendCodeMutation,
-  useVerifyCodeMutation,
-  useChangePassMutation,
-} from "./authSlice";
+import { useChangePassMutation, useVerifyTokenCodeQuery } from "./authSlice";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { checkPassword } from "../../hooks/checkRegex";
+import Loading from "../../Components/Loading";
+import { useNavigate } from 'react-router-dom';
 
 const NewPassword = () => {
+  const navigate = useNavigate();
   const { tokencito } = useParams();
+
+  const {
+    data: tokencitoRespuesta,
+    isLoading: tokencitoCargando,
+    isSuccess: tokencitoCorrecto,
+    isError: tokencitoIsError,
+    error: tokencitoErrorData,
+  } = useVerifyTokenCodeQuery(tokencito);
+
+  useEffect(() => {
+    if (tokencitoCargando) {
+      console.log("cargando");
+      setLoading(true);
+    }
+    if (tokencitoCorrecto) {
+      console.log(tokencitoRespuesta);
+      setLoading(false);
+    }
+    if (tokencitoIsError) {
+      console.log(tokencitoErrorData);
+      setLoading(false);
+    }
+  }, [tokencitoCargando, tokencitoCorrecto, tokencitoIsError]);
+
+  const [loading, setLoading] = useState(false);
 
   const [step, setStep] = useState(3); // control de pagina
   const [submitClicked, setSubmitClicked] = useState(false);
 
-  // ------------------------------Buscar email------------------------------
   const [emailText, setEmailText] = useState("");
   const [supportingText, setSupportingText] = useState("");
-  const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isButtonEmailEnabled, setIsButtonEmailEnabled] = useState(false);
+
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
-  const [
-    findEmail,
-    { data: response, isLoading, isSuccess, isError, error: errorsito },
-  ] = useFindEmailMutation();
 
   const [passwordStatus, setPasswordStatus] = useState({
     pass: false,
@@ -34,115 +51,17 @@ const NewPassword = () => {
   });
   const checkPass = checkPassword();
 
-  const handleEmailChange = (e) => {
-    setIsEmailValid(false);
-    setUsuario("");
-    setSupportingText("");
-    setEmailText(e.target.value);
-    if (e.target.value.length > 5) {
-      setIsButtonEmailEnabled(true);
-    }
-  };
-
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
   const toggleShowPassword1 = () => {
     setShowPassword1(!showPassword1);
   };
-
-  const handleSubmitEmailForm = (e) => {
-    e.preventDefault();
-    if (isEmailValid) {
-      goToNextStep();
-    } else {
-      const formulario = new FormData();
-      formulario.append("user_or_email", emailText);
-      try {
-        findEmail(formulario);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
-
-  const checkEmailResponse = () => {
-    if (isLoading) {
-      setIsButtonEmailEnabled(false);
-    }
-    if (isSuccess) {
-      setIsEmailValid(true);
-      setIsButtonEmailEnabled(true);
-      setUsuario(response.usuario);
-      goToNextStep();
-    }
-    if (isError) {
-      setIsEmailValid(false);
-      setSupportingText(errorsito.data.error);
-    }
-  };
-
-  useEffect(checkEmailResponse, [isError, isLoading, isSuccess, response]);
-
-  // ------------------------------verificacion codigos------------------------------
-  const [
-    sendCode,
-    {
-      data: dataCodigo,
-      isLoading: codeLoading,
-      isSuccess: codeSucess,
-      isError: codeIsError,
-      error: errorCodigo,
-    },
-  ] = useSendCodeMutation();
-  const [
-    verifyCode,
-    {
-      data: verData,
-      isLoading: verLoading,
-      isSuccess: verSucess,
-      isError: verIsError,
-      error: verError,
-    },
-  ] = useVerifyCodeMutation();
-  const [usuario, setUsuario] = useState("");
-  const [verificationCode, setVerificationCode] = useState("");
-  const [sendCodesButton, setSendCodesButton] = useState(false);
-
-  const handleEnviarCodigos = (e) => {
-    try {
-      const formulario = new FormData();
-      formulario.append("usuario", usuario);
-      sendCode(formulario);
-      // alert("Se envio correctamente los codigos");
-    } catch (error) {
-      console.log(error);
-      // alert("Ha ocurrido un error al enviar el código.");
-    }
-  };
-  // aaaa odio a los qas, usuario o email maximo de 255 chars
-  useEffect(() => {
-    if (codeLoading) {
-      console.log("Cargando..."); // Log mientras se carga
-    } else if (codeIsError) {
-      setSupportingText(errorCodigo.data.error);
-      console.log("Error:", errorCodigo.data.error); // Log en caso de error
-    } else if (codeSucess) {
-      console.log(dataCodigo); // Log si la solicitud fue exitosa
-    }
-  }, [codeLoading, codeIsError, codeSucess, errorCodigo]);
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
-
-  // Funciones para manejar los cambios en los formularios
-  const handleVerificationCodeChange = (e) => {
-    setSupportingText("");
-    setVerificationCode(e.target.value);
-  };
 
   const onPasswordChange = (e) => {
     const passwordChecked = checkPass(e.target.value);
@@ -161,42 +80,6 @@ const NewPassword = () => {
   // cambio de paginas
   const goToNextStep = () => setStep(step + 1);
   const goToPreviousStep = () => setStep(step - 1);
-
-  // Función para manejar el envío del formulario de código de verificación
-  const handleSubmitVerificationCodeForm = (e) => {
-    e.preventDefault();
-    console.log("aqui verificamos los códigos");
-    try {
-      const formulario = new FormData();
-      formulario.append("usuario", usuario);
-      formulario.append("codigo", verificationCode);
-      verifyCode(formulario);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (verLoading) {
-      setSupportingText("");
-      console.log("Cargando..."); // Log mientras se carga
-    } else if (verIsError) {
-      console.log("Error:", verError.data.error); // Log en caso de error
-      setSupportingText(verError.data.error);
-    } else if (verSucess) {
-      setSupportingText("");
-      console.log(verData); // Log si la solicitud fue exitosa
-      goToNextStep();
-    }
-  }, [verLoading, verIsError, verSucess, verError]);
-
-  useEffect(() => {
-    if (step === 4) {
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 2000);
-    }
-  }, [step]);
 
   //PASSWORD CONFIRMATION
   const [
@@ -243,13 +126,10 @@ const NewPassword = () => {
 
     if (isValid) {
       console.log(`ahora cambiamos contras`);
-      console.log(
-        `correo: ${emailText}, codigo: ${verificationCode}, usuario: ${usuario}`
-      );
+      console.log(`correo: ${emailText},`);
       try {
         const formulario = new FormData();
-        formulario.append("usuario", usuario);
-        formulario.append("codigo", verificationCode);
+        formulario.append("tokencito", tokencito);
         formulario.append("nuevaContrasena", confirmPassword);
         changePass(formulario);
       } catch (error) {
@@ -269,10 +149,21 @@ const NewPassword = () => {
     }
   }, [passLoading, passIsError, passSucess, passError]);
 
+  useEffect(() => {
+    if (step===4) {
+      setTimeout(() => {
+        navigate("/login")
+      }, 2000);
+    }
+  }, [step]);
+
+
   return (
     <div className="page principal">
-      {tokencito.length < 10 ? (
-        <p>El token ha expirado o ya ha sido utilizado.</p>
+      {loading ? ( // Verificar estado de carga
+        <Loading /> // Indicador de carga
+      ) : tokencitoIsError ? (
+        <p>{tokencitoErrorData.data.error}</p>
       ) : step === 3 ? (
         <div className="step-3 step-1">
           <div className="ingresa">

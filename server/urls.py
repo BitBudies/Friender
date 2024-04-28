@@ -21,7 +21,7 @@ from drf_yasg import openapi
 
 from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
 from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, RegistrarCliente,VerificarCorreoUsuario, EnviarCodigos, VerificarCodigo, obtenerInformacionCliente
-from amigo.views.edicion_views import cambiarContrasena, enviarCorreoCambioContrasena, findEmail, verificarCodigoCambioContrasena
+from amigo.views.edicion_views import cambiarContrasena, enviarCorreoCambioContrasena, findEmail, verificarCodigoToken
 from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef
 from amigo.views.gusto_views import obtenerGustos
 from amigo.views.interes_views import obtenerIntereses
@@ -94,9 +94,9 @@ urlpatterns = [
     path('api/login', LoginView),
     path('api/cambiarContrasena', cambiarContrasena),
     path('api/enviarCodigoRestablecimiento', enviarCorreoCambioContrasena),
-    path('api/verificarCodigosRestablecimiento', verificarCodigoCambioContrasena),
+    path('api/verificarTokenRestablecimiento/<str:tokencito>', verificarCodigoToken),
     path('api/findEmail', findEmail),
-
+    
     #ducumentacion de la API
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), 
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),

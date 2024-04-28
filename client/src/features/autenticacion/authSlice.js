@@ -35,14 +35,9 @@ const authApi = apiSlice.injectEndpoints({
         },
       })
     }),
-    verifyCode : builder.mutation({
-      query : (data) => ({
-        url : "/verificarCodigosRestablecimiento",
-        method : "POST",
-        body : data,
-        headers: {
-          "X-CSRFToken": getCookie("csrftoken") // Obtener el token CSRF desde las cookies
-        },
+    verifyTokenCode : builder.query({
+      query : (tokencito) => ({
+        url : `/verificarTokenRestablecimiento/${tokencito}`,
       })
     }),
     changePass : builder.mutation({
@@ -120,7 +115,7 @@ function getCookie(name) {
 export const {useLoginMutation,
       useFindEmailMutation,
       useSendCodeMutation,
-      useVerifyCodeMutation, 
+      useVerifyTokenCodeQuery, 
       useChangePassMutation,
       useGetInteresesQuery,
       useGetCsrfQuery,
