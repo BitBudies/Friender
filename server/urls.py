@@ -57,13 +57,14 @@ urlpatterns = [
     path('api/test/pruebaApi', RegistrarCliente),
     path('api/get/csrf', obtener_csrf),
     
-    #nuevas
+ 
     path('api/cliente/verificarCorreoUser', VerificarCorreoUsuario.as_view()),
     path('api/cliente/enviarCodigos', EnviarCodigos.as_view()),
     path('api/cliente/verificarCodigo', VerificarCodigo.as_view()),
-    
     path('api/cliente/logout', Logout.as_view()),
     path('api/cliente/login', Login.as_view()),
+    
+    
     # probando postsssss
     path('api/solicitud', EnviarSolicitud),
     

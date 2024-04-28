@@ -155,10 +155,10 @@ class EnviarCodigos(APIView):
         if not correo_valido(correo):
             return Response({"error": "El correo no es valido."}, status=400)
 
-        # comentado para hacer pruebas de los codigos
 
         codigoExistente = Codigos.objects.filter(correo=correo).first()
         if codigoExistente:
+            #tiempo trasnscurrido desde que se envio el codigo
             tiempo = timezone.now() - codigoExistente.timestamp_registro
             if tiempo.total_seconds() < 60:
                 tiempoRestante =  60 - int(tiempo.total_seconds())
