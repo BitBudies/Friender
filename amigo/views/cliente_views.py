@@ -155,7 +155,6 @@ class EnviarCodigos(APIView):
         if not correo_valido(correo):
             return Response({"error": "El correo no es valido."}, status=400)
 
-
         codigoExistente = Codigos.objects.filter(correo=correo).first()
         if codigoExistente:
             #tiempo trasnscurrido desde que se envio el codigo
@@ -166,9 +165,8 @@ class EnviarCodigos(APIView):
                     {"error": f"Debe esperar {tiempoRestante} segundos para enviar otro codigo de verificacion"},
                     status=status.HTTP_429_TOO_MANY_REQUESTS,
                 )
-        
-        
-        
+            else:
+                codigoExistente.delete()
         codigo = "".join(random.choices(string.ascii_uppercase + string.digits, k=5))
         asunto = f"Tu código: {codigo}"
         mensaje = f"Hola: {nombre} {ap_paterno}, \nTu código de verificación de Friender es: {codigo} . \n\n Usalo para acceder a tu cuenta. \n Si no solicitaste esto, simplemente ignora este mensaje. \n\n Saludos, \n El equipo de Friender"
