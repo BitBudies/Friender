@@ -1,8 +1,8 @@
 from django.utils import timezone
 import random
 import string
-
 from amigo.models.codigosVerificacionDB import Codigos
+from amigo.views.utils import generate_key
 from ..models.clienteDB import Cliente
 from decouple import config
 from rest_framework.decorators import api_view
@@ -30,7 +30,44 @@ def findEmail(request):
                 {"error": "No se encontró una cuenta asociada al email"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        
+    
+    codigoToken = Codigos.objects.filter(correo=user.email).first()
+    if codigoToken:
+        tiempo_transcurrido = timezone.now() - codigoToken.timestamp_registro
+        if tiempo_transcurrido.total_seconds() < 60:
+            tiempo_restante = 60 - int(tiempo_transcurrido.total_seconds())
+            return Response(
+                {"error": f"Debe esperar {tiempo_restante} segundos para enviar otro correo."},
+                status=status.HTTP_429_TOO_MANY_REQUESTS,
+            )
+    
+    codigoVerificacion = generate_key(64)
+
+    if codigoToken:
+        codigoToken.codigoVerificaion = codigoVerificacion
+        codigoToken.timestamp_registro = timezone.now()
+    else:
+        codigoToken = Codigos(
+            correo=user.email,
+            codigoVerificaion=codigoVerificacion,
+            timestamp_registro=timezone.now()
+        )
+    
+    try:
+        send_mail(
+            "Restablecer contraseña",
+            f"Hola {user.username}\nEl enlace para restablecer su contraseña es: https://friender.vercel.app/new-password/{codigoVerificacion}\n expira en 15 min",
+            config("EMAIL_HOST_USER"),
+            [user.email],
+            fail_silently=False,
+        )
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    print(codigoToken)
+    print(codigoToken.codigoVerificaion)
+    codigoToken.save()
+
     return Response({"usuario": user.username}, status=status.HTTP_200_OK)
 
 
