@@ -2,6 +2,8 @@ from decouple import config
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 import re
+import string
+import random
 
 
 def obtener_csrf(request):
@@ -17,3 +19,10 @@ def correo_valido(correo):
         return True
     else:
         return False
+
+def generate_key(length):
+    characters = string.ascii_letters + string.digits + '-_'
+    return ''.join(random.choice(characters) for _ in range(length))
+
+if __name__ == "__main__":
+    print(len(generate_key(64)))
