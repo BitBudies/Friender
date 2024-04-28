@@ -19,6 +19,14 @@ admin.site.register(Calificacion)
 admin.site.register(Fotografia)
 admin.site.register(Interes)
 admin.site.register(Gusto)
-admin.site.register(Codigos)
+#admin.site.register(Codigos)
 admin.site.register(ClienteInteres)
 admin.site.register(ClienteGusto)
+class CodigosAdmin(admin.ModelAdmin):
+    actions = ['delete_selected']
+
+    def delete_selected(self, request, queryset):
+        queryset.delete()
+
+    delete_selected.short_description = "Eliminar registros seleccionados"
+admin.site.register(Codigos, CodigosAdmin)
