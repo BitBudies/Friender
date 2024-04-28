@@ -156,8 +156,10 @@ class EnviarCodigos(APIView):
 
         # comentado para hacer pruebas de los codigos
 
-        # if Codigos.objects.filter(correo=correo).exists():
-        #     return Response({"mensage": "el correo ya tiene unos codigos activos"}, status=status.HTTP_400_BAD_REQUEST)
+        if Codigos.objects.filter(correo=correo).exists():
+            return Response({"mensage": "el correo ya tiene unos codigos activos"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        
 
         codigo = "".join(random.choices(string.ascii_uppercase + string.digits, k=5))
         asunto = f"Tu código: {codigo}"
