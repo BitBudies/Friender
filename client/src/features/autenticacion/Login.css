@@ -77,6 +77,11 @@
 }
 .password-icon{
     position: absolute;
+    right: 15px;
+    top: 5px;
+}
+.login-password-icon{
+    position: absolute;
     right: 30px;
     top: 5px;
 }

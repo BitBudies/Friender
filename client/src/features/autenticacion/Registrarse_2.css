@@ -45,6 +45,10 @@ select {
     height: 300px; 
 }
 
+.red-text{
+    color: red;
+}
+
 
 .para-boton {
     width: 100%;

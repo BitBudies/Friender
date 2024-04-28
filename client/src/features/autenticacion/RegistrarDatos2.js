@@ -251,10 +251,7 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
                   : 
                     fotos.length === 6 &&
                     `Máximo 6 fotografías`}
-                {pesado
-                  ? `Imágenes de máximo 200kB.`
-                  : '' 
-                }
+                {pesado && <span className="red-text">Imágenes de máximo 200kB.</span>}
                 {formato
                   ? `Sólo se permiten subir imágenes en formato jpg, jpeg, png.`
                   : '' 
@@ -295,8 +292,8 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
                 ? `${descripcionLength}/30 caracteres mínimo.`
                 : ""}
             </span>
-            {descripcionLength >= 400 &&
-              `${descripcionLength}/500 caracteres máximo.`}
+            {descripcionLength >= 400 && (<span className={`${descripcionLength === 500 ? "red-text" : ""}`}>
+              {descripcionLength}/500 caracteres máximo.</span>)}
           </p>
         </div>
         {/* <div>

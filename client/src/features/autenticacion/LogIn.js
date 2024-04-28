@@ -116,7 +116,7 @@ const LogIn = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Contraseña"
             />
-            <span className="password-icon" onClick={toggleShowPassword}>
+            <span className="login-password-icon" onClick={toggleShowPassword}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
@@ -142,7 +142,7 @@ const LogIn = () => {
           )}
 
           <p className="form-text">
-            <Link to={"/resetPassword"}>¿Haz olvidado la contraseña?</Link>
+            <Link to={"/resetPassword"}>¿Has olvidado la contraseña?</Link>
           </p>
 
           <div className="login-box-separator">
