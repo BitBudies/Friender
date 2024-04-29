@@ -74,6 +74,10 @@ class Login(ObtainAuthToken):
     async def bloquear(self, request):
         response = {"error": "Has excedido el límite de intentos. Por favor, inténtalo de nuevo en 60 segundos.", "intentos_fallidos": 3}
         await asyncio.sleep(5)
+
+        if request.session.get('login_failed_attempts', 0) >= 3:
+            cache.set('blocked_user_' + request.session.session_key, True, timeout=60)
+            return Response(response, status=status.HTTP_429_TOO_MANY_REQUESTS)
         
     
         
