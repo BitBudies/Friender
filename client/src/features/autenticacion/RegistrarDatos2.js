@@ -4,11 +4,12 @@ import { useGetInteresesQuery, useUploadImageMutation, useGetCsrfQuery } from '.
 import { LiaFileUploadSolid } from "react-icons/lia";
 import { useNavigate } from 'react-router-dom';
 
+import Foto from "../../Components/imagRegistro/test";
+
 const RegistrarDatos2 = ({setNForm,data : info}) => {
 
     const defaultValues = {
         interes: [],
-        // fotos: [],
         descripcion: '',
         terminos: false,
       };
@@ -20,12 +21,10 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
     const [values, setValues] = useState(defaultValues);
     const [pLabels, setPLabels] = useState(false)
     const [pFotos, setPFotos] = useState(false)
-    const [previeImage,setPreviewImage] = useState('');
     const [fotos, setFotos] = useState([])
     const [validating, setValidatig] = useState(false)
     const [pesado, setPesado] = useState(false)
     const [formato, setFormato] = useState(false)
-    const [contador, setContador] = useState(0)
     
 
     // para imagenes
@@ -62,7 +61,6 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
             });
         }
         if(name === 'selInteres') {
-            
             if (values.interes.indexOf(value) === -1) {
                 setPLabels(true);
                 setValues((currentValues) => {
@@ -83,81 +81,35 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
         if (name === 'input-foto'){
             setPesado(false)
             setFormato(false)
-            if (fotos.length === 6) {
-                return;
-            }
-            
-            const selectedFile = e.target.files[0];
-            const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
-            if (['jpg', 'png', 'jpeg'].indexOf(fileExtension) === -1) {
-                setFormato(true)
-                return;
-            }
-            if (selectedFile.size > 200000){
-                setPesado(true)
-                return;
-            }
 
-            setPFotos(true)
-            // setValues({...values,fotos : [...values.fotos,selectedFile]})
-            
-            const container = document.getElementById('para-fotos'); 
-            const reader =  new FileReader();
-            
-            const divFoto = document.createElement('div');
-            divFoto.className = 'x-foto';
-            const imageElement = document.createElement('img');
-            imageElement.id = 'cFoto';
-            reader.onload = function (e) {
-                imageElement.src = e.target.result;
-                imageElement.alt = 'Imagen'; 
-                imageElement.width = '100';
-                imageElement.height = '100'; 
-                imageElement.onclick = () => previewImageBtn(selectedFile);
-                
-                const cbuton = document.createElement('button');
-                cbuton.className = 'para-cerrar';
-                cbuton.id = 'para-cerrar';
-                cbuton.textContent = 'X';
-                cbuton.onclick = () => {
-                  divFoto.remove();
-                  console.log(selectedFile.name)
-                  }
-                divFoto.appendChild(imageElement);
-                divFoto.appendChild(cbuton);
+            try {
+              if (fotos.length === 6) {
+                return;
+              }
+              const selectedFile = e.target.files[0];
+              const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
+              if (['jpg', 'png', 'jpeg'].indexOf(fileExtension) === -1) {
+                  setFormato(true)
+                  return;
+              }
+              if (selectedFile.size > 205000){
+                  setPesado(true)
+                  return;
+              }
+              setPFotos(true)
+              setFotos([...fotos, {id:selectedFile.name, file:selectedFile}]);
+            } catch  (error) {
+              console.log("Debe ingresar una imagen")
             }
-          
-            reader.readAsDataURL(selectedFile)
-            container.appendChild(divFoto);
-
-            setFotos([...fotos, {id:selectedFile.name, file:selectedFile}]);
-            console.log(selectedFile)
         }
     };
 
-    const previewImageBtn = (file) => {
-      const reader =  new FileReader();
-            reader.onload = function (e) {
-                setPreviewImage(e.target.result);
-            }
-            reader.readAsDataURL(file)    
-    }
-
-    const rojoClase = descripcionLength < 30 ? 'texto-rojo' : '';
+    const rojoClase = descripcionLength < 30 || descripcionLength > 400? 'texto-rojo' : '';
     const rojoClaseFoto = fotos.length === 0 || fotos.length === 6 ? 'texto-rojo' : '';
 
     useEffect(() => {
         console.log(values);
     },[values])
-
-    useEffect(() => {
-        setPLabels(true)
-    }, [pLabels])
-
-    useEffect(() => {
-        setPFotos(true)
-        console.log(values);
-    }, [pFotos,values])
 
     useEffect(() => {
       setFotos(fotos);
@@ -242,7 +194,13 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
               />
             </div>
             <div className='para-fotos' id='para-fotos'>
-                        {/* se llena dinamicamente */}
+                  {pFotos ? 
+                    fotos.map((picture) => {
+                      return(
+                        <Foto foto={picture.file}/>
+                      )
+                    }) 
+                  : ""}
             </div>
             <p className="text-muted" id="min-max-fotos">
               <span className={rojoClaseFoto}>
@@ -262,18 +220,7 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
               </span>
               
             </p>
-            {
-              previeImage &&
-              <div className='preview' id='preview'>
-                <div className='close-btn' onClick={() => setPreviewImage('')}>
-                  <p>Cerrar</p>
-                </div>
-                <div className='image-preview' style={{backgroundImage : `url(${previeImage})`}}>
 
-                </div>
-              </div>
-            }
-            
           </section>
         </div>
         <div className="para-desc">
@@ -293,10 +240,9 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
             <span className={rojoClase}>
               {descripcionLength < 30
                 ? `${descripcionLength}/30 caracteres mínimo.`
-                : ""}
+                : descripcionLength >= 400 &&
+                  `${descripcionLength}/500 caracteres máximo.`}
             </span>
-            {descripcionLength >= 400 &&
-              `${descripcionLength}/500 caracteres máximo.`}
           </p>
         </div>
         {/* <div>
