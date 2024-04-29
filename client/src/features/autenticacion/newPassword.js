@@ -5,7 +5,7 @@ import { useChangePassMutation, useVerifyTokenCodeQuery } from "./authSlice";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { checkPassword } from "../../hooks/checkRegex";
 import Loading from "../../Components/Loading";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const NewPassword = () => {
   const navigate = useNavigate();
@@ -39,7 +39,6 @@ const NewPassword = () => {
   const [step, setStep] = useState(3); // control de pagina
   const [submitClicked, setSubmitClicked] = useState(false);
 
-  const [emailText, setEmailText] = useState("");
   const [supportingText, setSupportingText] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
@@ -81,7 +80,7 @@ const NewPassword = () => {
   const goToNextStep = () => setStep(step + 1);
   const goToPreviousStep = () => setStep(step - 1);
 
-  //PASSWORD CONFIRMATION
+  // password change endpoint
   const [
     changePass,
     {
@@ -125,8 +124,7 @@ const NewPassword = () => {
     setConfirmPasswordError(newErrors["confirmar_contraseña"] || "");
 
     if (isValid) {
-      console.log(`ahora cambiamos contras`);
-      console.log(`correo: ${emailText},`);
+      console.log("enviamos el formulario para cambiar password");
       try {
         const formulario = new FormData();
         formulario.append("tokencito", tokencito);
@@ -150,13 +148,12 @@ const NewPassword = () => {
   }, [passLoading, passIsError, passSucess, passError]);
 
   useEffect(() => {
-    if (step===4) {
+    if (step === 4) {
       setTimeout(() => {
-        navigate("/login")
+        navigate("/login");
       }, 2000);
     }
   }, [step]);
-
 
   return (
     <div className="page principal">
@@ -220,12 +217,11 @@ const NewPassword = () => {
                 <span
                   className="password-icon"
                   style={{ cursor: "pointer" }}
-                  onClick={toggleShowPassword}
+                  onClick={toggleShowPassword1}
                 >
                   {showPassword1 ? <FaEyeSlash /> : <FaEye />}
                 </span>
               </div>
-              {/* Para mensaje de que las contrase;as no son iguales */}
               {submitClicked && confirmPasswordError && (
                 <p style={{ color: "red" }}>{confirmPasswordError}</p>
               )}
@@ -235,6 +231,7 @@ const NewPassword = () => {
                 type="submit"
                 className="btn btn-azul"
                 onClick={handleSubmitPasswordForm}
+                disabled={passLoading}
               >
                 Confirmar
               </button>
