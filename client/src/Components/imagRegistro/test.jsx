@@ -3,29 +3,13 @@ import './imagRegist.css'
 
 const Foto = ( {foto, remover, index} ) => {
 
-    const [imagen, setImagen] = useState('')
     const [previewImage, setPreviewImage] = useState('')
-    const [mount, setMount] = useState(false)
-    
-    useEffect(() => {
-        const reader =  new FileReader();
-        reader.onload = function (e) {
-            setImagen(e.target.result);
-            setMount(true)
-        }
-        reader.readAsDataURL(foto)
-    },[])
 
     const handlePreview = () => {
-        const reader =  new FileReader();
-        reader.onload = function (e) {
-            setPreviewImage(e.target.result);
-        }
-        reader.readAsDataURL(foto)
+        setPreviewImage(foto);
     }
 
     const handleClose = () => {
-        setMount(false)
         console.log(foto.name)
         remover(index)
     }
@@ -34,7 +18,7 @@ const Foto = ( {foto, remover, index} ) => {
             <div className='foto' key={index}>
             <div className='sobreponer'>
                 <img 
-                    src= {imagen}
+                    src= {foto}
                     alt="Imagen" 
                     width={100} 
                     height={100} 

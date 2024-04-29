@@ -96,8 +96,12 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
                   setPesado(true)
                   return;
               }
+
+              const fotoURL = URL.createObjectURL(selectedFile)
+
               setPFotos(true)
-              setFotos([...fotos, {id:selectedFile.name, file:selectedFile}]);
+
+              setFotos([...fotos, {id:selectedFile.name, file:selectedFile, url: fotoURL}]);
             } catch  (error) {
               console.log("Debe ingresar una imagen")
             }
@@ -106,6 +110,7 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
 
     const rojoClase = descripcionLength < 30 || descripcionLength > 400? 'texto-rojo' : '';
     const rojoClaseFoto = fotos.length === 0 || fotos.length === 6 ? 'texto-rojo' : '';
+    const rojoClasePesoMax = pesado ? 'texto-rojo' : '';
 
     useEffect(() => {
         console.log(values);
@@ -156,10 +161,7 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
     }, [carganding, correctito, responseerror, respuesta])
 
     const remover = (index) => {
-      console.log("antes ", fotos)
-      // setFotos(fotos => [...fotos.slice(0,index), ...fotos.slice(index,fotos.length)])
       setFotos(fotos => fotos.filter((_, i) => index !== i))
-      
     }
 
     useEffect(() => {
@@ -205,9 +207,9 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
                   {pFotos ? 
                     fotos.map((picture, index) => {
                       return(
-                        <Foto foto={picture.file} remover={remover} index={index}/>
+                        <Foto foto={picture.url} remover={remover} index={index}/>
                       )
-                    }) 
+                    })
                   : ""}
             </div>
             <p className="text-muted" id="min-max-fotos">
@@ -216,17 +218,19 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
                   ? `Mínimo 1 fotografías.`
                   : 
                     fotos.length === 6 &&
-                    `Máximo 6 fotografías`}
-                {pesado
-                  ? `Imágenes de máximo 200kB.`
-                  : '' 
+                    `Máximo 6 fotografías`
                 }
                 {formato
                   ? `Sólo se permiten subir imágenes en formato jpg, jpeg, png.`
                   : '' 
                 }
               </span>
-              
+              <span className={rojoClasePesoMax}>
+                {pesado
+                  ? `Imágenes de máximo 200kB.`
+                  : '' 
+                }
+              </span>
             </p>
 
           </section>
