@@ -1,9 +1,12 @@
+import base64
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
+from amigo.models.clienteDB import Cliente
+from amigo.models.fotografiaDB import Fotografia
 from amigo.serializers.cliente_serializer import UserTokenSerializer
 from ..serializers.login_serializer import LoginSerializer
 import time
@@ -51,10 +54,26 @@ class Login(ObtainAuthToken):
         if created:
             token.delete()
             token = Token.objects.create(user=user)
+        try:
+            cliente = Cliente.objects.get(user=user)
+        except Cliente.DoesNotExist:
+            return Response(
+            {
+                "error": "El cliente no existe"
+            },
+            status=status.HTTP_404_NOT_FOUND,
+        )
+        
+        fotografiaAmigo = Fotografia.objects.filter(cliente = cliente, prioridad=0).first()
+        imagenBase64 = None
+        if fotografiaAmigo:
+            imagenBase64 = base64.b64encode(fotografiaAmigo.imagenBase64).decode("utf-8")
+        
         return Response(
             {
                 "token": token.key,
-                "message": "Inicio de sesión exitoso"
+                "message": "Inicio de sesión exitoso",
+                "imagenBase64": imagenBase64
                 #'cliente_id': cliente.cliente_id
                 # front solo debe de recibir el token
             },
