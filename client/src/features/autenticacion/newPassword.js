@@ -139,9 +139,12 @@ const NewPassword = () => {
   useEffect(() => {
     if (passLoading) {
       console.log("Cargando...");
+      setLoading(true)
     } else if (passIsError) {
+      setLoading(false)
       console.log("Error:", passError.data.error);
     } else if (passSucess) {
+      setLoading(false)
       console.log(passData);
       goToNextStep();
     }
@@ -240,7 +243,7 @@ const NewPassword = () => {
         </div>
       ) : (
         <div>
-          <h1>Se restableció correctamente la contraseña</h1>
+          <h1> {passIsError ? passError.data.error : "Se restableció correctamente la contraseña"}</h1>
         </div>
       )}
     </div>
