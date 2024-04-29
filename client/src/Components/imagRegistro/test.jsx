@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './imagRegist.css'
 
-const Foto = ( {foto} ) => {
+const Foto = ( {foto, remover, index} ) => {
 
     const [imagen, setImagen] = useState('')
     const [previewImage, setPreviewImage] = useState('')
@@ -26,10 +26,12 @@ const Foto = ( {foto} ) => {
 
     const handleClose = () => {
         setMount(false)
+        console.log(foto.name)
+        remover(index)
     }
     return (
-            mount &&
-            <div className='foto'>
+            // mount &&
+            <div className='foto' key={index}>
             <div className='sobreponer'>
                 <img 
                     src= {imagen}

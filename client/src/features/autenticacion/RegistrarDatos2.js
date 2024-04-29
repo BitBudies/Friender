@@ -111,10 +111,7 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
         console.log(values);
     },[values])
 
-    useEffect(() => {
-      setFotos(fotos);
-      console.log(fotos);
-    },[fotos])
+    
     
     
     // @kevin huayllas pinto hay que usar el csrf en todos los post
@@ -158,6 +155,17 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
       }
     }, [carganding, correctito, responseerror, respuesta])
 
+    const remover = (index) => {
+      console.log("antes ", fotos)
+      // setFotos(fotos => [...fotos.slice(0,index), ...fotos.slice(index,fotos.length)])
+      setFotos(fotos => fotos.filter((_, i) => index !== i))
+      
+    }
+
+    useEffect(() => {
+      console.log("despues ", fotos);
+    },[fotos])
+
   return (
     <div className="form-item popup">
       <div className="form-2 overlay">
@@ -195,9 +203,9 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
             </div>
             <div className='para-fotos' id='para-fotos'>
                   {pFotos ? 
-                    fotos.map((picture) => {
+                    fotos.map((picture, index) => {
                       return(
-                        <Foto foto={picture.file}/>
+                        <Foto foto={picture.file} remover={remover} index={index}/>
                       )
                     }) 
                   : ""}
