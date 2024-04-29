@@ -69,15 +69,17 @@ class Login(ObtainAuthToken):
             errores = request.session['login_failed_attempts']
             if errores == 3 or errores > 3 :
                 print(errores)
-                asyncio.run(self.bloquear(request))
+                asyncio.run(self.bloquear(request,errores))
 
-    async def bloquear(self, request):
+    async def bloquear(self, request,errores):
         response = {"error": "Has excedido el límite de intentos. Por favor, inténtalo de nuevo en 60 segundos.", "intentos_fallidos": 3}
-        await asyncio.sleep(5)
 
-        if request.session.get('login_failed_attempts', 0) >= 3:
-            cache.set('blocked_user_' + request.session.session_key, True, timeout=60)
-            return Response(response, status=status.HTTP_429_TOO_MANY_REQUESTS)
+        # Esperar 60 segundos antes de eliminar el bloqueo
+        await asyncio.sleep(60)
+        request.session.get('login_failed_attempts', 0) == 0
+        if errores >= 3:
+            cache.delete('blocked_user_' + request.session.session_key)
+        return Response(response, status=status.HTTP_429_TOO_MANY_REQUESTS)
         
-    
+        
         
