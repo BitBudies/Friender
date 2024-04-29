@@ -57,6 +57,27 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
     });
   };
 
+  const handleChangeOnlyLetters = (event) => {
+    const { name, value } = event.target;
+    // Expresión regular para permitir solo caracteres alfabéticos
+    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+    if (!onlyLettersRegex.test(value)) {
+      setErrors({
+        ...errors,
+        [name]: "",
+      });
+    } else {
+      setValues({
+        ...values,
+        [name]: value,
+      });
+      setErrors({
+        ...errors,
+        [name]: "",
+      });
+    }
+  };
+
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -223,7 +244,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             name="nombre"
             placeholder="Nombre"
             value={values.nombre}
-            onChange={handleChange}
+            onChange={handleChangeOnlyLetters}
             className="form-control input1m-width-70"
             required
           />
@@ -242,7 +263,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             name="apellido_paterno"
             placeholder="Apellido Paterno"
             value={values.apellido_paterno}
-            onChange={handleChange}
+            onChange={handleChangeOnlyLetters}
             className="form-control input-width-160"
             required
           />
@@ -263,7 +284,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             name="apellido_materno"
             placeholder="Apellido Materno"
             value={values.apellido_materno}
-            onChange={handleChange}
+            onChange={handleChangeOnlyLetters}
             className="form-control input-width-160"
           />
         </div>
@@ -327,7 +348,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
               placeholder="Ubicación"
               value={values.ubicacion}
               onChange={handleChange}
-              className="form-control input-width-160"
+              className="form-control input-width-160 ubicacion-input-box"
             />
             <FaLocationDot className="ubicacion-icon" />
           </div>

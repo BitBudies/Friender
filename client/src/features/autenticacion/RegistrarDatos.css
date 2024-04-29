@@ -41,11 +41,15 @@
     align-items: center;
     position: relative;
   }
+
+  .ubicacion-input-box{
+    padding-right: 35px !important;
+  }
   
   .ubicacion-icon {
     position: absolute;
-    right: 10px;
-    top: 20%;
+    right: 15px;
+    top: 10px;
     transform: translateY(-0%);
     color: black;
   }

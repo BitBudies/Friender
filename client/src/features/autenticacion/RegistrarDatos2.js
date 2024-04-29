@@ -245,8 +245,7 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
             <span className={rojoClase}>
               {descripcionLength < 30
                 ? `${descripcionLength}/30 caracteres mínimo.`
-                : descripcionLength >= 400 &&
-                  `${descripcionLength}/500 caracteres máximo.`}
+                : ""}
             </span>
             {descripcionLength >= 400 && (<span className={`${descripcionLength === 500 ? "red-text" : ""}`}>
               {descripcionLength}/500 caracteres máximo.</span>)}
