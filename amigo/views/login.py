@@ -6,12 +6,14 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.core.cache import cache
 import asyncio
-from rest_framework.authtoken.views import ObtainAuthToken
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 # Para instalar
 # pip install --upgrade djangorestframework-simplejwt
 
 
 class Login(ObtainAuthToken):
+    @method_decorator(never_cache)
     def post(self, request, *args, **kwargs):
         username_or_email = request.data.get("username_or_email")
         password = request.data.get("password")
@@ -70,10 +72,8 @@ class Login(ObtainAuthToken):
                 asyncio.run(self.bloquear(request))
 
     async def bloquear(self, request):
-        cache.set('blocked_user_' + request.session.session_key, True, timeout=60)
-        response = {"error": "Has excedido el límite de intentos. Por favor, inténtalo de nuevo en 60 segundos.","intentos_fallidos": 3}
-        await asyncio.sleep(60)  # Esperar 60 segundos
-        request.session['login_failed_attempts'] = 0
-        return Response(response, status=status.HTTP_429_TOO_MANY_REQUESTS)
+        response = {"error": "Has excedido el límite de intentos. Por favor, inténtalo de nuevo en 60 segundos.", "intentos_fallidos": 3}
+        await asyncio.sleep(5)
+        
     
         
