@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import './imagRegist.css'
 
-const Foto = ( {foto, remover, index} ) => {
+const Foto = ( {foto, remover, index, setPreview} ) => {
 
     const [previewImage, setPreviewImage] = useState('')
+    
 
     const handlePreview = () => {
-        setPreviewImage(foto);
+        setPreview(foto);
     }
 
     const handleClose = () => {
-        console.log(foto.name)
         remover(index)
     }
     return (
-            // mount &&
             <div className='foto' key={index}>
             <div className='sobreponer'>
                 <img 
@@ -32,17 +31,6 @@ const Foto = ( {foto, remover, index} ) => {
                     X
                 </button>
             </div>
-            {
-              previewImage &&
-              <div className='preview' id='preview'>
-                <div className='close-btn' onClick={() => setPreviewImage('')}>
-                  <p>Cerrar</p>
-                </div>
-                <div className='image-preview' style={{backgroundImage : `url(${previewImage})`}}>
-
-                </div>
-              </div>
-            }
         </div>
     )
 }

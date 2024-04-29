@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Foto from "../../Components/imagRegistro/test";
 
-const RegistrarDatos2 = ({setNForm,data : info}) => {
+const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
 
     const defaultValues = {
         interes: [],
@@ -207,7 +207,7 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
                   {pFotos ? 
                     fotos.map((picture, index) => {
                       return(
-                        <Foto foto={picture.url} remover={remover} index={index}/>
+                        <Foto foto={picture.url} remover={remover} index={index} setPreview={setPreview}/>
                       )
                     })
                   : ""}
