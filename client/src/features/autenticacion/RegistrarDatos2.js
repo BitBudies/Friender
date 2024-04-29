@@ -146,9 +146,6 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
     const rojoClase = descripcionLength < 30 ? 'texto-rojo' : '';
     const rojoClaseFoto = fotos.length === 0 || fotos.length === 6 ? 'texto-rojo' : '';
 
-    useEffect(() => {
-        console.log(values);
-    },[values])
 
     useEffect(() => {
         setPLabels(true)
@@ -156,12 +153,10 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
 
     useEffect(() => {
         setPFotos(true)
-        console.log(values);
     }, [pFotos,values])
 
     useEffect(() => {
       setFotos(fotos);
-      console.log(fotos);
     },[fotos])
     
     
@@ -204,7 +199,7 @@ const RegistrarDatos2 = ({setNForm,data : info}) => {
       if (correctito){
         navigate('/login')
       }
-    }, [carganding, correctito, responseerror, respuesta])
+    }, [carganding, correctito, navigate, responseerror, respuesta])
 
   return (
     <div className="form-item popup">
