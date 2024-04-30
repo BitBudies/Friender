@@ -41,15 +41,20 @@
     align-items: center;
     position: relative;
   }
-  
-  .ubicacion-icon {
-    position: absolute;
-    right: 10px;
-    top: 20%;
-    transform: translateY(-0%);
-    color: black;
+
+  .ubicacion-input-box{
+    padding-right: 35px !important;
   }
   
+ 
+  .ubicacion-icon{
+    position: relative;
+    left: 87%!important;
+    top: 70%!important;
+    transform: translateY(-410%)!important;
+    color: black;
+
+  }
 
   .step-3 .password-icon{
     position: relative;

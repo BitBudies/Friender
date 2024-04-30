@@ -5,7 +5,7 @@ import { useChangePassMutation, useVerifyTokenCodeQuery } from "./authSlice";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { checkPassword } from "../../hooks/checkRegex";
 import Loading from "../../Components/Loading";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const NewPassword = () => {
   const navigate = useNavigate();
@@ -39,7 +39,6 @@ const NewPassword = () => {
   const [step, setStep] = useState(3); // control de pagina
   const [submitClicked, setSubmitClicked] = useState(false);
 
-  const [emailText, setEmailText] = useState("");
   const [supportingText, setSupportingText] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
@@ -81,7 +80,7 @@ const NewPassword = () => {
   const goToNextStep = () => setStep(step + 1);
   const goToPreviousStep = () => setStep(step - 1);
 
-  //PASSWORD CONFIRMATION
+  // password change endpoint
   const [
     changePass,
     {
@@ -125,8 +124,7 @@ const NewPassword = () => {
     setConfirmPasswordError(newErrors["confirmar_contraseña"] || "");
 
     if (isValid) {
-      console.log(`ahora cambiamos contras`);
-      console.log(`correo: ${emailText},`);
+      console.log("enviamos el formulario para cambiar password");
       try {
         const formulario = new FormData();
         formulario.append("tokencito", tokencito);
@@ -141,22 +139,24 @@ const NewPassword = () => {
   useEffect(() => {
     if (passLoading) {
       console.log("Cargando...");
+      setLoading(true)
     } else if (passIsError) {
+      setLoading(false)
       console.log("Error:", passError.data.error);
     } else if (passSucess) {
+      setLoading(false)
       console.log(passData);
       goToNextStep();
     }
   }, [passLoading, passIsError, passSucess, passError]);
 
   useEffect(() => {
-    if (step===4) {
+    if (step === 4) {
       setTimeout(() => {
-        navigate("/login")
+        navigate("/login");
       }, 2000);
     }
   }, [step]);
-
 
   return (
     <div className="page principal">
@@ -171,7 +171,7 @@ const NewPassword = () => {
           </div>
           <div className="para-form">
             <div className="mb-2 password-input">
-              <p>Contraseña*</p>
+              <p className="required-label">Contraseña</p>
               <div
                 className={
                   passwordStatus.pass ? "password-match" : "password-no-match"
@@ -198,10 +198,10 @@ const NewPassword = () => {
               {!passwordStatus.pass && passwordStatus.message && (
                 <p className="text-danger mw-100">{passwordStatus.message}</p>
               )}
-              <p style={{ color: "#999" }}>Mínimo 8 caracteres*</p>
+              <p style={{ color: "#999" }}>Mínimo 8 caracteres</p>
             </div>
             <div className="mb-2 password-input">
-              <p>Confirmar Contraseña*</p>
+              <p className="required-label">Confirmar Contraseña</p>
               <div
                 className={
                   passwordStatus.pass && confirmPassword === password
@@ -220,12 +220,11 @@ const NewPassword = () => {
                 <span
                   className="password-icon"
                   style={{ cursor: "pointer" }}
-                  onClick={toggleShowPassword}
+                  onClick={toggleShowPassword1}
                 >
                   {showPassword1 ? <FaEyeSlash /> : <FaEye />}
                 </span>
               </div>
-              {/* Para mensaje de que las contrase;as no son iguales */}
               {submitClicked && confirmPasswordError && (
                 <p style={{ color: "red" }}>{confirmPasswordError}</p>
               )}
@@ -235,6 +234,7 @@ const NewPassword = () => {
                 type="submit"
                 className="btn btn-azul"
                 onClick={handleSubmitPasswordForm}
+                disabled={passLoading}
               >
                 Confirmar
               </button>
@@ -243,7 +243,7 @@ const NewPassword = () => {
         </div>
       ) : (
         <div>
-          <h1>Se restableció correctamente la contraseña</h1>
+          <h1> {passIsError ? passError.data.error : "Se restableció correctamente la contraseña"}</h1>
         </div>
       )}
     </div>

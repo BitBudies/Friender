@@ -71,7 +71,7 @@ class ClienteListLimitPaginator(APIView):
             )
         elif page_number <= 0:
             return Response(
-                {"error": "La pagina tiene que ser mayor a 0"},
+                {"error": "La página tiene que ser mayor a 0"},
                 status=status.HTTP_200_OK,
             )
 
@@ -123,20 +123,28 @@ class VerificarCorreoUsuario(APIView):
             )
 
         if not correo_valido(correo):
-            return Response({"error": "El correo no es valido."}, status=400)
+            return Response({
+                "error": "Verifica que respete el formato: ejemplo@dominio.com",
+                "email": "Verifica que respete el formato: ejemplo@dominio.com"
+            }, status=400)
 
         if User.objects.filter(username=usuario).exists():
-            return Response(
-                {"error": "Usuario ya existe"}, status=status.HTTP_400_BAD_REQUEST
+            return Response({
+                "error": "Usuario ya existe",
+                "username": "Usuario ya existe"
+            }, status=status.HTTP_400_BAD_REQUEST
             )
         if User.objects.filter(email=correo).exists():
-            return Response(
-                {"error": "Correo ya existe"}, status=status.HTTP_400_BAD_REQUEST
+            return Response({
+                "error": "Correo ya existe",
+                "email": "El correo ya existe."
+            }, status=status.HTTP_400_BAD_REQUEST
             )
 
         return Response(
-            {"message": "Usuario y correo validos"}, status=status.HTTP_200_OK
+            {"message": "Usuario y correo válidos"}, status=status.HTTP_200_OK
         )
+        
 
 
 # Envia codigos de verificacion para el correo electronico
@@ -153,7 +161,7 @@ class EnviarCodigos(APIView):
             )
 
         if not correo_valido(correo):
-            return Response({"error": "El correo no es valido."}, status=400)
+            return Response({"error": "El correo no es válido."}, status=400)
 
         codigoExistente = Codigos.objects.filter(correo=correo).first()
         if codigoExistente:
@@ -162,7 +170,10 @@ class EnviarCodigos(APIView):
             if tiempo.total_seconds() < 60:
                 tiempoRestante =  60 - int(tiempo.total_seconds())
                 return Response(
-                    {"error": f"Debe esperar {tiempoRestante} segundos para enviar otro codigo de verificacion"},
+                    {
+                        "error": f"Debe esperar {tiempoRestante} segundos para enviar otro código de verificación",
+                        "tiempo": tiempoRestante
+                        },
                     status=status.HTTP_429_TOO_MANY_REQUESTS,
                 )
             else:
@@ -203,14 +214,14 @@ class VerificarCodigo(APIView):
             )
 
         if not correo_valido(correo):
-            return Response({"error": "El correo no es valido."}, status=400)
+            return Response({"error": "El correo no es válido."}, status=400)
 
         try:
             codigos = Codigos.objects.get(correo=correo, codigoVerificaion=codigo)
             codigos.delete()
         except Codigos.DoesNotExist:
             return Response(
-                {"error": "El codigo de verificaion son incorrectos"},
+                {"error": "El código de verificación es incorrecto"},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -252,12 +263,11 @@ def RegistrarCliente(request):
     # ------------------------------------cliente---------------------------------------
     jeje = request.POST.copy()
     print(jeje)
-    jeje["genero"] = "O"
-    if jeje["genero"] == "Masculino":
+    if jeje["genero"] == "masculino":
         jeje["genero"] = "M"
-    elif jeje["genero"] == "Femenino":
+    elif jeje["genero"] == "femenino":
         jeje["genero"] = "F"
-    elif jeje["genero"] == "Otro":
+    elif jeje["genero"] == "otro":
         jeje["genero"] = "O"
 
     clienteSerializado = ClienteSerializer(data=jeje)

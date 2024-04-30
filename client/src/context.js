@@ -23,7 +23,7 @@ const AppProvider = ({ children }) => {
   }
 
    useEffect(() => {
-    console.log(userData);
+    console.log(userData,"userData");
   },[userData])
 
   return (

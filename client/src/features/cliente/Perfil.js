@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Perfil.css";
 import { useGlobalContext } from "../../context";
 import { GiReturnArrow } from "react-icons/gi";
-import { useCookies } from "react-cookie";
-import { useGetClienteInfoQuery } from "./clienteSlice";
+
 
 import SolicitudesPendientes from "../solicitudes/SolicitudesPendientes";
 
@@ -25,31 +24,23 @@ const optionsData = [
 ];
 
 const Perfil = () => {
-  const [cookies] = useCookies(["token"]);
-  const token = cookies.token;
   const [currentOption, setCurrentOption] = useState(1);
   const [showContent, setShowContent] = useState(false);
-  const {
-    data: informacion,
-    isFetching,
-    isSuccess,
-    isError,
-    error: responseError,
-  } = useGetClienteInfoQuery(token);
+
+  const {userData : informacion} = useGlobalContext();
+
   const [nombreCompleto, setNombreCompleto] = useState("");
   const [imagenBase64, setImagenBase64] = useState("");
 
   useEffect(() => {
-    if (isSuccess) {
+    if (informacion) {
       console.log(informacion);
       setNombreCompleto(informacion.nombre_completo);
       setImagenBase64(informacion.imagenBase64);
       //nombre_completo = informacion.nombre_completo
     }
-    if (isError) {
-      console.log(responseError);
-    }
-  }, [isSuccess, isError]);
+
+  }, [informacion]);
 
   const handleOptionClick = (id) => {
     setCurrentOption(id);
@@ -98,9 +89,9 @@ const Perfil = () => {
                   <p>{item.name}</p>
                 </li>
               ))}
-              {/* <li className='option'>
-                        <p>Cerrar Sesión</p>
-                      </li> */}
+              <li className='option'>
+                <p>Cerrar Sesión</p>
+              </li>
             </ul>
           </div>
         </div>
