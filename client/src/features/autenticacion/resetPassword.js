@@ -10,8 +10,8 @@ const ResetPassword = () => {
   // ------------------------------Buscar email------------------------------
   const [emailText, setEmailText] = useState("");
   const [supportingText, setSupportingText] = useState("");
-  const [isEmailValid, setIsEmailValid] = useState(false);
   const [isButtonEmailEnabled, setIsButtonEmailEnabled] = useState(true);
+  const [remainingTime, setRemainingTime] = useState(0);
 
   const [
     findEmail,
@@ -21,7 +21,6 @@ const ResetPassword = () => {
   const handleEmailChange = (e) => {
     setSupportingText("");
     setEmailText(e.target.value);
-    setIsButtonEmailEnabled(true);
   };
 
   const handleSubmitEmailForm = (e) => {
@@ -48,21 +47,34 @@ const ResetPassword = () => {
       goToNextStep();
     }
     if (isError) {
-      setIsEmailValid(false);
-      setSupportingText(errorsito.data.error);
+      const tiempoRestante = errorsito.data.tiempo;
+      if (tiempoRestante) {
+        setRemainingTime(errorsito.data.tiempo);
+        console.log(errorsito.data.tiempo);
+        const timer = setInterval(() => {
+          setRemainingTime((prevTime) => prevTime - 1);
+        }, 1000);
+        // cuando llegue a 0 lo eliminamos
+        setTimeout(() => {
+          clearInterval(timer);
+          setIsButtonEmailEnabled(true);
+        }, errorsito.data.tiempo * 1000);
+      } else {
+        setSupportingText(errorsito.data.error);
+      }
     }
   }, [isError, isLoading, isSuccess, response]);
 
   const goToNextStep = () => setStep(step + 1);
   const goToPreviousStep = () => setStep(step - 1);
 
-  // useEffect(() => {
-  //   if (step === 2) {
-  //     setTimeout(() => {
-  //       navigate("/")
-  //     }, 5000);
-  //   }
-  // }, [step]);
+  useEffect(() => {
+    if (step === 2) {
+      setTimeout(() => {
+        navigate("/")
+      }, 5000);
+    }
+  }, [step]);
 
   return (
     <div className="page principal">
@@ -83,9 +95,16 @@ const ResetPassword = () => {
             {supportingText.length > 0 && (
               <p style={{ color: "red" }}>{supportingText}</p>
             )}
+            {remainingTime > 0 && (
+              <p>
+                Debe esperar {remainingTime} segundos para enviar otro correo.
+              </p>
+            )}
             <div className="botones">
               <a href="/login">
-                <button className="b-cancelar btn btn-outline-primary">Cancelar</button>
+                <button className="b-cancelar btn btn-outline-primary">
+                  Cancelar
+                </button>
               </a>
               <button
                 type="submit"
@@ -93,7 +112,7 @@ const ResetPassword = () => {
                 disabled={!isButtonEmailEnabled}
                 className="b-buscar btn btn-azul"
               >
-                {isEmailValid ? <p>Continuar</p> : <p>Buscar cuenta</p>}
+                <p>Buscar cuenta</p>
               </button>
             </div>
           </div>
