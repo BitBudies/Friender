@@ -85,7 +85,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
     if (!password.length) {
       setPasswordStatus({
         pass: false,
-        message: "El campo contraseña es obligatorio",
+        message:  "El campo Contraseña es obligatorio" ,
       });
       isValid = false;
     }
@@ -400,7 +400,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
               {!passwordStatus.pass && passwordStatus.message && (
                 <p className="text-danger mw-100">{passwordStatus.message}</p>
               )}
-              <span className="password-icon " onClick={toggleShowPassword}>
+              <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
@@ -435,7 +435,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
               <p className="text-danger input-width-30">
                 {errors.confirmar_contraseña}
               </p>
-              <span className="password-icon" onClick={toggleShowPassword1}>
+              <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword}>
                 {showPassword1 ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
