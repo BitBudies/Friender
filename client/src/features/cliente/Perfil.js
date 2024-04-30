@@ -49,7 +49,7 @@ const Perfil = () => {
     if (isError) {
       console.log(responseError);
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess, isError, informacion, responseError]);
 
   const handleOptionClick = (id) => {
     setCurrentOption(id);

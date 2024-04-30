@@ -53,8 +53,8 @@ const LogIn = () => {
       
     }
     if (isSuccess) {
-      console.log(response);
-      setClientId(response.id); //as;ldjkfl;ashidf 'as
+      setClientId(response.id);
+      window.localStorage.setItem("clientId",response.id);
       setCookie("token", response.token);
       navigate("/amigos/page/1");
     }
@@ -70,7 +70,7 @@ const LogIn = () => {
       if(responseError.data.intentos_fallidos === "2"){
         setContadorBloqueo(2);
       }
-      if(contadorBloqueo == 2){
+      if(contadorBloqueo === 2){
         setBlockedPasswordBox(false); //Mostrar Modal de Penalizacion
       }
       setFeedbackText(responseError.data.error);

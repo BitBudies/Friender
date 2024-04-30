@@ -1,4 +1,3 @@
-import { useGlobalContext } from "../context";
 import { useCookies  } from "react-cookie";
 
 const useIsAuthenticated = () => {

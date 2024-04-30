@@ -20,11 +20,22 @@ import RecuperarCuenta from './features/autenticacion/RecuperarCuenta';
 import { RegistrarDatos15 } from './features/autenticacion/RegistrarDatos15';
 import {DayezaPractica} from './features/autenticacion/DayezaPractica';
 import NewPassword from './features/autenticacion/newPassword'
+import { Cookies } from 'react-cookie';
+import { useGetClienteInfoQuery } from './features/cliente/clienteSlice';
+import { useCookies } from "react-cookie";
+
 
 function App() {
+
+  const [cookies] = useCookies(["token"]);
+  const token = cookies.token;
   const {clientId,setUserData} = useGlobalContext();
 
-  const {data,isFetching,isUninitialized} = useGetClienteByIdQuery(clientId);
+  const {
+    data,
+    isFetching,
+    isUninitialized
+  } = useGetClienteInfoQuery(token);
 
   const isAuthenticated = useIsAuthenticated();
 
@@ -35,7 +46,7 @@ function App() {
       }
     }
     
-  },[data, isAuthenticated, isFetching, isUninitialized, setUserData])
+  },[data, isAuthenticated, isFetching, isUninitialized, setUserData,clientId])
 
   if(isFetching){
     return <Loading/>
