@@ -87,18 +87,20 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
   };
 
   const onPasswordChange = (e) => {
-    setValues((values) => {
-      return {...values,confirmar_contraseña : ""}
-    })
-    const passwordChecked = checkPass(e.target.value);
-    const { pass, message } = passwordChecked;
-    if (!passwordChecked.pass) {
-      console.log(pass, message);
-      setPasswordStatus({ ...passwordStatus, pass, message });
-    } else {
-      setPasswordStatus({ ...passwordStatus, pass: true });
+    if(e.target.value.length <= 32){
+      setValues((values) => {
+        return {...values,confirmar_contraseña : ""}
+      })
+      const passwordChecked = checkPass(e.target.value);
+      const { pass, message } = passwordChecked;
+      if (!passwordChecked.pass) {
+        setPasswordStatus({ ...passwordStatus, pass, message });
+      } else {
+        setPasswordStatus({ ...passwordStatus, pass: true });
+      }
+      setPassword(e.target.value);
     }
-    setPassword(e.target.value);
+    
   };
 
   // Función para validar el formulario antes de pasar al siguiente paso
