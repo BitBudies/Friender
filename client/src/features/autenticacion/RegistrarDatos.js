@@ -87,6 +87,9 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
   };
 
   const onPasswordChange = (e) => {
+    setValues((values) => {
+      return {...values,confirmar_contraseña : ""}
+    })
     const passwordChecked = checkPass(e.target.value);
     const { pass, message } = passwordChecked;
     if (!passwordChecked.pass) {
