@@ -2,6 +2,9 @@
 
 const checkPassword = () => {
     return (password) =>{
+        if(!password.match(/[a-z]/gi)){
+            return {pass : false, message: "La contraseña debe tener al menos una letra"}
+        }
         if (!password.match(/[A-Z]/g)){
             return {pass : false, message : "La contraseña debe tener al menos una letra en mayúscula"}
         }
