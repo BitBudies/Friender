@@ -44,7 +44,8 @@ def findEmail(request):
             tiempo_restante = 60 - int(tiempo_transcurrido.total_seconds())
             return Response(
                 {
-                    "error": f"Debe esperar {tiempo_restante} segundos para enviar otro correo."
+                    "error": f"Debe esperar {tiempo_restante} segundos para enviar otro correo.",
+                    "tiempo": tiempo_restante
                 },
                 status=status.HTTP_429_TOO_MANY_REQUESTS,
             )
