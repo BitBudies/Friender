@@ -2,6 +2,7 @@ from datetime import timedelta
 from django.utils import timezone
 import random
 import string
+from amigo.views.utils import correo_valido
 from amigo.models.codigosVerificacionDB import Codigos
 from amigo.views.utils import generate_key
 from ..models.clienteDB import Cliente
@@ -17,6 +18,8 @@ from django.shortcuts import get_object_or_404
 @api_view(["POST"])
 def findEmail(request):
     user_or_email = request.POST.get("user_or_email", None)
+    if not correo_valido(user_or_email):
+            return Response({"error": "Formato incorrecto ejemplo@dominio.com"}, status=status.HTTP_400_BAD_REQUEST)
     if not user_or_email:
         return Response(
             {"error": "El campo es obligatorio"},
@@ -32,7 +35,8 @@ def findEmail(request):
                 {"error": "No se encontró una cuenta asociada al email"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-
+    
+     
     codigoToken = Codigos.objects.filter(correo=user.email).first()
     if codigoToken:
         tiempo_transcurrido = timezone.now() - codigoToken.timestamp_registro
