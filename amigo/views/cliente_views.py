@@ -123,15 +123,22 @@ class VerificarCorreoUsuario(APIView):
             )
 
         if not correo_valido(correo):
-            return Response({"error": "El correo no es válido."}, status=400)
+            return Response({
+                "error": "El correo no es válido.",
+                "email": "El correo no es válido."
+            }, status=400)
 
         if User.objects.filter(username=usuario).exists():
-            return Response(
-                {"error": "Usuario ya existe"}, status=status.HTTP_400_BAD_REQUEST
+            return Response({
+                "error": "Usuario ya existe",
+                "username": "Usuario ya existe"
+            }, status=status.HTTP_400_BAD_REQUEST
             )
         if User.objects.filter(email=correo).exists():
-            return Response(
-                {"error": "Correo ya existe"}, status=status.HTTP_400_BAD_REQUEST
+            return Response({
+                "error": "Correo ya existe",
+                "email": "El correo ya existe."
+            }, status=status.HTTP_400_BAD_REQUEST
             )
 
         return Response(

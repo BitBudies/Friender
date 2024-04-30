@@ -221,6 +221,23 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
       setData({ ...data, ...values, contraseña: values.confirmar_contraseña });
       reset();
     }
+    if (isError) {
+      const tipoError = responseError.data
+      if (tipoError.username) {
+        setErrors({
+          ...errors,
+          ["nombre_usuario"]: tipoError.username,
+        });
+      } else if (tipoError.email) {
+        setErrors({
+          ...errors,
+          ["correo_electronico"]: tipoError.email,
+        });
+      } else {
+        console.log(tipoError.error);
+      }
+      
+    }
   }, [
     response,
     isLoading,
