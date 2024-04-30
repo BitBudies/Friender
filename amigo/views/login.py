@@ -6,6 +6,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
+from django.utils import timezone
 # Para instalar
 # pip install --upgrade djangorestframework-simplejwt
 
@@ -58,6 +59,17 @@ class Login(ObtainAuthToken):
             },
             status=status.HTTP_201_CREATED,
         )
+    
+    def incrementoFallo(self, request):
+        if 'login_failed_attempts' not in request.session:
+            request.session['login_failed_attempts'] = 1
+        else:
+            request.session['login_failed_attempts'] += 1
+            errores = request.session['login_failed_attempts']
+
+            if errores == 3:
+                request.session['block_time'] = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
+                return Response({"error": "Has excedido el límite de intentos. Por favor, inténtalo de nuevo en 60 segundos."}, status=status.HTTP_400_BAD_REQUEST)
 
     
 
