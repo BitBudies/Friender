@@ -29,27 +29,27 @@ const Perfil = () => {
   const token = cookies.token;
   const [currentOption, setCurrentOption] = useState(1);
   const [showContent, setShowContent] = useState(false);
-  const {
-    data: informacion,
-    isFetching,
-    isSuccess,
-    isError,
-    error: responseError,
-  } = useGetClienteInfoQuery(token);
+
+  const {userData : informacion} = useGlobalContext();
+  // const {
+  //   data: informacion,
+  //   isFetching,
+  //   isSuccess,
+  //   isError,
+  //   error: responseError,
+  // } = useGetClienteInfoQuery(token);
   const [nombreCompleto, setNombreCompleto] = useState("");
   const [imagenBase64, setImagenBase64] = useState("");
 
   useEffect(() => {
-    if (isSuccess) {
+    if (informacion) {
       console.log(informacion);
       setNombreCompleto(informacion.nombre_completo);
       setImagenBase64(informacion.imagenBase64);
       //nombre_completo = informacion.nombre_completo
     }
-    if (isError) {
-      console.log(responseError);
-    }
-  }, [isSuccess, isError, informacion, responseError]);
+
+  }, [informacion]);
 
   const handleOptionClick = (id) => {
     setCurrentOption(id);
