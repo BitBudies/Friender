@@ -38,7 +38,8 @@ class Login(ObtainAuthToken):
             if not User.objects.filter(username=username_or_email).exists() and not User.objects.filter(email=username_or_email).exists():
                 #self.incrementoFallo(request)
                 #self.verificarIntento(request)
-                return Response({"error": "Username o correo incorrecto"}, status=status.HTTP_400_BAD_REQUEST)
+                # esto es de Usuario o correo incorrecto, a solicitud de qa el mensaje cambio
+                return Response({"error": "Datos incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
             else:
                return self.incrementoFallo(request)
 
@@ -83,7 +84,8 @@ class Login(ObtainAuthToken):
                     else:
                         remaining_time = int((block_time + timedelta(seconds=60) - timezone.now()).total_seconds())
                         return Response({"error": f"Has excedido el límite de intentos. Por favor, inténtalo de nuevo en {remaining_time} segundos."}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({"error": "Contraseña incorrecta"}, status=status.HTTP_400_BAD_REQUEST)
+        # esto es de contraseña incorrecta, a solicitud de qa el mensaje cambio
+        return Response({"error": "Datos incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
     
     def usuarioBloqueado(self, request):
         block_time_str = request.session.get('block_time')
