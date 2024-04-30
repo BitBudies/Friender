@@ -87,7 +87,6 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
   };
 
   const onPasswordChange = (e) => {
-    if(e.target.value.length <= 32){
       setValues((values) => {
         return {...values,confirmar_contraseña : ""}
       })
@@ -98,9 +97,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
       } else {
         setPasswordStatus({ ...passwordStatus, pass: true });
       }
-      setPassword(e.target.value);
-    }
-    
+      setPassword(e.target.value);    
   };
 
   // Función para validar el formulario antes de pasar al siguiente paso

@@ -2,6 +2,9 @@
 
 const checkPassword = () => {
     return (password) =>{
+        if (password.length > 64) {
+            return {pass : false,message : "La contraseña debe tener 64 caracteres como máximo"}
+        }
         if(!password.match(/[a-z]/gi)){
             return {pass : false, message: "La contraseña debe tener al menos una letra"}
         }
@@ -17,9 +20,7 @@ const checkPassword = () => {
         if (password.length < 8) {
             return {pass : false,message : "La contraseña debe tener al menos 8 caracteres"}
         }
-        if (password.length > 64) {
-            return {pass : false,message : "La contraseña debe tener 64 caracteres como máximo"}
-        }
+        
         if (!password.match(/[#!@$%&-*+/?¡]+/g)){
             return {pass : false, message : "La contraseña debe tener al menos un caracter especial"}
         }
