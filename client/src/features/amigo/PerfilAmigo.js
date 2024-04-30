@@ -82,8 +82,10 @@ const PerfilAmigo = () => {
                     ? "data:image/jpeg;base64," + amigo.imagenBase64
                     : "/images/user.jpeg"} 
                   setPreview={setFoto} 
-                  conX={false}/>
+                  conX={false}
+                /> 
               }
+              
             </div>
             <Preview foto={foto} handleClose={()=>{
               setFoto('')
