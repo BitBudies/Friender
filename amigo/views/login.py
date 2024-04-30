@@ -40,9 +40,7 @@ class Login(ObtainAuthToken):
                 #self.verificarIntento(request)
                 return Response({"error": "Username o correo incorrecto"}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                self.incrementoFallo(request)
-                #self.verificarIntento(request)
-                return Response({"error": "Contraseña incorrecta", "intentos_fallidos": request.session.get('login_failed_attempts', 0)}, status=status.HTTP_400_BAD_REQUEST)
+               return self.incrementoFallo(request)
 
         if self.usuarioBloqueado(request):
             remaining_time = self.usuarioBloqueado(request)
