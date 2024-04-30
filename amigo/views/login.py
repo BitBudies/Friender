@@ -8,6 +8,7 @@ from django.core.cache import cache
 import asyncio
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
+import time
 # Para instalar
 # pip install --upgrade djangorestframework-simplejwt
 
@@ -68,10 +69,10 @@ class Login(ObtainAuthToken):
             request.session['login_failed_attempts'] += 1
             errores = request.session['login_failed_attempts']
             if errores == 3 or errores > 3:
-                # Enviar mensaje y estado al front
                 message = {"error": "Contraseña incorrecta", "intentos_fallidos": errores}
                 response = Response(message, status=status.HTTP_400_BAD_REQUEST)
-                # Llamar a la función bloquear
+                
+                time.sleep(2)
                 asyncio.run(self.bloquear(request))
                 return response
 
