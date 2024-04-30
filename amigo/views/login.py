@@ -4,11 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
-from django.core.cache import cache
-import asyncio
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
-import time
 # Para instalar
 # pip install --upgrade djangorestframework-simplejwt
 
@@ -62,29 +59,9 @@ class Login(ObtainAuthToken):
             status=status.HTTP_201_CREATED,
         )
 
-    def incrementoFallo(self, request):
-        if 'login_failed_attempts' not in request.session:
-            request.session['login_failed_attempts'] = 1
-        else:
-            request.session['login_failed_attempts'] += 1
-            errores = request.session['login_failed_attempts']
-            if errores == 3 or errores > 3:
-                message = {"error": "Contraseña incorrecta", "intentos_fallidos": errores}
-                response = Response(message, status=status.HTTP_400_BAD_REQUEST)
-                
-                time.sleep(2)
-                asyncio.run(self.bloquear(request))
-                return response
+    
 
-    async def bloquear(self, request):
-        request.session['login_failed_attempts'] = 0  # Reiniciar los intentos fallidos
-        response = {"error": "Has excedido el límite de intentos. Por favor, inténtalo de nuevo en 60 segundos.", "intentos_fallidos": 3}
-
-        # Esperar 60 segundos antes de eliminar el bloqueo
-        await asyncio.sleep(60)
-        cache.delete('blocked_user_' + request.session.session_key)
-        # Retornar la respuesta
-        return Response(response, status=status.HTTP_429_TOO_MANY_REQUESTS)
+    
         
 
         
