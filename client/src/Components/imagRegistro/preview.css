@@ -5,16 +5,20 @@
     z-index: 1;
     background: rgba(0,0,0,0.7);
     width: 100%;
-    height: 110%;
+    height: 130%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
 }
 
-.preview .close-btn p {
-    color: white;
+.preview .close-btn button {
     font-size: 25px;
+}
+
+.preview .close-btn {
+    display: flex;
+    justify-content: end;
 }
 
 .image-preview{

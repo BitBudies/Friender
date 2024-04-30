@@ -50,9 +50,7 @@ const LogIn = () => {
     if (isLoading) {
       setDisableBtnLoading(true);
       setShowFeedback(false);
-      if(contadorBloqueo == 2){
-        setBlockedPasswordBox(false); //Mostrar Modal de Penalizacion
-      }
+      
     }
     if (isSuccess) {
       console.log(response);
@@ -71,6 +69,9 @@ const LogIn = () => {
       }
       if(responseError.data.intentos_fallidos == "2"){
         setContadorBloqueo(2);
+      }
+      if(contadorBloqueo == 2){
+        setBlockedPasswordBox(false); //Mostrar Modal de Penalizacion
       }
       setFeedbackText(responseError.data.error);
     }
@@ -116,7 +117,7 @@ const LogIn = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Contraseña"
             />
-            <span className="password-icon" onClick={toggleShowPassword}>
+            <span className="login-password-icon" onClick={toggleShowPassword}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
@@ -142,7 +143,7 @@ const LogIn = () => {
           )}
 
           <p className="form-text">
-            <Link to={"/resetPassword"}>¿Haz olvidado la contraseña?</Link>
+            <Link to={"/resetPassword"}>¿Has olvidado la contraseña?</Link>
           </p>
 
           <div className="login-box-separator">

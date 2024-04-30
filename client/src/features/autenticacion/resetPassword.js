@@ -71,6 +71,7 @@ const ResetPassword = () => {
           <h1>Restablecer contraseña</h1>
           <div className="para-form">
             <p>Ingresa tu correo electrónico para buscar tu cuenta.</p>
+            {/* <h3>Ingresa tu correo electrónico para buscar tu cuenta</h3> */}
             <input
               type="email"
               name="user_email"
@@ -84,7 +85,7 @@ const ResetPassword = () => {
             )}
             <div className="botones">
               <a href="/login">
-                <button className="b-cancelar btn">Cancelar</button>
+                <button className="b-cancelar btn btn-outline-primary">Cancelar</button>
               </a>
               <button
                 type="submit"
@@ -92,7 +93,7 @@ const ResetPassword = () => {
                 disabled={!isButtonEmailEnabled}
                 className="b-buscar btn btn-azul"
               >
-                <p>Buscar</p>
+                {isEmailValid ? <p>Continuar</p> : <p>Buscar cuenta</p>}
               </button>
             </div>
           </div>

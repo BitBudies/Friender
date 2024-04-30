@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './imagRegist.css'
 
-const Foto = ( {foto, remover, index, setPreview} ) => {
+const Foto = ( {foto, remover, index, setPreview, conX} ) => {
 
     const [previewImage, setPreviewImage] = useState('')
     
@@ -24,12 +24,16 @@ const Foto = ( {foto, remover, index, setPreview} ) => {
                     onClick={handlePreview}
                     className='imagen'
                 />
-                <button 
-                    className='cerrar-img'
-                    onClick={handleClose}
-                >
-                    X
-                </button>
+                {
+                    conX &&
+                    <button 
+                        className='cerrar-img'
+                        onClick={handleClose}
+                    >
+                        X
+                    </button>       
+                }
+                
             </div>
         </div>
     )

@@ -60,6 +60,7 @@
   }
   
 .form-control{
+    margin-left: 5px;
     border-radius: 10px;
     resize: none;
 }

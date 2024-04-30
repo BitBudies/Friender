@@ -57,6 +57,27 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
     });
   };
 
+  const handleChangeOnlyLetters = (event) => {
+    const { name, value } = event.target;
+    // Expresión regular para permitir solo caracteres alfabéticos
+    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+    if (!onlyLettersRegex.test(value)) {
+      setErrors({
+        ...errors,
+        [name]: "",
+      });
+    } else {
+      setValues({
+        ...values,
+        [name]: value,
+      });
+      setErrors({
+        ...errors,
+        [name]: "",
+      });
+    }
+  };
+
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -223,7 +244,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             name="nombre"
             placeholder="Nombre"
             value={values.nombre}
-            onChange={handleChange}
+            onChange={handleChangeOnlyLetters}
             className="form-control input1m-width-70"
             required
           />
@@ -242,7 +263,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             name="apellido_paterno"
             placeholder="Apellido Paterno"
             value={values.apellido_paterno}
-            onChange={handleChange}
+            onChange={handleChangeOnlyLetters}
             className="form-control input-width-160"
             required
           />
@@ -263,7 +284,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             name="apellido_materno"
             placeholder="Apellido Materno"
             value={values.apellido_materno}
-            onChange={handleChange}
+            onChange={handleChangeOnlyLetters}
             className="form-control input-width-160"
           />
         </div>
@@ -312,28 +333,52 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
           </select>
           <p className="text-danger input1-width-70">{errors.genero}</p>
         </div>
+       
         <div className="mb-2 input-item">
+      
           <label
             htmlFor="ubicacion"
             className="input-label required-label input1-width-70"
           >
             Ubicación
+           
           </label>
-          <div className="ubicacion-input">
-            <input
-              type="text"
-              id="ubicacion"
-              name="ubicacion"
-              placeholder="Ubicación"
-              value={values.ubicacion}
-              onChange={handleChange}
-              className="form-control input-width-160"
-            />
-            <FaLocationDot className="ubicacion-icon" />
-          </div>
+          
+          <select
+            id="ubicacion"
+            name="ubicacion"
+            value={values.ubicacion}
+            onChange={handleChange}
+            className="form-select input-width-160 "
+            required
+          >
+            
+            <option value="" disabled selected hidden>
+              ----------
+            </option>
+            <option value="La Paz">La Paz</option>
+            <option value="Santa Cruz">Santa Cruz</option>
+            <option value="Cochabamba">Cochabamba</option>
+            <option value="Potosi">Potosi</option>
+            <option value="Oruro">Oruro</option>
+            <option value="Tarija">Tarija</option>
+            <option value="Pando">Pando</option>
+            <option value="Chuquisaca">Chuquisaca</option>
+            <option value="Beni">Beni</option>
+          </select>
+          <span className="ubicacion-icon">
+              <FaLocationDot />
+              </span>
+
           <p className="text-danger input1-width-70">{errors.ubicacion}</p>
         </div>
-      </div>
+       
+        <div className="mb-2 input-item">
+      
+         
+        </div>  </div>
+     
+     
       <div className="input-group registro">
         <div className="mb-2 input-item">
           <label
@@ -398,7 +443,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
                 required
               />
               {!passwordStatus.pass && passwordStatus.message && (
-                <p className="text-danger mw-100">{passwordStatus.message}</p>
+                <p className="text-danger mw-100" style={{ position: "fixed" }}>{passwordStatus.message}</p>
               )}
               <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -435,7 +480,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
               <p className="text-danger input-width-30">
                 {errors.confirmar_contraseña}
               </p>
-              <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword}>
+              <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword1}>
                 {showPassword1 ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
@@ -444,7 +489,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
       </div>
       <div className="para1-boton">
         <button
-          className={`btn btn-outline-primary ${isLoading && "disabled"}`}
+          className={`btn btn-azul ${isLoading && "disabled"}`}
           onClick={handleSubmit}
         >
           Siguiente

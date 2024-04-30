@@ -5,11 +5,11 @@ import { LiaFileUploadSolid } from "react-icons/lia";
 import { useNavigate } from 'react-router-dom';
 
 import Foto from "../../Components/imagRegistro/test";
+import Interes from '../../Components/interesRegistro/Interes';
 
 const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
 
     const defaultValues = {
-        interes: [],
         descripcion: '',
         terminos: false,
       };
@@ -19,9 +19,8 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
     const {data,isFetching,isSuccess} = useGetInteresesQuery();
     const [descripcionLength, setDescripcionLength] = useState(0); // Estado para longitud de descripción
     const [values, setValues] = useState(defaultValues);
-    const [pLabels, setPLabels] = useState(false)
-    const [pFotos, setPFotos] = useState(false)
     const [fotos, setFotos] = useState([])
+    const [interes, setInteres] = useState([])
     const [validating, setValidatig] = useState(false)
     const [pesado, setPesado] = useState(false)
     const [formato, setFormato] = useState(false)
@@ -61,27 +60,13 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
             });
         }
         if(name === 'selInteres') {
-            if (values.interes.indexOf(value) === -1) {
-                setPLabels(true);
-                setValues((currentValues) => {
-                    return {
-                        ...currentValues,
-                        interes : [...currentValues.interes, value]
-                    }
-                });
-                const container = document.getElementById('para-labels'); 
-                const element = document.createElement('div');
-                element.innerHTML = `
-                    <strong> ${value} </strong>
-                `;
-                element.onclick = () => {element.remove()};
-                container.appendChild(element);
+            if (interes.indexOf(value) === -1) {
+                setInteres([...interes, value])
             }
         }
         if (name === 'input-foto'){
             setPesado(false)
             setFormato(false)
-
             try {
               if (fotos.length === 6) {
                 return;
@@ -96,11 +81,7 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
                   setPesado(true)
                   return;
               }
-
               const fotoURL = URL.createObjectURL(selectedFile)
-
-              setPFotos(true)
-
               setFotos([...fotos, {id:selectedFile.name, file:selectedFile, url: fotoURL}]);
             } catch  (error) {
               console.log("Debe ingresar una imagen")
@@ -112,13 +93,18 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
     const rojoClaseFoto = fotos.length === 0 || fotos.length === 6 ? 'texto-rojo' : '';
     const rojoClasePesoMax = pesado ? 'texto-rojo' : '';
 
+    const removerInteres = (index) => {
+      setInteres(interes => interes.filter((_, i) => index !== i))
+    }
+
+    const removerImg = (index) => {
+      setFotos(fotos => fotos.filter((_, i) => index !== i))
+    }
+
     useEffect(() => {
         console.log(values);
     },[values])
 
-    
-    
-    
     // @kevin huayllas pinto hay que usar el csrf en todos los post
     const {data: csrf, error, isLoading } = useGetCsrfQuery({})
     useEffect(() => {
@@ -137,7 +123,7 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
       form.append("fecha_nacimiento", info.fecha_nacimiento);
       form.append("genero", info.genero);
       form.append("direccion", info.ubicacion);
-      form.append("descripcion", "descripcion de jhon");
+      form.append("descripcion", values.descripcion);
       form.append("usuario", info.nombre_usuario);
       form.append("correo", info.correo_electronico);
       form.append("contrasena", info.contraseña);
@@ -145,7 +131,7 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
       fotos.forEach((it) => {
         form.append("imagenes", it.file)
       })
-      values.interes.forEach((it) => {
+      interes.forEach((it) => {
         form.append("intereses", it)
       })
       console.log(form)
@@ -158,15 +144,19 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
       if (correctito){
         navigate('/login')
       }
+      if (responseerror) {
+        console.log(responseerror.data.error)
+        // setValidatig(false)
+      }
     }, [carganding, correctito, responseerror, respuesta])
-
-    const remover = (index) => {
-      setFotos(fotos => fotos.filter((_, i) => index !== i))
-    }
 
     useEffect(() => {
       console.log("despues ", fotos);
     },[fotos])
+
+    useEffect(() => {
+      console.log("intereses: ", interes)
+    },[interes])
 
   return (
     <div className="form-item popup">
@@ -185,8 +175,22 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
               </option>
             </select>
             <div className='para-labels' id='para-labels'>
-                        {/* se llena dinamicamente */}
+                {interes.length>0 ?
+                  interes.map((inter, indexInt) => {
+                    return (
+                      <Interes interes={inter} remover={removerInteres} index={indexInt}/>
+                    )
+                  })
+                  : ''
+                }
             </div>
+            <span className='texto-rojo'>
+            {
+              interes.length === 0 && validating 
+              ? `Este campo es obligatorio`
+              : ''
+            }
+            </span>
           </section>
 
           <section className="fotos">
@@ -204,33 +208,38 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
               />
             </div>
             <div className='para-fotos' id='para-fotos'>
-                  {pFotos ? 
+                  {fotos.length>0 ? 
                     fotos.map((picture, index) => {
                       return(
-                        <Foto foto={picture.url} remover={remover} index={index} setPreview={setPreview}/>
+                        <Foto foto={picture.url} 
+                          remover={removerImg} 
+                          index={index} 
+                          setPreview={setPreview}
+                          conX={true}
+                        />
                       )
                     })
                   : ""}
             </div>
             <p className="text-muted" id="min-max-fotos">
-              <span className={rojoClaseFoto}>
+              <p className={rojoClaseFoto}>
                 {fotos.length === 0 && validating
-                  ? `Mínimo 1 fotografías.`
+                  ? `Debe tener una imagen como mínimo y Archivos menores a 200 Kb`
                   : 
                     fotos.length === 6 &&
-                    `Máximo 6 fotografías`
+                    `Sólo se admiten como máximo seis fotografías.`
                 }
                 {formato
                   ? `Sólo se permiten subir imágenes en formato jpg, jpeg, png.`
                   : '' 
                 }
-              </span>
-              <span className={rojoClasePesoMax}>
+              </p>
+              <p className={rojoClasePesoMax}>
                 {pesado
-                  ? `Imágenes de máximo 200kB.`
+                  ? `Tu imagen pesa más de 200KB. Solo se permiten imágenes de máximo 200KB.`
                   : '' 
                 }
-              </span>
+              </p>
             </p>
 
           </section>
@@ -252,8 +261,18 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
             <span className={rojoClase}>
               {descripcionLength < 30
                 ? `${descripcionLength}/30 caracteres mínimo.`
-                : descripcionLength >= 400 &&
-                  `${descripcionLength}/500 caracteres máximo.`}
+                : ""
+              }
+            </span>
+            {descripcionLength >= 400 && (<span className={`${descripcionLength === 500 ? "red-text" : ""}`}>
+              {descripcionLength}/500 caracteres máximo.</span>)}
+          </p>
+          <p className="text-muted" id="caracteres-minimo">
+            <span className={rojoClase}>
+              {descripcionLength < 30 && validating
+                ? `La descripción es obligatoria.`
+                : ""
+              }
             </span>
           </p>
         </div>
