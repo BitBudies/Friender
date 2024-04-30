@@ -7,6 +7,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.utils import timezone
+from datetime import datetime, timedelta
 # Para instalar
 # pip install --upgrade djangorestframework-simplejwt
 
@@ -70,6 +71,16 @@ class Login(ObtainAuthToken):
             if errores == 3:
                 request.session['block_time'] = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
                 return Response({"error": "Has excedido el límite de intentos. Por favor, inténtalo de nuevo en 60 segundos."}, status=status.HTTP_400_BAD_REQUEST)
+            elif errores > 3:
+                block_time_str = request.session.get('block_time')
+                if block_time_str:
+                    block_time = timezone.make_aware(datetime.strptime(block_time_str, '%Y-%m-%d %H:%M:%S'))
+                    if timezone.now() > block_time + timedelta(seconds=60):
+                        request.session['login_failed_attempts'] = 1
+                        return Response({"error": "Has excedido el límite de intentos. Por favor, inténtalo de nuevo."}, status=status.HTTP_400_BAD_REQUEST)
+                    else:
+                        remaining_time = int((block_time + timedelta(seconds=60) - timezone.now()).total_seconds())
+                        return Response({"error": f"Has excedido el límite de intentos. Por favor, inténtalo de nuevo en {remaining_time} segundos."}, status=status.HTTP_400_BAD_REQUEST)
 
     
 
