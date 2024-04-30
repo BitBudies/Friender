@@ -211,7 +211,12 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
                   {fotos.length>0 ? 
                     fotos.map((picture, index) => {
                       return(
-                        <Foto foto={picture.url} remover={removerImg} index={index} setPreview={setPreview}/>
+                        <Foto foto={picture.url} 
+                          remover={removerImg} 
+                          index={index} 
+                          setPreview={setPreview}
+                          conX={true}
+                        />
                       )
                     })
                   : ""}
