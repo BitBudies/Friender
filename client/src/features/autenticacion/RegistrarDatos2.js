@@ -187,7 +187,7 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
             <span className='texto-rojo'>
             {
               interes.length === 0 && validating 
-              ? `Mínimo un interes.`
+              ? `Este campo es obligatorio`
               : ''
             }
             </span>
@@ -224,7 +224,7 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
             <p className="text-muted" id="min-max-fotos">
               <p className={rojoClaseFoto}>
                 {fotos.length === 0 && validating
-                  ? `Mínimo una fotografía.`
+                  ? `Debe tener una imagen como mínimo y Archivos menores a 200 Kb`
                   : 
                     fotos.length === 6 &&
                     `Sólo se admiten como máximo seis fotografías.`
