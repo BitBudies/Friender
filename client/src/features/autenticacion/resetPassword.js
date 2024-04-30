@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./resetPassword.css";
-import {
-  useFindEmailMutation,
-} from "./authSlice";
+import { useFindEmailMutation } from "./authSlice";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -13,35 +11,31 @@ const ResetPassword = () => {
   const [emailText, setEmailText] = useState("");
   const [supportingText, setSupportingText] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isButtonEmailEnabled, setIsButtonEmailEnabled] = useState(false);
+  const [isButtonEmailEnabled, setIsButtonEmailEnabled] = useState(true);
 
   const [
     findEmail,
     { data: response, isLoading, isSuccess, isError, error: errorsito },
   ] = useFindEmailMutation();
 
-
   const handleEmailChange = (e) => {
-    setIsEmailValid(false);
     setSupportingText("");
     setEmailText(e.target.value);
-    if (e.target.value.length > 5) {
-      setIsButtonEmailEnabled(true);
-    }
+    setIsButtonEmailEnabled(true);
   };
 
   const handleSubmitEmailForm = (e) => {
     e.preventDefault();
-    if (isEmailValid) {
-      goToNextStep();
-    } else {
-      const formulario = new FormData();
-      formulario.append("user_or_email", emailText);
-      try {
-        findEmail(formulario);
-      } catch (error) {
-        console.error(error);
-      }
+    if (emailText.length === 0) {
+      setSupportingText("El campo es obligatorio");
+      return;
+    }
+    const formulario = new FormData();
+    formulario.append("user_or_email", emailText);
+    try {
+      findEmail(formulario);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -50,9 +44,8 @@ const ResetPassword = () => {
       setIsButtonEmailEnabled(false);
     }
     if (isSuccess) {
-      setIsEmailValid(true);
       setIsButtonEmailEnabled(true);
-      goToNextStep()
+      goToNextStep();
     }
     if (isError) {
       setIsEmailValid(false);
@@ -60,7 +53,6 @@ const ResetPassword = () => {
     }
   }, [isError, isLoading, isSuccess, response]);
 
-  
   const goToNextStep = () => setStep(step + 1);
   const goToPreviousStep = () => setStep(step - 1);
 
@@ -78,8 +70,7 @@ const ResetPassword = () => {
         <div className="step-1">
           <h1>Restablecer contraseña</h1>
           <div className="para-form">
-            <h3>Ingresa tu correo electrónico</h3>
-            <h3>para buscar tu cuenta.</h3>
+            <p>Ingresa tu correo electrónico para buscar tu cuenta.</p>
             {/* <h3>Ingresa tu correo electrónico para buscar tu cuenta</h3> */}
             <input
               type="email"
@@ -94,7 +85,7 @@ const ResetPassword = () => {
             )}
             <div className="botones">
               <a href="/login">
-                <button className="b-cancelar btn">Cancelar</button>
+                <button className="b-cancelar btn btn-outline-primary">Cancelar</button>
               </a>
               <button
                 type="submit"
@@ -111,8 +102,11 @@ const ResetPassword = () => {
       {step === 2 && (
         <div className="step-2 step-1">
           <h1>Revisa tu bandeja de entrada</h1>
-          <p>Se ha enviado un correo electrónico con un enlace para restablecer la contraseña</p>
-        </div>  
+          <p>
+            Se ha enviado un correo electrónico con un enlace para restablecer
+            la contraseña
+          </p>
+        </div>
       )}
     </div>
   );

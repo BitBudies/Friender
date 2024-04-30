@@ -171,7 +171,7 @@ const NewPassword = () => {
           </div>
           <div className="para-form">
             <div className="mb-2 password-input">
-              <p>Contraseña*</p>
+              <p className="required-label">Contraseña</p>
               <div
                 className={
                   passwordStatus.pass ? "password-match" : "password-no-match"
@@ -198,10 +198,10 @@ const NewPassword = () => {
               {!passwordStatus.pass && passwordStatus.message && (
                 <p className="text-danger mw-100">{passwordStatus.message}</p>
               )}
-              <p style={{ color: "#999" }}>Mínimo 8 caracteres*</p>
+              <p style={{ color: "#999" }}>Mínimo 8 caracteres</p>
             </div>
             <div className="mb-2 password-input">
-              <p>Confirmar Contraseña*</p>
+              <p className="required-label">Confirmar Contraseña</p>
               <div
                 className={
                   passwordStatus.pass && confirmPassword === password

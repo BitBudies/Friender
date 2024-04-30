@@ -9,6 +9,7 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
 
 
     const [btnEnabled,setBtnEnabled] = useState(false);
+    const [btnEnabledSend,setBtnEnabledSend] = useState(false);
     const [verificationCode, setVerificationCode] = useState("");
     const [supportingText, setSupportingText] = useState("");
     const [segundo, setSegundo] = useState(60)
@@ -48,7 +49,10 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
           // formulario.append("nombre", "asdf");
           // formulario.append("ap_paterno", "asd");
           sendCode(formulario);
-          
+          setBtnEnabledSend(true);
+          setTimeout(() => {
+            setBtnEnabledSend(false);
+          }, 60000);
         } catch (error) {
           console.log(error);
           
@@ -119,7 +123,7 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
             />
             
             <button 
-                className="btn btn-azul"
+                className={`btn btn-azul ${btnEnabledSend ? "disabled":""}`}
                 onClick={handleEnviarCodigos}>
                 Enviar Código
             </button>

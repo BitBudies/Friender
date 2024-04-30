@@ -17,7 +17,7 @@
 }
 
 .interes {
-    width: 40%;
+    width: 50%;
     /* background-color: yellow; */
 }
 
@@ -43,6 +43,10 @@ select {
 .logo-img {
     width: 300px; 
     height: 300px; 
+}
+
+.red-text{
+    color: red;
 }
 
 
@@ -92,6 +96,10 @@ select {
 
 .interes .para-labels {
     margin: 5px;
+    width: 100%;
+    max-height: 6rem;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 .fotos .para-fotos {

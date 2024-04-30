@@ -6,10 +6,13 @@ import Loading from "../../Components/Loading";
 import "./PerfilAmigo.css";
 import Formulario from "../solicitudes/Formulario";
 import { useCookies } from "react-cookie";
+import Foto from "../../Components/imagRegistro/test";
+import Preview from "../../Components/imagRegistro/preview"
 
 const PerfilAmigo = () => {
   const [cookies] = useCookies(["token"]);
   const token = cookies.token;
+  const [foto,setFoto] = useState(''); //para la preview
 
   const { id_amigo } = useParams();
   const {
@@ -59,7 +62,38 @@ const PerfilAmigo = () => {
             <p>
               <strong>Edad:</strong> {amigo.edad} años
             </p>
+            
+            <div className="galeria">
+              {/* Aqui poner la galeria de imagenes */}
+              {
+                // amigo.imagenBase64.map((imag) => {
+                //   <Foto
+                //     foto={imag}
+                //     setPreview={setFoto}
+                //     conX={false} 
+                //   />
+                // })
+              }
+              {
+                // eliminar esto cuando este lo de la lista
+                // solo es para probar con el preview
+                <Foto 
+                  foto={amigo.imagenBase64 
+                    ? "data:image/jpeg;base64," + amigo.imagenBase64
+                    : "/images/user.jpeg"} 
+                  setPreview={setFoto} 
+                  conX={false}
+                /> 
+              }
+              
+            </div>
+            <Preview foto={foto} handleClose={()=>{
+              setFoto('')
+            }}/>
           </div>
+
+          
+
           <div className="perfil-amigo-right">
             <h1>Perfil de amigo</h1>
             <div className="profile-description w-100">

@@ -190,7 +190,8 @@ const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStat
           <span className={rojoClase}>
       {descripcionLength < 30 ? `${descripcionLength}/30 caracteres mínimo.` : ''}
     </span>
-            {descripcionLength >= 100 && `${descripcionLength}/500 caracteres máximo.`}
+            {descripcionLength >= 100 && (<span className={`${descripcionLength === 500 ? "red-text" : ""}`}>
+              {descripcionLength}/500 caracteres máximo.</span>)}
           </p>
         </div> 
         {showFeedback.status && <p className='text-danger'>{showFeedback.message}</p>}
