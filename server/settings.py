@@ -154,4 +154,4 @@ CORS_ALLOWED_ORIGINS = [
 ]  # quien puede acceder a la api hacer peticiones
 
 #barra final 
-APPEND_SLASH = False
+#APPEND_SLASH = False
