@@ -12,9 +12,13 @@
     gap: 1rem;
 }
 
-.preview .close-btn p {
-    color: white;
+.preview .close-btn button {
     font-size: 25px;
+}
+
+.preview .close-btn {
+    display: flex;
+    justify-content: end;
 }
 
 .image-preview{
