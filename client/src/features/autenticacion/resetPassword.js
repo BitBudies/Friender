@@ -85,7 +85,7 @@ const ResetPassword = () => {
             )}
             <div className="botones">
               <a href="/login">
-                <button className="b-cancelar btn">Cancelar</button>
+                <button className="b-cancelar btn btn-outline-primary">Cancelar</button>
               </a>
               <button
                 type="submit"

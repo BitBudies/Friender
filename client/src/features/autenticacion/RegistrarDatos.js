@@ -485,7 +485,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
       </div>
       <div className="para1-boton">
         <button
-          className={`btn btn-outline-primary ${isLoading && "disabled"}`}
+          className={`btn btn-azul ${isLoading && "disabled"}`}
           onClick={handleSubmit}
         >
           Siguiente
