@@ -13,7 +13,7 @@ import { useCookies } from 'react-cookie';
 
 const NavBar = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
-  const {goToBeginning} = useGlobalContext();
+  const {goToBeginning,userData} = useGlobalContext();
   /*false --> Muestra iniciar sesión;  true --> Muestra el icono del perfil*/
 
   const navigate = useNavigate();
@@ -65,7 +65,12 @@ const NavBar = () => {
             </div>
             <div className={`${userLoged ? "" : "hidden"}`}>
             <span className="nav-link dropdown-toggle profile-icon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i><FaUserCircle/></i>
+              <div
+                className="image-icon"
+                style={{
+                  backgroundImage: `url(${userData.imagenBase64 ? `data:image/jpeg;base64,${userData.imagenBase64}` : "/images/user.jpeg"})`,
+                }}
+              ></div>
             </span>
             <ul className="dropdown-menu">
               <li><Link className="dropdown-item" to={"/acerca"}>Acerca De</Link></li>
