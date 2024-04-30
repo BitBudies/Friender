@@ -46,18 +46,12 @@
     padding-right: 35px !important;
   }
   
-  .ubicacion-icon {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    transform: translateY(-0%);
-    color: black;
-  }
+ 
   .ubicacion-icon{
-    position: absolute;
-    right: 310px;
-    top: 50%;
-    transform: translateY(-55%);
+    position: relative;
+    left: 87%!important;
+    top: 70%!important;
+    transform: translateY(-410%)!important;
     color: black;
 
   }

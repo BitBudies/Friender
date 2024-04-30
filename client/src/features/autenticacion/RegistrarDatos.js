@@ -335,15 +335,15 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
         </div>
        
         <div className="mb-2 input-item">
+      
           <label
             htmlFor="ubicacion"
             className="input-label required-label input1-width-70"
           >
             Ubicación
+           
           </label>
           
-           <FaLocationDot className="ubicacion-icon mr-2" /> 
-    
           <select
             id="ubicacion"
             name="ubicacion"
@@ -352,6 +352,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             className="form-select input-width-160 "
             required
           >
+            
             <option value="" disabled selected hidden>
               ----------
             </option>
@@ -365,7 +366,10 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             <option value="Chuquisaca">Chuquisaca</option>
             <option value="Beni">Beni</option>
           </select>
-          
+          <span className="ubicacion-icon">
+              <FaLocationDot />
+              </span>
+
           <p className="text-danger input1-width-70">{errors.ubicacion}</p>
         </div>
        
