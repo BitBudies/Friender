@@ -152,3 +152,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000"
 ]  # quien puede acceder a la api hacer peticiones
+
+#barra final 
+APPEND_SLASH = False
