@@ -137,6 +137,7 @@ class VerificarCorreoUsuario(APIView):
         return Response(
             {"message": "Usuario y correo válidos"}, status=status.HTTP_200_OK
         )
+        
 
 
 # Envia codigos de verificacion para el correo electronico
