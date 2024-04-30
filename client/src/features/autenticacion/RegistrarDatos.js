@@ -46,11 +46,11 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    if (name === "confirmar_contraseña" && value.length > 64){return};
     setValues({
       ...values,
       [name]: value,
     });
-    console.log(name);
     setErrors({
       ...errors,
       [name]: "",
