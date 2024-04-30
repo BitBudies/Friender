@@ -61,13 +61,13 @@ const LogIn = () => {
     if (isError) {
       setDisableBtnLoading(false);
       setShowFeedback(true);
-      if(responseError.data.intentos_fallidos == "0"){
+      if(responseError.data.intentos_fallidos === "0"){
         setContadorBloqueo(0);
       }
-      if(responseError.data.intentos_fallidos == "1"){
+      if(responseError.data.intentos_fallidos === "1"){
         setContadorBloqueo(1);
       }
-      if(responseError.data.intentos_fallidos == "2"){
+      if(responseError.data.intentos_fallidos === "2"){
         setContadorBloqueo(2);
       }
       if(contadorBloqueo == 2){
@@ -75,11 +75,7 @@ const LogIn = () => {
       }
       setFeedbackText(responseError.data.error);
     }
-  }, [
-    isError,
-    isLoading,
-    isSuccess
-  ]);
+  }, [contadorBloqueo, isError, isLoading, isSuccess, navigate, response, responseError.data.error, responseError.data.intentos_fallidos, setClientId, setCookie]);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
