@@ -124,8 +124,8 @@ class VerificarCorreoUsuario(APIView):
 
         if not correo_valido(correo):
             return Response({
-                "error": "El correo no es válido.",
-                "email": "El correo no es válido."
+                "error": "Verifica que respete el formato: ejemplo@dominio.com",
+                "email": "Verifica que respete el formato: ejemplo@dominio.com"
             }, status=400)
 
         if User.objects.filter(username=usuario).exists():
