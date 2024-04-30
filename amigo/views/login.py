@@ -4,16 +4,17 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
-from amigo.serializers.cliente_serializer import UserTokenSerializer
-from ..serializers.login_serializer import LoginSerializer
-import time
 from django.core.cache import cache
 import asyncio
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
+import time
 # Para instalar
 # pip install --upgrade djangorestframework-simplejwt
 
 
 class Login(ObtainAuthToken):
+    @method_decorator(never_cache)
     def post(self, request, *args, **kwargs):
         username_or_email = request.data.get("username_or_email")
         password = request.data.get("password")
@@ -67,15 +68,23 @@ class Login(ObtainAuthToken):
         else:
             request.session['login_failed_attempts'] += 1
             errores = request.session['login_failed_attempts']
-            if errores == 3 or errores > 3 :
-                print(errores)
+            if errores == 3 or errores > 3:
+                message = {"error": "Contraseña incorrecta", "intentos_fallidos": errores}
+                response = Response(message, status=status.HTTP_400_BAD_REQUEST)
+                
+                time.sleep(2)
                 asyncio.run(self.bloquear(request))
+                return response
 
     async def bloquear(self, request):
-        cache.set('blocked_user_' + request.session.session_key, True, timeout=60)
-        response = {"error": "Has excedido el límite de intentos. Por favor, inténtalo de nuevo en 60 segundos.","intentos_fallidos": 3}
-        await asyncio.sleep(60)  # Esperar 60 segundos
-        request.session['login_failed_attempts'] = 0
+        request.session['login_failed_attempts'] = 0  # Reiniciar los intentos fallidos
+        response = {"error": "Has excedido el límite de intentos. Por favor, inténtalo de nuevo en 60 segundos.", "intentos_fallidos": 3}
+
+        # Esperar 60 segundos antes de eliminar el bloqueo
+        await asyncio.sleep(60)
+        cache.delete('blocked_user_' + request.session.session_key)
+        # Retornar la respuesta
         return Response(response, status=status.HTTP_429_TOO_MANY_REQUESTS)
-    
+        
+
         
