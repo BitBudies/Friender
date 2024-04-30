@@ -47,8 +47,8 @@ const PerfilAmigo = () => {
               className="image-container"
               style={{
                 backgroundImage: `url(${
-                  amigo.imagenBase64
-                    ? "data:image/jpeg;base64," + amigo.imagenBase64
+                  amigo.imagenes && amigo.imagenes[0]
+                    ? "data:image/jpeg;base64," + amigo.imagenes[0].imagenBase64
                     : "/images/user.jpeg"
                 })`,
               }}
@@ -64,35 +64,21 @@ const PerfilAmigo = () => {
             </p>
             
             <div className="galeria">
-              {/* Aqui poner la galeria de imagenes */}
               {
-                // amigo.imagenBase64.map((imag) => {
-                //   <Foto
-                //     foto={imag}
-                //     setPreview={setFoto}
-                //     conX={false} 
-                //   />
-                // })
+                amigo.imagenes.map((imagen) => {
+                  console.log(imagen);
+                  return <Foto
+                    foto={"data:image/jpeg;base64," + imagen.imagenBase64}
+                    setPreview={setFoto}
+                    conX={false}
+                  />
+                })
               }
-              {
-                // eliminar esto cuando este lo de la lista
-                // solo es para probar con el preview
-                <Foto 
-                  foto={amigo.imagenBase64 
-                    ? "data:image/jpeg;base64," + amigo.imagenBase64
-                    : "/images/user.jpeg"} 
-                  setPreview={setFoto} 
-                  conX={false}
-                /> 
-              }
-              
             </div>
             <Preview foto={foto} handleClose={()=>{
               setFoto('')
             }}/>
           </div>
-
-          
 
           <div className="perfil-amigo-right">
             <h1>Perfil de amigo</h1>

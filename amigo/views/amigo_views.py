@@ -19,6 +19,8 @@ from rest_framework.authentication import TokenAuthentication
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def AmigoDetailById(request, amigo_id):
+    print(amigo_id)
+    print("holaaaa")
     amigo = get_object_or_404(Amigo, pk=amigo_id)
     calificaciones_amigo = Calificacion.objects.filter(amigo=amigo, emisor="cliente")
     if not calificaciones_amigo.exists():
@@ -28,12 +30,20 @@ def AmigoDetailById(request, amigo_id):
             "puntuacion__avg"
         ]
 
-    fotografiaAmigo = Fotografia.objects.filter(
-        cliente=amigo.cliente, prioridad=0
-    ).first()
-    imagenBase64 = None
-    if fotografiaAmigo:
-        imagenBase64 = base64.b64encode(fotografiaAmigo.imagenBase64).decode("utf-8")
+    fotografiaAmigo = Fotografia.objects.filter(cliente=amigo.cliente).order_by('prioridad')
+    
+    #imagenBase64 = None
+    #if fotografiaAmigo:
+    #    imagenBase64 = base64.b64encode(fotografiaAmigo.imagenBase64).decode("utf-8")
+    imagenes = []
+    for fotografia in fotografiaAmigo:
+        imagenBase64 = None
+        if fotografia.imagenBase64:
+            imagenBase64 = base64.b64encode(fotografia.imagenBase64).decode("utf-8")
+        imagenes.append({
+            "imagenBase64": imagenBase64,
+            "prioridad": fotografia.prioridad
+        })
 
     data = {
         "amigo_id": amigo.amigo_id,
@@ -41,7 +51,7 @@ def AmigoDetailById(request, amigo_id):
         "nombre_completo": amigo.cliente.getFullName(),
         "nombre": amigo.cliente.nombre.title(),
         "ap_paterno": amigo.cliente.ap_paterno.title(),
-        "ap_materno": amigo.cliente.ap_materno.title(),
+        "ap_materno": amigo.cliente.ap_materno.title() if amigo.cliente.ap_materno else amigo.cliente.ap_materno,
         "ci": amigo.cliente.ci,
         "fecha_nacimiento": amigo.cliente.fecha_nacimiento,
         "edad": amigo.cliente.calcular_edad(),
@@ -55,7 +65,8 @@ def AmigoDetailById(request, amigo_id):
         "registro_amigo": amigo.timestamp_registro,
         "numero_califiaciiones": calificaciones_amigo.count(),
         "calificacion": promedio_calificaciones,
-        "imagenBase64": imagenBase64,
+        #"imagenBase64": imagenBase64,
+        "imagenes": imagenes,
     }
     return Response(data)
 
@@ -121,7 +132,7 @@ def AmigoListLimitPaginator(request, page_number=1, limite=10):
             "nombre_completo": amigo.cliente.getFullName(),
             "nombre": amigo.cliente.nombre.title(),
             "ap_paterno": amigo.cliente.ap_paterno.title(),
-            "ap_materno": amigo.cliente.ap_materno.title(),
+            "ap_materno": amigo.cliente.ap_materno.title() if amigo.cliente.ap_materno else amigo.cliente.ap_materno,
             "fecha_nacimiento": amigo.cliente.fecha_nacimiento,
             "edad": amigo.cliente.calcular_edad(),
             "genero": amigo.cliente.genero,

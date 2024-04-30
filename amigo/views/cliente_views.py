@@ -124,8 +124,8 @@ class VerificarCorreoUsuario(APIView):
 
         if not correo_valido(correo):
             return Response({
-                "error": "El correo no es válido.",
-                "email": "El correo no es válido."
+                "error": "Verifica que respete el formato: ejemplo@dominio.com",
+                "email": "Verifica que respete el formato: ejemplo@dominio.com"
             }, status=400)
 
         if User.objects.filter(username=usuario).exists():
@@ -263,12 +263,11 @@ def RegistrarCliente(request):
     # ------------------------------------cliente---------------------------------------
     jeje = request.POST.copy()
     print(jeje)
-    jeje["genero"] = "O"
-    if jeje["genero"] == "Masculino":
+    if jeje["genero"] == "masculino":
         jeje["genero"] = "M"
-    elif jeje["genero"] == "Femenino":
+    elif jeje["genero"] == "femenino":
         jeje["genero"] = "F"
-    elif jeje["genero"] == "Otro":
+    elif jeje["genero"] == "otro":
         jeje["genero"] = "O"
 
     clienteSerializado = ClienteSerializer(data=jeje)
