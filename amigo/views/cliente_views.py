@@ -263,11 +263,11 @@ def RegistrarCliente(request):
     # ------------------------------------cliente---------------------------------------
     jeje = request.POST.copy()
     print(jeje)
-    if jeje["genero"] == "Masculino":
+    if jeje["genero"] == "masculino":
         jeje["genero"] = "M"
-    elif jeje["genero"] == "Femenino":
+    elif jeje["genero"] == "femenino":
         jeje["genero"] = "F"
-    elif jeje["genero"] == "Otro":
+    elif jeje["genero"] == "otro":
         jeje["genero"] = "O"
 
     clienteSerializado = ClienteSerializer(data=jeje)
