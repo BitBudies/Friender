@@ -47,6 +47,8 @@ const LogIn = () => {
   };
 
   useEffect(() => {
+    console.log(response);
+
     if (isLoading) {
       setDisableBtnLoading(true);
       setShowFeedback(false);
@@ -75,7 +77,7 @@ const LogIn = () => {
       }
       setFeedbackText(responseError.data.error);
     }
-  }, [contadorBloqueo, isError, isLoading, isSuccess, navigate, response, responseError.data.error, responseError.data.intentos_fallidos, setClientId, setCookie]);
+  }, [contadorBloqueo, isError, isLoading, isSuccess, navigate, response, responseError, setClientId, setCookie]);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
