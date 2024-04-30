@@ -480,7 +480,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
               <p className="text-danger input-width-30">
                 {errors.confirmar_contraseña}
               </p>
-              <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword}>
+              <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword1}>
                 {showPassword1 ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
