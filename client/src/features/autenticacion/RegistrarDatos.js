@@ -312,6 +312,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
           </select>
           <p className="text-danger input1-width-70">{errors.genero}</p>
         </div>
+       
         <div className="mb-2 input-item">
           <label
             htmlFor="ubicacion"
@@ -319,21 +320,40 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
           >
             Ubicación
           </label>
-          <div className="ubicacion-input">
-            <input
-              type="text"
-              id="ubicacion"
-              name="ubicacion"
-              placeholder="Ubicación"
-              value={values.ubicacion}
-              onChange={handleChange}
-              className="form-control input-width-160"
-            />
-            <FaLocationDot className="ubicacion-icon" />
-          </div>
+          
+           <FaLocationDot className="ubicacion-icon mr-2" /> 
+    
+          <select
+            id="ubicacion"
+            name="ubicacion"
+            value={values.ubicacion}
+            onChange={handleChange}
+            className="form-select input-width-160 "
+            required
+          >
+            <option value="" disabled selected hidden>
+              ----------
+            </option>
+            <option value="La Paz">La Paz</option>
+            <option value="Santa Cruz">Santa Cruz</option>
+            <option value="Cochabamba">Cochabamba</option>
+            <option value="Potosi">Potosi</option>
+            <option value="Oruro">Oruro</option>
+            <option value="Tarija">Tarija</option>
+            <option value="Pando">Pando</option>
+            <option value="Chuquisaca">Chuquisaca</option>
+            <option value="Beni">Beni</option>
+          </select>
+          
           <p className="text-danger input1-width-70">{errors.ubicacion}</p>
         </div>
-      </div>
+       
+        <div className="mb-2 input-item">
+      
+         
+        </div>  </div>
+     
+     
       <div className="input-group registro">
         <div className="mb-2 input-item">
           <label

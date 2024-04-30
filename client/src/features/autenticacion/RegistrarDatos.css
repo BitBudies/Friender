@@ -49,7 +49,14 @@
     transform: translateY(-0%);
     color: black;
   }
-  
+  .ubicacion-icon{
+    position: absolute;
+    right: 310px;
+    top: 50%;
+    transform: translateY(-55%);
+    color: black;
+
+  }
 
   .step-3 .password-icon{
     position: relative;
