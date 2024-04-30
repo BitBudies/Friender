@@ -43,7 +43,11 @@ class Login(ObtainAuthToken):
                 self.incrementoFallo(request)
                 #self.verificarIntento(request)
                 return Response({"error": "Contraseña incorrecta", "intentos_fallidos": request.session.get('login_failed_attempts', 0)}, status=status.HTTP_400_BAD_REQUEST)
-            
+
+        if self.usuarioBloqueado(request):
+            remaining_time = self.usuarioBloqueado(request)
+            return Response({"error": f"Tu cuenta ha sido bloqueada debido a múltiples intentos fallidos. Por favor, inténtalo de nuevo en {remaining_time} segundos."}, status=status.HTTP_400_BAD_REQUEST)
+
         request.session['login_failed_attempts'] = 0 
         token, created = Token.objects.get_or_create(user=user)
 
@@ -81,6 +85,16 @@ class Login(ObtainAuthToken):
                     else:
                         remaining_time = int((block_time + timedelta(seconds=60) - timezone.now()).total_seconds())
                         return Response({"error": f"Has excedido el límite de intentos. Por favor, inténtalo de nuevo en {remaining_time} segundos."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": "Contraseña incorrecta"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    def usuarioBloqueado(self, request):
+        block_time_str = request.session.get('block_time')
+        if block_time_str:
+            block_time = timezone.make_aware(datetime.strptime(block_time_str, '%Y-%m-%d %H:%M:%S'))
+            remaining_time = int((block_time + timedelta(seconds=60) - timezone.now()).total_seconds())
+            if remaining_time > 0:
+                return remaining_time
+        return False
 
     
 
