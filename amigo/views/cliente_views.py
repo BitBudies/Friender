@@ -263,7 +263,6 @@ def RegistrarCliente(request):
     # ------------------------------------cliente---------------------------------------
     jeje = request.POST.copy()
     print(jeje)
-    jeje["genero"] = "O"
     if jeje["genero"] == "Masculino":
         jeje["genero"] = "M"
     elif jeje["genero"] == "Femenino":
