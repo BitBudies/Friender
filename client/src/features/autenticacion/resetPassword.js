@@ -21,6 +21,9 @@ const ResetPassword = () => {
   const handleEmailChange = (e) => {
     setSupportingText("");
     setEmailText(e.target.value);
+    if (remainingTime <= 0) {
+      setIsButtonEmailEnabled(true)
+    }
   };
 
   const handleSubmitEmailForm = (e) => {
@@ -83,7 +86,6 @@ const ResetPassword = () => {
           <h1>Restablecer contraseña</h1>
           <div className="para-form">
             <p>Ingresa tu correo electrónico para buscar tu cuenta.</p>
-            {/* <h3>Ingresa tu correo electrónico para buscar tu cuenta</h3> */}
             <input
               type="email"
               name="user_email"
