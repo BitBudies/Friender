@@ -5,11 +5,12 @@ import RegistrarDatos from './RegistrarDatos';
 import RegistrarDatos2 from './RegistrarDatos2';
 import logo from '../../logo-friender.png';
 import { RegistrarDatos15 } from "./RegistrarDatos15";
-
+import Preview from '../../Components/imagRegistro/preview'
 
 const Registrarse = () => {
-  const [nForm, setNForm] = useState(2);
+  const [nForm, setNForm] = useState(0);
   const [data,setData] = useState({});
+  const [foto,setFoto] = useState('');
   const props = {
     setNForm,
     nForm,
@@ -26,6 +27,11 @@ const Registrarse = () => {
           <h5><p>inolvidables.</p></h5>
           <img className="logo-img" src={logo} alt="icono-friender"></img>
       </div>
+
+      <Preview foto={foto} handleClose={()=>{
+        setFoto('')
+      }}/>
+
       <div className='registrarse-right'>
         <div className="form-indicators">
           <div className={`indicator ${nForm === 0 && "active"}`}></div>
@@ -37,7 +43,7 @@ const Registrarse = () => {
           <div className="form-carousel" style={{transform: `translate(${nForm * -33.33}%)`}}>
             <RegistrarDatos {...props}/>
             <RegistrarDatos15 {...props}/>
-            <RegistrarDatos2 {...props}/>
+            <RegistrarDatos2 {...props} setPreview={(imagen)=>{setFoto(imagen)}}/>
           </div>  
         </div>
         
