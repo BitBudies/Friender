@@ -12,7 +12,7 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
     const [btnEnabledSend,setBtnEnabledSend] = useState(false);
     const [verificationCode, setVerificationCode] = useState("");
     const [supportingText, setSupportingText] = useState("");
-    const [segundo, setSegundo] = useState(60)
+    const [remainingTime, setRemainingTime] = useState(0)
 
     const [
         sendCode,
@@ -49,13 +49,8 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
           // formulario.append("nombre", "asdf");
           // formulario.append("ap_paterno", "asd");
           sendCode(formulario);
-          setBtnEnabledSend(true);
-          setTimeout(() => {
-            setBtnEnabledSend(false);
-          }, 60000);
         } catch (error) {
           console.log(error);
-          
         }
     };
 
@@ -63,8 +58,23 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
         if (codeLoading) {
           console.log("Cargando..."); // Log mientras se carga
         } else if (codeIsError) {
-          console.log("Error:", errorCodigo.data.error); // Log en caso de error
+          const tiempoRestante = errorCodigo.data.tiempo;
+          if (tiempoRestante) {
+            setRemainingTime(tiempoRestante);
+            console.log(tiempoRestante);
+            const timer = setInterval(() => {
+              setRemainingTime((prevTime) => prevTime - 1);
+            }, 1000);
+            // cuando llegue a 0 lo eliminamos
+            setTimeout(() => {
+              clearInterval(timer);
+            }, tiempoRestante * 1000);
+          } else {
+            console.log("Error:", errorCodigo.data.error); // Log en caso de error
+          }
+          
         } else if (codeSucess) {
+          setBtnEnabledSend(true)
           console.log(dataCodigo); // Log si la solicitud fue exitosa
         }
       }, [codeLoading, codeIsError, codeSucess, errorCodigo, dataCodigo]);
@@ -93,14 +103,14 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
   useEffect(() => {
     if (verLoading) {
       setSupportingText("");
-      console.log("Cargando..."); // Log mientras se carga
+      console.log("Cargando...");
     } else if (verIsError) {
-      console.log("Error:", verError.data.error); // Log en caso de error
+      console.log("Error:", verError.data.error);
       setSupportingText(verError.data.error);
     } else if (verSucess) {
       setBtnEnabled(true);
       setSupportingText("");
-      console.log(verData); // Log si la solicitud fue exitosa
+      console.log(verData);
       
     }
   }, [verLoading, verIsError, verSucess, verError, verData, setNForm]);
@@ -123,14 +133,18 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
             />
             
             <button 
-                className={`btn btn-azul ${btnEnabledSend ? "disabled":""}`}
+                className={`btn btn-azul`}
+                disabled={codeLoading || remainingTime > 0}
                 onClick={handleEnviarCodigos}>
                 Enviar Código
             </button>
             </div>
-            
-            
         </form>
+        {remainingTime > 0 && (
+          <p style={{color: 'gray'}}>
+            Debe esperar {remainingTime} segundos para enviar otro correo.
+          </p>
+        )}
         <p className='msj-confirm' style={{color: 'red'}}>
             {/* {codeSucess ? `${segundo}` : ``} */}
         </p>    

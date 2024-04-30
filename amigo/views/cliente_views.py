@@ -170,7 +170,10 @@ class EnviarCodigos(APIView):
             if tiempo.total_seconds() < 60:
                 tiempoRestante =  60 - int(tiempo.total_seconds())
                 return Response(
-                    {"error": f"Debe esperar {tiempoRestante} segundos para enviar otro código de verificación"},
+                    {
+                        "error": f"Debe esperar {tiempoRestante} segundos para enviar otro código de verificación",
+                        "tiempo": tiempoRestante
+                        },
                     status=status.HTTP_429_TOO_MANY_REQUESTS,
                 )
             else:
