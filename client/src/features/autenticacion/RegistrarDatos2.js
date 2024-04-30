@@ -217,7 +217,7 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
                   : ""}
             </div>
             <p className="text-muted" id="min-max-fotos">
-              <span className={rojoClaseFoto}>
+              <p className={rojoClaseFoto}>
                 {fotos.length === 0 && validating
                   ? `Mínimo una fotografía.`
                   : 
@@ -228,13 +228,13 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
                   ? `Sólo se permiten subir imágenes en formato jpg, jpeg, png.`
                   : '' 
                 }
-              </span>
-              <span className={rojoClasePesoMax}>
+              </p>
+              <p className={rojoClasePesoMax}>
                 {pesado
                   ? `Tu imagen pesa más de 200KB. Solo se permiten imágenes de máximo 200KB.`
                   : '' 
                 }
-              </span>
+              </p>
             </p>
 
           </section>
