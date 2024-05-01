@@ -111,6 +111,10 @@
     padding-left: 20px;
 }
 
+.login-password-icon:hover{
+    cursor: pointer;
+}
+
 @media screen and (max-width : 380px) {
     .login-box{
         width: 90%;

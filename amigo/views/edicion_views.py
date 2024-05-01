@@ -184,7 +184,7 @@ def verificarCodigoToken(request, tokencito):
         pass
     if not codigo:
         return Response(
-            {"error": "El enlace no es correcto o expiro"},
+            {"error": "El enlace no es válido o expiró"},
             status=status.HTTP_404_NOT_FOUND,
         )
 
@@ -197,7 +197,7 @@ def verificarCodigoToken(request, tokencito):
         # Borrar el código
         codigo.delete()
         return Response(
-            {"error": "El enlace ha expirado"},
+            {"error": "El enlace no es válido o expiró"},
             status=status.HTTP_400_BAD_REQUEST,
         )
 

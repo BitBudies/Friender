@@ -7,8 +7,12 @@ import { useGlobalContext } from "../../context";
 import NavBar from "../../Components/NavBar.js";
 import logo from "../../logo-friender.png";
 import { useCookies } from "react-cookie";
+import  { useRedirectIfAuthenticated } from "../../hooks/isAuthenticated.js";
 
 const LogIn = () => {
+
+  const redirectIfAuth = useRedirectIfAuthenticated();
+  redirectIfAuth();
   const [cookies, setCookie] = useCookies(["token"]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -18,8 +22,12 @@ const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [disableBtn, setDisableBtn] = useState(false);
   const [disableBtnLoading, setDisableBtnLoading] = useState(false);
-  const [disableBlockedPasswordBox, setBlockedPasswordBox] = useState(true);
-  const [contadorBloqueo, setContadorBloqueo] = useState(0);
+  /*const [disableBlockedPasswordBox, setBlockedPasswordBox] = useState(true);
+  const [contadorBloqueo, setContadorBloqueo] = useState(0);*/
+
+  // Para cuenta regresiva
+  const [remainingTime, setRemainingTime] = useState(0)
+  const [supportingText, setSupportingText] = useState("");
 
   const navigate = useNavigate();
 
@@ -30,21 +38,15 @@ const LogIn = () => {
 
   const handleBtn = async (e) => {
     e.preventDefault();
-    if (username && password) {
       const form = new FormData();
       form.append("username_or_email", username);
       form.append("password", password);
       await login(form);
-    }
   };
 
-  const handleBlockedPasswordBox = () => {
+  /*const handleBlockedPasswordBox = () => {
     setBlockedPasswordBox(true);
-    /*setDisableBtn(true);
-    setTimeout(() => {
-      setDisableBtn(false);
-    }, 7000);*/
-  };
+  };*/
 
   useEffect(() => {
     console.log(response);
@@ -61,23 +63,33 @@ const LogIn = () => {
       navigate("/amigos/page/1");
     }
     if (isError) {
+      console.log(responseError.data)
       setDisableBtnLoading(false);
       setShowFeedback(true);
-      if(responseError.data.intentos_fallidos === "0"){
-        setContadorBloqueo(0);
+      if (responseError.data.tiempo){
+        setSupportingText("")
+        const tiempoRestante = responseError.data.tiempo;
+          if (tiempoRestante) {
+            setRemainingTime(tiempoRestante);
+            console.log(tiempoRestante);
+            const timer = setInterval(() => {
+              setRemainingTime((prevTime) => prevTime - 1);
+            }, 1000);
+            // cuando llegue a 0 lo eliminamos
+            setTimeout(() => {
+              clearInterval(timer);
+            }, tiempoRestante * 1000);
+          } else {
+            console.log("Error:", responseError.data.error); // Log en caso de error
+          }
+      } else {
+        setSupportingText(responseError.data.error)
       }
-      if(responseError.data.intentos_fallidos === "1"){
-        setContadorBloqueo(1);
-      }
-      if(responseError.data.intentos_fallidos === "2"){
-        setContadorBloqueo(2);
-      }
-      if(contadorBloqueo === 2){
-        setBlockedPasswordBox(false); //Mostrar Modal de Penalizacion
-      }
+      
+
       setFeedbackText(responseError.data.error);
     }
-  }, [contadorBloqueo, isError, isLoading, isSuccess, navigate, response, responseError, setClientId, setCookie]);
+  }, [isError, isLoading, isSuccess, navigate, response, responseError, setClientId, setCookie]);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -89,8 +101,8 @@ const LogIn = () => {
         <img src={logo} alt="icono-friender"></img>
         <h1>Friender</h1>
       </div>
-
-      <div className={`form-section-rigth login-box ${disableBlockedPasswordBox ? "" : "hidden"}`}>
+      
+      <div className="form-section-rigth login-box">
         <p className="mb-4 fw-bold login-box-title">
           Inicia sesión en Friender
         </p>
@@ -102,7 +114,8 @@ const LogIn = () => {
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value.trim())}
-              placeholder="Correo electrónico"
+              placeholder="Usuario o Correo electrónico"
+              maxLength={255}
             />
           </div>
 
@@ -114,31 +127,46 @@ const LogIn = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Contraseña"
+              maxLength={65}
             />
             <span className="login-password-icon" onClick={toggleShowPassword}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
 
-          {showFeedback && (
+          {/* {showFeedback && (
             <p className="text-danger mb-2 login-box-text-danger">
               {feedbackText}
             </p>
-          )}
+          )} */}
+          {
+            supportingText &&
+            <p className="text-danger mb-2 login-box-text-danger">
+              {supportingText}
+            </p>
+          }
+          { 
+            remainingTime > 0 &&
+            <p className="text-danger mb-2 login-box-text-danger">
+              Inténtalo de nuevo en {remainingTime} segundos.
+            </p>
+          }
+
 
           <button
             className={`btn btn-azul mb-2 button-login ${
               disableBtnLoading && "disabled"
-            } ${disableBtn && "disabled"}`}
+            } `}//${disableBtn && "disabled"}
+            disabled={remainingTime > 0}
             onClick={handleBtn}
           >
             Iniciar Sesión
           </button>
-          {disableBtn && (
+          {/*disableBtn && (
             <p className="text-danger mb-2 login-box-text-danger">
               Intenta ingresar luego de 60 segundos.
             </p>
-          )}
+          )*/}
 
           <p className="form-text">
             <Link to={"/resetPassword"}>¿Has olvidado la contraseña?</Link>
@@ -154,7 +182,7 @@ const LogIn = () => {
           </p>
         </form>
       </div>
-      <div
+      {/*<div
         className={`flex-column justify-content-rigth align-items-center modal-bloqueo ${
           disableBlockedPasswordBox ? "hidden" : ""
         }`}
@@ -182,7 +210,7 @@ const LogIn = () => {
         >
           Entendido
         </button>
-      </div>
+      </div>*/}
     </div>
   );
 };

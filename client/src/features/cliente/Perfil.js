@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./Perfil.css";
 import { useGlobalContext } from "../../context";
 import { GiReturnArrow } from "react-icons/gi";
-
+import { useNavigate } from 'react-router-dom';
+import { useCookies, removeCookie } from 'react-cookie';
 
 import SolicitudesPendientes from "../solicitudes/SolicitudesPendientes";
 
@@ -26,7 +27,8 @@ const optionsData = [
 const Perfil = () => {
   const [currentOption, setCurrentOption] = useState(1);
   const [showContent, setShowContent] = useState(false);
-
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const navigate = useNavigate();
   const {userData : informacion} = useGlobalContext();
 
   const [nombreCompleto, setNombreCompleto] = useState("");
@@ -42,6 +44,11 @@ const Perfil = () => {
 
   }, [informacion]);
 
+  const handleCloseSession = () => {
+    removeCookie("token");
+    navigate("/");
+    window.location.reload();
+  }   
   const handleOptionClick = (id) => {
     setCurrentOption(id);
     if (window.innerWidth < 576) {
@@ -90,7 +97,7 @@ const Perfil = () => {
                 </li>
               ))}
               <li className='option'>
-                <p>Cerrar Sesión</p>
+                <li><button className="dropdown-item "onClick={handleCloseSession}>Cerrar Sesión</button></li>
               </li>
             </ul>
           </div>

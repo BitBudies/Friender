@@ -25,9 +25,6 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [errors, setErrors] = useState({});
-  const [feedbackText, setFeedbackText] = useState("");
-
-  const [showFeedback, setShowFeedback] = useState(false);
   const [passwordStatus, setPasswordStatus] = useState({
     pass: false,
     message: "",
@@ -218,36 +215,41 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
   };
 
   useEffect(() => {
+    console.log(isSuccess);
     if (isSuccess) {
       setNForm(1);
       setData({ ...data, ...values, contraseña: values.confirmar_contraseña });
       reset();
     }
     if (isError) {
-      const errorMessage = responseError.response?.data?.error;
-      if (errorMessage) {
-        setFeedbackText(errorMessage);
-        setShowFeedback(true);
-        return;
-      }
-  
-      const tipoError = responseError.data;
+      console.log(responseError);
+      const tipoError = responseError.data
       if (tipoError.username) {
         setErrors({
           ...errors,
-          ["nombre_usuario"]: tipoError.username,
+          nombre_usuario : tipoError.username,
         });
       } else if (tipoError.email) {
         setErrors({
           ...errors,
-          ["correo_electronico"]: tipoError.email,
+          correo_electronico: tipoError.email,
         });
       } else {
         console.log(tipoError.error);
       }
+      
     }
-  }, [response, isLoading, isSuccess, isError, responseError, setNForm, reset, setData, data, values, errors]);
-  
+  }, [
+    response,
+    isLoading,
+    isSuccess,
+    setNForm,
+    validateForm,
+    reset,
+    setData,
+    data,
+    values,
+  ]);
 
   return (
     <div className="form-item">
@@ -384,39 +386,35 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             <option value="Chuquisaca">Chuquisaca</option>
             <option value="Beni">Beni</option>
           </select>
-          <span className="ubicacion-icon">
-              <FaLocationDot />
-              </span>
-
           <p className="text-danger input1-width-70">{errors.ubicacion}</p>
         </div>
        
         <div className="mb-2 input-item">
-        </div></div>
-                <div className="input-group registro">
-                <div className="mb-2 input-item">
-            <label htmlFor="nombre_usuario" className="input-label required-label">
-              Nombre de Usuario
-            </label>
-            <input
-              type="text"
-              id="nombre_usuario"
-              name="nombre_usuario"
-              placeholder="Usuario"
-              value={values.nombre_usuario}
-              onChange={handleChange}
-              className="form-control input1fv-width-70"
-              required
-            />
-            {showFeedback && (
-              <p className="text-danger mb-2 login-box-text-danger">
-                {feedbackText}
-              </p>
-            )}
-          </div>
-
-        
-
+      
+         
+        </div>  </div>
+     
+     
+      <div className="input-group registro">
+        <div className="mb-2 input-item">
+          <label
+            htmlFor="nombre_usuario"
+            className="input-label required-label"
+          >
+            Nombre de Usuario
+          </label>
+          <input
+            type="text"
+            id="nombre_usuario"
+            name="nombre_usuario"
+            placeholder="Usuario"
+            value={values.nombre_usuario}
+            onChange={handleChange}
+            className="form-control input1fv-width-70"
+            required
+          />
+          <p className="text-danger">{errors.nombre_usuario}</p>
+        </div>
         <div className="mb-2 input-item">
           <label
             htmlFor="correo_electronico"
@@ -428,7 +426,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             type="email"
             id="correo_electronico"
             name="correo_electronico"
-            placeholder="ejemplo: @gmail.com"
+            placeholder="ejemplo@dominio.com"
             value={values.correo_electronico}
             onChange={handleChange}
             className="form-control input-width-280"
@@ -463,11 +461,6 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
               {!passwordStatus.pass && passwordStatus.message && (
                 <p className="text-danger mw-100" style={{ position: "fixed" }}>{passwordStatus.message}</p>
               )}
-              {showFeedback && (
-            <p className="text-danger mb-2 login-box-text-danger">
-              {feedbackText}
-            </p>
-          )}
               <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>

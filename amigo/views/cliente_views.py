@@ -125,7 +125,7 @@ class VerificarCorreoUsuario(APIView):
         if not correo_valido(correo):
             return Response({
                 "error": "Verifica que respete el formato: ejemplo@dominio.com",
-                "email": "Verifica que respete el formato: ejemplo@dominio.com"
+                "email": "Verifica que respete el formato"
             }, status=400)
 
         if User.objects.filter(username=usuario).exists():
@@ -137,7 +137,7 @@ class VerificarCorreoUsuario(APIView):
         if User.objects.filter(email=correo).exists():
             return Response({
                 "error": "Correo ya existe",
-                "email": "El correo ya existe."
+                "email": "Correo registrado"
             }, status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -164,6 +164,7 @@ class EnviarCodigos(APIView):
             return Response({"error": "El correo no es válido."}, status=400)
 
         codigoExistente = Codigos.objects.filter(correo=correo).first()
+
         if codigoExistente:
             #tiempo trasnscurrido desde que se envio el codigo
             tiempo = timezone.now() - codigoExistente.timestamp_registro
@@ -193,7 +194,9 @@ class EnviarCodigos(APIView):
                 fail_silently=False,
             )
             return Response(
-                {"message": "Correo enviado correctamente"}, status=status.HTTP_200_OK
+                {"message": "Correo enviado correctamente",
+                 "tiempo": 60}, status=status.HTTP_200_OK
+                 
             )
         except Exception as e:
             return Response(

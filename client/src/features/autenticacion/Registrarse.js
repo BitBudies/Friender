@@ -6,8 +6,11 @@ import RegistrarDatos2 from './RegistrarDatos2';
 import logo from '../../logo-friender.png';
 import { RegistrarDatos15 } from "./RegistrarDatos15";
 import Preview from '../../Components/imagRegistro/preview'
+import { useRedirectIfAuthenticated } from "../../hooks/isAuthenticated";
 
 const Registrarse = () => {
+  const redirectIfAuth = useRedirectIfAuthenticated();
+  redirectIfAuth();
   const [nForm, setNForm] = useState(0);
   const [data,setData] = useState({});
   const [foto,setFoto] = useState('');

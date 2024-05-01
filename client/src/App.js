@@ -14,7 +14,7 @@ import SolicitudDetalles from './features/solicitudes/SolicitudDetalles';
 import Alert from './Components/Alert';
 import Jhon from './features/Test/Jhon';
 import Registrarse from './features/autenticacion/Registrarse';
-import useIsAuthenticated from './hooks/isAuthenticated';
+import {useIsAuthenticated} from './hooks/isAuthenticated';
 import ResetPassword from './features/autenticacion/resetPassword';
 import RecuperarCuenta from './features/autenticacion/RecuperarCuenta';
 import { RegistrarDatos15 } from './features/autenticacion/RegistrarDatos15';
@@ -29,7 +29,7 @@ function App() {
 
   const [cookies] = useCookies(["token"]);
   const token = cookies.token;
-  const {clientId,setUserData} = useGlobalContext();
+  const {clientId,setUserData,setClientId} = useGlobalContext();
 
   const {
     data,
@@ -42,11 +42,12 @@ function App() {
   useEffect(() => {
     if(isAuthenticated){
       if(!isFetching && !isUninitialized){
-        setUserData(data)    
+        setUserData(data)   
+        setClientId(data.cliente_id) 
       }
     }
     
-  },[data, isAuthenticated, isFetching, isUninitialized, setUserData,clientId])
+  },[data, isAuthenticated, isFetching, isUninitialized, setUserData, clientId, setClientId])
 
   if(isFetching){
     return <Loading/>
