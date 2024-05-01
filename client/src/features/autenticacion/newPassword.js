@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 const NewPassword = () => {
   const navigate = useNavigate();
   const { tokencito } = useParams();
-  const {isEnabledBtn,setIsEnabledBtn} = useState(false);
 
   const {
     data: tokencitoRespuesta,
@@ -77,9 +76,6 @@ const NewPassword = () => {
   const handleConfirmPasswordChange = (e) => {
     const {value} = e.target;
     setConfirmPassword(value);
-    if(value === password && password.length > 0){
-      setIsEnabledBtn(true);
-    }
   }
 
   // cambio de paginas
@@ -99,7 +95,6 @@ const NewPassword = () => {
 
   const handleSubmitPasswordForm = (e) => {
     e.preventDefault();
-    setIsEnabledBtn(false);
     setSubmitClicked(true);
     let isValid = true;
     const newErrors = {};
@@ -140,7 +135,7 @@ const NewPassword = () => {
         console.log(error);
       }
     }else{
-      setIsEnabledBtn(true);
+
     }
   };
 
@@ -151,6 +146,7 @@ const NewPassword = () => {
     } else if (passIsError) {
       setLoading(false)
       console.log("Error:", passError.data.error);
+      goToNextStep();
     } else if (passSucess) {
       setLoading(false)
       console.log(passData);
@@ -242,7 +238,10 @@ const NewPassword = () => {
                 type="submit"
                 className="btn btn-azul"
                 onClick={handleSubmitPasswordForm}
-                disabled={isEnabledBtn}
+                disabled={
+                  !password.trim() || !confirmPassword.trim() ||
+                  password != confirmPassword || confirmPassword.length < 8 || passLoading
+                }
               >
                 Confirmar
               </button>

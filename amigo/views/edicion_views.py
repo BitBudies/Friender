@@ -93,7 +93,7 @@ def cambiarContrasena(request):
     codigoToken = Codigos.objects.filter(codigoVerificaion=tokencito).first()
     if not codigoToken:
         return Response(
-            {"error": "Ocurrio un problema"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            {"error": "El enlace no es válido o expiró"}, status=status.HTTP_404_NOT_FOUND
         )
     try:
         user = User.objects.get(email=codigoToken.correo)
@@ -103,10 +103,10 @@ def cambiarContrasena(request):
 
     except User.DoesNotExist:
         return Response(
-            {"error": "Ocurrio un problema"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            {"error": "El enlace no es válido o expiró"}, status=status.HTTP_404_NOT_FOUND
         )
     return Response(
-        {"message": f"Se establecio correctamente su contraseña"},
+        {"message": f"Se restableció correctamente la contraseña"},
         status=status.HTTP_200_OK,
     )
 
