@@ -22,8 +22,6 @@ const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [disableBtn, setDisableBtn] = useState(false);
   const [disableBtnLoading, setDisableBtnLoading] = useState(false);
-  /*const [disableBlockedPasswordBox, setBlockedPasswordBox] = useState(true);
-  const [contadorBloqueo, setContadorBloqueo] = useState(0);*/
 
   // Para cuenta regresiva
   const [remainingTime, setRemainingTime] = useState(0)
@@ -44,17 +42,13 @@ const LogIn = () => {
       await login(form);
   };
 
-  /*const handleBlockedPasswordBox = () => {
-    setBlockedPasswordBox(true);
-  };*/
-
   useEffect(() => {
     console.log(response);
 
     if (isLoading) {
       setDisableBtnLoading(true);
       setShowFeedback(false);
-      
+      setSupportingText("");
     }
     if (isSuccess) {
       setClientId(response.id);
@@ -133,12 +127,6 @@ const LogIn = () => {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-
-          {/* {showFeedback && (
-            <p className="text-danger mb-2 login-box-text-danger">
-              {feedbackText}
-            </p>
-          )} */}
           {
             supportingText &&
             <p className="text-danger mb-2 login-box-text-danger">
@@ -156,17 +144,12 @@ const LogIn = () => {
           <button
             className={`btn btn-azul mb-2 button-login ${
               disableBtnLoading && "disabled"
-            } `}//${disableBtn && "disabled"}
+            } `}
             disabled={remainingTime > 0}
             onClick={handleBtn}
           >
             Iniciar Sesión
           </button>
-          {/*disableBtn && (
-            <p className="text-danger mb-2 login-box-text-danger">
-              Intenta ingresar luego de 60 segundos.
-            </p>
-          )*/}
 
           <p className="form-text">
             <Link to={"/resetPassword"}>¿Has olvidado la contraseña?</Link>
@@ -182,35 +165,6 @@ const LogIn = () => {
           </p>
         </form>
       </div>
-      {/*<div
-        className={`flex-column justify-content-rigth align-items-center modal-bloqueo ${
-          disableBlockedPasswordBox ? "hidden" : ""
-        }`}
-      >
-        <h2>Se impidió un inicio de sesión sospechoso</h2>
-        <br></br>
-        <p>
-          Bloqueamos un intento de acceder a tu cuenta porque no estábamos
-          seguros de si realmente eras tú.
-        </p>
-        <br></br>
-        <p>
-          Esto sucede cuando detectamos actividades de inicio de sesión
-          inusuales, como el intento de iniciar sesión demasiadas veces.
-        </p>
-        <br></br>
-        <p>
-          Tendrás que esperar 60 segundos para intentar iniciar sesión
-          nuevamente.
-        </p>
-        <br></br>
-        <button
-          className={`btn btn-azul mb-2`}
-          onClick={handleBlockedPasswordBox}
-        >
-          Entendido
-        </button>
-      </div>*/}
     </div>
   );
 };
