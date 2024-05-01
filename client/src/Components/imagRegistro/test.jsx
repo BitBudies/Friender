@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './imagRegist.css'
+import { FaTrashAlt } from "react-icons/fa";
 
 const Foto = ( {foto, remover, index, setPreview, conX} ) => {
 
@@ -26,12 +27,12 @@ const Foto = ( {foto, remover, index, setPreview, conX} ) => {
                 />
                 {
                     conX &&
-                    <button 
+                    <label 
                         className='cerrar-img'
                         onClick={handleClose}
                     >
-                        X
-                    </button>       
+                        <FaTrashAlt />
+                    </label>       
                 }
                 
             </div>

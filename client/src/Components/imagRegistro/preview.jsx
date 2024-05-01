@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './preview.css'
+import { IoMdClose } from "react-icons/io";
 
 const Preview = ( {foto, handleClose} ) => {
 
@@ -7,10 +8,11 @@ const Preview = ( {foto, handleClose} ) => {
         foto &&
         <div className='preview' id='preview'>
           <div className='close-btn' >
-            <button
+            <label
+              className='icon'
               onClick={handleClose}>
-              Cerrar
-            </button>
+              <IoMdClose size={50}/>
+            </label>
           </div>
           <div className='image-preview' style={{backgroundImage : `url(${foto})`}}>
           </div>
