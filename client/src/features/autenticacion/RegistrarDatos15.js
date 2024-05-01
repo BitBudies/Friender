@@ -74,8 +74,22 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
           }
           
         } else if (codeSucess) {
-          setBtnEnabledSend(true)
           console.log(dataCodigo); // Log si la solicitud fue exitosa
+
+          const tiempoRestante = dataCodigo.tiempo;
+          if (tiempoRestante) {
+            setRemainingTime(tiempoRestante);
+            console.log(tiempoRestante);
+            const timer = setInterval(() => {
+              setRemainingTime((prevTime) => prevTime - 1);
+            }, 1000);
+            // cuando llegue a 0 lo eliminamos
+            setTimeout(() => {
+              clearInterval(timer);
+            }, tiempoRestante * 1000);
+          } else {
+            console.log("Error:", errorCodigo.data.error); // Log en caso de error
+          }
         }
       }, [codeLoading, codeIsError, codeSucess, errorCodigo, dataCodigo]);
 
@@ -133,7 +147,7 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
             />
             
             <button 
-                className={`btn btn-azul`}
+                className={`btn btn-azul `} 
                 disabled={codeLoading || remainingTime > 0}
                 onClick={handleEnviarCodigos}>
                 Enviar Código
@@ -155,7 +169,9 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
             {verIsError ? `Código de verificación incorrecto.` : ``}
         </p>
         <button 
-            className={`btn btn-verde ${verificationCode.length !== 5 && "disabled"}`}
+            className={`btn btn-verde 
+              ${verificationCode.length !== 5 && "disabled"}
+              para-verificar`}
             onClick={handleSubmitVerificationCodeForm}>
             Verificar
         </button>
