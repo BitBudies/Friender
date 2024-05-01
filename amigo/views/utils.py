@@ -12,9 +12,6 @@ def obtener_csrf(request):
 
 
 def correo_valido(correo):
-    # regex_correo = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
-    #regex_correo = r"^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+([.]\w+){1,3}"
-    # (✿◡‿◡)
     regex_correo = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     if re.match(regex_correo, correo):
         return True
