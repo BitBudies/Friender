@@ -18,25 +18,21 @@ from django.shortcuts import get_object_or_404
 @api_view(["POST"])
 def findEmail(request):
     user_or_email = request.POST.get("user_or_email", None)
-    if not correo_valido(user_or_email):
-            return Response({"error": "Formato incorrecto ejemplo@dominio.com"}, status=status.HTTP_400_BAD_REQUEST)
     if not user_or_email:
         return Response(
             {"error": "El campo es obligatorio"},
             status=status.HTTP_400_BAD_REQUEST,
         )
+    if not correo_valido(user_or_email):
+            return Response({"error": "Formato incorrecto ejemplo@dominio.com"}, status=status.HTTP_400_BAD_REQUEST)
     try:
         user = User.objects.get(email=user_or_email)
     except User.DoesNotExist:
-        try:
-            user = User.objects.get(username=user_or_email)
-        except User.DoesNotExist:
-            return Response(
-                {"error": "No se encontró una cuenta asociada al email"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
+        return Response(
+            {"error": "No se encontró una cuenta asociada al email"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
     
-     
     codigoToken = Codigos.objects.filter(correo=user.email).first()
     if codigoToken:
         tiempo_transcurrido = timezone.now() - codigoToken.timestamp_registro
