@@ -99,7 +99,7 @@ const LogIn = () => {
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value.trim())}
-              placeholder="Correo electrónico"
+              placeholder="Usuario o Correo electrónico"
               maxLength={255}
             />
           </div>
