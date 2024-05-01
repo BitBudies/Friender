@@ -125,7 +125,7 @@ class VerificarCorreoUsuario(APIView):
         if not correo_valido(correo):
             return Response({
                 "error": "Verifica que respete el formato: ejemplo@dominio.com",
-                "email": "Verifica que respete el formato: ejemplo@dominio.com"
+                "email": "Verifica que respete el formato"
             }, status=400)
 
         if User.objects.filter(username=usuario).exists():
@@ -137,7 +137,7 @@ class VerificarCorreoUsuario(APIView):
         if User.objects.filter(email=correo).exists():
             return Response({
                 "error": "Correo ya existe",
-                "email": "El correo ya existe."
+                "email": "Correo registrado"
             }, status=status.HTTP_400_BAD_REQUEST
             )
 
