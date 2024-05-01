@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 const NewPassword = () => {
   const navigate = useNavigate();
   const { tokencito } = useParams();
+  const {isEnabledBtn,setIsEnabledBtn} = useState(false);
 
   const {
     data: tokencitoRespuesta,
@@ -32,14 +33,13 @@ const NewPassword = () => {
       console.log(tokencitoErrorData);
       setLoading(false);
     }
-  }, [tokencitoCargando, tokencitoCorrecto, tokencitoIsError]);
+  }, [tokencitoCargando, tokencitoCorrecto, tokencitoErrorData, tokencitoIsError, tokencitoRespuesta]);
 
   const [loading, setLoading] = useState(false);
 
   const [step, setStep] = useState(3); // control de pagina
   const [submitClicked, setSubmitClicked] = useState(false);
 
-  const [supportingText, setSupportingText] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
@@ -74,11 +74,16 @@ const NewPassword = () => {
     setPassword(e.target.value);
   };
 
-  const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
+  const handleConfirmPasswordChange = (e) => {
+    const {value} = e.target;
+    setConfirmPassword(value);
+    if(value === password && password.length > 0){
+      setIsEnabledBtn(true);
+    }
+  }
 
   // cambio de paginas
   const goToNextStep = () => setStep(step + 1);
-  const goToPreviousStep = () => setStep(step - 1);
 
   // password change endpoint
   const [
@@ -94,6 +99,7 @@ const NewPassword = () => {
 
   const handleSubmitPasswordForm = (e) => {
     e.preventDefault();
+    setIsEnabledBtn(false);
     setSubmitClicked(true);
     let isValid = true;
     const newErrors = {};
@@ -133,6 +139,8 @@ const NewPassword = () => {
       } catch (error) {
         console.log(error);
       }
+    }else{
+      setIsEnabledBtn(true);
     }
   };
 
@@ -148,7 +156,7 @@ const NewPassword = () => {
       console.log(passData);
       goToNextStep();
     }
-  }, [passLoading, passIsError, passSucess, passError]);
+  }, [passLoading, passIsError, passSucess, passError, passData]);
 
   useEffect(() => {
     if (step === 4) {
@@ -234,7 +242,7 @@ const NewPassword = () => {
                 type="submit"
                 className="btn btn-azul"
                 onClick={handleSubmitPasswordForm}
-                disabled={passLoading}
+                disabled={isEnabledBtn}
               >
                 Confirmar
               </button>
