@@ -30,12 +30,10 @@ const LogIn = () => {
 
   const handleBtn = async (e) => {
     e.preventDefault();
-    if (username && password) {
       const form = new FormData();
       form.append("username_or_email", username);
       form.append("password", password);
       await login(form);
-    }
   };
 
   /*const handleBlockedPasswordBox = () => {
