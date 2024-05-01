@@ -92,6 +92,7 @@ const ResetPassword = () => {
               value={emailText}
               onChange={handleEmailChange}
               placeholder="Correo electrónico"
+              maxLength={255}
               required
             />
             {supportingText.length > 0 && (

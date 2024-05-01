@@ -20,7 +20,7 @@ class Login(ObtainAuthToken):
 
         if not (username_or_email and password):
             return Response(
-                {"error": "Faltan campos requeridos"},
+                {"error": "Faltan campos obligatorios"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -80,7 +80,7 @@ class Login(ObtainAuthToken):
                     block_time = timezone.make_aware(datetime.strptime(block_time_str, '%Y-%m-%d %H:%M:%S'))
                     if timezone.now() > block_time + timedelta(seconds=60):
                         request.session['login_failed_attempts'] = 1
-                        return Response({"error": "Has excedido el límite de intentos. Por favor, inténtalo de nuevo."}, status=status.HTTP_400_BAD_REQUEST)
+                        return Response({"error": "Datos incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
                     else:
                         remaining_time = int((block_time + timedelta(seconds=60) - timezone.now()).total_seconds())
                         return Response({"error": f"Has excedido el límite de intentos. Por favor, inténtalo de nuevo en {remaining_time} segundos."}, status=status.HTTP_400_BAD_REQUEST)

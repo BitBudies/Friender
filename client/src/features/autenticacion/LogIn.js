@@ -18,8 +18,8 @@ const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [disableBtn, setDisableBtn] = useState(false);
   const [disableBtnLoading, setDisableBtnLoading] = useState(false);
-  const [disableBlockedPasswordBox, setBlockedPasswordBox] = useState(true);
-  const [contadorBloqueo, setContadorBloqueo] = useState(0);
+  /*const [disableBlockedPasswordBox, setBlockedPasswordBox] = useState(true);
+  const [contadorBloqueo, setContadorBloqueo] = useState(0);*/
 
   const navigate = useNavigate();
 
@@ -30,21 +30,15 @@ const LogIn = () => {
 
   const handleBtn = async (e) => {
     e.preventDefault();
-    if (username && password) {
       const form = new FormData();
       form.append("username_or_email", username);
       form.append("password", password);
       await login(form);
-    }
   };
 
-  const handleBlockedPasswordBox = () => {
+  /*const handleBlockedPasswordBox = () => {
     setBlockedPasswordBox(true);
-    /*setDisableBtn(true);
-    setTimeout(() => {
-      setDisableBtn(false);
-    }, 7000);*/
-  };
+  };*/
 
   useEffect(() => {
     console.log(response);
@@ -63,7 +57,7 @@ const LogIn = () => {
     if (isError) {
       setDisableBtnLoading(false);
       setShowFeedback(true);
-      if(responseError.data.intentos_fallidos === "0"){
+      /*if(responseError.data.intentos_fallidos === "0"){
         setContadorBloqueo(0);
       }
       if(responseError.data.intentos_fallidos === "1"){
@@ -74,10 +68,10 @@ const LogIn = () => {
       }
       if(contadorBloqueo === 2){
         setBlockedPasswordBox(false); //Mostrar Modal de Penalizacion
-      }
+      }*/
       setFeedbackText(responseError.data.error);
     }
-  }, [contadorBloqueo, isError, isLoading, isSuccess, navigate, response, responseError, setClientId, setCookie]);
+  }, [isError, isLoading, isSuccess, navigate, response, responseError, setClientId, setCookie]);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -89,8 +83,8 @@ const LogIn = () => {
         <img src={logo} alt="icono-friender"></img>
         <h1>Friender</h1>
       </div>
-
-      <div className={`form-section-rigth login-box ${disableBlockedPasswordBox ? "" : "hidden"}`}>
+      
+      <div className="form-section-rigth login-box">
         <p className="mb-4 fw-bold login-box-title">
           Inicia sesión en Friender
         </p>
@@ -102,7 +96,8 @@ const LogIn = () => {
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value.trim())}
-              placeholder="Correo electrónico"
+              placeholder="Usuario o Correo electrónico"
+              maxLength={255}
             />
           </div>
 
@@ -114,6 +109,7 @@ const LogIn = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Contraseña"
+              maxLength={65}
             />
             <span className="login-password-icon" onClick={toggleShowPassword}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -134,11 +130,11 @@ const LogIn = () => {
           >
             Iniciar Sesión
           </button>
-          {disableBtn && (
+          {/*disableBtn && (
             <p className="text-danger mb-2 login-box-text-danger">
               Intenta ingresar luego de 60 segundos.
             </p>
-          )}
+          )*/}
 
           <p className="form-text">
             <Link to={"/resetPassword"}>¿Has olvidado la contraseña?</Link>
@@ -154,7 +150,7 @@ const LogIn = () => {
           </p>
         </form>
       </div>
-      <div
+      {/*<div
         className={`flex-column justify-content-rigth align-items-center modal-bloqueo ${
           disableBlockedPasswordBox ? "hidden" : ""
         }`}
@@ -182,7 +178,7 @@ const LogIn = () => {
         >
           Entendido
         </button>
-      </div>
+      </div>*/}
     </div>
   );
 };
