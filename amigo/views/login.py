@@ -20,7 +20,7 @@ class Login(ObtainAuthToken):
 
         if not (username_or_email and password):
             return Response(
-                {"error": "Faltan campos requeridos"},
+                {"error": "Faltan campos obligatorios"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
