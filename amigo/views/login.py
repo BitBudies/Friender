@@ -22,7 +22,9 @@ class Login(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Faltan campos obligatorios"}, 
+                            status=status.HTTP_400_BAD_REQUEST
+                            )
 
         username_or_email = serializer.validated_data.get("username_or_email")
         password = serializer.validated_data.get("password")
