@@ -98,7 +98,7 @@ const ResetPassword = () => {
               <p style={{ color: "red" }}>{supportingText}</p>
             )}
             {remainingTime > 0 && (
-              <p>
+              <p className="texto-rojo">
                 Debe esperar {remainingTime} segundos para enviar otro correo.
               </p>
             )}
@@ -122,7 +122,7 @@ const ResetPassword = () => {
       )}
       {step === 2 && (
         <div className="step-2 step-1">
-          <h1>Revisa tu bandeja de entrada</h1>
+          <h1>Revisa tu bandeja de entrada</h1>         
           <p>
             Se ha enviado un correo electrónico con un enlace para restablecer
             la contraseña
