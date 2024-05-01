@@ -8,15 +8,24 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.utils import timezone
 from datetime import datetime, timedelta
+from rest_framework import serializers
 # Para instalar
 # pip install --upgrade djangorestframework-simplejwt
 
+class LoginSerializer(serializers.Serializer):
+    username_or_email = serializers.CharField(max_length=255)
+    password = serializers.CharField(max_length=65)
 
 class Login(ObtainAuthToken):
+    serializer_class = LoginSerializer
     @method_decorator(never_cache)
     def post(self, request, *args, **kwargs):
-        username_or_email = request.data.get("username_or_email")
-        password = request.data.get("password")
+        serializer = self.serializer_class(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        username_or_email = serializer.validated_data.get("username_or_email")
+        password = serializer.validated_data.get("password")
 
         if not (username_or_email and password):
             return Response(
