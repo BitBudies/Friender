@@ -21,6 +21,10 @@ const LogIn = () => {
   /*const [disableBlockedPasswordBox, setBlockedPasswordBox] = useState(true);
   const [contadorBloqueo, setContadorBloqueo] = useState(0);*/
 
+  // Para cuenta regresiva
+  const [remainingTime, setRemainingTime] = useState(0)
+  const [supportingText, setSupportingText] = useState("");
+
   const navigate = useNavigate();
 
   const { setClientId } = useGlobalContext();
@@ -55,20 +59,30 @@ const LogIn = () => {
       navigate("/amigos/page/1");
     }
     if (isError) {
+      console.log(responseError.data)
       setDisableBtnLoading(false);
       setShowFeedback(true);
-      /*if(responseError.data.intentos_fallidos === "0"){
-        setContadorBloqueo(0);
+      if (responseError.data.tiempo){
+        setSupportingText("")
+        const tiempoRestante = responseError.data.tiempo;
+          if (tiempoRestante) {
+            setRemainingTime(tiempoRestante);
+            console.log(tiempoRestante);
+            const timer = setInterval(() => {
+              setRemainingTime((prevTime) => prevTime - 1);
+            }, 1000);
+            // cuando llegue a 0 lo eliminamos
+            setTimeout(() => {
+              clearInterval(timer);
+            }, tiempoRestante * 1000);
+          } else {
+            console.log("Error:", responseError.data.error); // Log en caso de error
+          }
+      } else {
+        setSupportingText(responseError.data.error)
       }
-      if(responseError.data.intentos_fallidos === "1"){
-        setContadorBloqueo(1);
-      }
-      if(responseError.data.intentos_fallidos === "2"){
-        setContadorBloqueo(2);
-      }
-      if(contadorBloqueo === 2){
-        setBlockedPasswordBox(false); //Mostrar Modal de Penalizacion
-      }*/
+      
+
       setFeedbackText(responseError.data.error);
     }
   }, [isError, isLoading, isSuccess, navigate, response, responseError, setClientId, setCookie]);
@@ -116,16 +130,30 @@ const LogIn = () => {
             </span>
           </div>
 
-          {showFeedback && (
+          {/* {showFeedback && (
             <p className="text-danger mb-2 login-box-text-danger">
               {feedbackText}
             </p>
-          )}
+          )} */}
+          {
+            supportingText &&
+            <p className="text-danger mb-2 login-box-text-danger">
+              {supportingText}
+            </p>
+          }
+          { 
+            remainingTime > 0 &&
+            <p className="text-danger mb-2 login-box-text-danger">
+              Inténtalo de nuevo en {remainingTime} segundos.
+            </p>
+          }
+
 
           <button
             className={`btn btn-azul mb-2 button-login ${
               disableBtnLoading && "disabled"
-            } ${disableBtn && "disabled"}`}
+            } `}//${disableBtn && "disabled"}
+            disabled={remainingTime > 0}
             onClick={handleBtn}
           >
             Iniciar Sesión

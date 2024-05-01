@@ -73,7 +73,11 @@ class Login(ObtainAuthToken):
 
             if errores == 3:
                 request.session['block_time'] = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
-                return Response({"error": "Has excedido el límite de intentos. Por favor, inténtalo de nuevo en 60 segundos."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({
+                    "error": "Has excedido el límite de intentos. Por favor, inténtalo de nuevo en 60 segundos.",
+                    "tiempo": 60}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
             elif errores > 3:
                 block_time_str = request.session.get('block_time')
                 if block_time_str:
@@ -83,7 +87,7 @@ class Login(ObtainAuthToken):
                         return Response({"error": "Datos incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
                     else:
                         remaining_time = int((block_time + timedelta(seconds=60) - timezone.now()).total_seconds())
-                        return Response({"error": f"Has excedido el límite de intentos. Por favor, inténtalo de nuevo en {remaining_time} segundos."}, status=status.HTTP_400_BAD_REQUEST)
+                        return Response({"error": f"Inténtalo de nuevo en {remaining_time} segundos."}, status=status.HTTP_400_BAD_REQUEST)
         # esto es de contraseña incorrecta, a solicitud de qa el mensaje cambio
         return Response({"error": "Datos incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
     
