@@ -369,7 +369,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             name="ubicacion"
             value={values.ubicacion}
             onChange={handleChange}
-            className="form-control input-width-160 "
+            className="form-select input-width-160 "
             required
           >
             
@@ -386,10 +386,6 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             <option value="Chuquisaca">Chuquisaca</option>
             <option value="Beni">Beni</option>
           </select>
-          <span className="ubicacion-icon">
-              <FaLocationDot />
-              </span>
-
           <p className="text-danger input1-width-70">{errors.ubicacion}</p>
         </div>
        
