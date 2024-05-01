@@ -98,7 +98,7 @@ const ResetPassword = () => {
               <p style={{ color: "red" }}>{supportingText}</p>
             )}
             {remainingTime > 0 && (
-              <p className="texto-rojo">
+              <p>
                 Debe esperar {remainingTime} segundos para enviar otro correo.
               </p>
             )}
