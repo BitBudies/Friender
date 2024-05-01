@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import "./RecuperarCuenta.css"
+import { useRedirectIfAuthenticated } from '../../hooks/isAuthenticated';
 
 const RecuperarCuenta = () => {
+  const redirectIfAuth = useRedirectIfAuthenticated();
+  redirectIfAuth();
     const [x,setX] = useState(0);
 
   return (

@@ -7,8 +7,12 @@ import { useGlobalContext } from "../../context";
 import NavBar from "../../Components/NavBar.js";
 import logo from "../../logo-friender.png";
 import { useCookies } from "react-cookie";
+import  { useRedirectIfAuthenticated } from "../../hooks/isAuthenticated.js";
 
 const LogIn = () => {
+
+  const redirectIfAuth = useRedirectIfAuthenticated();
+  redirectIfAuth();
   const [cookies, setCookie] = useCookies(["token"]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
