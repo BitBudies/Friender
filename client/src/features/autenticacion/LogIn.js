@@ -85,8 +85,7 @@ const LogIn = () => {
         <img src={logo} alt="icono-friender"></img>
         <h1>Friender</h1>
       </div>
-
-      {/*<div className={`form-section-rigth login-box ${disableBlockedPasswordBox ? "" : "hidden"}`}>*/}
+      
       <div className="form-section-rigth login-box">
         <p className="mb-4 fw-bold login-box-title">
           Inicia sesión en Friender
