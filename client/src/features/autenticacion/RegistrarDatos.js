@@ -367,7 +367,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             name="ubicacion"
             value={values.ubicacion}
             onChange={handleChange}
-            className="form-select input-width-160 "
+            className="form-control input-width-160 "
             required
           >
             
