@@ -426,7 +426,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             type="email"
             id="correo_electronico"
             name="correo_electronico"
-            placeholder="ejemplo: @gmail.com"
+            placeholder="ejemplo@dominio.com"
             value={values.correo_electronico}
             onChange={handleChange}
             className="form-control input-width-280"
