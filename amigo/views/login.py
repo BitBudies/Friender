@@ -96,7 +96,9 @@ class Login(ObtainAuthToken):
                         return Response({"error": "Datos incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
                     else:
                         remaining_time = int((block_time + timedelta(seconds=60) - timezone.now()).total_seconds())
-                        return Response({"error": f"Inténtalo de nuevo en {remaining_time} segundos."}, status=status.HTTP_400_BAD_REQUEST)
+                        return Response({
+                            "error": f"Inténtalo de nuevo en {remaining_time} segundos.",
+                            "tiempo": remaining_time}, status=status.HTTP_400_BAD_REQUEST)
         # esto es de contraseña incorrecta, a solicitud de qa el mensaje cambio
         return Response({"error": "Datos incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
     
