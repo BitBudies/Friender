@@ -47,7 +47,7 @@ const PerfilAmigo = () => {
               className="image-container"
               style={{
                 backgroundImage: `url(${
-                  amigo.imagenes[0].imagenBase64
+                  amigo.imagenes && amigo.imagenes[0]
                     ? "data:image/jpeg;base64," + amigo.imagenes[0].imagenBase64
                     : "/images/user.jpeg"
                 })`,
