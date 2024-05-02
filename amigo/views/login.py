@@ -50,13 +50,13 @@ class Login(ObtainAuthToken):
                 #self.incrementoFallo(request)
                 #self.verificarIntento(request)
                 # esto es de Usuario o correo incorrecto, a solicitud de qa el mensaje cambio
-                return Response({"error": f"{request.session['block_time']} y {type(request.session['login_failed_attempts'])}"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": "Datos incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
             else:
                return self.incrementoFallo(request)
 
         if self.usuarioBloqueado(request):
             remaining_time = self.usuarioBloqueado(request)
-            return Response({"error": f"{request.session['block_time']} y {type(request.session['login_failed_attempts'])}"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": f"Tu cuenta ha sido bloqueada debido a múltiples intentos fallidos. Por favor, inténtalo de nuevo en {remaining_time} segundos."}, status=status.HTTP_400_BAD_REQUEST)
 
         request.session['login_failed_attempts'] = 0 
         token, created = Token.objects.get_or_create(user=user)
