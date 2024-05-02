@@ -79,7 +79,7 @@ class Login(ObtainAuthToken):
         if 'login_failed_attempts' not in request.session:
             request.session['login_failed_attempts'] = 1
         else:
-            request.session['login_failed_attempts'] += 1
+            request.session['login_failed_attempts'] = request.session['login_failed_attempts'] + 1
             errores = request.session['login_failed_attempts']
 
             if errores == 3:
