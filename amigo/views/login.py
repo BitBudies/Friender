@@ -54,7 +54,10 @@ class Login(ObtainAuthToken):
 
         if self.usuarioBloqueado(username_or_email):
             remaining_time = self.usuarioBloqueado(username_or_email)
-            return Response({"error": f"Tu cuenta ha sido bloqueada debido a múltiples intentos fallidos. Por favor, inténtalo de nuevo en {remaining_time} segundos."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                "error": f"Tu cuenta ha sido bloqueada debido a múltiples intentos fallidos. Por favor, inténtalo de nuevo en {remaining_time} segundos.",
+                "tiempo": remaining_time}, 
+                status=status.HTTP_400_BAD_REQUEST)
 
         login_failed_attempts.pop(username_or_email, None)  # Limpiar intentos fallidos si el inicio de sesión es exitoso
 

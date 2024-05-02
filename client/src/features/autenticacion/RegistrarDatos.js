@@ -413,7 +413,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             className="form-control input1fv-width-70"
             required
           />
-          <p className="text-danger">{errors.nombre_usuario}</p>
+          <p className="text-danger" style={{width: "300px" }}>{errors.nombre_usuario}</p>
         </div>
         <div className="mb-2 input-item">
           <label
@@ -459,7 +459,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
                 required
               />
               {!passwordStatus.pass && passwordStatus.message && (
-                <p className="text-danger mw-100" style={{ position: "fixed" }}>{passwordStatus.message}</p>
+                <p className="text-danger mw-100" style={{ position: "fixed", width: "300px" }}>{passwordStatus.message}</p>
               )}
               <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
