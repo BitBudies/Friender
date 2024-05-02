@@ -105,5 +105,4 @@ class Login(ObtainAuthToken):
             remaining_time = int((block_time[username_or_email] - timezone.now()).total_seconds())
             return remaining_time
         return False
-
         
