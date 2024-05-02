@@ -459,7 +459,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
                 required
               />
               {!passwordStatus.pass && passwordStatus.message && (
-                <p className="text-danger mw-100" style={{ position: "fixed" }}>{passwordStatus.message}</p>
+                <p className="text-danger mw-100" style={{ position: "fixed", width: "300px" }}>{passwordStatus.message}</p>
               )}
               <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
