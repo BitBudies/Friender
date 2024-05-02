@@ -50,13 +50,13 @@ class Login(ObtainAuthToken):
                 #self.incrementoFallo(request)
                 #self.verificarIntento(request)
                 # esto es de Usuario o correo incorrecto, a solicitud de qa el mensaje cambio
-                return Response({"error": "Datos incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": request.session}, status=status.HTTP_400_BAD_REQUEST)
             else:
                return self.incrementoFallo(request)
 
         if self.usuarioBloqueado(request):
             remaining_time = self.usuarioBloqueado(request)
-            return Response({"error": f"Tu cuenta ha sido bloqueada debido a múltiples intentos fallidos. Por favor, inténtalo de nuevo en {remaining_time} segundos."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": request.session}, status=status.HTTP_400_BAD_REQUEST)
 
         request.session['login_failed_attempts'] = 0 
         token, created = Token.objects.get_or_create(user=user)
@@ -85,7 +85,7 @@ class Login(ObtainAuthToken):
             if errores == 3:
                 request.session['block_time'] = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
                 return Response({
-                    "error": "Has excedido el límite de intentos. Por favor, inténtalo de nuevo en 60 segundos.",
+                    "error": request.session,
                     "tiempo": 60}, 
                     status=status.HTTP_400_BAD_REQUEST
                 )
@@ -95,14 +95,14 @@ class Login(ObtainAuthToken):
                     block_time = timezone.make_aware(datetime.strptime(block_time_str, '%Y-%m-%d %H:%M:%S'))
                     if timezone.now() > block_time + timedelta(seconds=60):
                         request.session['login_failed_attempts'] = 1
-                        return Response({"error": "Datos incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
+                        return Response({"error": request.session}, status=status.HTTP_400_BAD_REQUEST)
                     else:
                         remaining_time = int((block_time + timedelta(seconds=60) - timezone.now()).total_seconds())
                         return Response({
-                            "error": f"Inténtalo de nuevo en {remaining_time} segundos.",
+                            "error": request.session,
                             "tiempo": remaining_time}, status=status.HTTP_400_BAD_REQUEST)
         # esto es de contraseña incorrecta, a solicitud de qa el mensaje cambio
-        return Response({"error": "Datos incorrectos"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": request.session}, status=status.HTTP_400_BAD_REQUEST)
     
     def usuarioBloqueado(self, request):
         block_time_str = request.session.get('block_time')

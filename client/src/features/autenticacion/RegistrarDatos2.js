@@ -245,7 +245,7 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
               </p>
               <p className={rojoClasePesoMax}>
                 {pesado
-                  ? `Tu imagen pesa más de 200KB. Solo se permiten imágenes de máximo 200KB.`
+                  ? `Solo se permiten imágenes de máximo 200KB.`
                   : '' 
                 }
               </p>
