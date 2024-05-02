@@ -413,7 +413,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             className="form-control input1fv-width-70"
             required
           />
-          <p className="text-danger">{errors.nombre_usuario}</p>
+          <p className="text-danger" style={{width: "300px" }}>{errors.nombre_usuario}</p>
         </div>
         <div className="mb-2 input-item">
           <label
