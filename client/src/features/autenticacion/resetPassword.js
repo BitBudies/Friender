@@ -100,8 +100,7 @@ const ResetPassword = () => {
             )}
             {remainingTime > 0 && (
               <p>
-                Debe esperar {remainingTime} 
-                segundos para enviar otro correo.
+                Debe esperar {remainingTime} segundos para enviar otro correo.
               </p>
             )}
             <div className="botones">
