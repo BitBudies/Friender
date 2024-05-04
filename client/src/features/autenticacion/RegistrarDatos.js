@@ -60,7 +60,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
   const handleChangeOnlyLetters = (event) => {
     const { name, value } = event.target;
     // Expresión regular para permitir solo caracteres alfabéticos
-    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+    const onlyLettersRegex = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]*$/;
     if (!onlyLettersRegex.test(value)) {
       setErrors({
         ...errors,
@@ -265,7 +265,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             placeholder="Nombre"
             value={values.nombre}
             onChange={handleChangeOnlyLetters}
-            className="form-control input1m-width-70"
+            className="form-control "
             required
           />
           <p className="text-danger">{errors.nombre}</p>
@@ -273,7 +273,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
         <div className="mb-2 input-item">
           <label
             htmlFor="apellido_paterno"
-            className="input-label required-label  input1-width-70 "
+            className="input-label required-label "
           >
             Apellido Paterno
           </label>
@@ -284,17 +284,17 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             placeholder="Apellido Paterno"
             value={values.apellido_paterno}
             onChange={handleChangeOnlyLetters}
-            className="form-control input-width-160"
+            className="form-control"
             required
           />
-          <p className="text-danger input1-width-70">
+          <p className="text-danger">
             {errors.apellido_paterno}
           </p>
         </div>
         <div className="mb-2 input-item">
           <label
             htmlFor="apellido_materno"
-            className="input-label input1-width-70"
+            className="input-label "
           >
             Apellido Materno
           </label>
@@ -305,7 +305,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             placeholder="Apellido Materno"
             value={values.apellido_materno}
             onChange={handleChangeOnlyLetters}
-            className="form-control input-width-160"
+            className="form-control "
           />
         </div>
       </div>
@@ -324,7 +324,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             placeholder="dd/mm/aa"
             value={values.fecha_nacimiento}
             onChange={handleChange}
-            className="form-control input1f-width-70"
+            className="form-control "
             required
           />
           <p className="text-danger">{errors.fecha_nacimiento}</p>
@@ -332,7 +332,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
         <div className="mb-2 input-item">
           <label
             htmlFor="genero"
-            className="input-label required-label input1-width-70"
+            className="input-label required-label"
           >
             Género
           </label>
@@ -341,7 +341,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             name="genero"
             value={values.genero}
             onChange={handleChange}
-            className="form-select input-width-160"
+            className="form-select"
             required
           >
             <option value="" disabled selected hidden>
@@ -351,14 +351,14 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             <option value="femenino">Femenino</option>
             <option value="otro">Otro</option>
           </select>
-          <p className="text-danger input1-width-70">{errors.genero}</p>
+          <p className="text-danger">{errors.genero}</p>
         </div>
        
         <div className="mb-2 input-item">
       
           <label
             htmlFor="ubicacion"
-            className="input-label required-label input1-width-70"
+            className="input-label required-label"
           >
             Ubicación
            
@@ -369,7 +369,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             name="ubicacion"
             value={values.ubicacion}
             onChange={handleChange}
-            className="form-select input-width-160 "
+            className="form-select "
             required
           >
             
@@ -386,7 +386,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             <option value="Chuquisaca">Chuquisaca</option>
             <option value="Beni">Beni</option>
           </select>
-          <p className="text-danger input1-width-70">{errors.ubicacion}</p>
+          <p className="text-danger">{errors.ubicacion}</p>
         </div>
        
         <div className="mb-2 input-item">
@@ -395,7 +395,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
         </div>  </div>
      
      
-      <div className="input-group registro">
+      <div className="input-group registro2">
         <div className="mb-2 input-item">
           <label
             htmlFor="nombre_usuario"
@@ -410,15 +410,15 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             placeholder="Usuario"
             value={values.nombre_usuario}
             onChange={handleChange}
-            className="form-control input1fv-width-70"
+            className="form-control "
             required
           />
-          <p className="text-danger" style={{width: "300px" }}>{errors.nombre_usuario}</p>
+          <p className="text-danger" >{errors.nombre_usuario}</p>
         </div>
         <div className="mb-2 input-item">
           <label
             htmlFor="correo_electronico"
-            className="input-label required-label input-width-30"
+            className="input-label required-label "
           >
             Correo Electrónico
           </label>
@@ -429,17 +429,17 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             placeholder="ejemplo@dominio.com"
             value={values.correo_electronico}
             onChange={handleChange}
-            className="form-control input-width-280"
+            className="form-control "
             required
           />
-          <p className="text-danger input-width-30">
+          <p className="text-danger ">
             {errors.correo_electronico}
           </p>
         </div>
       </div>
 
-      <div className="input-group registro">
-        <div className="mb-2 password-input">
+      <div className="input-group registro2">
+        <div className="mb-2 ">
           <label htmlFor="contraseña" className="input-label required-label">
             Contraseña
           </label>
@@ -451,7 +451,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             >
               <input
                 type={showPassword ? "text" : "password"}
-                className="form-control input1fv-width-70"
+                className="form-control "
                 id="contraseña"
                 placeholder="Contraseña"
                 value={password}
@@ -459,7 +459,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
                 required
               />
               {!passwordStatus.pass && passwordStatus.message && (
-                <p className="text-danger mw-100" style={{ position: "fixed", width: "300px" }}>{passwordStatus.message}</p>
+                <p className="text-danger mw-100">{passwordStatus.message}</p>
               )}
               <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -467,10 +467,10 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             </div>
           </div>
         </div>
-        <div className="mb-2 input-item">
+        <div className="mb-2">
           <label
             htmlFor="confirmar_contraseña"
-            className="input-label required-label input-width-30"
+            className="input-label required-label "
           >
             Confirmar Contraseña
           </label>
@@ -486,14 +486,14 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
                 type={showPassword1 ? "text" : "password"}
                 id="confirmar_contraseña"
                 name="confirmar_contraseña"
-                className="form-control input-width-280"
+                className="form-control"
                 placeholder="Confirmar Contraseña"
                 value={values.confirmar_contraseña}
                 onChange={handleChange}
                 required
                 disabled={!passwordStatus.pass}
               />
-              <p className="text-danger input-width-30">
+              <p className="text-danger ">
                 {errors.confirmar_contraseña}
               </p>
               <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword1}>
@@ -503,14 +503,15 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
           </div>
         </div>
       </div>
-      <div className="para1-boton">
-        <button
+      <div className="btn-next-container">
+      <button
           className={`btn btn-azul ${isLoading && "disabled"}`}
           onClick={handleSubmit}
         >
           Siguiente
         </button>
       </div>
+        
     </div>
   );
 };

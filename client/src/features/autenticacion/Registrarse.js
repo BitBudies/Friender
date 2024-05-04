@@ -11,7 +11,7 @@ import { useRedirectIfAuthenticated } from "../../hooks/isAuthenticated";
 const Registrarse = () => {
   const redirectIfAuth = useRedirectIfAuthenticated();
   redirectIfAuth();
-  const [nForm, setNForm] = useState(0);
+  const [nForm, setNForm] = useState(2);
   const [data,setData] = useState({});
   const [foto,setFoto] = useState('');
   const props = {

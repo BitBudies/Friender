@@ -147,7 +147,7 @@ export const RegistrarDatos15 = ({setNForm,data}) => {
             />
             
             <button 
-                className={`btn btn-azul `} 
+                className={`btn btn-azul`} 
                 disabled={codeLoading || remainingTime > 0}
                 onClick={handleEnviarCodigos}>
                 Enviar Código
