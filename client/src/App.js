@@ -23,6 +23,7 @@ import NewPassword from './features/autenticacion/newPassword'
 import { Cookies } from 'react-cookie';
 import { useGetClienteInfoQuery } from './features/cliente/clienteSlice';
 import { useCookies } from "react-cookie";
+import PerfilCliente from './features/cliente/PerfilCliente';
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='/amigos/page/:n_page' element={<ListaAmigos/>}/>
           <Route path='/amigos/:id_amigo' element={<PerfilAmigo/>}/>
+          <Route path='/cliente/:id_cliente' element={<PerfilCliente/>}/>
           <Route path='/new-password/:tokencito' element={<NewPassword/>}/>
           <Route path='/login' element= {<LogIn/>}/>
           <Route path='/perfil' element={<Perfil/>}/>

@@ -43,7 +43,7 @@ const LogIn = () => {
   };
 
   useEffect(() => {
-    console.log(response);
+    console.log(response,"response");
 
     if (isLoading) {
       setDisableBtnLoading(true);
@@ -57,7 +57,7 @@ const LogIn = () => {
       navigate("/amigos/page/1");
     }
     if (isError) {
-      console.log(responseError.data)
+      console.log(responseError,"error")
       setDisableBtnLoading(false);
       setShowFeedback(true);
       if (responseError.data.tiempo){

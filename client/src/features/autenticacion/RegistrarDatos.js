@@ -60,7 +60,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
   const handleChangeOnlyLetters = (event) => {
     const { name, value } = event.target;
     // Expresión regular para permitir solo caracteres alfabéticos
-    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+    const onlyLettersRegex = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]*$/;
     if (!onlyLettersRegex.test(value)) {
       setErrors({
         ...errors,
@@ -265,7 +265,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             placeholder="Nombre"
             value={values.nombre}
             onChange={handleChangeOnlyLetters}
-            className="form-control input1m-width-70"
+            className="form-control "
             required
           />
           <p className="text-danger">{errors.nombre}</p>
@@ -273,7 +273,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
         <div className="mb-2 input-item">
           <label
             htmlFor="apellido_paterno"
-            className="input-label required-label  input1-width-70 "
+            className="input-label required-label "
           >
             Apellido Paterno
           </label>
@@ -284,17 +284,17 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             placeholder="Apellido Paterno"
             value={values.apellido_paterno}
             onChange={handleChangeOnlyLetters}
-            className="form-control input-width-160"
+            className="form-control"
             required
           />
-          <p className="text-danger input1-width-70">
+          <p className="text-danger">
             {errors.apellido_paterno}
           </p>
         </div>
         <div className="mb-2 input-item">
           <label
             htmlFor="apellido_materno"
-            className="input-label input1-width-70"
+            className="input-label "
           >
             Apellido Materno
           </label>
@@ -305,7 +305,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             placeholder="Apellido Materno"
             value={values.apellido_materno}
             onChange={handleChangeOnlyLetters}
-            className="form-control input-width-160"
+            className="form-control "
           />
         </div>
       </div>
@@ -413,7 +413,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             className="form-control input1fv-width-70"
             required
           />
-          <p className="text-danger">{errors.nombre_usuario}</p>
+          <p className="text-danger" style={{width: "300px" }}>{errors.nombre_usuario}</p>
         </div>
         <div className="mb-2 input-item">
           <label
@@ -459,7 +459,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
                 required
               />
               {!passwordStatus.pass && passwordStatus.message && (
-                <p className="text-danger mw-100" style={{ position: "fixed" }}>{passwordStatus.message}</p>
+                <p className="text-danger mw-100" style={{ position: "fixed", width: "300px" }}>{passwordStatus.message}</p>
               )}
               <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}

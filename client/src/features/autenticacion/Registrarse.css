@@ -113,10 +113,16 @@
 
 .registro{
   display: flex;
+  justify-content: space-between;
 }
 .registro .input-item{
   display: flex;
   flex-direction: column;
+}
+
+.registro .input-item .form-control{
+  width: 12rem;
+  margin-left: 0;
 }
 
 
@@ -138,10 +144,6 @@
     display: none !important;
   }
 
-  .registrarse-right{
-    display:  block !important;
-    padding: 15px;
-  }
 
   .registrarse-left, .registrarse-right{
     width: 100%;
@@ -159,6 +161,14 @@
   .form-item{
     display: flex;
     justify-content: center;
-    /*border: 2px solid black;*/
+    align-items: center !important;
+    border: 2px solid black;
+  }
+
+  .registro{
+    border: 1px solid #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

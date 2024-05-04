@@ -12,13 +12,12 @@ def obtener_csrf(request):
 
 
 def correo_valido(correo):
-    # regex_correo = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
-
-    regex_correo = r"^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+([.]\w+){1,3}"
-    if re.search(regex_correo, correo):
+    regex_correo = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    if re.match(regex_correo, correo):
         return True
     else:
         return False
+    
 
 def generate_key(length):
     characters = string.ascii_letters + string.digits + '-_'
@@ -26,3 +25,12 @@ def generate_key(length):
 
 if __name__ == "__main__":
     print(len(generate_key(64)))
+    
+def contrasena_valida(contrasena):
+    if (re.search(r'[A-Z]', contrasena) and
+        re.search(r'[a-z]', contrasena) and
+        re.search(r'[0-9]', contrasena) and
+        re.search(r'[!@#\$%\^&\*\(\)_\+\-\=\[\]\{\}\|;:,<\.>\/\?]', contrasena)):
+        return True
+    else:
+        return False

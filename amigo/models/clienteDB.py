@@ -18,7 +18,7 @@ class Cliente(models.Model):
     fecha_nacimiento = models.DateField()
     genero = models.CharField(max_length=1, choices=GENERO_OPCIONES)
     direccion = models.CharField(max_length=100)
-    descripcion = models.TextField(max_length=255)
+    descripcion = models.TextField(max_length=500)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     correo = models.CharField(max_length=100)
     codigoVerificaion = models.CharField(max_length=5, null=True, blank=True)
@@ -31,7 +31,10 @@ class Cliente(models.Model):
         return f"{self.cliente_id} {self.nombre} {self.ap_paterno} {self.ap_materno}"
 
     def getFullName(self):
-        return f"{self.nombre.capitalize()} {self.ap_paterno.capitalize()} {self.ap_materno.capitalize() if self.ap_materno else ''}"
+        full_name = f"{self.nombre.capitalize()} {self.ap_paterno.capitalize()}"
+        if self.ap_materno:
+            full_name += f" {self.ap_materno.capitalize()}"
+        return full_name
 
     def calcular_edad(self):
         today = date.today()

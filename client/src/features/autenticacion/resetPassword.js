@@ -3,11 +3,8 @@ import "./resetPassword.css";
 import { useFindEmailMutation } from "./authSlice";
 
 import { useNavigate } from "react-router-dom";
-import { useRedirectIfAuthenticated } from "../../hooks/isAuthenticated";
 
 const ResetPassword = () => {
-  const redirectIfAuth = useRedirectIfAuthenticated();
-  redirectIfAuth();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   // ------------------------------Buscar email------------------------------
@@ -102,7 +99,7 @@ const ResetPassword = () => {
               <p style={{ color: "red" }}>{supportingText}</p>
             )}
             {remainingTime > 0 && (
-              <p style={{color: "#999"}}>
+              <p>
                 Debe esperar {remainingTime} segundos para enviar otro correo.
               </p>
             )}
