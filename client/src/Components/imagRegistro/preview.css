@@ -4,13 +4,9 @@
     left: 0;
     z-index: 1;
     background: rgba(0,0,0,0.7);
-    width: 100vw;
-    height: 100vh;
+    max-width: 100vw;
+    height: 95vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
 }
 
 .preview .close-btn {
@@ -27,9 +23,9 @@
 
 .image-preview{
     position: relative;
-    width: 100%;
-    height: 100%;
-    background-position: center;
+    width: 90%;
+    height: 90%;
     background-repeat: no-repeat;
     background-size: contain;
+    background-position: center;
    }
