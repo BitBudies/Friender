@@ -82,6 +82,10 @@ const RegistrarDatos2 = ({setNForm, data : info, setPreview}) => {
                   setPesado(true)
                   return;
               }
+
+              const element = document.getElementById('input-foto');
+              element.value = '';
+
               const fotoURL = URL.createObjectURL(selectedFile)
               setFotos([...fotos, {id:selectedFile.name, file:selectedFile, url: fotoURL}]);
             } catch  (error) {
