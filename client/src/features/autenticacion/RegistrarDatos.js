@@ -265,7 +265,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             placeholder="Nombre"
             value={values.nombre}
             onChange={handleChangeOnlyLetters}
-            className="form-control input1m-width-70"
+            className="form-control "
             required
           />
           <p className="text-danger">{errors.nombre}</p>
@@ -273,7 +273,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
         <div className="mb-2 input-item">
           <label
             htmlFor="apellido_paterno"
-            className="input-label required-label  input1-width-70 "
+            className="input-label required-label "
           >
             Apellido Paterno
           </label>
@@ -284,17 +284,17 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             placeholder="Apellido Paterno"
             value={values.apellido_paterno}
             onChange={handleChangeOnlyLetters}
-            className="form-control input-width-160"
+            className="form-control"
             required
           />
-          <p className="text-danger input1-width-70">
+          <p className="text-danger">
             {errors.apellido_paterno}
           </p>
         </div>
         <div className="mb-2 input-item">
           <label
             htmlFor="apellido_materno"
-            className="input-label input1-width-70"
+            className="input-label "
           >
             Apellido Materno
           </label>
@@ -305,7 +305,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             placeholder="Apellido Materno"
             value={values.apellido_materno}
             onChange={handleChangeOnlyLetters}
-            className="form-control input-width-160"
+            className="form-control "
           />
         </div>
       </div>
