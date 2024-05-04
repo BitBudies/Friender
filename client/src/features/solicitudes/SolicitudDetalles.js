@@ -77,7 +77,7 @@ const SolicitudDetalles = () => {
                   <p>Edad: {solicitud.edad_cliente} años</p>
                   <span className="text-warning">★★★☆☆</span>
                   <Link
-                    to={`/amigos/${solicitud.cliente}`}
+                    to={`/cliente/${solicitud.cliente_id}`}
                     className="btn btn-azul btn-lg"
                   >
                     Ver Perfil

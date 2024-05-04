@@ -62,6 +62,7 @@ const NewPassword = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   const onPasswordChange = (e) => {
+    setConfirmPassword("");
     const passwordChecked = checkPass(e.target.value);
     const { pass, message } = passwordChecked;
     if (!passwordChecked.pass) {
