@@ -1,18 +1,22 @@
 .preview {
-    position: absolute;
-    top: 0;
+    position: fixed;
+    top: var(--navbar-height);
     left: 0;
     z-index: 1;
     background: rgba(0,0,0,0.7);
-    width: 100%;
-    height: 130%;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 1rem;
 }
 
 .preview .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
     display: flex;
     justify-content: end;
 }
@@ -25,7 +29,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    background-size: fit-content;
     background-position: center;
     background-repeat: no-repeat;
+    background-size: contain;
    }

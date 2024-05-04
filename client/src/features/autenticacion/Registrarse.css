@@ -183,11 +183,6 @@
   .registro, .registro2{
     display: flex;
     padding: 0 2rem;
-    background-color: #aaa;
-  }
-
-  .btn-next-container{
-    margin-bottom: 10rem;
   }
 
 }

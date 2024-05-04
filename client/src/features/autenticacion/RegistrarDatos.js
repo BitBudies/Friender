@@ -467,7 +467,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             </div>
           </div>
         </div>
-        <div className="mb-2 input-item">
+        <div className="mb-2">
           <label
             htmlFor="confirmar_contraseña"
             className="input-label required-label "
@@ -486,7 +486,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
                 type={showPassword1 ? "text" : "password"}
                 id="confirmar_contraseña"
                 name="confirmar_contraseña"
-                className="form-control "
+                className="form-control"
                 placeholder="Confirmar Contraseña"
                 value={values.confirmar_contraseña}
                 onChange={handleChange}
