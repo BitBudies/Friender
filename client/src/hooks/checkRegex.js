@@ -18,7 +18,7 @@ const checkPassword = () => {
             return {pass : false, message : "La contraseña debe tener al menos una letra en minúscula"}
         }
         if (!password.match(/\d/g)){
-            return {pass : false, message : "La contraña debe tener al menos un número"}
+            return {pass : false, message : "La contraseña debe tener al menos un número"}
         }
         if (!password.match(/[$&+,:;=?@#|'"¿._<>\-^*)(%!{}\][\\]+/g)){
             return {pass : false, message : "La contraseña debe tener al menos un caracter especial"}
