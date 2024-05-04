@@ -282,7 +282,7 @@ class SolicitudAlquilerDetailAPIView(APIView):
             )
         data = {
             "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
-            "cliente": solicitud.cliente.cliente_id,
+            "cliente_id": solicitud.cliente.cliente_id,
             "nombre_cliente": solicitud.cliente.getFullName(),
             "edad_cliente": solicitud.cliente.calcular_edad(),
             "amigo": solicitud.amigo.amigo_id,
