@@ -31,7 +31,10 @@ class Cliente(models.Model):
         return f"{self.cliente_id} {self.nombre} {self.ap_paterno} {self.ap_materno}"
 
     def getFullName(self):
-        return f"{self.nombre.capitalize()} {self.ap_paterno.capitalize()} {self.ap_materno.capitalize() if self.ap_materno else ''}"
+        full_name = f"{self.nombre.capitalize()} {self.ap_paterno.capitalize()}"
+        if self.ap_materno:
+            full_name += f" {self.ap_materno.capitalize()}"
+        return full_name
 
     def calcular_edad(self):
         today = date.today()

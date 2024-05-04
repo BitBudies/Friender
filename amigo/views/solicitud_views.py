@@ -194,7 +194,7 @@ def obtenerSolicitudesAmigo(request):
         return Response(data, status=status.HTTP_200_OK)
 
     for solicitud in solicitudes:
-        nombre_cliente = f"{solicitud.cliente.nombre} {solicitud.cliente.ap_paterno} {solicitud.cliente.ap_materno}".title()
+        nombre_cliente =solicitud.cliente.getFullName()
         calificacion_cliente = Calificacion.objects.filter(
             amigo=solicitud.amigo, emisor="cliente"
         ).aggregate(Avg("puntuacion"))["puntuacion__avg"]
