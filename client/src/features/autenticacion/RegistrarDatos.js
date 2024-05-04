@@ -60,7 +60,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
   const handleChangeOnlyLetters = (event) => {
     const { name, value } = event.target;
     // Expresión regular para permitir solo caracteres alfabéticos
-    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+    const onlyLettersRegex = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]*$/;
     if (!onlyLettersRegex.test(value)) {
       setErrors({
         ...errors,
