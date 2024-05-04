@@ -244,7 +244,7 @@ class VerificarCodigo(APIView):
 
         try:
             codigos = Codigos.objects.get(correo=correo, codigoVerificaion=codigo)
-            codigos.delete()
+            #codigos.delete()
         except Codigos.DoesNotExist:
             return Response(
                 {"error": "El código de verificación es incorrecto"},
@@ -254,6 +254,9 @@ class VerificarCodigo(APIView):
         return Response(
             {"message": "Correo verificado correctamente"}, status=status.HTTP_200_OK
         )
+
+
+
 
 
 # Yon aqui lo de registra cliente
