@@ -2,6 +2,7 @@ import base64
 import random
 import string
 from decouple import config
+from django.db.models import Avg
 from django.core.paginator import Paginator
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -18,6 +19,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework import status
+from amigo.models.calificacionDB import Calificacion
 from amigo.models.clienteInteres import ClienteInteres
 from amigo.models.fotografiaDB import Fotografia
 from amigo.models.interes import Interes
@@ -28,21 +30,39 @@ from django.core.mail import send_mail
 from .utils import correo_valido
 from django.utils import timezone
 
-
 @api_view(["GET"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def ClienteDetailById(request, cliente_id):
-    try:
-        cliente = Cliente.objects.get(cliente_id=cliente_id)
-    except Cliente.DoesNotExist:
-        return Response(
-            {"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND
-        )
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    calificaciones_cliente = Calificacion.objects.filter(cliente=cliente, emisor="amigo")
+    promedio_calificaciones = 0
+    if calificaciones_cliente.exists():
+        promedio_calificaciones = calificaciones_cliente.aggregate(Avg("puntuacion"))[
+            "puntuacion__avg"
+        ]
+    fotografiaAmigo = Fotografia.objects.filter(cliente=cliente).order_by('prioridad')
+    
+    #imagenBase64 = None
+    #if fotografiaAmigo:
+    #    imagenBase64 = base64.b64encode(fotografiaAmigo.imagenBase64).decode("utf-8")
+    imagenes = []
+    for fotografia in fotografiaAmigo:
+        imagenBase64 = None
+        if fotografia.imagenBase64:
+            imagenBase64 = base64.b64encode(fotografia.imagenBase64).decode("utf-8")
+        imagenes.append({
+            "imagenBase64": imagenBase64,
+            "prioridad": fotografia.prioridad
+        })
+    
+    
     data = {
         "cliente_id": cliente.cliente_id,
         "nombre_completo": cliente.getFullName(),
-        "nombre": cliente.nombre.title(),
-        "ap_paterno": cliente.ap_paterno.title(),
-        "ap_materno": cliente.ap_materno.title(),
+        #"nombre": cliente.nombre.title(),
+        #"ap_paterno": cliente.ap_paterno.title(),
+        #"ap_materno": cliente.ap_materno.title(),
         "ci": cliente.ci,
         "fecha_nacimiento": cliente.fecha_nacimiento,
         "edad": cliente.calcular_edad(),
@@ -54,6 +74,9 @@ def ClienteDetailById(request, cliente_id):
         "dinero": cliente.dinero,
         "estado": cliente.estado,
         "timestamp_registro": cliente.estado,
+        "numero_calificaciones": calificaciones_cliente.count(),
+        "calificacion": promedio_calificaciones,
+        "imagenes": imagenes,
     }
     return Response(data)
 
