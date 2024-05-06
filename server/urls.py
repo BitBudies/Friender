@@ -58,7 +58,7 @@ urlpatterns = [
     path('api/get/csrf', obtener_csrf),
     
  
-    path('api/cliente/verificarCorreoUser', VerificarCorreoUsuario.as_view()),
+    path('api/cliente/verificarCorreoUser', VerificarCorreoUsuario.as_view(), name='verificarCorreoUser'),
     path('api/cliente/enviarCodigos', EnviarCodigos.as_view()),
     path('api/cliente/verificarCodigo', VerificarCodigo.as_view()),
     path('api/cliente/logout', Logout.as_view()),
