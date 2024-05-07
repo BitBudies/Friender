@@ -11,4 +11,6 @@ def  ObtenerListaDeSolicitudes(request, amigo_id):
             'cliente': solicitud.cliente.nombre,
             'calificacion': calificacion_cliente.puntuacion if calificacion_cliente else None,
         }
-        
+        data.append(solicitud_info)
+    return JsonResponse(data, safe=False)
+
