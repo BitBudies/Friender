@@ -77,13 +77,13 @@ const NavBar = () => {
 
               {isAuthenticated ? 
                 <>
-                  <li><Link className="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
+                  <li><Link className="dropdown-item" to={"/perfil"}>Cambiar a modo amigo</Link></li>
                   <li><hr className="dropdown-divider"/></li>
                   <li><button className="dropdown-item "onClick={handleCloseSession}>Cerrar Sesión</button></li>
                 </>
               :
               <>
-                <li><Link className="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
+                <li><Link className="dropdown-item" to={"/perfil"}>Hola :3</Link></li>
                 <li><button className="dropdown-item " onClick={handleCloseSession}>Cerrar Sesión</button></li>
                  {/*<li><hr className="dropdown-divider"/></li>
                  */}
