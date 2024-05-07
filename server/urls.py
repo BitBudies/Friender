@@ -58,7 +58,7 @@ urlpatterns = [
     path('api/get/csrf', obtener_csrf),
     
  
-    path('api/cliente/verificarCorreoUser', VerificarCorreoUsuario.as_view()),
+    path('api/cliente/verificarCorreoUser', VerificarCorreoUsuario.as_view(), name='verificarCorreoUser'),
     path('api/cliente/enviarCodigos', EnviarCodigos.as_view()),
     path('api/cliente/verificarCodigo', VerificarCodigo.as_view()),
     path('api/cliente/logout', Logout.as_view()),
@@ -101,6 +101,6 @@ urlpatterns = [
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), 
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     
-    
+    # primer commit del 3er sprint
   #  path('correo/', EnviarCorreo.as_view())
 ]
