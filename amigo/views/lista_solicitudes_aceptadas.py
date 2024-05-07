@@ -7,3 +7,8 @@ def  ObtenerListaDeSolicitudes(request, amigo_id):
     for solicitud in solicitudes_aceptadas:
         #calificación del cliente
         calificacion_cliente = Calificacion.objects.filter(cliente=solicitud.cliente).first()
+        solicitud_info = {
+            'cliente': solicitud.cliente.nombre,
+            'calificacion': calificacion_cliente.puntuacion if calificacion_cliente else None,
+        }
+        
