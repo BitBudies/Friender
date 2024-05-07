@@ -10,6 +10,9 @@ def  ObtenerListaDeSolicitudes(request, amigo_id):
         solicitud_info = {
             'cliente': solicitud.cliente.nombre,
             'calificacion': calificacion_cliente.puntuacion if calificacion_cliente else None,
+            'fecha': solicitud.fecha_inicio,
+            'hora': solicitud.hora_inicio,
+            'ubicacion': solicitud.lugar
         }
         data.append(solicitud_info)
     return JsonResponse(data, safe=False)
