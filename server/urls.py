@@ -30,7 +30,7 @@ from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetS
 from amigo.views.utils import obtener_csrf
 from amigo.views.login import Login
 from amigo.views.cerrarSesion import Logout
-
+from amigo.views.lista_solicitudes_aceptadas import ObtenerListaDeSolicitudes
 schema_view = get_schema_view(
     openapi.Info(
         title="Documentacion de la API 🐸",
@@ -71,7 +71,7 @@ urlpatterns = [
     # Amigo
     path('api/amigo/<int:amigo_id>/', AmigoDetailById),
     path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator),
-
+    path('api/amigo/<int:amigo_id>/solicitudes-aceptadas/', ObtenerListaDeSolicitudes),
     # Solicitud
     path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud),
     path('api/solicitud/rechazar/<int:solicitud_alquiler_id>', RechazarSolicitud.as_view()),

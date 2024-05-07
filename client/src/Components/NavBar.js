@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa";
 import "./NavBar.css"
@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import {useIsAuthenticated} from '../hooks/isAuthenticated';
 import { useCookies } from 'react-cookie';
 
+
 const NavBar = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const {goToBeginning,userData} = useGlobalContext();
@@ -19,10 +20,20 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   const isAuthenticated = useIsAuthenticated();
+  const [ModeAmigo, setModeAmigo] = useState(false);
   const [userLoged, setUserLoged] = useState(isAuthenticated);
   const location = useLocation();
   const isActive = location.pathname.startsWith('/amigos/page/');
   const isTestJhon = location.pathname === '/test/jhon';
+  const modelocation = useLocation();
+
+  useEffect(() => {
+    if(!modelocation.pathname.startsWith('/perfil')){
+        console.log("Estamos en modo cliente");
+        setModeAmigo(false);
+    }
+  }, [modelocation])
+
   if (isTestJhon) {
     return null;
   }
@@ -30,7 +41,11 @@ const NavBar = () => {
     removeCookie("token")
     navigate("/")
     window.location.reload();
-}
+  }
+
+  const handleChangeMode= () =>{
+    setModeAmigo(true);
+  }
   
   const handleAmigosClick = () => {
       if(!isActive){
@@ -53,7 +68,7 @@ const NavBar = () => {
               </li>
               <li className={`nav-item ${userLoged ? "" : "hidden"}`}>
                 <button 
-                  className={`nav-link nav-item ${isActive && "active"}`}
+                  className={`nav-link nav-item ${isActive && "active"} ${ModeAmigo ? "hidden" : ""}`}
                   onClick={handleAmigosClick}
                   >Buscar Amigos</button>
               </li>
@@ -77,13 +92,13 @@ const NavBar = () => {
 
               {isAuthenticated ? 
                 <>
-                  <li><Link className="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
+                  <li><Link className={`dropdown-item ${ModeAmigo ? "hidden" : ""}`} to={"/perfil"} onClick={handleChangeMode}>Cambiar a modo amigo</Link></li>
                   <li><hr className="dropdown-divider"/></li>
                   <li><button className="dropdown-item "onClick={handleCloseSession}>Cerrar Sesión</button></li>
                 </>
               :
               <>
-                <li><Link className="dropdown-item" to={"/perfil"}>Mi Perfil</Link></li>
+                <li><Link className="dropdown-item" to={"/perfil"}>Hola :3</Link></li>
                 <li><button className="dropdown-item " onClick={handleCloseSession}>Cerrar Sesión</button></li>
                  {/*<li><hr className="dropdown-divider"/></li>
                  */}
