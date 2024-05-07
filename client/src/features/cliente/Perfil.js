@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import "./Perfil.css";
 import { useGlobalContext } from "../../context";
 import { GiReturnArrow } from "react-icons/gi";
 import { useNavigate } from 'react-router-dom';
 import { useCookies, removeCookie } from 'react-cookie';
-
+import { useLocation } from 'react-router-dom';
 import SolicitudesPendientes from "../solicitudes/SolicitudesPendientes";
 
 const optionsData = [
@@ -33,6 +33,8 @@ const Perfil = () => {
 
   const [nombreCompleto, setNombreCompleto] = useState("");
   const [imagenBase64, setImagenBase64] = useState("");
+  const modelocation = useLocation();
+  //const [isFriendMode, setFriendMode] = useState();
 
   useEffect(() => {
     if (informacion) {
@@ -40,6 +42,9 @@ const Perfil = () => {
       setNombreCompleto(informacion.nombre_completo);
       setImagenBase64(informacion.imagenBase64);
       //nombre_completo = informacion.nombre_completo
+    }
+    if(modelocation.pathname.startsWith('/perfil')){
+      console.log("Estamos en modo amigo");
     }
 
   }, [informacion]);
@@ -55,6 +60,10 @@ const Perfil = () => {
       setShowContent(true);
     }
   };
+
+  const handleChangeMode = () => {
+    navigate("/amigos/page/1");
+  }   
 
   useEffect(() => {
     const handleResize = () => {
@@ -96,6 +105,9 @@ const Perfil = () => {
                   <p>{item.name}</p>
                 </li>
               ))}
+              <li className="option">
+                <li><button className="dropdown-item" id="cambiarmodo-item" onClick={handleChangeMode}>Cambiar a modo cliente</button></li>
+              </li>
               <li className='option'>
                 <li><button className="dropdown-item "onClick={handleCloseSession}>Cerrar Sesión</button></li>
               </li>
