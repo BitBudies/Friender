@@ -68,7 +68,7 @@ const NavBar = () => {
               </li>
               <li className={`nav-item ${userLoged ? "" : "hidden"}`}>
                 <button 
-                  className={`nav-link nav-item ${isActive && "active"}`}
+                  className={`nav-link nav-item ${isActive && "active"} ${ModeAmigo ? "hidden" : ""}`}
                   onClick={handleAmigosClick}
                   >Buscar Amigos</button>
               </li>
