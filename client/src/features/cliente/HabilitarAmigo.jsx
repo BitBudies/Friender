@@ -7,7 +7,7 @@ const [precio,setPrecio] = useState(0);
 
 const handleChange = (e) => {
     let value = e.target.value;
-    if(value < 0 || value > 200) return;
+    if(value < 0 || value > 150) return;
     setPrecio(value);
 }
 

@@ -19,8 +19,18 @@ const clienteApi = apiSlice.injectEndpoints({
       }),
     }),
     habilitarAmigo: builder.mutation({
-      query: ({ id_amigo, token }) => ({
-        url: `/amigo/${id_amigo}`,
+      query: ({ precio, token }) => ({
+        url: `/registraramigo`,
+        method: "POST",
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+        body : {precio}
+      }),
+    }),
+    deshabilitarAmigo: builder.mutation({
+      query: ({ token }) => ({
+        url: `/deshabilitaramigo`,
         method: "POST",
         headers: {
           Authorization: `Token ${token}`,
