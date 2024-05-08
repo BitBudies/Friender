@@ -7,9 +7,8 @@ from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework import status
 from amigo.serializers.cliente_serializer import ClienteSerializer
-from ..models import Cliente
+from ..models import Cliente , ClienteInteres
 from datetime import date
-
 # filtrar por edad, precio, genero, ubicacion, intereses
 
     
@@ -72,3 +71,11 @@ class ClienteFiltro(APIView):
 
         serializer = ClienteSerializer(clientes, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class Interes(APIView):
+    def post(self, request, *args, **kwargs):
+        interes = request.data.get('interes')
+        clientes_interes = ClienteInteres.objects.filter(interes__nombre=interes)
+        clientes = [ci.cliente for ci in clientes_interes]
+        serializer = ClienteSerializer(clientes, many=True)
+        return Response(serializer.data)
