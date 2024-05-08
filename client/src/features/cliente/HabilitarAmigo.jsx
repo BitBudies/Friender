@@ -15,7 +15,7 @@ const token = useGetToken();
 
 const {data: isEnabled,isFetching,isSuccess} = useIsEnabledFriendModeQuery({token:token})
 
-const [enable,{data: enabled,isSuccess:isSuccessEnable,isError,error,isLoading}] = useEnableFriendModeMutation();
+const [enable,{data: response,isSuccess:isSuccessEnable,isError,error,isLoading}] = useEnableFriendModeMutation();
 
 if (isFetching) {
     return <Loading/>
@@ -32,6 +32,8 @@ if (isFetching) {
         await enable({token:token,precio:precio});
     }
 
+    console.log(isEnabled);
+
     return (
         <div className='habilitar-amigo'>
           <div className="habilitar-amigo-container">
@@ -47,7 +49,7 @@ if (isFetching) {
                     value={precio}
                     onChange={(e) => handleChange(e)} />
                 </div>
-                <button className={`btn btn-azul w-25 ${(!isEnabledBtn || isEnabled) && "disabled"}`} onClick={handleSubmit}>Habilitar</button>
+                <button className={`btn btn-azul w-25 ${(!isEnabledBtn || isEnabled.data) && "disabled"}`} onClick={handleSubmit}>Habilitar</button>
             </div>
           </div>
         </div>
