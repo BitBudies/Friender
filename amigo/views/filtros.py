@@ -27,9 +27,10 @@ from amigo.serializers.cliente_serializer import ClienteSerializer
 from ..models import Cliente
 from ..models import Codigos
 from django.core.mail import send_mail
-from .utils import correo_valido
+from .utils import correo_valido, calcular_edad
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
+from datetime import date, timedelta
 
 # filtrar por edad, precio, genero, ubicacion, intereses
 
@@ -74,22 +75,20 @@ class ClientePorGenero(APIView):
     
     
     
-    
+
+
 class ClienteFiltro(APIView):
     def post(self, request):
-        genero = request.data.get('genero')  # Obtiene el género de la solicitud POST
-        #edad = request.data.get('edad')  # Obtiene la edad de la solicitud POST
-      #  precio = request.data.get('precio')  # Obtiene el precio de la solicitud POST
-        direccion = request.data.get('ubicacion')  # Obtiene la ubicación de la solicitud POST
-        
-        # Inicia con todos los clientes
+        genero = request.data.get('genero')  
+        edad = request.data.get('edad')  
+        direccion = request.data.get('ubicacion')  
         clientes = Cliente.objects.all()
-
-        # Aplica los filtros si se proporcionaron los parámetros
         if genero:
             clientes = clientes.filter(genero=genero)
-        # if edad:
-        #     clientes = clientes.filter(edad=edad)
+        if edad:
+            fecha_nacimiento_mas_tardia = date.today().replace(year=date.today().year - int(edad))
+            fecha_nacimiento_mas_temprana = fecha_nacimiento_mas_tardia.replace(year=fecha_nacimiento_mas_tardia.year - 1)
+            clientes = clientes.filter(fecha_nacimiento__gt=fecha_nacimiento_mas_temprana, fecha_nacimiento__lte=fecha_nacimiento_mas_tardia)
         if direccion:
             clientes = clientes.filter(direccion=direccion)
 
