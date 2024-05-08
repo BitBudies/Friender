@@ -1,36 +1,14 @@
-import base64
-import random
-import string
+
 from decouple import config
-from django.db.models import Avg
-from django.core.paginator import Paginator
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
-from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
-from rest_framework.decorators import (
-    api_view,
-    authentication_classes,
-    permission_classes,
-)
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework import status
-from amigo.models.calificacionDB import Calificacion
-from amigo.models.clienteInteres import ClienteInteres
-from amigo.models.fotografiaDB import Fotografia
-from amigo.models.interes import Interes
 from amigo.serializers.cliente_serializer import ClienteSerializer
 from ..models import Cliente
-from ..models import Codigos
-from django.core.mail import send_mail
-from .utils import correo_valido, calcular_edad
-from django.utils import timezone
-from django.core.exceptions import ObjectDoesNotExist
-from datetime import date, timedelta
+from datetime import date
 
 # filtrar por edad, precio, genero, ubicacion, intereses
 
