@@ -3,7 +3,7 @@
 }
 
 .rectangle {
-    width: 95%;
+    width: 75%;
     background-color: gray;
     position: relative;
     display:flex;
@@ -18,7 +18,9 @@
     justify-content: space-between;
 
 }
-
+.boton{
+    border-radius: 10px;
+}
 .interesesSeleccionados {
     display: flex;
     margin: 10px;
