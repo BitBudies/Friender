@@ -45,7 +45,7 @@ if (isFetching) {
                     value={precio}
                     onChange={(e) => handleChange(e)} />
                 </div>
-                <button className='btn btn-azul w-25'>Habilitar</button>
+                <button className='btn btn-azul w-25' onClick={handleSubmit}>Habilitar</button>
             </div>
           </div>
         </div>
