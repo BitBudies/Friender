@@ -8,7 +8,7 @@ import { useGlobalContext } from "../../context";
 import { useCookies } from "react-cookie";
 import { MdInterests, MdOutlineAttachMoney } from "react-icons/md";
 import { BsCalendarRange } from "react-icons/bs";
-import { IoLocationSharp } from "react-icons/io5";
+import { IoLocationSharp, IoClose } from "react-icons/io5";
 import { IoIosPeople } from "react-icons/io";
 
 const calificacionEstrellas = (calificacion) => {
@@ -153,7 +153,7 @@ const ListaAmigos = () => {
         </div>
         <div className="interesesSeleccionados">
           {interesesSeleccionados.map((interes) => {
-            return <h1>{interes}</h1>;
+            return <div className="burbujaInteres">{interes} <IoClose onClick={() => console.log(`borrar el interes ${interes}`)}/></div>;
           })}
         </div>
 

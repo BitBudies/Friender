@@ -22,8 +22,12 @@
 .interesesSeleccionados {
     display: flex;
 }
-.interesesSeleccionados h1 {
-    margin: 10px;
+.burbujaInteres {
+    margin-right: 10px;
+    border: 1px solid gray; /* Borde gris */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 5px 10px; /* Espacio interno */
+    background-color: transparent; /* Sin fondo de color */
 }
 
 @media (max-width: 768px) {
