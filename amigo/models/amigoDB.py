@@ -12,4 +12,4 @@ class Amigo(models.Model):
     timestamp_registro = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.amigo_id} {self.cliente}"
+        return f"{self.amigo_id} {self.cliente} {self.precio}"
