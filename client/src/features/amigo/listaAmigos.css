@@ -19,6 +19,10 @@
   padding: 5px 10px;
 }
 
+.nomostraropcionxd {
+    display: none;
+}
+
 .itemsGenero {
     position: absolute;
     z-index: 999;
