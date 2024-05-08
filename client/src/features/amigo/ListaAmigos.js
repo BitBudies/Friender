@@ -6,7 +6,6 @@ import Loading from '../../Components/Loading';
 import { FaUser } from "react-icons/fa";
 import { useGlobalContext } from '../../context';
 import { useCookies } from 'react-cookie';
-import { useLocation } from 'react-router-dom';
 
 const calificacionEstrellas = (calificacion) => {
     const numEstrellas = Math.round(calificacion);
@@ -21,7 +20,6 @@ const ListaAmigos = () => {
     const {n_page} = useParams();
 
     const {pageRef,goToBeginning} = useGlobalContext();
-    const modelocation = useLocation();
 
     const {data:amigos, isFetching, isSuccess} = useGetAmigosQuery({
         pagina: n_page,
@@ -33,9 +31,6 @@ const ListaAmigos = () => {
 
     useEffect(() => {
         console.log(amigos);
-        if(!modelocation.pathname.startsWith('/perfil')){
-            console.log("Estamos en modo cliente");
-        }
     },[amigos])
 
     if (isFetching) {
@@ -44,7 +39,11 @@ const ListaAmigos = () => {
         )
     }else if (isSuccess){
         return (
+         
+
             <div id='lista_amigos ' className='page bg-light' ref={pageRef}>
+                 <div className='rectangle'>
+            </div>
                 <div className='container-fluid py-5'>
                     <div className='row row-cols-1 row-cols-lg-4 row-cols-md-3 g-3'>
                         {amigos['amigos'].map((amigo, index) => {
