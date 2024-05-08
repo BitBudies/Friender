@@ -31,6 +31,7 @@ from amigo.views.utils import obtener_csrf
 from amigo.views.login import Login
 from amigo.views.cerrarSesion import Logout
 from amigo.views.lista_solicitudes_aceptadas import ObtenerListaDeSolicitudes
+from amigo.views.filtros import Filtros
 schema_view = get_schema_view(
     openapi.Info(
         title="Documentacion de la API 🐸",
@@ -101,6 +102,7 @@ urlpatterns = [
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), 
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     
-    # primer commit del 3er sprint
-  #  path('correo/', EnviarCorreo.as_view())
+    #filtros
+    path('api/filtros', Filtros.as_view(), name='filtros'),
+
 ]
