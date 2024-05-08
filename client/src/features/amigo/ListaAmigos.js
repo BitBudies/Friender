@@ -153,7 +153,7 @@ const ListaAmigos = () => {
         </div>
         <div className="interesesSeleccionados">
           {interesesSeleccionados.map((interes) => {
-            return <div className="burbujaInteres">{interes} <IoClose onClick={() => console.log(`borrar el interes ${interes}`)}/></div>;
+            return <div className="burbujaInteres">{interes} <IoClose className="cerrarBurbuja" onClick={() => console.log(`borrar el interes ${interes}`)}/></div>;
           })}
         </div>
 

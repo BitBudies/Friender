@@ -21,7 +21,13 @@
 
 .interesesSeleccionados {
     display: flex;
+    margin: 10px;
 }
+
+.cerrarBurbuja {
+    cursor: pointer;
+}
+
 .burbujaInteres {
     margin-right: 10px;
     border: 1px solid gray; /* Borde gris */
