@@ -155,8 +155,9 @@ def AmigoListLimitPaginator(request, page_number=1, limite=10):
 @permission_classes([IsAuthenticated])
 def RegistrarAmigo(request):
     user = request.user
+    print(request.POST)
     cliente = get_object_or_404(Cliente, user=user)
-    precio = request["POST"].get("precio")
+    precio = request.POST.get("precio")
     if not precio:
         return Response({"error": "El precio es obligatorio"}, status=status.HTTP_400_BAD_REQUEST)
     if Amigo.objects.filter(cliente=cliente).exists():
