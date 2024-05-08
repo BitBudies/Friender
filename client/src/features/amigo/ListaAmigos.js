@@ -33,9 +33,6 @@ const ListaAmigos = () => {
 
     /*useEffect(() => {
         console.log(amigos);
-        if(!modelocation.pathname.startsWith('/perfil')){
-            console.log("Estamos en modo cliente");
-        }
     },[amigos])*/
 
     if (isFetching) {
