@@ -24,6 +24,7 @@ import { Cookies } from 'react-cookie';
 import { useGetClienteInfoQuery } from './features/cliente/clienteSlice';
 import { useCookies } from "react-cookie";
 import PerfilCliente from './features/cliente/PerfilCliente';
+import SolicitudesAceptadas from './features/solicitudes/SolicitudesAceptadas';
 
 
 function App() {
@@ -68,7 +69,7 @@ function App() {
           <Route path="/test/jhon" element={<Jhon/>} />
           <Route path="/resetPassword" element={<ResetPassword/>}/>
           <Route path="/registrar" element={<Registrarse/>}/>
-          <Route path="/registrarse" element={<RegistrarDatos15/>}/>
+          <Route path="/aceptadas" element={<SolicitudesAceptadas/>}/>
           <Route path="/recuperar" element={<RecuperarCuenta/>}/>
           <Route path="/practica" element={<DayezaPractica/>}/>
           <Route path='/*' element={<Default/>}/>
