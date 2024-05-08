@@ -1,42 +1,57 @@
 import React,{useState} from 'react'
 import "./habilitarAmigo.css"
-import { useIsEnabledFriendModeQuery } from './clienteSlice';
+import { useEnableFriendModeMutation, useIsEnabledFriendModeQuery } from './clienteSlice';
 import useGetToken from '../../hooks/getToken';
+import Loading from '../../Components/Loading';
 
 
 const HabilitarAmigo = () => {
 
-const [precio,setPrecio] = useState(0);
+    const [precio,setPrecio] = useState(0);
+
+
 const token = useGetToken();
 
-const {data,isLoading} = useIsEnabledFriendModeQuery({token:token})
+const {data: isEnabled,isFetching,isSuccess} = useIsEnabledFriendModeQuery({token:token})
 
-const handleChange = (e) => {
-    let value = e.target.value;
-    if(value < 0 || value > 150) return;
-    setPrecio(value);
-}
+const [enable,{data: enabled,isSuccess:isSuccessEnable,isError,error,isLoading}] = useEnableFriendModeMutation();
 
-  return (
-    <div className='habilitar-amigo'>
-      <div className="habilitar-amigo-container">
-        <h1>Habilitar Cuenta Como Amigo</h1>
-        <div className="habilitar-form">
-            <div className="input-item">
-                <label htmlFor="precio">Precio por hora (en Bs).</label>
-                <input  className="form-control mt-2" 
-                type="number" 
-                id="precio" 
-                name="precio" 
-                placeholder='Precio'
-                value={precio}
-                onChange={(e) => handleChange(e)} />
+if (isFetching) {
+    return <Loading/>
+}else if(isSuccess){
+
+    const handleChange = (e) => {
+        let value = e.target.value;
+        if(value < 0 || value > 150) return;
+        setPrecio(value);
+    }
+
+    const handleSubmit = async() => {
+        await enable({token:token,precio:precio});
+    }
+
+    return (
+        <div className='habilitar-amigo'>
+          <div className="habilitar-amigo-container">
+            <h1>Habilitar Cuenta Como Amigo</h1>
+            <div className="habilitar-form">
+                <div className="input-item">
+                    <label htmlFor="precio">Precio por hora (en Bs).</label>
+                    <input  className="form-control mt-2" 
+                    type="number" 
+                    id="precio" 
+                    name="precio" 
+                    placeholder='Precio'
+                    value={precio}
+                    onChange={(e) => handleChange(e)} />
+                </div>
+                <button className='btn btn-azul w-25'>Habilitar</button>
             </div>
-            <button className='btn btn-azul w-25'>Habilitar</button>
+          </div>
         </div>
-      </div>
-    </div>
-  )
+      )
+}
+  
 }
 
 export default HabilitarAmigo
