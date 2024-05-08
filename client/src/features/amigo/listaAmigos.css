@@ -2,6 +2,41 @@
    scroll-behavior: smooth !important
 }
 
+.rectangle {
+    width: 95%;
+    background-color: gray;
+    position: relative;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.filtrosYBoton {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.interesesSeleccionados {
+    display: flex;
+}
+.interesesSeleccionados h1 {
+    margin: 10px;
+}
+
+@media (max-width: 768px) {
+    .filtrosYBoton {
+        flex-direction: column;
+    }
+    .rectangle {
+        justify-content: start;
+        flex-direction: column;
+        align-items: start;
+    }
+}
+
 .card-list {
     position: relative;
     width: 100%; /* Ancho máximo del 100% */
@@ -13,17 +48,6 @@
 .card-list:hover{
     transform: scale(0.98);
     box-shadow: 0 0 10px 1px var(--gris);
-}
-.rectangle {
-    width: 70%;
-    height: 12%;
-    background-color: gray;
-    position: relative;
-    margin: 20px auto; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
 }
 
 .card-header {
