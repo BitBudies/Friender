@@ -29,9 +29,9 @@ const ListaAmigos = () => {
 
    
 
-    useEffect(() => {
+    /*useEffect(() => {
         console.log(amigos);
-    },[amigos])
+    },[amigos])*/
 
     if (isFetching) {
         return (            

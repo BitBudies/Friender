@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa";
 import "./NavBar.css"
 import { NavLink } from 'react-router-dom';
-// import { useLocation } from 'react-router-dom';
-
 import { useLocation } from 'react-router-dom';
 import { useGlobalContext } from '../context';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +18,8 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   const isAuthenticated = useIsAuthenticated();
-  const [ModeAmigo, setModeAmigo] = useState(false);
+  const [ModeAmigo, setModeAmigo] = useState();
+  const [ShowMiPerfil, setShowMiPerfil] = useState();
   const [userLoged, setUserLoged] = useState(isAuthenticated);
   const location = useLocation();
   const isActive = location.pathname.startsWith('/amigos/page/');
@@ -28,9 +27,13 @@ const NavBar = () => {
   const modelocation = useLocation();
 
   useEffect(() => {
-    if(!modelocation.pathname.startsWith('/perfil')){
-        console.log("Estamos en modo cliente");
-        setModeAmigo(false);
+    if(modelocation.pathname === '/perfil'){
+      setShowMiPerfil(false);
+      setModeAmigo(true);
+      console.log("Modo amigo?: "+ModeAmigo);
+      
+    }else{
+      setShowMiPerfil(true);
     }
   }, [modelocation])
 
@@ -43,8 +46,12 @@ const NavBar = () => {
     window.location.reload();
   }
 
-  const handleChangeMode= () =>{
+  const handleChangeModeAmigo= () =>{
     setModeAmigo(true);
+  }
+
+  const handleChangeModeCliente= () =>{
+    setModeAmigo(false);
   }
   
   const handleAmigosClick = () => {
@@ -92,7 +99,9 @@ const NavBar = () => {
 
               {isAuthenticated ? 
                 <>
-                  <li><Link className={`dropdown-item ${ModeAmigo ? "hidden" : ""}`} to={"/perfil"} onClick={handleChangeMode}>Cambiar a modo amigo</Link></li>
+                <li><Link className={`dropdown-item ${ModeAmigo && ShowMiPerfil ? "" : "hidden"}`} to={"/perfil"}>Mi Perfil</Link></li>
+                  <li><Link className={`dropdown-item ${ModeAmigo ? "hidden" : ""}`} to={"/perfil"} onClick={handleChangeModeAmigo}>Cambiar a modo amigo</Link></li>
+                  <li><Link className={`dropdown-item ${ModeAmigo ? "" : "hidden"}`} to={"/amigos/page/1"} onClick={handleChangeModeCliente}>Cambiar a modo cliente</Link></li>
                   <li><hr className="dropdown-divider"/></li>
                   <li><button className="dropdown-item "onClick={handleCloseSession}>Cerrar Sesión</button></li>
                 </>
