@@ -29,37 +29,69 @@ from ..models import Codigos
 from django.core.mail import send_mail
 from .utils import correo_valido
 from django.utils import timezone
+from django.core.exceptions import ObjectDoesNotExist
 
-# filtrar por edad, precio, genero, ubicacion
+# filtrar por edad, precio, genero, ubicacion, intereses
 
-class Filtros(APIView):
+    
+    
+    
+    #token
+    
+# class ClientePorGenero(APIView):
+#     def post(self, request):
+#         if not request.user.is_authenticated:
+#             return Response({"error": "Usuario no autenticado"}, status=status.HTTP_401_UNAUTHORIZED)
+
+#         genero = request.data.get('genero')  # Obtiene el género de la solicitud POST
+#         if not genero:
+#             return Response({"error": "Género no proporcionado"}, status=status.HTTP_400_BAD_REQUEST)
+
+#         try:
+#             cliente = Cliente.objects.get(user=request.user)
+#         except ObjectDoesNotExist:
+#             return Response({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+#         clientes = Cliente.objects.filter(
+#             Q(genero=genero)
+#         ).exclude(id=cliente.id).distinct()
+#         serializer = ClienteSerializer(clientes, many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+class ClientePorGenero(APIView):
     def post(self, request):
-        data = request.data
-        intereses = data.get('intereses', None)
-        edad = data.get('edad', None)
-        precio = data.get('precio', None)
-        genero = data.get('genero', None)
-        ubicacion = data.get('ubicacion', None)
-        cliente = Cliente.objects.get(id=request.user.id)
-        if intereses:
-            clientes = Cliente.objects.filter(
-                Q(clienteinteres__interes__nombre__in=intereses) &
-                Q(clienteinteres__cliente__edad__gte=edad[0]) &
-                Q(clienteinteres__cliente__edad__lte=edad[1]) &
-                Q(clienteinteres__cliente__genero=genero) &
-                Q(clienteinteres__cliente__ubicacion=ubicacion) &
-                Q(clienteinteres__cliente__precio__gte=precio[0]) &
-                Q(clienteinteres__cliente__precio__lte=precio[1])
-            ).exclude(id=cliente.id).distinct()
-        else:
-            clientes = Cliente.objects.filter(
-                Q(edad__gte=edad[0]) &
-                Q(edad__lte=edad[1]) &
-                Q(genero=genero) &
-                Q(ubicacion=ubicacion) &
-                Q(precio__gte=precio[0]) &
-                Q(precio__lte=precio[1])
-            ).exclude(id=cliente.id).distinct()
+        genero = request.data.get('genero')  # Obtiene el género de la solicitud POST
+        if not genero:
+            return Response({"error": "Género no proporcionado"}, status=status.HTTP_400_BAD_REQUEST)
+
+        clientes = Cliente.objects.filter(
+            Q(genero=genero)
+        ).distinct()
         serializer = ClienteSerializer(clientes, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+    
+    
+    
+class ClienteFiltro(APIView):
+    def post(self, request):
+        genero = request.data.get('genero')  # Obtiene el género de la solicitud POST
+        #edad = request.data.get('edad')  # Obtiene la edad de la solicitud POST
+      #  precio = request.data.get('precio')  # Obtiene el precio de la solicitud POST
+        direccion = request.data.get('ubicacion')  # Obtiene la ubicación de la solicitud POST
+        
+        # Inicia con todos los clientes
+        clientes = Cliente.objects.all()
+
+        # Aplica los filtros si se proporcionaron los parámetros
+        if genero:
+            clientes = clientes.filter(genero=genero)
+        # if edad:
+        #     clientes = clientes.filter(edad=edad)
+        if direccion:
+            clientes = clientes.filter(direccion=direccion)
+
+        serializer = ClienteSerializer(clientes, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

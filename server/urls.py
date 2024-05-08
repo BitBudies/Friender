@@ -31,7 +31,7 @@ from amigo.views.utils import obtener_csrf
 from amigo.views.login import Login
 from amigo.views.cerrarSesion import Logout
 from amigo.views.lista_solicitudes_aceptadas import ObtenerListaDeSolicitudes
-from amigo.views.filtros import Filtros
+from amigo.views.filtros import  ClientePorGenero, ClienteFiltro
 schema_view = get_schema_view(
     openapi.Info(
         title="Documentacion de la API 🐸",
@@ -103,6 +103,7 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     
     #filtros
-    path('api/filtros', Filtros.as_view(), name='filtros'),
-
+   
+    path('api/filtros/femenino', ClientePorGenero.as_view(), name='filtro_femenino'),
+    path('api/filtros/cliente', ClienteFiltro.as_view(), name='filtro_cliente'),
 ]
