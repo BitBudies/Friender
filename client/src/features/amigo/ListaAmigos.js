@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useAsyncError, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./listaAmigos.css";
 import { useGetAmigosQuery } from "./amigoSlice";
 import Loading from "../../Components/Loading";
@@ -9,8 +9,8 @@ import { useCookies } from "react-cookie";
 import { MdInterests, MdOutlineAttachMoney } from "react-icons/md";
 import { BsCalendarRange } from "react-icons/bs";
 import { IoLocationSharp, IoClose } from "react-icons/io5";
-import { IoIosPeople } from "react-icons/io";
-import { FaFilter } from "react-icons/fa";
+import { FaFilter, FaAngleDown, FaAngleUp } from "react-icons/fa";
+import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
 
 const calificacionEstrellas = (calificacion) => {
   const numEstrellas = Math.round(calificacion);
@@ -58,7 +58,6 @@ const ListaAmigos = () => {
     "cc",
   ]);
 
-
   const interesesPermitidos = [
     "Arte y Cultura",
     "Cine y Series",
@@ -80,6 +79,24 @@ const ListaAmigos = () => {
     "Santa Cruz",
     "Tarija",
   ];
+
+  const [generos, SetGeneros] = useState([
+    { nombre: "Masculino", estado: false },
+    { nombre: "Femenino", estado: false },
+    { nombre: "Otro", estado: false },
+  ]);
+
+  const [generoDropCheckBox, SetGeneroDropCheckBox] = useState(false);
+
+  function handleGeneroChange(nuevoGenero) {
+    const nuevosGeneros = generos.map((genero) => {
+      if (genero.nombre === nuevoGenero.nombre) {
+        return { ...genero, estado: !nuevoGenero.estado };
+      }
+      return genero;
+    });
+    SetGeneros(nuevosGeneros);
+  }
 
   useEffect(() => {
     // Ordenar intereses seleccionados alfabéticamente
@@ -106,7 +123,6 @@ const ListaAmigos = () => {
                 value={values.intereses}
                 onChange={handleChange}
                 className="form-select"
-                
               >
                 {interesesPermitidos.map((interes) => (
                   <option key={interes} value={interes}>
@@ -148,7 +164,10 @@ const ListaAmigos = () => {
                   placeholder="Min"
                   value={values.precio.min}
                   onChange={(e) =>
-                    setValues({ ...values, precio: { ...values.precio, min: e.target.value } })
+                    setValues({
+                      ...values,
+                      precio: { ...values.precio, min: e.target.value },
+                    })
                   }
                 />
                 <span> a </span>
@@ -157,53 +176,44 @@ const ListaAmigos = () => {
                   placeholder="Max"
                   value={values.precio.max}
                   onChange={(e) =>
-                    setValues({ ...values, precio: { ...values.precio, max: e.target.value } })
+                    setValues({
+                      ...values,
+                      precio: { ...values.precio, max: e.target.value },
+                    })
                   }
                 />
               </div>
             </div>
 
-            <div>
-  <label className="input-label">
-    <IoIosPeople /> Género
-  </label>
-  <div className="form-check">
-    <input
-      type="checkbox"
-      id="masculino"
-      name="genero"
-      value="masculino"
-      checked={values.genero === "masculino"}
-      onChange={handleChange}
-      className="form-check-input"
-    />
-    <label htmlFor="masculino" className="form-check-label">Masculino</label>
-  </div>
-  <div className="form-check">
-    <input
-      type="checkbox"
-      id="femenino"
-      name="genero"
-      value="femenino"
-      checked={values.genero === "femenino"}
-      onChange={handleChange}
-      className="form-check-input"
-    />
-    <label htmlFor="femenino" className="form-check-label">Femenino</label>
-  </div>
-  <div className="form-check">
-    <input
-      type="checkbox"
-      id="otro"
-      name="genero"
-      value="otro"
-      checked={values.genero === "otro"}
-      onChange={handleChange}
-      className="form-check-input"
-    />
-    <label htmlFor="otro" className="form-check-label">Otro</label>
-  </div>
-</div>
+            <div className="genero">
+              <span>Genero</span>
+              <div className="generoDropCheckBox">
+                <div onClick={() => SetGeneroDropCheckBox(!generoDropCheckBox)}>
+                  Genero {generoDropCheckBox ? <FaAngleUp /> : <FaAngleDown />}
+                </div>
+                {generoDropCheckBox && (
+                  <div class="itemsGenero">
+                    {generos.map((genero) => {
+                      return (
+                        <div
+                          className="itemGenero"
+                          onClick={() => {
+                            handleGeneroChange(genero);
+                          }}
+                        >
+                          {genero.nombre}{" "}
+                          {genero.estado ? (
+                            <MdCheckBox />
+                          ) : (
+                            <MdCheckBoxOutlineBlank />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
 
             <div>
               <label htmlFor="ubicacion" className="input-label">
@@ -237,7 +247,11 @@ const ListaAmigos = () => {
               {interes}{" "}
               <IoClose
                 className="cerrarBurbuja"
-                onClick={() => setInteresesSeleccionados(interesesSeleccionados.filter((i) => i !== interes))}
+                onClick={() =>
+                  setInteresesSeleccionados(
+                    interesesSeleccionados.filter((i) => i !== interes)
+                  )
+                }
               />
             </div>
           ))}
@@ -273,7 +287,10 @@ const ListaAmigos = () => {
                         </div>
                       </div>
                       <div className="card-actions">
-                        <Link to={`/amigos/${amigo.amigo_id}`} className="btn btn-azul ">
+                        <Link
+                          to={`/amigos/${amigo.amigo_id}`}
+                          className="btn btn-azul "
+                        >
                           Ver Perfil
                         </Link>
                         {amigo.precio_amigo} Bs/hr
