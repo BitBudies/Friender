@@ -8,6 +8,7 @@ import Loading from '../../Components/Loading';
 const HabilitarAmigo = () => {
 
     const [precio,setPrecio] = useState(0);
+    const [isEnabledBtn,setIsEnabledBtn] = useState(true);
 
 
 const token = useGetToken();
@@ -27,6 +28,7 @@ if (isFetching) {
     }
 
     const handleSubmit = async() => {
+        setIsEnabledBtn(false);
         await enable({token:token,precio:precio});
     }
 
@@ -45,7 +47,7 @@ if (isFetching) {
                     value={precio}
                     onChange={(e) => handleChange(e)} />
                 </div>
-                <button className='btn btn-azul w-25' onClick={handleSubmit}>Habilitar</button>
+                <button className={`btn btn-azul w-25 ${(!isEnabledBtn || isEnabled) && "disabled"}`} onClick={handleSubmit}>Habilitar</button>
             </div>
           </div>
         </div>
