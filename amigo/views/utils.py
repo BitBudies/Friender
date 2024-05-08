@@ -4,6 +4,7 @@ from django.middleware.csrf import get_token
 import re
 import string
 import random
+from datetime import date
 
 
 def obtener_csrf(request):
@@ -35,3 +36,14 @@ def contrasena_valida(contrasena):
     else:
         return False
     
+def calcular_edad(self):
+        today = date.today()
+        age = (
+            today.year
+            - self.fecha_nacimiento.year
+            - (
+                (today.month, today.day)
+                < (self.fecha_nacimiento.month, self.fecha_nacimiento.day)
+            )
+        )
+        return age
