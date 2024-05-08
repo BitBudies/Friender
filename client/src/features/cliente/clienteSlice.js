@@ -40,7 +40,7 @@ const clienteApi = apiSlice.injectEndpoints({
     }),
     isEnabledFriendMode: builder.query({
       query: ({ token }) => ({
-        url: `/habilitaramigo`,
+        url: `/clienteesamigo`,
         headers: {
           Authorization: `Token ${token}`,
         },
