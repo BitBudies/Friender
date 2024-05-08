@@ -72,10 +72,11 @@ class ClienteFiltro(APIView):
         serializer = ClienteSerializer(clientes, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+    
 class Interes(APIView):
     def post(self, request, *args, **kwargs):
         interes = request.data.get('interes')
-        clientes_interes = ClienteInteres.objects.filter(interes__nombre=interes)
+        clientes_interes = ClienteInteres.objects.filter(interes__nombre__in=interes)
         clientes = [ci.cliente for ci in clientes_interes]
         serializer = ClienteSerializer(clientes, many=True)
         return Response(serializer.data)
