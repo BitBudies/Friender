@@ -1,9 +1,26 @@
-.aceptadas {
-    display: flex;
+.solicitudes-aceptadas{
+    position: relative;
     width: 100%;
-    /* height: 100%; */
-    flex-wrap: wrap;
-    gap: 3rem;
-    /* margin: 3rem; */
-    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem ;
+    gap: 2rem;
+    text-align: center;
+}
+
+.aceptadas{
+    position: relative;
+    width: 100%;
+    padding: 0 1rem;
+    padding-bottom: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.solicitudes-aceptadas-header{
+    width: 100%;
+    padding: 0 2.5rem;
+    text-align: start;
 }

@@ -5,6 +5,7 @@ import { GiReturnArrow } from "react-icons/gi";
 import { useNavigate } from 'react-router-dom';
 import { useCookies, removeCookie } from 'react-cookie';
 import SolicitudesPendientes from "../solicitudes/SolicitudesPendientes";
+import SolicitudesAceptadas from "../solicitudes/SolicitudesAceptadas";
 
 const optionsData = [
   // {
@@ -16,11 +17,11 @@ const optionsData = [
     name: "Solicitudes Pendientes",
     toRender: <SolicitudesPendientes />,
   },
-  // {
-  //   id:3,
-  //   name: 'Configuracion',
-  //   toRender: <h1>Configuracion</h1>
-  // }
+  {
+    id:2,
+    name: 'Encuentros aceptados',
+    toRender: <SolicitudesAceptadas/>
+  }
 ];
 
 const Perfil = () => {

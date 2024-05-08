@@ -55,14 +55,14 @@ const SolicitudAceptada = ( {imagenBase64,
             <p>{lugar}</p>
           </div>
           <div className="d-flex justify-content-between align-items-center solicitud-footer">
-            <Link
+            {/* <Link
               to={`/usuario/solicitud_pendiente/${solicitud_aceptada_id}`}
               id="ver-perfil-button"
               className="btn btn-azul"
               type="button"
             >
               Ver Perfil
-            </Link>
+            </Link> */}
             <p>{duracion} Hrs</p>
           </div>
         </div>
