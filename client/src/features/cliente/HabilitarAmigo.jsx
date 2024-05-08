@@ -1,9 +1,15 @@
 import React,{useState} from 'react'
 import "./habilitarAmigo.css"
+import { useIsEnabledFriendModeQuery } from './clienteSlice';
+import useGetToken from '../../hooks/getToken';
+
 
 const HabilitarAmigo = () => {
 
 const [precio,setPrecio] = useState(0);
+const token = useGetToken();
+
+const {data,isLoading} = useIsEnabledFriendModeQuery({token:token})
 
 const handleChange = (e) => {
     let value = e.target.value;
