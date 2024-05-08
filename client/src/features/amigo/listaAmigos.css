@@ -14,15 +14,18 @@
     transform: scale(0.98);
     box-shadow: 0 0 10px 1px var(--gris);
 }
-.rectangle{
+.rectangle {
     width: 70%;
-    height: 10%;
+    height: 12%;
     background-color: gray;
     position: relative;
+    margin: 20px auto; 
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
 }
+
 .card-header {
     width: 100%;
     height: 12rem;
