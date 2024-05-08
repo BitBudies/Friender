@@ -8,11 +8,14 @@ const SolicitudesAceptadas = () => {
 //   const url = URL.createObjectURL(logo)
 
   return (
-    <div className='page'>
+    <div className='solicitudes-aceptadas'>
+        <div className="solicitudes-aceptadas-header">
+          <h1 id="titulo-solicitudes">Solicitudes Aceptadas</h1>
+        </div>
         <div className='aceptadas'>
             <div>
               <SolicitudAceptada 
-                imagenBase64={logo} 
+                imagenBase64={logo}
                 nombre_cliente={"Raul"}
                 fecha_inicio={"26-12-2024"}
                 hora_inicio={"12:20"}
