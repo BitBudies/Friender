@@ -83,8 +83,9 @@ class Interes(APIView):
 
 class Precio(APIView):
     def post(self, request, *args, **kwargs):
-        precio1 = request.data.get('precio')
-        precio_amigo = Amigo.objects.filter(precio=precio1)
+        precioMin = request.data.get('precio_min')
+        precioMax = request.data.get('precio_max')
+        precio_amigo = Amigo.objects.filter(precio__range=(precioMin, precioMax))
         clientes = [amigo.cliente for amigo in precio_amigo]
         
         serializer = ClienteSerializer(clientes, many=True)
