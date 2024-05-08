@@ -25,12 +25,14 @@ import { useGetClienteInfoQuery } from './features/cliente/clienteSlice';
 import { useCookies } from "react-cookie";
 import PerfilCliente from './features/cliente/PerfilCliente';
 import SolicitudesAceptadas from './features/solicitudes/SolicitudesAceptadas';
+import useGetToken from './hooks/getToken';
 
 
 function App() {
 
-  const [cookies] = useCookies(["token"]);
-  const token = cookies.token;
+  // const [cookies] = useCookies(["token"]);
+  // const token = cookies.token;
+  const token = useGetToken();
   const {clientId,setUserData,setClientId} = useGlobalContext();
 
   const {

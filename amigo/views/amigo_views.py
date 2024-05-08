@@ -3,6 +3,8 @@ from django.db.models import Avg
 from django.core.paginator import Paginator
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import status
+from amigo.models.clienteDB import Cliente
 from amigo.models.fotografiaDB import Fotografia
 from ..models import Amigo, Calificacion
 from django.shortcuts import get_object_or_404
@@ -147,3 +149,26 @@ def AmigoListLimitPaginator(request, page_number=1, limite=10):
         data["amigos"].append(amigo_data)
 
     return Response(data)
+
+@api_view(["POST"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def RegistrarAmigo(request):
+    user = request.user
+    cliente = get_object_or_404(Cliente, user=user)
+    precio = request["POST"].get("precio")
+    if not precio:
+        return Response({"error": "El precio es obligatorio"}, status=status.HTTP_400_BAD_REQUEST)
+    if Amigo.objects.filter(cliente=cliente).exists():
+        return Response({"error": "El cliente ya es un amigo"}, status=status.HTTP_400_BAD_REQUEST)
+    amiwito = Amigo(
+        cliente = cliente,
+        precio = precio,
+        estado = "A",
+        dinero = 0
+    )
+    try:
+        amiwito.save()
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    return Response({"data":"uwu"}, status=status.HTTP_200_OK)
