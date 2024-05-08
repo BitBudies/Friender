@@ -18,7 +18,8 @@ const clienteApi = apiSlice.injectEndpoints({
         },
       }),
     }),
-    habilitarAmigo: builder.mutation({
+    
+    enableFriendMode: builder.mutation({
       query: ({ precio, token }) => ({
         url: `/registraramigo`,
         method: "POST",
@@ -28,10 +29,18 @@ const clienteApi = apiSlice.injectEndpoints({
         body : {precio}
       }),
     }),
-    deshabilitarAmigo: builder.mutation({
+    disableFriendMode: builder.mutation({
       query: ({ token }) => ({
         url: `/deshabilitaramigo`,
         method: "POST",
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      }),
+    }),
+    isEnabledFriendMode: builder.query({
+      query: ({ token }) => ({
+        url: `/habilitaramigo`,
         headers: {
           Authorization: `Token ${token}`,
         },
