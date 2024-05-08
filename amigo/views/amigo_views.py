@@ -172,3 +172,15 @@ def RegistrarAmigo(request):
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response({"data":"uwu"}, status=status.HTTP_200_OK)
+
+@api_view(["GET"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def ClienteEsAmigo(request):
+    user = request.user
+    cliente = get_object_or_404(Cliente, user=user)
+
+    if Amigo.objects.filter(cliente=cliente).exists():
+        return Response({"error": "Ya esta registrado como cliente"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    return Response({"data":"Pasar el cliente al formulario de registro"}, status=status.HTTP_200_OK)
