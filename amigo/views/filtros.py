@@ -57,15 +57,16 @@ class ClientePorGenero(APIView):
 class ClienteFiltro(APIView):
     def post(self, request):
         genero = request.data.get('genero')  
-        edad = request.data.get('edad')  
+        edadMin = request.data.get('edad_min')  
+        edadMax = request.data.get('edad_max')  
         direccion = request.data.get('ubicacion')  
         clientes = Cliente.objects.all()
         if genero:
             clientes = clientes.filter(genero=genero)
-        if edad:
-            fecha_nacimiento_mas_tardia = date.today().replace(year=date.today().year - int(edad))
-            fecha_nacimiento_mas_temprana = fecha_nacimiento_mas_tardia.replace(year=fecha_nacimiento_mas_tardia.year - 1)
-            clientes = clientes.filter(fecha_nacimiento__gt=fecha_nacimiento_mas_temprana, fecha_nacimiento__lte=fecha_nacimiento_mas_tardia)
+        if edadMin and edadMax:
+            fecha_nacimiento_mas_tardia = date.today().replace(year=date.today().year - int(edadMin))
+            fecha_nacimiento_mas_temprana = date.today().replace(year=date.today().year - int(edadMax))
+            clientes = clientes.filter(fecha_nacimiento__range=(fecha_nacimiento_mas_temprana, fecha_nacimiento_mas_tardia))
         if direccion:
             clientes = clientes.filter(direccion=direccion)
 
