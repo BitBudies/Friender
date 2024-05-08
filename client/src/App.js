@@ -44,8 +44,9 @@ function App() {
   useEffect(() => {
     if(isAuthenticated){
       if(!isFetching && !isUninitialized){
-        setUserData(data)   
-        setClientId(data.cliente_id) 
+        setUserData(data)  
+        console.log(data); 
+        // setClientId(data.cliente_id) 
       }
     }
     

@@ -1,0 +1,25 @@
+.habilitar-amigo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: var(--section-height);
+}
+
+.habilitar-amigo-container{
+    width: var(--small);
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.habilitar-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
+    gap: 1rem;
+}

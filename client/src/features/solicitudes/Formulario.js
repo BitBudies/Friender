@@ -17,7 +17,6 @@ const defaultValues = {
 const Formulario = ({amigo_id,precio,showForm,setShowForm,formStatus,setFormStatus}) => {
   const [cookies] = useCookies(["token"]);
   const token = cookies.token;
-  const {clientId : cliente_id} = useGlobalContext();
   const [formData,setFormData] = useState(defaultValues);
 
   const [disableBtn,setDisableBtn] = useState(true);

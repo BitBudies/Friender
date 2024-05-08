@@ -3,9 +3,10 @@ import "./Perfil.css";
 import { useGlobalContext } from "../../context";
 import { GiReturnArrow } from "react-icons/gi";
 import { useNavigate } from 'react-router-dom';
-import { useCookies, removeCookie } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import SolicitudesPendientes from "../solicitudes/SolicitudesPendientes";
 import SolicitudesAceptadas from "../solicitudes/SolicitudesAceptadas";
+import HabilitarAmigo from "./HabilitarAmigo";
 
 const optionsData = [
   // {
@@ -21,7 +22,13 @@ const optionsData = [
     id:2,
     name: 'Encuentros aceptados',
     toRender: <SolicitudesAceptadas/>
-  }
+  },
+  {
+    id:3,
+    name: 'Cuenta de Amigo',
+    toRender: <HabilitarAmigo/>
+  },
+  
 ];
 
 const Perfil = () => {
