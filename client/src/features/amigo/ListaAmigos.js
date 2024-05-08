@@ -6,8 +6,8 @@ import Loading from "../../Components/Loading";
 import { FaUser } from "react-icons/fa";
 import { useGlobalContext } from "../../context";
 import { useCookies } from "react-cookie";
-import { MdInterests } from "react-icons/md";
-import { MdOutlineAttachMoney } from "react-icons/md";
+import { MdInterests, MdOutlineAttachMoney } from "react-icons/md";
+import { BsCalendarRange } from "react-icons/bs";
 import { IoLocationSharp } from "react-icons/io5";
 import { IoIosPeople } from "react-icons/io";
 
@@ -77,7 +77,7 @@ const ListaAmigos = () => {
 
             <div>
               <label htmlFor="genero" className="input-label ">
-                <IoIosPeople /> Edad
+                <BsCalendarRange /> Rango de edad
               </label>
               <select
                 id="genero"
@@ -101,10 +101,10 @@ const ListaAmigos = () => {
                 Precio
               </label>
               <div className="precios">
-                <span>Min: </span>
-                <input type="text" />
-                <span>Max: </span>
-                <input type="text" />
+ 
+                <input type="text" placeholder="Min"/>
+                <span> a </span>
+                <input type="text" placeholder="Max"/>
               </div>
             </div>
 
