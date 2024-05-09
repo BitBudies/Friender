@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
-import "./habilitarAmigo.css";
-import {
-  useEnableFriendModeMutation,
-  useIsEnabledFriendModeQuery,
-} from "./clienteSlice";
-import useGetToken from "../../hooks/getToken";
-import Loading from "../../Components/Loading";
+import React,{useEffect, useState} from 'react'
+import "./habilitarAmigo.css"
+import { useEnableFriendModeMutation, useIsEnabledFriendModeQuery } from './clienteSlice';
+import useGetToken from '../../hooks/getToken';
+import Loading from '../../Components/Loading';
+
 
 const HabilitarAmigo = () => {
   const [precio, setPrecio] = useState(0);
