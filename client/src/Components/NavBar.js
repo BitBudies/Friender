@@ -19,7 +19,7 @@ const NavBar = () => {
   
   
   if (isSuccess){
-    console.log("este usuario es amigo?")
+    console.log("este usuario se registro como amigo?")
     console.log(data.data)
   }
 
@@ -107,7 +107,8 @@ const NavBar = () => {
 
               {isAuthenticated ? 
                 <>
-                <li><Link className={`dropdown-item ${ModeAmigo && ShowMiPerfil ? "" : "hidden"}`} to={"/perfil"}>Mi Perfil</Link></li>
+                  <li><Link className="dropdown-item" to={"/miperfil"}>Mi Perfil</Link></li>
+                  <li><Link className={`dropdown-item ${ModeAmigo && ShowMiPerfil ? "" : "hidden"}`} to={"/perfil"}>Volver a modo amigo</Link></li>
                   <li><Link className={`dropdown-item ${ModeAmigo ? "hidden" : ""}`} to={"/perfil"} onClick={handleChangeModeAmigo}>Cambiar a modo amigo</Link></li>
                   <li><Link className={`dropdown-item ${ModeAmigo ? "" : "hidden"}`} to={"/amigos/page/1"} onClick={handleChangeModeCliente}>Cambiar a modo cliente</Link></li>
                   <li><hr className="dropdown-divider"/></li>
