@@ -25,8 +25,9 @@ const clienteApi = apiSlice.injectEndpoints({
         method: "POST",
         headers: {
           Authorization: `Token ${token}`,
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body : {precio}
+        body : `precio=${precio}`
       }),
     }),
     disableFriendMode: builder.mutation({

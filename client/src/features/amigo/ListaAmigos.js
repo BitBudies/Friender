@@ -11,6 +11,7 @@ import { BsCalendarRange } from "react-icons/bs";
 import { IoLocationSharp, IoClose } from "react-icons/io5";
 import { FaFilter, FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
+import { IoIosPeople } from "react-icons/io";
 
 const calificacionEstrellas = (calificacion) => {
   const numEstrellas = Math.round(calificacion);
@@ -52,15 +53,21 @@ const ListaAmigos = () => {
     // valores: values
   });
 
-  const [intereses, setIntereses] = useState([
-    { nombre: "Arte y Cultura", seleccionado: false },
-    { nombre: "Cine y Series", seleccionado: false },
-    { nombre: "Gastronomía", seleccionado: false },
-    { nombre: "Idiomas", seleccionado: false },
-    { nombre: "Lectura", seleccionado: false },
-    { nombre: "Taekwondo", seleccionado: false },
-    { nombre: "Tecnología", seleccionado: false },
+  const [interesesSeleccionados, setInteresesSeleccionados] = useState([
+    "aa",
+    "bb",
+    "cc",
   ]);
+
+  const interesesPermitidos = [
+    "Arte y Cultura",
+    "Cine y Series",
+    "Gastronomía",
+    "Idiomas",
+    "Lectura",
+    "Taekwondo",
+    "Tecnología",
+  ];
 
   const ubicacionesPermitidas = [
     "Beni",
@@ -94,8 +101,10 @@ const ListaAmigos = () => {
 
   useEffect(() => {
     // Ordenar intereses seleccionados alfabéticamente
-    setIntereses(intereses.sort((a, b) => a.nombre.localeCompare(b.nombre)));
-  }, [intereses]);
+    setInteresesSeleccionados(
+      interesesSeleccionados.sort((a, b) => a.localeCompare(b))
+    );
+  }, [interesesSeleccionados]);
 
   if (isFetching) {
     return <Loading />;
@@ -112,32 +121,15 @@ const ListaAmigos = () => {
               <select
                 id="intereses"
                 name="intereses"
-                onChange={(e) => {
-                  const selectedInterest = e.target.value;
-                  setIntereses(
-                    intereses.map((interes) => {
-                      if (interes.nombre === selectedInterest) {
-                        return {
-                          ...interes,
-                          seleccionado: interes.nombre === selectedInterest,
-                        };
-                      }
-                      return interes;
-                    })
-                  );
-                }}
+                value={values.intereses}
+                onChange={handleChange}
                 className="form-select"
               >
-                <option className="nomostraropcionxd"> </option>
-                {intereses.map((interes) => {
-                  if (!interes.seleccionado) {
-                    return (
-                      <option key={interes.nombre} value={interes.nombre}>
-                        {interes.nombre}
-                      </option>
-                    );
-                  }
-                })}
+                {interesesPermitidos.map((interes) => (
+                  <option key={interes} value={interes}>
+                    {interes}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -152,7 +144,7 @@ const ListaAmigos = () => {
                 onChange={handleChange}
                 className="form-select"
               >
-                <option value="">----------</option>
+                <option value=""></option>
                 <option value="1">Entre 18 y 25 años</option>
                 <option value="2">Entre 25 y 35 años</option>
                 <option value="3">Entre 35 y 45 años</option>
@@ -179,7 +171,7 @@ const ListaAmigos = () => {
                     })
                   }
                 />
-                <span> a </span>
+                <hr className="precio-linea" />
                 <input
                   type="text"
                   placeholder="Max"
@@ -195,36 +187,26 @@ const ListaAmigos = () => {
             </div>
 
             <div className="genero">
-              <span>Genero</span>
-              <div className="generoDropCheckBox">
-                <div onClick={() => SetGeneroDropCheckBox(!generoDropCheckBox)}>
-                  Genero {generoDropCheckBox ? <FaAngleUp /> : <FaAngleDown />}
-                </div>
-                {generoDropCheckBox && (
-                  <div className="itemsGenero">
-                    {generos.map((genero) => {
-                      return (
-                        <div
-                          className="itemGenero"
-                          onClick={() => {
-                            handleGeneroChange(genero);
-                          }}
-                        >
-                          {genero.nombre}{" "}
-                          {genero.estado ? (
-                            <MdCheckBox />
-                          ) : (
-                            <MdCheckBoxOutlineBlank />
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
+        <label htmlFor="genero" className="input-label">
+            <span><IoIosPeople />Género</span>
+        </label>
+        <div className="itemenero">
+            {generos.map((genero) => (
+            <div
+                key={genero.nombre}
+                className={`itemGenero ${genero.estado ? 'selected' : ''}`}
+                onClick={() => {
+                handleGeneroChange(genero);
+                }}
+            >
+                <span>{genero.nombre}</span>
+                {genero.estado ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
             </div>
-
+            ))}
+        </div>
+        </div>
             <div>
+                
               <label htmlFor="ubicacion" className="input-label">
                 <IoLocationSharp /> Ubicación
               </label>
@@ -235,7 +217,7 @@ const ListaAmigos = () => {
                 onChange={handleChange}
                 className="form-select"
               >
-                <option value="">----------</option>
+                <option value=""></option>
                 {ubicacionesPermitidas.map((ubicacion) => (
                   <option key={ubicacion} value={ubicacion}>
                     {ubicacion}
@@ -245,34 +227,25 @@ const ListaAmigos = () => {
             </div>
           </div>
           <div className="btn-container">
-            <button className="btn btn-azul mt-3 btn-solicitar">
+            <button className="btn btn-azul mt-3 btn-filtrar">
               <FaFilter /> Filtrar
             </button>
           </div>
         </div>
         <div className="interesesSeleccionados">
-          {intereses.map((interes) => {
-            if (interes.seleccionado) {
-              return (
-                <div className="burbujaInteres">
-                  {interes.nombre}
-                  <IoClose
-                    className="cerrarBurbuja"
-                    onClick={() =>
-                      setIntereses(
-                        intereses.map((i) => {
-                          if (i.nombre === interes.nombre) {
-                            return { ...i, seleccionado: !i.seleccionado };
-                          }
-                          return i;
-                        })
-                      )
-                    }
-                  />
-                </div>
-              );
-            }
-          })}
+          {interesesSeleccionados.map((interes) => (
+            <div key={interes} className="burbujaInteres">
+              {interes}{" "}
+              <IoClose
+                className="cerrarBurbuja"
+                onClick={() =>
+                  setInteresesSeleccionados(
+                    interesesSeleccionados.filter((i) => i !== interes)
+                  )
+                }
+              />
+            </div>
+          ))}
         </div>
 
         <div className="container-fluid py-5">
@@ -378,3 +351,4 @@ const ListaAmigos = () => {
 };
 
 export default ListaAmigos;
+

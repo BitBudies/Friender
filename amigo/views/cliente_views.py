@@ -56,7 +56,9 @@ def ClienteDetailById(request, cliente_id):
             "prioridad": fotografia.prioridad
         })
     
-    
+    intereses = ClienteInteres.objects.filter(cliente=cliente)
+    print(intereses)
+    interes = []
     data = {
         "cliente_id": cliente.cliente_id,
         "nombre_completo": cliente.getFullName(),
@@ -77,6 +79,7 @@ def ClienteDetailById(request, cliente_id):
         "numero_calificaciones": calificaciones_cliente.count(),
         "calificacion": promedio_calificaciones,
         "imagenes": imagenes,
+        "interes": interes
     }
     return Response(data)
 

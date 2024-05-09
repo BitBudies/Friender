@@ -7,6 +7,7 @@ import { useCookies } from 'react-cookie';
 import SolicitudesPendientes from "../solicitudes/SolicitudesPendientes";
 import SolicitudesAceptadas from "../solicitudes/SolicitudesAceptadas";
 import HabilitarAmigo from "./HabilitarAmigo";
+import MiPerfil from "../../Components/MiPerfil/MiPerfil";
 
 const optionsData = [
   // {
@@ -14,17 +15,22 @@ const optionsData = [
   //   name : "Editar Perfil",
   //   toRender : <div className='editar-perfil'><h1>Editar Perfil</h1></div>},
   {
-    id: 1,
+    id:1,
+    name: "Mi Perfil",
+    toRender: <MiPerfil />//"Mi perfil :D"
+  },
+  {
+    id: 2,
     name: "Solicitudes Pendientes",
     toRender: <SolicitudesPendientes />,
   },
   {
-    id:2,
+    id:3,
     name: 'Encuentros aceptados',
     toRender: <SolicitudesAceptadas/>
   },
   {
-    id:3,
+    id:4,
     name: 'Cuenta de Amigo',
     toRender: <HabilitarAmigo/>
   },

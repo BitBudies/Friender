@@ -8,12 +8,20 @@ import { useGlobalContext } from '../context';
 import { useNavigate } from 'react-router-dom';
 import {useIsAuthenticated} from '../hooks/isAuthenticated';
 import { useCookies } from 'react-cookie';
-
+import { useGetEsAmigoQuery } from './NavBarSlice';
 
 const NavBar = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const {goToBeginning,userData} = useGlobalContext();
   /*false --> Muestra iniciar sesión;  true --> Muestra el icono del perfil*/
+
+  const {data, isFetching, isSuccess} = useGetEsAmigoQuery(cookies.token)
+  
+  
+  if (isSuccess){
+    console.log("este usuario es amigo?")
+    console.log(data.data)
+  }
 
   const navigate = useNavigate();
 
@@ -47,7 +55,7 @@ const NavBar = () => {
   }
 
   const handleChangeModeAmigo= () =>{
-    setModeAmigo(true);
+      setModeAmigo(true);  
   }
 
   const handleChangeModeCliente= () =>{
