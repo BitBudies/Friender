@@ -60,6 +60,7 @@ class ClienteFiltro(APIView):
         edadMin = request.data.get('edad_min')  
         edadMax = request.data.get('edad_max')  
         direccion = request.data.get('ubicacion')  
+        
         clientes = Cliente.objects.all()
         if genero:
             clientes = clientes.filter(genero=genero)
@@ -91,4 +92,34 @@ class Precio(APIView):
         
         serializer = ClienteSerializer(clientes, many=True)
         return Response(serializer.data)
+    
+class FiltroTotal(APIView):
+    def post(self, request , *args,**kwargs):
+        genero = request.data.get('genero')  
+        edadMin = request.data.get('edad_min')  
+        edadMax = request.data.get('edad_max')  
+        direccion = request.data.get('ubicacion')  
+        interes = request.data.get('interes')
+        precioMin = request.data.get('precio_min')
+        precioMax = request.data.get('precio_max')
+        clientes = Cliente.objects.all()
+        if genero:
+            clientes = clientes.filter(genero=genero)
+        if edadMin and edadMax:
+            fecha_nacimiento_mas_tardia = date.today().replace(year=date.today().year - int(edadMin))
+            fecha_nacimiento_mas_temprana = date.today().replace(year=date.today().year - int(edadMax))
+            clientes = clientes.filter(fecha_nacimiento__range=(fecha_nacimiento_mas_temprana, fecha_nacimiento_mas_tardia))
+        if direccion:
+            clientes = clientes.filter(direccion=direccion)
+        if interes:
+            clientes_interes = ClienteInteres.objects.filter(interes__nombre__in=interes, cliente__in = clientes)
+            clientes = [ci.cliente for ci in clientes_interes]
+        if precioMin and precioMax:
+            precio_amigo = Amigo.objects.filter(precio__range=(precioMin, precioMax), cliente__in = clientes)
+            clientes = [amigo.cliente for amigo in precio_amigo]
+        
+        serializer = ClienteSerializer(clientes, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+        
+    
     
