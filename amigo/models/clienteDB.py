@@ -28,7 +28,7 @@ class Cliente(models.Model):
     timestamp_registro = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.cliente_id} {self.nombre} {self.ap_paterno} {self.ap_materno} edad {self.calcular_edad()}"
+        return f"{self.cliente_id} {self.nombre} {self.ap_paterno} {self.ap_materno} edad {self.calcular_edad()} vive en {self.direccion}"
 
     def getFullName(self):
         full_name = f"{self.nombre.title()} {self.ap_paterno.capitalize()}"

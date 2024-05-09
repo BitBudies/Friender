@@ -91,3 +91,4 @@ class Precio(APIView):
         
         serializer = ClienteSerializer(clientes, many=True)
         return Response(serializer.data)
+    

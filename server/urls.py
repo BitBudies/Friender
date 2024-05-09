@@ -105,8 +105,8 @@ urlpatterns = [
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), 
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     
+    
     #filtros
-   
     path('api/filtros/femenino', ClientePorGenero.as_view(), name='filtro_femenino'),
     path('api/filtros/cliente', ClienteFiltro.as_view(), name='filtro_cliente'),
     path('api/filtros/interes', Interes.as_view(), name='filtro_interes'),
