@@ -35,7 +35,7 @@ const MiPerfil = () => {
   } else if (isSuccess){
     return (
         // <div className="page">
-        <div className="perfil-amigo-container">
+        <div className="miperfil-amigo-container">
           <div className=" perfil-amigo-left ">
             <div
               className="image-container"
