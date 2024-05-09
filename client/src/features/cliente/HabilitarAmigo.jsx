@@ -9,8 +9,6 @@ import Loading from "../../Components/Loading";
 
 const HabilitarAmigo = () => {
   const [precio, setPrecio] = useState(0);
-  const [isEnabledBtn, setIsEnabledBtn] = useState(true);
-
   const token = useGetToken();
 
   const {
@@ -25,8 +23,13 @@ const HabilitarAmigo = () => {
   ] = useEnableFriendModeMutation();
 
   useEffect(() => {
-    console.log(isEnabled);
-  }, [isSuccess, isEnabled]);
+    if (isError) {
+        console.log(error);
+    }
+    if (isSuccessEnable) {
+        console.log(enabled);
+    }
+  }, [isError, enabled, isSuccessEnable]);
 
   if (isFetching) {
     return <Loading />;
@@ -38,7 +41,6 @@ const HabilitarAmigo = () => {
     };
 
     const handleSubmit = async () => {
-      setIsEnabledBtn(false);
       await enable({ token: token, precio: precio });
     };
 
