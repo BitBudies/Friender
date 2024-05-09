@@ -39,7 +39,12 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
+  /*
+      AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+      PUSIERON ESTE HIDDEN POR? XD
+      ME ESTA OCASIONANDO CONFLICTOS
+  */
+  /*overflow: hidden;*/
 }
 
 
