@@ -25,12 +25,14 @@ import { useGetClienteInfoQuery } from './features/cliente/clienteSlice';
 import { useCookies } from "react-cookie";
 import PerfilCliente from './features/cliente/PerfilCliente';
 import SolicitudesAceptadas from './features/solicitudes/SolicitudesAceptadas';
+import useGetToken from './hooks/getToken';
 
 
 function App() {
 
-  const [cookies] = useCookies(["token"]);
-  const token = cookies.token;
+  // const [cookies] = useCookies(["token"]);
+  // const token = cookies.token;
+  const token = useGetToken();
   const {clientId,setUserData,setClientId} = useGlobalContext();
 
   const {
@@ -44,8 +46,9 @@ function App() {
   useEffect(() => {
     if(isAuthenticated){
       if(!isFetching && !isUninitialized){
-        setUserData(data)   
-        setClientId(data.cliente_id) 
+        setUserData(data)  
+        console.log(data); 
+        // setClientId(data.cliente_id) 
       }
     }
     
