@@ -58,7 +58,6 @@ const ListaAmigos = () => {
     "cc",
   ]);
 
-
   const interesesPermitidos = [
     "Arte y Cultura",
     "Cine y Series",
