@@ -3,8 +3,8 @@
 }
 
 .rectangle {
-    width: 75%;
-    background-color: gray;
+    width: 65%;
+    background-color: #e9ecef;
     position: relative;
     display:flex;
     justify-content: space-around;
@@ -30,8 +30,8 @@
     border: 1px solid #ccc;
     width: 100%;
     list-style: none;
-    margin: 0; /* Agregado */
-  padding: 0; /* Agregado */
+    margin: 0; 
+  padding: 0; 
 }
 
 .itemGenero {
@@ -58,10 +58,10 @@
 
 .burbujaInteres {
     margin-right: 10px;
-    border: 1px solid gray; /* Borde gris */
-    border-radius: 10px; /* Bordes redondeados */
-    padding: 5px 10px; /* Espacio interno */
-    background-color: transparent; /* Sin fondo de color */
+    border: 1px solid gray;
+    border-radius: 10px; 
+    padding: 5px 10px; 
+    background-color: transparent; 
 }
 
 @media (max-width: 768px) {
@@ -77,7 +77,7 @@
 
 .card-list {
     position: relative;
-    width: 100%; /* Ancho máximo del 100% */
+    width: 100%; 
     max-width: 300px;
     border-radius: 10px;
     overflow: hidden;
@@ -151,6 +151,13 @@
     font-size: 2rem;
     margin: 20px !important;
 }
+.btn-filtrar {
+    font-size: 25px !important; 
+    padding: 12px 20px; 
+    position: flex;
+   
+  }
+ 
 
 .active .page-link{
     background-color: var(--azul-oscuro);
@@ -163,3 +170,42 @@
 .d-none{
     display: none;
 }
+.genero {
+    margin-bottom: 20px;
+  }
+  
+  .input-label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .itemsGenero {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    background-color: transparent;
+
+  }
+  
+  .itemGenero {
+    margin-bottom: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .itemGenero span {
+    margin-right: 5px;
+  }
+  
+  .itemGenero.selected {
+    background-color: #e0e0e0; 
+  }
+  
+  .itemGenero svg {
+    width: 20px;
+    height: 20px;
+    
+  }
+  
+  

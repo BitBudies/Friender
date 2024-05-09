@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
-import "./habilitarAmigo.css";
-import {
-  useEnableFriendModeMutation,
-  useIsEnabledFriendModeQuery,
-} from "./clienteSlice";
-import useGetToken from "../../hooks/getToken";
-import Loading from "../../Components/Loading";
+import React,{useEffect, useState} from 'react'
+import "./habilitarAmigo.css"
+import { useEnableFriendModeMutation, useIsEnabledFriendModeQuery } from './clienteSlice';
+import useGetToken from '../../hooks/getToken';
+import Loading from '../../Components/Loading';
+
 
 const HabilitarAmigo = () => {
   const [precio, setPrecio] = useState(0);
+  const [isEnabledBtn,setIsEnabledBtn] = useState(true);
   const token = useGetToken();
 
   const {
@@ -29,9 +28,9 @@ const HabilitarAmigo = () => {
     if (isSuccessEnable) {
         console.log(enabled);
     }
-  }, [isError, enabled, isSuccessEnable]);
+  }, [isError, enabled, isSuccessEnable, error]);
 
-  if (isFetching || isLoading) {
+  if (isFetching ) {
     return <Loading />
   } else if (isSuccessEnable) {
     return <p>Registrado correctamente como amigo (lo cambiamos de modo ? (´▽`ʃ♡ƪ))</p>
@@ -43,21 +42,25 @@ const HabilitarAmigo = () => {
     };
 
     const handleSubmit = async () => {
-      await enable({ token: token, precio: precio });
+        setIsEnabledBtn(false);
+        if(!isEnabled){
+            await enable({ token: token, precio: precio });
+
+        }else{
+            alert("En desarrollo")
+        }
     };
 
-    return isEnabled.data ? (
-      <p>Ya tienes una cuenta de amigo (cambien de modo aaaaa)</p>
-    ) : (
+    return(
       <div className="habilitar-amigo">
         <div className="habilitar-amigo-container">
-          <h1>Habilitar Cuenta Como Amigo</h1>
+          <h1>{isEnabled ? "Cuenta Como Amigo Habilitada" : "Habilitar Cuenta Como Amigo"}</h1>
           <div className="habilitar-form">
             <div className="input-item">
               <label htmlFor="precio">Precio por hora (en Bs).</label>
               <input
                 className="form-control mt-2"
-                type="number"
+                type='number'
                 id="precio"
                 name="precio"
                 placeholder="Precio"
@@ -65,13 +68,37 @@ const HabilitarAmigo = () => {
                 onChange={(e) => handleChange(e)}
               />
             </div>
-            <button
-              className={"btn btn-azul w-25"}
+            <div className="btns">
+            {
+                isEnabled ? (
+                    <>
+                         <button className='btn btn-azul'>Cambiar Precio</button>
+                    <button
+                        className={`btn btn-outline-secondary`}
+                        disabled={isLoading}
+                        onClick={handleSubmit}
+                    >
+                        Cambiar a modo cliente
+                    </button>
+                    </>
+                       
+                    
+                
+                ) :
+                 (
+                
+             <button
+              className={`btn btn-azul ${!isEnabledBtn && "disabled"}`}
               disabled={isLoading}
               onClick={handleSubmit}
             >
               Habilitar
             </button>
+                 )
+                 
+            }
+            </div>
+            
           </div>
         </div>
       </div>

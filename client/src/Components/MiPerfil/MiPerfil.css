@@ -1,0 +1,71 @@
+.perfil-amigo-container{
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - var(--navbar-height));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+    padding: 0 2rem;
+  }
+  
+  .image-container {
+    width: 15rem; /* Ancho de la imagen */
+    height: 15rem; /* Altura de la imagen */
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center; 
+    border-radius: 100%; 
+  }
+  
+  .perfil-amigo-left{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .perfil-amigo-right{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .perfil-amigo-right .profile-description{
+    max-width: var(--small);
+  }  
+  
+  .perfil-amigo-left .stars-and-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  
+  @media screen and (max-width : 700px) {
+    .perfil-amigo-container{
+      flex-direction: column;
+      margin: 3rem 0;
+    }
+  
+    .perfil-amigo-right{
+      align-items: center;
+    }
+  }
+  
+  .galeria {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+
+  .perfil-amigo-right .para-intereses {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 10px;
+    row-gap: 10px;
+  }
