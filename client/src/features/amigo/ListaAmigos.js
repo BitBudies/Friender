@@ -153,7 +153,7 @@ const ListaAmigos = () => {
               </select>
             </div>
 
-            <div>
+               <div>
               <label htmlFor="precio" className="input-label">
                 <MdOutlineAttachMoney />
                 Precio
@@ -170,7 +170,7 @@ const ListaAmigos = () => {
                     })
                   }
                 />
-                <span> a </span>
+                <hr className="precio-linea" />
                 <input
                   type="text"
                   placeholder="Max"
@@ -186,10 +186,11 @@ const ListaAmigos = () => {
             </div>
 
             <div className="genero">
-              <span>Genero</span>
-              <div className="generoDropCheckBox">
+      <label htmlFor="genero" className="input-label">
+        <span>Genero</span>
+        <div className="generoDropCheckBox">
                 <div onClick={() => SetGeneroDropCheckBox(!generoDropCheckBox)}>
-                  Genero {generoDropCheckBox ? <FaAngleUp /> : <FaAngleDown />}
+                 <h5>Genero  {generoDropCheckBox ? <FaAngleUp /> : <FaAngleDown />}</h5> 
                 </div>
                 {generoDropCheckBox && (
                   <div class="itemsGenero">
@@ -213,7 +214,11 @@ const ListaAmigos = () => {
                   </div>
                 )}
               </div>
+              </label>
             </div>
+  
+ 
+  
 
             <div>
               <label htmlFor="ubicacion" className="input-label">
