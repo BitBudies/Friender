@@ -42,8 +42,13 @@ const HabilitarAmigo = () => {
     };
 
     const handleSubmit = async () => {
-        isEnabledBtn(false);
-      await enable({ token: token, precio: precio });
+        setIsEnabledBtn(false);
+        if(!isEnabled){
+            await enable({ token: token, precio: precio });
+
+        }else{
+            alert("En desarrollo")
+        }
     };
 
     return(
@@ -63,21 +68,25 @@ const HabilitarAmigo = () => {
                 onChange={(e) => handleChange(e)}
               />
             </div>
+            <div className="btns">
             {
                 isEnabled ? (
-                    <div className="btns">
-                        <button className='btn btn-azul'>Cambiar Precio</button>
+                    <>
+                         <button className='btn btn-azul'>Cambiar Precio</button>
                     <button
                         className={`btn btn-outline-secondary`}
                         disabled={isLoading}
                         onClick={handleSubmit}
                     >
-                        Deshabilitar Cuenta
+                        Cambiar a modo cliente
                     </button>
+                    </>
+                       
                     
-                </div>
+                
                 ) :
                  (
+                
              <button
               className={`btn btn-azul ${!isEnabledBtn && "disabled"}`}
               disabled={isLoading}
@@ -86,8 +95,9 @@ const HabilitarAmigo = () => {
               Habilitar
             </button>
                  )
-                
+                 
             }
+            </div>
             
           </div>
         </div>
