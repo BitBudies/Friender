@@ -57,8 +57,10 @@ def ClienteDetailById(request, cliente_id):
         })
     
     intereses = ClienteInteres.objects.filter(cliente=cliente)
-    print(intereses)
     interes = []
+    for i in intereses:
+        interes.append(i.interes.nombre)
+
     data = {
         "cliente_id": cliente.cliente_id,
         "nombre_completo": cliente.getFullName(),

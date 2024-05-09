@@ -17,7 +17,10 @@ const MiPerfil = () => {
         isFetching,
         isSuccess,
       } = useGetClienteByIdQuery({ id_cliente: userData.cliente_id, token: token });
-      
+    
+    if (isSuccess){
+        console.log(cliente)
+    }
     
     const calificacionEstrellas = (calificacion) => {
         const numEstrellas = Math.round(calificacion);
