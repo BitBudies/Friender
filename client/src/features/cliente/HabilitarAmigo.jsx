@@ -31,8 +31,10 @@ const HabilitarAmigo = () => {
     }
   }, [isError, enabled, isSuccessEnable]);
 
-  if (isFetching) {
-    return <Loading />;
+  if (isFetching || isLoading) {
+    return <Loading />
+  } else if (isSuccessEnable) {
+    return <p>Registrado correctamente como amigo (lo cambiamos de modo ? (´▽`ʃ♡ƪ))</p>
   } else if (isSuccess) {
     const handleChange = (e) => {
       let value = e.target.value;
