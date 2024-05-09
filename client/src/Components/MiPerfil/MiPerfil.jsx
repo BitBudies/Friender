@@ -5,6 +5,9 @@ import { useCookies } from "react-cookie";
 import { useGetClienteByIdQuery } from '../NavBarSlice';
 import { useGlobalContext } from '../../context';
 import Loading from '../Loading';
+import Etiqueta from './Etiqueta';
+
+import './MiPerfil.css'
 
 const MiPerfil = () => {
     const [cookies] = useCookies(["token"]);
@@ -77,6 +80,17 @@ const MiPerfil = () => {
 
           <div className="perfil-amigo-right">
             <h1>Mi Perfil</h1>
+            <p>
+                <strong>Mis Intereses</strong>
+              </p>
+            <div className='para-intereses'>
+              
+              {
+                cliente.interes.map((interes) =>{
+                    return <Etiqueta interes={interes}/>
+                })
+              }
+            </div>
             <div className="profile-description w-100">
               <p>
                 <strong>Descripción:</strong> {cliente.descripcion}
