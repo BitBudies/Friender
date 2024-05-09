@@ -181,6 +181,6 @@ def ClienteEsAmigo(request):
     cliente = get_object_or_404(Cliente, user=user)
 
     if Amigo.objects.filter(cliente=cliente).exists():
-        return Response({"error": "Ya esta registrado como cliente"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"data": False}, status=status.HTTP_200_OK)
     
-    return Response({"data":"Pasar el cliente al formulario de registro"}, status=status.HTTP_200_OK)
+    return Response({"data":True}, status=status.HTTP_200_OK)

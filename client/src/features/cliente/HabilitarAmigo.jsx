@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import "./habilitarAmigo.css"
 import { useEnableFriendModeMutation, useIsEnabledFriendModeQuery } from './clienteSlice';
 import useGetToken from '../../hooks/getToken';
@@ -17,6 +17,10 @@ const {data: isEnabled,isFetching,isSuccess} = useIsEnabledFriendModeQuery({toke
 
 const [enable,{data: response,isSuccess:isSuccessEnable,isError,error,isLoading}] = useEnableFriendModeMutation();
 
+useEffect(() => {
+    console.log(isEnabled);
+},[isEnabled])
+
 if (isFetching) {
     return <Loading/>
 }else if(isSuccess){
@@ -32,7 +36,7 @@ if (isFetching) {
         await enable({token:token,precio:precio});
     }
 
-    console.log(isEnabled);
+    
 
     return (
         <div className='habilitar-amigo'>
