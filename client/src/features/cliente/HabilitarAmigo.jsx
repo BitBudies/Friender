@@ -7,6 +7,7 @@ import Loading from '../../Components/Loading';
 
 const HabilitarAmigo = () => {
   const [precio, setPrecio] = useState(0);
+  const [isEnabledBtn,setIsEnabledBtn] = useState(true);
   const token = useGetToken();
 
   const {
@@ -27,9 +28,9 @@ const HabilitarAmigo = () => {
     if (isSuccessEnable) {
         console.log(enabled);
     }
-  }, [isError, enabled, isSuccessEnable]);
+  }, [isError, enabled, isSuccessEnable, error]);
 
-  if (isFetching || isLoading) {
+  if (isFetching ) {
     return <Loading />
   } else if (isSuccessEnable) {
     return <p>Registrado correctamente como amigo (lo cambiamos de modo ? (´▽`ʃ♡ƪ))</p>
@@ -41,21 +42,20 @@ const HabilitarAmigo = () => {
     };
 
     const handleSubmit = async () => {
+        isEnabledBtn(false);
       await enable({ token: token, precio: precio });
     };
 
-    return isEnabled.data ? (
-      <p>Ya tienes una cuenta de amigo (cambien de modo aaaaa)</p>
-    ) : (
+    return(
       <div className="habilitar-amigo">
         <div className="habilitar-amigo-container">
-          <h1>Habilitar Cuenta Como Amigo</h1>
+          <h1>{isEnabled ? "Cuenta Como Amigo Habilitada" : "Habilitar Cuenta Como Amigo"}</h1>
           <div className="habilitar-form">
             <div className="input-item">
               <label htmlFor="precio">Precio por hora (en Bs).</label>
               <input
                 className="form-control mt-2"
-                type="number"
+                type='number'
                 id="precio"
                 name="precio"
                 placeholder="Precio"
@@ -63,13 +63,32 @@ const HabilitarAmigo = () => {
                 onChange={(e) => handleChange(e)}
               />
             </div>
-            <button
-              className={"btn btn-azul w-25"}
+            {
+                isEnabled ? (
+                    <div className="btns">
+                        <button className='btn btn-azul'>Cambiar Precio</button>
+                    <button
+                        className={`btn btn-outline-secondary`}
+                        disabled={isLoading}
+                        onClick={handleSubmit}
+                    >
+                        Deshabilitar Cuenta
+                    </button>
+                    
+                </div>
+                ) :
+                 (
+             <button
+              className={`btn btn-azul ${!isEnabledBtn && "disabled"}`}
               disabled={isLoading}
               onClick={handleSubmit}
             >
               Habilitar
             </button>
+                 )
+                
+            }
+            
           </div>
         </div>
       </div>
