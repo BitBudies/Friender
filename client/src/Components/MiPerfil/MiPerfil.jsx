@@ -93,7 +93,10 @@ const MiPerfil = () => {
             </div>
             <div className="profile-description w-100">
               <p>
-                <strong>Descripción:</strong> {cliente.descripcion}
+                <strong>Descripción:</strong> 
+              </p>
+              <p>
+                {cliente.descripcion}
               </p>
             </div>
           </div>
