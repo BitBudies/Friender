@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Foto from '../imagRegistro/test';
 import Preview from '../imagRegistro/preview';
 import { useCookies } from "react-cookie";
-import { useGetClienteByIdQuery } from '../NavBarSlice';
+import { useGetAmiwoPrecioQuery, useGetClienteByIdQuery } from '../NavBarSlice';
 import { useGlobalContext } from '../../context';
 import Loading from '../Loading';
 import Etiqueta from './Etiqueta';
@@ -21,8 +21,14 @@ const MiPerfil = () => {
         isSuccess,
       } = useGetClienteByIdQuery({ id_cliente: userData.cliente_id, token: token });
     
-    if (isSuccess){
-        console.log(cliente)
+    const {
+        data: info, 
+        isFetching: cargandin, 
+        isSuccess: suceso} = useGetAmiwoPrecioQuery(token);
+
+    
+    if (suceso){
+        console.log("precio es: " + info.precio)
     }
     
     const calificacionEstrellas = (calificacion) => {
@@ -30,7 +36,7 @@ const MiPerfil = () => {
         const estrellas = "★".repeat(numEstrellas) + "☆".repeat(5 - numEstrellas);
         return estrellas;
     };
-  if (isFetching){
+  if (isFetching || cargandin){
     return <Loading />
   } else if (isSuccess){
     return (
@@ -98,6 +104,12 @@ const MiPerfil = () => {
               <p>
                 {cliente.descripcion}
               </p>
+            </div>
+            <div>
+                {
+                    info.precio>0 && //falta aumentar si esta en modo amigo o cliente
+                    <h3>Precio {info.precio} Bs/hr</h3> 
+                }
             </div>
           </div>
         </div>

@@ -19,7 +19,15 @@ const navBarApi = apiSlice.injectEndpoints({
           },
         }),
     }),
+    getAmiwoPrecio: builder.query({
+        query: (token) => ({
+          url: `/amigo/precio`,
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }),
+    }),
   }),
 });
 
-export const { useGetEsAmigoQuery, useGetClienteByIdQuery } = navBarApi;
+export const { useGetEsAmigoQuery, useGetClienteByIdQuery, useGetAmiwoPrecioQuery } = navBarApi;
