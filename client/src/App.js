@@ -60,7 +60,7 @@ function App() {
       }
     }
     
-  },[data, isAuthenticated, isFetching, isUninitialized, setUserData, clientId, setClientId, isEnabled.data]) //setIsFriendModeEnabled
+  },[data, isAuthenticated, isFetching, isUninitialized, setUserData, clientId, setClientId]) //setIsFriendModeEnabled, isEnabled.data
 
   if(isFetching){
     return <Loading/>
