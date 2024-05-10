@@ -83,6 +83,6 @@
   }
 
   .mi-perfil-centro {
+    margin: auto;
     display: flex;
-    align-content: center;
   }
