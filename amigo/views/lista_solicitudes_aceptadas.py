@@ -8,11 +8,13 @@ from django.shortcuts import get_object_or_404
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def ObtenerListaDeSolicitudes(request,amigo_id):
-    solicitudes_aceptadas = solicitud_alquiler.objects.filter(amigo_id=amigo_id, estado_solicitud='A')
+def ObtenerListaDeSolicitudes(request ):
+    user = request.user
+    amigo = get_object_or_404(Amigo, cliente__user=user)  # Modificado para obtener el amigo del usuario
+    solicitudes_aceptadas = solicitud_alquiler.objects.filter(amigo=amigo, estado_solicitud='A')
+
     data = []
     for solicitud in solicitudes_aceptadas:
-        #calificación del cliente
         calificacion_cliente = Calificacion.objects.filter(cliente=solicitud.cliente).first()
         solicitud_info = {
             'cliente': solicitud.cliente.nombre,
@@ -22,5 +24,7 @@ def ObtenerListaDeSolicitudes(request,amigo_id):
             'ubicacion': solicitud.lugar
         }
         data.append(solicitud_info)
-    return JsonResponse(data, safe=False)
+    response_data = {'solicitudes': data}
+
+    return JsonResponse(response_data, safe=False)
 
