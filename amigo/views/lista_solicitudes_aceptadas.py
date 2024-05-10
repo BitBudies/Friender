@@ -17,15 +17,17 @@ def ObtenerListaDeSolicitudes(request ):
     data = []
     now = datetime.now()
     for solicitud in solicitudes_aceptadas:
-        calificacion_cliente = Calificacion.objects.filter(cliente=solicitud.cliente).first()
-        solicitud_info = {
-            'cliente': solicitud.cliente.nombre,
-            'calificacion': calificacion_cliente.puntuacion if calificacion_cliente else None,
-            'fecha': solicitud.fecha_inicio,
-            'hora': solicitud.hora_inicio,
-            'ubicacion': solicitud.lugar
-        }
-        data.append(solicitud_info)
+        if solicitud.fecha_inicio > now.date() or (solicitud.fecha_inicio == now.date() and solicitud.hora_inicio > now.time()):
+            calificacion_cliente = Calificacion.objects.filter(cliente=solicitud.cliente).first()
+            solicitud_info = {
+                'cliente': solicitud.cliente.nombre,
+                'calificacion': calificacion_cliente.puntuacion if calificacion_cliente else None,
+                'fecha': solicitud.fecha_inicio,
+                'hora': solicitud.hora_inicio,
+                'ubicacion': solicitud.lugar
+            }
+            data.append(solicitud_info)
+
     response_data = {'solicitudes': data}
 
     return JsonResponse(response_data, safe=False)
