@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./listaAmigos.css";
 import Loading from "../../Components/Loading";
-import { useGetAmigosQuery } from "./amigoSlice";
+import { useGetAmigosMutation } from "./amigoSlice";
 import { FaUser, FaFilter, FaAngleDown, FaAngleUp } from "react-icons/fa";
 import {
   MdInterests,
@@ -50,17 +50,22 @@ const ListaAmigos = () => {
     });
   };
 
-  const {
+  const [getAmiwitos, {
     data: amigos,
     isFetching,
     isSuccess,
-  } = useGetAmigosQuery({
-    pagina: n_page,
-    limite: 24,
-    token,
-    // Aquí deberías pasar los valores de los filtros
-    // valores: values
-  });
+  }] = useGetAmigosMutation();
+
+  useEffect(() => {
+    getAmiwitos({
+      pagina: n_page,
+      limite: 24,
+      token: token,
+      filtros: {
+        genero: "M"
+      }
+    })
+  }, [])
 
   const onBlurcito = (e, field) => {
     let value = e.target.value;
