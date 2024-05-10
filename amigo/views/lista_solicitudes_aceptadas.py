@@ -7,6 +7,7 @@ from rest_framework.authentication import TokenAuthentication
 from django.shortcuts import get_object_or_404
 from datetime import datetime
 from django.db.models import F
+import base64
 from amigo.models.fotografiaDB import Fotografia
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
@@ -44,4 +45,10 @@ def obtener_imagenes_cliente(cliente):
     fotografiaCliente = Fotografia.objects.filter(cliente=cliente, estado_fotografia='F').order_by('prioridad')
     for fotografia in fotografiaCliente:
         imagenBase64 = None
+        if fotografia.imagenBase64:
+            imagenBase64 = base64.b64encode(fotografia.imagenBase64).decode("utf-8")
+        imagenes.append({
+            "imagenBase64": imagenBase64,
+            "prioridad": fotografia.prioridad
+        })
     return imagenes 
