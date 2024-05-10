@@ -31,7 +31,7 @@ from amigo.views.utils import obtener_csrf
 from amigo.views.login import Login
 from amigo.views.cerrarSesion import Logout
 from amigo.views.lista_solicitudes_aceptadas import ObtenerListaDeSolicitudes
-from amigo.views.filtros import  ClientePorGenero,FiltroTotalToken, ClienteFiltro,Interes,Precio,FiltroTotal,ClientePorGeneroToken, ClienteFiltroToken, InteresToken,PrecioToken
+from amigo.views.filtros import  ClientePorGenero,FiltroTotalToken, ClienteFiltro,Interes,Precio,FiltroTotal,ClientePorGeneroToken, ClienteFiltroToken, InteresToken,PrecioToken,FiltroPaginacion
 schema_view = get_schema_view(
     openapi.Info(
         title="Documentacion de la API 🐸",
@@ -118,6 +118,8 @@ urlpatterns = [
     path('api/filtros/clienteToken',ClienteFiltroToken.as_view()),
     path('api/filtros/interesToken',InteresToken.as_view()),
     path('api/filtros/precioToken', PrecioToken.as_view()),
-    path('api/filtros/total',FiltroTotalToken.as_view())
+    path('api/filtros/total',FiltroTotalToken.as_view()),
+    
+    path('api/filtros/filtrosPaginacion',FiltroPaginacion.as_view()),
     
 ]
