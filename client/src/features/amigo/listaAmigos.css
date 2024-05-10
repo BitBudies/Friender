@@ -30,10 +30,9 @@
   background-repeat: no-repeat;
   background-position: right .75rem center;
   background-size: 16px 12px;
-  border: var(--bs-border-width) solid var(--bs-border-color);
+  border: 1px solid #ced4da;
   border-radius: var(--bs-border-radius);
 }
-
 
 .nomostraropcionxd {
   display: none;

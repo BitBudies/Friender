@@ -141,6 +141,7 @@ const ListaAmigos = () => {
                 value={values.intereses}
                 onChange={handleChange}
                 className="form-select"
+                style={{ boxShadow: "none", border: "1px solid #ced4da" }}
               >
                 {interesesPermitidos.map((interes) => (
                   <option key={interes} value={interes}>
@@ -160,6 +161,7 @@ const ListaAmigos = () => {
                 value={values.rangoEdad}
                 onChange={handleChange}
                 className="form-select"
+                style={{ boxShadow: "none", border: "1px solid #ced4da" }}
               >
                 <option value=""></option>
                 <option value="1">Cualquiera</option>
@@ -183,6 +185,7 @@ const ListaAmigos = () => {
                     type="text"
                     placeholder="Min"
                     className="form-control"
+                    style={{ boxShadow: "none", border: "1px solid #ced4da" }}
                     value={values.precio.min}
                     onChange={(e) =>
                       setValues({
@@ -193,10 +196,10 @@ const ListaAmigos = () => {
                   />
                   <p>-</p>
                   <input
-                    type="text"
+                    type="number"
                     placeholder="Max"
                     className="form-control"
-                    style={{ marginLeft: '0' }}
+                    style={{ marginLeft: '0', boxShadow: "none", border: "1px solid #ced4da"}}
                     value={values.precio.max}
                     onChange={(e) =>
                       setValues({
@@ -252,6 +255,7 @@ const ListaAmigos = () => {
                 value={values.ubicacion}
                 onChange={handleChange}
                 className="form-select"
+                style={{ boxShadow: "none", border: "1px solid #ced4da" }}
               >
                 <option value=""></option>
                 {ubicacionesPermitidas.map((ubicacion) => (
