@@ -55,21 +55,15 @@ const ListaAmigos = () => {
     // valores: values
   });
 
-  const [interesesSeleccionados, setInteresesSeleccionados] = useState([
-    "aa",
-    "bb",
-    "cc",
+  const [intereses, setIntereses] = useState([
+    { nombre: "Arte y Cultura", seleccionado: false },
+    { nombre: "Cine y Series", seleccionado: false },
+    { nombre: "Gastronomía", seleccionado: false },
+    { nombre: "Idiomas", seleccionado: false },
+    { nombre: "Lectura", seleccionado: false },
+    { nombre: "Taekwondo", seleccionado: false },
+    { nombre: "Tecnología", seleccionado: false },
   ]);
-
-  const interesesPermitidos = [
-    "Arte y Cultura",
-    "Cine y Series",
-    "Gastronomía",
-    "Idiomas",
-    "Lectura",
-    "Taekwondo",
-    "Tecnología",
-  ];
 
   const ubicacionesPermitidas = [
     "Cualquiera",
@@ -103,10 +97,8 @@ const ListaAmigos = () => {
 
   useEffect(() => {
     // Ordenar intereses seleccionados alfabéticamente
-    setInteresesSeleccionados(
-      interesesSeleccionados.sort((a, b) => a.localeCompare(b))
-    );
-  }, [interesesSeleccionados]);
+    setIntereses(intereses.sort((a, b) => a.nombre.localeCompare(b.nombre)));
+  }, [intereses]);
 
   const dropdownRef = useRef(null);
   useEffect(() => {
@@ -138,16 +130,32 @@ const ListaAmigos = () => {
               <select
                 id="intereses"
                 name="intereses"
-                value={values.intereses}
-                onChange={handleChange}
+                onChange={(e) => {
+                  const selectedInterest = e.target.value;
+                  setIntereses(
+                    intereses.map((interes) => {
+                      if (interes.nombre === selectedInterest) {
+                        return {
+                          ...interes,
+                          seleccionado: interes.nombre === selectedInterest,
+                        };
+                      }
+                      return interes;
+                    })
+                  );
+                }}
                 className="form-select"
-                style={{ boxShadow: "none", border: "1px solid #ced4da" }}
               >
-                {interesesPermitidos.map((interes) => (
-                  <option key={interes} value={interes}>
-                    {interes}
-                  </option>
-                ))}
+                <option className="nomostraropcionxd"> </option>
+                {intereses.map((interes) => {
+                  if (!interes.seleccionado) {
+                    return (
+                      <option key={interes.nombre} value={interes.nombre}>
+                        {interes.nombre}
+                      </option>
+                    );
+                  }
+                })}
               </select>
             </div>
 
@@ -273,19 +281,28 @@ const ListaAmigos = () => {
           </div>
         </div>
         <div className="interesesSeleccionados">
-          {interesesSeleccionados.map((interes) => (
-            <div key={interes} className="burbujaInteres">
-              {interes}{" "}
-              <IoClose
-                className="cerrarBurbuja"
-                onClick={() =>
-                  setInteresesSeleccionados(
-                    interesesSeleccionados.filter((i) => i !== interes)
-                  )
-                }
-              />
-            </div>
-          ))}
+          {intereses.map((interes) => {
+            if (interes.seleccionado) {
+              return (
+                <div className="burbujaInteres">
+                  {interes.nombre}
+                  <IoClose
+                    className="cerrarBurbuja"
+                    onClick={() =>
+                      setIntereses(
+                        intereses.map((i) => {
+                          if (i.nombre === interes.nombre) {
+                            return { ...i, seleccionado: !i.seleccionado };
+                          }
+                          return i;
+                        })
+                      )
+                    }
+                  />
+                </div>
+              );
+            }
+          })}
         </div>
         <div className="container-fluid py-5">
           <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 g-3">
