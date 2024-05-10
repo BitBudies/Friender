@@ -50,11 +50,8 @@ const ListaAmigos = () => {
     });
   };
 
-  const [getAmiwitos, {
-    data: amigos,
-    isFetching,
-    isSuccess,
-  }] = useGetAmigosMutation();
+  const [getAmiwitos, { data: amigos, isFetching, isSuccess }] =
+    useGetAmigosMutation();
 
   useEffect(() => {
     getAmiwitos({
@@ -62,10 +59,21 @@ const ListaAmigos = () => {
       limite: 24,
       token: token,
       filtros: {
-        genero: "M"
-      }
-    })
-  }, [])
+        genero: "F",
+      },
+    });
+  }, []);
+
+  function ActualizarListaAmigos() {
+    getAmiwitos({
+      pagina: n_page,
+      limite: 24,
+      token: token,
+      filtros: {
+        genero: "M",
+      },
+    });
+  }
 
   const onBlurcito = (e, field) => {
     let value = e.target.value;
@@ -155,309 +163,314 @@ const ListaAmigos = () => {
     };
   }, [dropdownRef]);
 
-  if (isFetching) {
-    return <Loading />;
-  } else if (isSuccess) {
-    return (
-      <div id="lista_amigos" className="page bg-light" ref={pageRef}>
-        <div className="filtrosYBoton d-flex justify-content-center">
-          <div className="rectangle">
-            <div>
-              <label htmlFor="intereses" className="input-label">
-                <MdInterests />
-                Intereses
-              </label>
-              <select
-                id="intereses"
-                name="intereses"
-                onChange={(e) => {
-                  const selectedInterest = e.target.value;
-                  setIntereses(
-                    intereses.map((interes) => {
-                      if (interes.nombre === selectedInterest) {
-                        return {
-                          ...interes,
-                          seleccionado: interes.nombre === selectedInterest,
-                        };
-                      }
-                      return interes;
-                    })
-                  );
-                }}
-                className="form-select"
-              >
-                <option className="nomostraropcionxd"> </option>
-                {intereses.map((interes) => {
-                  if (!interes.seleccionado) {
-                    return (
-                      <option key={interes.nombre} value={interes.nombre}>
-                        {interes.nombre}
-                      </option>
-                    );
-                  }
-                })}
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="rangoEdad" className="input-label">
-                <BsCalendarRange /> Rango de edad
-              </label>
-              <select
-                id="rangoEdad"
-                name="rangoEdad"
-                value={values.rangoEdad}
-                onChange={handleChange}
-                className="form-select"
-                style={{ boxShadow: "none", border: "1px solid #ced4da" }}
-              >
-                <option value=""></option>
-                <option value="1">Cualquiera</option>
-                <option value="1">Entre 18 y 25 años</option>
-                <option value="2">Entre 25 y 35 años</option>
-                <option value="3">Entre 35 y 45 años</option>
-                <option value="4">Entre 45 y 55 años</option>
-                <option value="5">Entre 55 y 65 años</option>
-                <option value="6">Más de 65 años</option>
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="precio" className="input-label input-item">
-                <MdOutlineAttachMoney />
-                Precio
-              </label>
-              <div className="precio-container">
-                <div className="precios">
-                  <input
-                    type="text"
-                    placeholder="Min"
-                    className="form-control"
-                    style={{ boxShadow: "none", border: "1px solid #ced4da" }}
-                    value={values.precio.min}
-                    onBlur={(e) => onBlurcito(e, "min")}
-                    onChange={(e) => {
-                      if (validNumberPattern.test(e.target.value)) {
-                        setValues({
-                          ...values,
-                          precio: { ...values.precio, min: e.target.value },
-                        });
-                      }
-                    }}
-                    onKeyDown={handleKeyDown}
-                  />
-                  <p>-</p>
-                  <input
-                    type="text"
-                    placeholder="Max"
-                    className="form-control"
-                    style={{
-                      marginLeft: "0",
-                      boxShadow: "none",
-                      border: "1px solid #ced4da",
-                    }}
-                    value={values.precio.max}
-                    onBlur={(e) => {
-                      console.log("holalalsadas");
-                      onBlurcito(e, "max");
-                    }}
-                    onChange={(e) => {
-                      if (validNumberPattern.test(e.target.value)) {
-                        setValues({
-                          ...values,
-                          precio: { ...values.precio, max: e.target.value },
-                        });
-                      }
-                    }}
-                    onKeyDown={handleKeyDown}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <label className="input-label input-item">
-                <IoPeople />
-                Genero
-              </label>
-              <div className="generoDropCheckBox" ref={dropdownRef}>
-                <p onClick={() => SetGeneroDropCheckBox(!generoDropCheckBox)}>
-                  Seleccionar <FaAngleDown />
-                </p>
-                {generoDropCheckBox && (
-                  <div class="itemsGenero">
-                    {generos.map((genero) => {
-                      return (
-                        <div
-                          className="itemGenero"
-                          onClick={() => {
-                            handleGeneroChange(genero);
-                          }}
-                        >
-                          {genero.nombre}{" "}
-                          {genero.estado ? (
-                            <MdCheckBox />
-                          ) : (
-                            <MdCheckBoxOutlineBlank />
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="ubicacion" className="input-label">
-                <IoLocationSharp /> Ubicación
-              </label>
-              <select
-                id="ubicacion"
-                name="ubicacion"
-                value={values.ubicacion}
-                onChange={handleChange}
-                className="form-select"
-                style={{ boxShadow: "none", border: "1px solid #ced4da" }}
-              >
-                <option value=""></option>
-                {ubicacionesPermitidas.map((ubicacion) => (
-                  <option key={ubicacion} value={ubicacion}>
-                    {ubicacion}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div className="btn-container" style={{ marginLeft: "10px" }}>
-            <button className="btn btn-azul">
-              <FaFilter style={{ color: "white" }} /> Filtrar
-            </button>
-          </div>
-        </div>
-        <div className="interesesSeleccionados">
-          {intereses.map((interes) => {
-            if (interes.seleccionado) {
-              return (
-                <div className="burbujaInteres">
-                  {interes.nombre}
-                  <IoClose
-                    className="cerrarBurbuja"
-                    onClick={() =>
-                      setIntereses(
-                        intereses.map((i) => {
-                          if (i.nombre === interes.nombre) {
-                            return { ...i, seleccionado: !i.seleccionado };
-                          }
-                          return i;
-                        })
-                      )
+  return (
+    <div id="lista_amigos" className="page bg-light" ref={pageRef}>
+      <div className="filtrosYBoton d-flex justify-content-center">
+        <div className="rectangle">
+          <div>
+            <label htmlFor="intereses" className="input-label">
+              <MdInterests />
+              Intereses
+            </label>
+            <select
+              id="intereses"
+              name="intereses"
+              onChange={(e) => {
+                const selectedInterest = e.target.value;
+                setIntereses(
+                  intereses.map((interes) => {
+                    if (interes.nombre === selectedInterest) {
+                      return {
+                        ...interes,
+                        seleccionado: interes.nombre === selectedInterest,
+                      };
                     }
-                  />
-                </div>
-              );
-            }
-          })}
-        </div>
-        <div className="container-fluid py-5">
-          <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 g-3">
-            {amigos["amigos"].map((amigo, index) => (
-              <div key={index} className="col">
-                <div className="card-amigo card card-list">
-                  <div
-                    className="card-header"
-                    style={{
-                      backgroundImage: `url(${
-                        amigo.imagenBase64
-                          ? "data:image/jpeg;base64," + amigo.imagenBase64
-                          : "/images/user.jpeg"
-                      })`,
-                    }}
-                  />
-                  <div className="card-body px-4">
-                    <h5 className="card-title">{amigo.nombre_completo}</h5>
-                    <div className="card-text">
-                      <div className="card-stats">
-                        <div className="text-warning">
-                          {calificacionEstrellas(amigo.calificacion)}
-                        </div>
-                        <div className="card-n-users">
-                          0{" "}
-                          <span>
-                            <FaUser />
-                          </span>
-                        </div>
+                    return interes;
+                  })
+                );
+              }}
+              className="form-select"
+            >
+              <option className="nomostraropcionxd"> </option>
+              {intereses.map((interes) => {
+                if (!interes.seleccionado) {
+                  return (
+                    <option key={interes.nombre} value={interes.nombre}>
+                      {interes.nombre}
+                    </option>
+                  );
+                }
+              })}
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="rangoEdad" className="input-label">
+              <BsCalendarRange /> Rango de edad
+            </label>
+            <select
+              id="rangoEdad"
+              name="rangoEdad"
+              value={values.rangoEdad}
+              onChange={handleChange}
+              className="form-select"
+              style={{ boxShadow: "none", border: "1px solid #ced4da" }}
+            >
+              <option value=""></option>
+              <option value="1">Cualquiera</option>
+              <option value="1">Entre 18 y 25 años</option>
+              <option value="2">Entre 25 y 35 años</option>
+              <option value="3">Entre 35 y 45 años</option>
+              <option value="4">Entre 45 y 55 años</option>
+              <option value="5">Entre 55 y 65 años</option>
+              <option value="6">Más de 65 años</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="precio" className="input-label input-item">
+              <MdOutlineAttachMoney />
+              Precio
+            </label>
+            <div className="precio-container">
+              <div className="precios">
+                <input
+                  type="text"
+                  placeholder="Min"
+                  className="form-control"
+                  style={{ boxShadow: "none", border: "1px solid #ced4da" }}
+                  value={values.precio.min}
+                  onBlur={(e) => onBlurcito(e, "min")}
+                  onChange={(e) => {
+                    if (validNumberPattern.test(e.target.value)) {
+                      setValues({
+                        ...values,
+                        precio: { ...values.precio, min: e.target.value },
+                      });
+                    }
+                  }}
+                  onKeyDown={handleKeyDown}
+                />
+                <p>-</p>
+                <input
+                  type="text"
+                  placeholder="Max"
+                  className="form-control"
+                  style={{
+                    marginLeft: "0",
+                    boxShadow: "none",
+                    border: "1px solid #ced4da",
+                  }}
+                  value={values.precio.max}
+                  onBlur={(e) => {
+                    console.log("holalalsadas");
+                    onBlurcito(e, "max");
+                  }}
+                  onChange={(e) => {
+                    if (validNumberPattern.test(e.target.value)) {
+                      setValues({
+                        ...values,
+                        precio: { ...values.precio, max: e.target.value },
+                      });
+                    }
+                  }}
+                  onKeyDown={handleKeyDown}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label className="input-label input-item">
+              <IoPeople />
+              Genero
+            </label>
+            <div className="generoDropCheckBox" ref={dropdownRef}>
+              <p onClick={() => SetGeneroDropCheckBox(!generoDropCheckBox)}>
+                Seleccionar <FaAngleDown />
+              </p>
+              {generoDropCheckBox && (
+                <div class="itemsGenero">
+                  {generos.map((genero) => {
+                    return (
+                      <div
+                        className="itemGenero"
+                        onClick={() => {
+                          handleGeneroChange(genero);
+                        }}
+                      >
+                        {genero.nombre}{" "}
+                        {genero.estado ? (
+                          <MdCheckBox />
+                        ) : (
+                          <MdCheckBoxOutlineBlank />
+                        )}
                       </div>
-                      <div className="card-actions">
-                        <Link
-                          to={`/amigos/${amigo.amigo_id}`}
-                          className="btn btn-azul "
-                        >
-                          Ver Perfil
-                        </Link>
-                        {amigo.precio_amigo} Bs/hr
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="ubicacion" className="input-label">
+              <IoLocationSharp /> Ubicación
+            </label>
+            <select
+              id="ubicacion"
+              name="ubicacion"
+              value={values.ubicacion}
+              onChange={handleChange}
+              className="form-select"
+              style={{ boxShadow: "none", border: "1px solid #ced4da" }}
+            >
+              <option value=""></option>
+              {ubicacionesPermitidas.map((ubicacion) => (
+                <option key={ubicacion} value={ubicacion}>
+                  {ubicacion}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="btn-container" style={{ marginLeft: "10px" }}>
+          <button className="btn btn-azul" onClick={ActualizarListaAmigos}>
+            <FaFilter style={{ color: "white" }} /> Filtrar
+          </button>
+        </div>
+      </div>
+      <div className="interesesSeleccionados">
+        {intereses.map((interes) => {
+          if (interes.seleccionado) {
+            return (
+              <div className="burbujaInteres">
+                {interes.nombre}
+                <IoClose
+                  className="cerrarBurbuja"
+                  onClick={() =>
+                    setIntereses(
+                      intereses.map((i) => {
+                        if (i.nombre === interes.nombre) {
+                          return { ...i, seleccionado: !i.seleccionado };
+                        }
+                        return i;
+                      })
+                    )
+                  }
+                />
+              </div>
+            );
+          }
+        })}
+      </div>
+
+      {isFetching ? (
+        <Loading/>
+      ) : (
+        isSuccess && (
+          <div className="container-fluid py-5">
+            <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 g-3">
+              {amigos["amigos"].map((amigo, index) => (
+                <div key={index} className="col">
+                  <div className="card-amigo card card-list">
+                    <div
+                      className="card-header"
+                      style={{
+                        backgroundImage: `url(${
+                          amigo.imagenBase64
+                            ? "data:image/jpeg;base64," + amigo.imagenBase64
+                            : "/images/user.jpeg"
+                        })`,
+                      }}
+                    />
+                    <div className="card-body px-4">
+                      <h5 className="card-title">{amigo.nombre_completo}</h5>
+                      <div className="card-text">
+                        <div className="card-stats">
+                          <div className="text-warning">
+                            {calificacionEstrellas(amigo.calificacion)}
+                          </div>
+                          <div className="card-n-users">
+                            0{" "}
+                            <span>
+                              <FaUser />
+                            </span>
+                          </div>
+                        </div>
+                        <div className="card-actions">
+                          <Link
+                            to={`/amigos/${amigo.amigo_id}`}
+                            className="btn btn-azul "
+                          >
+                            Ver Perfil
+                          </Link>
+                          {amigo.precio_amigo} Bs/hr
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            {Number(n_page) === amigos.numero_paginas && (
+              <p id="mensaje-no-more-results">No existen más resultados</p>
+            )}
+            <nav aria-label="Page navigation example">
+              <ul className="pagination justify-content-center">
+                <li className="page-item">
+                  <Link
+                    className={`page-link ${
+                      Number(n_page) === 1 && "disabled"
+                    }`}
+                    to={`/amigos/page/${
+                      Number(n_page) > 1 ? Number(n_page) - 1 : Number(n_page)
+                    }`}
+                  >
+                    {" "}
+                    {"<"}{" "}
+                  </Link>
+                </li>
+                {Array.from({ length: amigos.numero_paginas }, (_, index) => (
+                  <li
+                    key={index}
+                    className={`pagination-item page-item ${
+                      Number(n_page) === index + 1 && "active"
+                    }`}
+                  >
+                    <Link
+                      className={`page-link ${
+                        Number(n_page) === index + 1 && "bg-azul-fuerte"
+                      }`}
+                      to={`/amigos/page/${index + 1}`}
+                      onClick={goToBeginning}
+                    >
+                      {index + 1}
+                    </Link>
+                  </li>
+                ))}
+                <li className="page-item">
+                  <Link
+                    className={`page-link ${
+                      Number(n_page) === amigos.numero_paginas && "disabled"
+                    }`}
+                    onClick={() => goToBeginning}
+                    to={`/amigos/page/${
+                      Number(n_page) < amigos.numero_paginas
+                        ? Number(n_page) + 1
+                        : Number(n_page)
+                    }`}
+                  >
+                    {">"}
+                  </Link>
+                </li>
+              </ul>
+            </nav>
           </div>
-        </div>
-        {Number(n_page) === amigos.numero_paginas && (
-          <p id="mensaje-no-more-results">No existen más resultados</p>
-        )}
-        <nav aria-label="Page navigation example">
-          <ul className="pagination justify-content-center">
-            <li className="page-item">
-              <Link
-                className={`page-link ${Number(n_page) === 1 && "disabled"}`}
-                to={`/amigos/page/${
-                  Number(n_page) > 1 ? Number(n_page) - 1 : Number(n_page)
-                }`}
-              >
-                {" "}
-                {"<"}{" "}
-              </Link>
-            </li>
-            {Array.from({ length: amigos.numero_paginas }, (_, index) => (
-              <li
-                key={index}
-                className={`pagination-item page-item ${
-                  Number(n_page) === index + 1 && "active"
-                }`}
-              >
-                <Link
-                  className={`page-link ${
-                    Number(n_page) === index + 1 && "bg-azul-fuerte"
-                  }`}
-                  to={`/amigos/page/${index + 1}`}
-                  onClick={goToBeginning}
-                >
-                  {index + 1}
-                </Link>
-              </li>
-            ))}
-            <li className="page-item">
-              <Link
-                className={`page-link ${
-                  Number(n_page) === amigos.numero_paginas && "disabled"
-                }`}
-                onClick={() => goToBeginning}
-                to={`/amigos/page/${
-                  Number(n_page) < amigos.numero_paginas
-                    ? Number(n_page) + 1
-                    : Number(n_page)
-                }`}
-              >
-                {">"}
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    );
-  }
+        )
+      )}
+    </div>
+  );
 };
 
 export default ListaAmigos;
