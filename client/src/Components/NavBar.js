@@ -109,7 +109,7 @@ const NavBar = () => {
                 <>
                   <li><Link className="dropdown-item" to={"/miperfil"}>Mi Perfil</Link></li>
                   <li><Link className={`dropdown-item ${ModeAmigo && ShowMiPerfil ? "" : "hidden"}`} to={"/perfil"}>Volver a modo amigo</Link></li>
-                  <li><Link className={`dropdown-item ${ModeAmigo ? "hidden" : ""}`} to={"/perfil"} onClick={handleChangeModeAmigo}>Cambiar a modo amigo</Link></li>
+                  <li><Link className={`dropdown-item ${ModeAmigo ? "hidden" : ""}`} to={"/cuenta-amigo"} onClick={handleChangeModeAmigo}>Cambiar a modo amigo</Link></li>
                   <li><Link className={`dropdown-item ${ModeAmigo ? "" : "hidden"}`} to={"/amigos/page/1"} onClick={handleChangeModeCliente}>Cambiar a modo cliente</Link></li>
                   <li><hr className="dropdown-divider"/></li>
                   <li><button className="dropdown-item "onClick={handleCloseSession}>Cerrar Sesión</button></li>
