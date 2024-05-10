@@ -1,211 +1,243 @@
 #lista_amigos{
-   scroll-behavior: smooth !important
-}
-
-.rectangle {
-    width: 65%;
-    background-color: #e9ecef;
-    position: relative;
-    display:flex;
-    justify-content: space-around;
-    align-items: center;
-    border-radius: 10px;
-}
-
-.generoDropCheckBox {
- position: relative;
-  cursor: pointer;
-  display: inline-block;
-  padding: 5px 10px;
-}
-
-.nomostraropcionxd {
-    display: none;
-}
-
-.itemsGenero {
-    position: absolute;
-    z-index: 999;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    width: 100%;
-    list-style: none;
-    margin: 0; 
-  padding: 0; 
-}
-
-.itemGenero {
-    display: flex;
-}
-
-.filtrosYBoton {
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-
-}
-.boton{
-    border-radius: 10px;
-}
-.interesesSeleccionados {
-    display: flex;
-    margin: 10px;
-}
-
-.cerrarBurbuja {
-    cursor: pointer;
-}
-
-.burbujaInteres {
-    margin-right: 10px;
-    border: 1px solid gray;
-    border-radius: 10px; 
-    padding: 5px 10px; 
-    background-color: transparent; 
-}
-
-@media (max-width: 768px) {
-    .filtrosYBoton {
-        flex-direction: column;
-    }
-    .rectangle {
-        justify-content: start;
-        flex-direction: column;
-        align-items: start;
-    }
-}
-
-.card-list {
-    position: relative;
-    width: 100%; 
-    max-width: 300px;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.card-list:hover{
-    transform: scale(0.98);
-    box-shadow: 0 0 10px 1px var(--gris);
-}
-
-.card-header {
-    width: 100%;
-    height: 12rem;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-.card-info {
-    text-align: center;
-}
-
-.card-stats {
-    position: relative;
-    width: 100%; 
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 10px;
-}
-
-.card-n-users{
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-.card-n-users span{
-    font-size: 0.7rem;
-    margin-bottom: 3px;
-}
-
-.card-actions {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.col{
-    display: flex;
-    justify-content: center;
-}
-
-.coin-container{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.coin{
-    position: relative;
-    background-color: blue;
-    height: 1.7rem;
-    width: 1.7rem;   
-}
-
-#mensaje-no-more-results{
-    text-align: center;
-    font-size: 2rem;
-    margin: 20px !important;
-}
-.btn-filtrar {
-    font-size: 25px !important; 
-    padding: 12px 20px; 
-    position: flex;
-   
-  }
+    scroll-behavior: smooth !important
+ }
  
-
-.active .page-link{
-    background-color: var(--azul-oscuro);
-}
-
-.btn-ver-perfil{
-    border-radius: 20px !important;
-}
-
-.d-none{
-    display: none;
-}
-.genero {
-    margin-bottom: 20px;
-  }
-  
-  .input-label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .itemsGenero {
-    display: flex;
-    flex-direction: column;
-    width: 100px;
-    background-color: transparent;
-
-  }
-  
-  .itemGenero {
-    margin-bottom: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-  }
-  
-  .itemGenero span {
-    margin-right: 5px;
-  }
-  
-  .itemGenero.selected {
-    background-color: #e0e0e0; 
-  }
-  
-  .itemGenero svg {
-    width: 20px;
-    height: 20px;
-    
-  }
-  
-  
+ .rectangle {
+     width: 65%;
+     background-color: #e9ecef;
+     position: relative;
+     display:flex;
+     justify-content: space-around;
+     align-items: center;
+     border-radius: 10px;
+ }
+ 
+ .generoDropCheckBox {
+  position: relative;
+   cursor: pointer;
+   display: inline-block;
+   padding: 5px 10px;
+ }
+ 
+ .nomostraropcionxd {
+     display: none;
+ }
+ .form-control{
+     width: 80px !important;
+ 
+ }
+ .itemsGenero {
+     position: absolute;
+     z-index: 999;
+     background-color: #fff;
+     border: 1px solid #ccc;
+     width: 100%;
+     list-style: none;
+     margin: 0; 
+   padding: 0; 
+ }
+ 
+ .itemGenero {
+     display: flex;
+ }
+ 
+ .filtrosYBoton {
+     padding: 10px;
+     display: flex;
+     justify-content: space-between;
+ 
+ }
+ .boton{
+     border-radius: 10px;
+ }
+ .interesesSeleccionados {
+     display: flex;
+     margin: 10px;
+ }
+ 
+ .cerrarBurbuja {
+     cursor: pointer;
+ }
+ 
+ .burbujaInteres {
+     margin-right: 10px;
+     border: 1px solid gray;
+     border-radius: 10px; 
+     padding: 5px 10px; 
+     background-color: transparent; 
+ }
+ 
+ @media (max-width: 768px) {
+     .filtrosYBoton {
+         flex-direction: column;
+     }
+     .rectangle {
+         justify-content: start;
+         flex-direction: column;
+         align-items: start;
+     }
+ }
+ 
+ .card-list {
+     position: relative;
+     width: 100%; 
+     max-width: 300px;
+     border-radius: 10px;
+     overflow: hidden;
+ }
+ 
+ .card-list:hover{
+     transform: scale(0.98);
+     box-shadow: 0 0 10px 1px var(--gris);
+ }
+ 
+ .card-header {
+     width: 100%;
+     height: 12rem;
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: contain;
+ }
+ 
+ .card-info {
+     text-align: center;
+ }
+ 
+ .card-stats {
+     position: relative;
+     width: 100%; 
+     display: flex;
+     gap: 1rem;
+     margin-bottom: 10px;
+ }
+ 
+ .card-n-users{
+     display: flex;
+     align-items: center;
+     gap: 0.3rem;
+ }
+ 
+ .card-n-users span{
+     font-size: 0.7rem;
+     margin-bottom: 3px;
+ }
+ 
+ .card-actions {
+     position: relative;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     width: 100%;
+ }
+ 
+ .col{
+     display: flex;
+     justify-content: center;
+ }
+ 
+ .coin-container{
+     position: relative;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+ 
+ .coin{
+     position: relative;
+     background-color: blue;
+     height: 1.7rem;
+     width: 1.7rem;   
+ }
+ 
+ #mensaje-no-more-results{
+     text-align: center;
+     font-size: 2rem;
+     margin: 20px !important;
+ }
+ .btn-filtrar {
+     font-size: 15px !important; 
+     padding: 12px 20px ; 
+     position: flex;
+     
+       
+   }
+ .btn-container{
+     justify-content: space-around;
+ }
+ .active .page-link{
+     background-color: var(--azul-oscuro);
+ }
+ 
+ .btn-ver-perfil{
+     border-radius: 20px !important;
+ }
+ 
+ .d-none{
+     display: none;
+ }
+ .form-group {
+   margin-bottom: 20px;
+ }
+ 
+ .input-label {
+   display: block;
+   font-weight: bold;
+ }
+ 
+ .generoDropCheckBox {
+   position: relative;
+ }
+ 
+ .generoDropCheckBox > div:first-child {
+   cursor: pointer;
+   display: inline-block;
+ }
+ 
+ .itemsGenero {
+   position: absolute;
+   top: 100%;
+   left: 0;
+   background-color: #fff;
+   border: 1px solid #ccc;
+   padding: 10px;
+   min-width: 150px;
+   z-index: 10;
+   border-radius: 20px !important;
+ }
+ 
+ .itemGenero {
+   cursor: pointer;
+   padding: 5px;
+ }
+ 
+ .itemGenero:hover {
+   background-color: #f0f0f0;
+ }
+ 
+ .itemGenero.selected {
+   font-weight: bold;
+ }
+ 
+ .itemGenero:last-child {
+   margin-bottom: 0;
+ }
+ 
+   
+   .precio-container {
+     display: flex;
+     align-items: center;
+   }
+   
+   .precio-container .input-label {
+     margin-right: 10px; 
+   }
+   
+   .precio-container .precios {
+     display: flex;
+     align-items: center;
+   }
+   
+   .precio-container .precios span {
+     margin: 0 10px; 
+   }
+   
