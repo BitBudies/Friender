@@ -107,3 +107,27 @@ class ClientePorGeneroToken(APIView):
         ).distinct()
         serializer = ClienteSerializer(clientes, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    
+class ClienteFiltroToken(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request):
+        genero = request.data.get('genero')  
+        edadMin = request.data.get('edad_min')  
+        edadMax = request.data.get('edad_max')  
+        direccion = request.data.get('ubicacion')  
+        
+        clientes = Cliente.objects.all()
+        if genero:
+            clientes = clientes.filter(genero=genero)
+        if edadMin and edadMax:
+            fecha_nacimiento_mas_tardia = date.today().replace(year=date.today().year - int(edadMin))
+            fecha_nacimiento_mas_temprana = date.today().replace(year=date.today().year - int(edadMax))
+            clientes = clientes.filter(fecha_nacimiento__range=(fecha_nacimiento_mas_temprana, fecha_nacimiento_mas_tardia))
+        if direccion:
+            clientes = clientes.filter(direccion=direccion)
+
+        serializer = ClienteSerializer(clientes, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
