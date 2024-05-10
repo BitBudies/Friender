@@ -142,3 +142,15 @@ class InteresToken(APIView):
         clientes = [ci.cliente for ci in clientes_interes]
         serializer = ClienteSerializer(clientes, many=True)
         return Response(serializer.data)
+    
+class PrecioToken(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, *args, **kwargs):
+        precioMin = request.data.get('precio_min')
+        precioMax = request.data.get('precio_max')
+        precio_amigo = Amigo.objects.filter(precio__range=(precioMin, precioMax))
+        clientes = [amigo.cliente for amigo in precio_amigo]
+        serializer = ClienteSerializer(clientes, many=True)
+        return Response(serializer.data)
