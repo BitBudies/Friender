@@ -54,7 +54,7 @@ const HabilitarAmigo = () => {
     return(
       <div className="habilitar-amigo">
         <div className="habilitar-amigo-container">
-          <h1>{isEnabled ? "Cuenta Como Amigo Habilitada" : "Habilitar Cuenta Como Amigo"}</h1>
+          <h1>{isEnabled.data ? "Cuenta Como Amigo Habilitada" : "Habilitar Cuenta Como Amigo"}</h1>
           <div className="habilitar-form">
             <div className="input-item">
               <label htmlFor="precio">Precio por hora (en Bs).</label>
@@ -70,7 +70,7 @@ const HabilitarAmigo = () => {
             </div>
             <div className="btns">
             {
-                isEnabled ? (
+                isEnabled.data ? (
                     <>
                          <button className='btn btn-azul'>Cambiar Precio</button>
                     <button
