@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef} from "react";
 import { Link, useParams } from "react-router-dom";
 import "./listaAmigos.css";
 import Loading from "../../Components/Loading";
@@ -108,6 +108,21 @@ const ListaAmigos = () => {
     );
   }, [interesesSeleccionados]);
 
+  const dropdownRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        // Click fuera del dropdown, cerrar
+        SetGeneroDropCheckBox(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
+
   if (isFetching) {
     return <Loading />;
   } else if (isSuccess) {
@@ -176,11 +191,12 @@ const ListaAmigos = () => {
                       })
                     }
                   />
-                  <span> - </span>
+                  <p>-</p>
                   <input
                     type="text"
                     placeholder="Max"
                     className="form-control"
+                    style={{ marginLeft: '0' }}
                     value={values.precio.max}
                     onChange={(e) =>
                       setValues({
@@ -198,7 +214,7 @@ const ListaAmigos = () => {
                 <IoPeople />
                 Genero
               </label>
-              <div className="generoDropCheckBox">
+              <div className="generoDropCheckBox" ref={dropdownRef}>
                 <p onClick={() => SetGeneroDropCheckBox(!generoDropCheckBox)}>
                   Seleccionar <FaAngleDown/>
                 </p>
