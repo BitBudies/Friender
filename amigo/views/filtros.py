@@ -6,7 +6,7 @@ from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework import status
 from amigo.serializers.cliente_serializer import ClienteSerializer
-from ..models import Cliente , ClienteInteres, Amigo, Calificacion, Fotografia
+from ..models import Cliente , ClienteInteres, Amigo, Calificacion, Fotografia,interes
 from datetime import date
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -15,7 +15,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from django.db.models import Avg
 from django.core.paginator import Paginator
 import base64
-
+from django.db.models import Count
 #por tablas
 class ClientePorGenero(APIView):
     def post(self, request):
@@ -49,13 +49,37 @@ class ClienteFiltro(APIView):
         serializer = ClienteSerializer(clientes, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+# class Interes(APIView):
+#     def post(self, request, *args, **kwargs):
+#         interes = request.data.get('interes')
+        
+#         clientes_interes = ClienteInteres.objects.filter(interes__nombre__in=interes)
+#         clientes = [ci.cliente for ci in clientes_interes]
+#         serializer = ClienteSerializer(clientes, many=True)
+#         return Response(serializer.data)
+
+#filtro exacto
 class Interes(APIView):
     def post(self, request, *args, **kwargs):
-        interes = request.data.get('interes')
-        clientes_interes = ClienteInteres.objects.filter(interes__nombre__in=interes)
-        clientes = [ci.cliente for ci in clientes_interes]
+        intereses = request.data.get('interes')
+        clientes = Cliente.objects.all()
+
+        for interes in intereses:
+            clientes = clientes.filter(clienteinteres__interes__nombre=interes)
+
         serializer = ClienteSerializer(clientes, many=True)
         return Response(serializer.data)
+    
+
+# class Interes(APIView):
+#     def post(self, request, *args, **kwargs):
+#         intereses = request.data.get('interes')
+#         clientes = Cliente.objects.annotate(
+#             num_intereses=Count('clienteinteres', filter=Q(clienteinteres__interes__nombre__in=intereses))
+#         ).filter(num_intereses=len(intereses))
+
+#         serializer = ClienteSerializer(clientes, many=True)
+#         return Response(serializer.data)
 
 class Precio(APIView):
     def post(self, request, *args, **kwargs):
@@ -191,11 +215,11 @@ class FiltroTotalToken(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     
-class FiltroPaginacion(APIView):
-    @api_view(["POST"])
-    @authentication_classes([TokenAuthentication])
-    @permission_classes([IsAuthenticated])
-    def AmigoListLimitPaginator(request, page_number=1, limite=10):
+#class FiltroPaginacion(APIView):
+@api_view(["POST"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def AmigoListLimitPaginator(request, page_number=1, limite=10):
         genero = request.data.get('genero')  
         edadMin = request.data.get('edad_min')  
         edadMax = request.data.get('edad_max')  
