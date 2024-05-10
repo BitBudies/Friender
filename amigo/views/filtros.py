@@ -215,10 +215,11 @@ class FiltroTotalToken(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 #class FiltroPaginacion(APIView):
-@api_view(["GET"])
+@api_view(["POST"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def AmigoListLimitPaginator(request, page_number=1, limite=10):
+        print(request.data)
         genero = request.data.get('genero')  
         edadMin = request.data.get('edad_min')  
         edadMax = request.data.get('edad_max')  
