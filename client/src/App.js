@@ -27,6 +27,7 @@ import { useCookies } from "react-cookie";
 import PerfilCliente from './features/cliente/PerfilCliente';
 import SolicitudesAceptadas from './features/solicitudes/SolicitudesAceptadas';
 import useGetToken from './hooks/getToken';
+import { useIsEnabledFriendModeQuery } from './features/cliente/clienteSlice';
 
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
   // const [cookies] = useCookies(["token"]);
   // const token = cookies.token;
   const token = useGetToken();
-  const {clientId,setUserData,setClientId} = useGlobalContext();
+  const {clientId,setUserData,setClientId,setIsFriendModeEnabled} = useGlobalContext();
 
   const {
     data,
@@ -42,18 +43,23 @@ function App() {
     isUninitialized
   } = useGetClienteInfoQuery(token);
 
+  const {
+    data: isEnabled,
+    isFetching :fetching,
+    isSuccess : success,
+  } = useIsEnabledFriendModeQuery({ token: token });
+
   const isAuthenticated = useIsAuthenticated();
 
   useEffect(() => {
     if(isAuthenticated){
       if(!isFetching && !isUninitialized){
         setUserData(data)  
-        console.log(data); 
-        // setClientId(data.cliente_id) 
+        setIsFriendModeEnabled(isEnabled.data)
       }
     }
     
-  },[data, isAuthenticated, isFetching, isUninitialized, setUserData, clientId, setClientId])
+  },[data, isAuthenticated, isFetching, isUninitialized, setUserData, clientId, setClientId, setIsFriendModeEnabled, isEnabled.data])
 
   if(isFetching){
     return <Loading/>

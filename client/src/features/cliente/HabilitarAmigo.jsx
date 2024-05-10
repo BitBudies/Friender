@@ -3,18 +3,19 @@ import "./habilitarAmigo.css"
 import { useEnableFriendModeMutation, useIsEnabledFriendModeQuery } from './clienteSlice';
 import useGetToken from '../../hooks/getToken';
 import Loading from '../../Components/Loading';
+import { useGlobalContext } from '../../context';
 
 
 const HabilitarAmigo = () => {
   const [precio, setPrecio] = useState(0);
   const [isEnabledBtn,setIsEnabledBtn] = useState(true);
   const token = useGetToken();
-
-  const {
-    data: isEnabled,
-    isFetching,
-    isSuccess,
-  } = useIsEnabledFriendModeQuery({ token: token });
+  const {isFriendModeEnabled} = useGlobalContext()
+  // const {
+  //   data: isEnabled,
+  //   isFetching,
+  //   isSuccess,
+  // } = useIsEnabledFriendModeQuery({ token: token });
 
   const [
     enable,
@@ -30,11 +31,10 @@ const HabilitarAmigo = () => {
     }
   }, [isError, enabled, isSuccessEnable, error]);
 
-  if (isFetching ) {
-    return <Loading />
-  } else if (isSuccessEnable) {
+ 
+   if (isSuccessEnable) {
     return <p>Registrado correctamente como amigo (lo cambiamos de modo ? (´▽`ʃ♡ƪ))</p>
-  } else if (isSuccess) {
+  } else {
     const handleChange = (e) => {
       let value = e.target.value;
       if (value < 0 || value > 150) return;
@@ -43,7 +43,7 @@ const HabilitarAmigo = () => {
 
     const handleSubmit = async () => {
         setIsEnabledBtn(false);
-        if(!isEnabled){
+        if(!isFriendModeEnabled){
             await enable({ token: token, precio: precio });
 
         }else{
@@ -54,7 +54,7 @@ const HabilitarAmigo = () => {
     return(
       <div className="habilitar-amigo">
         <div className="habilitar-amigo-container">
-          <h1>{isEnabled ? "Cuenta Como Amigo Habilitada" : "Habilitar Cuenta Como Amigo"}</h1>
+          <h1>{isFriendModeEnabled? "Cuenta Como Amigo Habilitada" : "Habilitar Cuenta Como Amigo"}</h1>
           <div className="habilitar-form">
             <div className="input-item">
               <label htmlFor="precio">Precio por hora (en Bs).</label>
@@ -70,7 +70,7 @@ const HabilitarAmigo = () => {
             </div>
             <div className="btns">
             {
-                isEnabled ? (
+                isFriendModeEnabled ? (
                     <>
                          <button className='btn btn-azul'>Cambiar Precio</button>
                     <button
