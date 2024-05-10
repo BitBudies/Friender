@@ -182,9 +182,9 @@ def ClienteEsAmigo(request):
     cliente = get_object_or_404(Cliente, user=user)
 
     if Amigo.objects.filter(cliente=cliente).exists():
-        return Response({"data": False}, status=status.HTTP_200_OK)
+        return Response({"data": True}, status=status.HTTP_200_OK)
     
-    return Response({"data":True}, status=status.HTTP_200_OK)
+    return Response({"data":False}, status=status.HTTP_200_OK)
 
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])
