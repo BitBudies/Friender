@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from django.shortcuts import get_object_or_404
+from datetime import datetime
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -14,6 +15,7 @@ def ObtenerListaDeSolicitudes(request ):
     solicitudes_aceptadas = solicitud_alquiler.objects.filter(amigo=amigo, estado_solicitud='A')
 
     data = []
+    now = datetime.now()
     for solicitud in solicitudes_aceptadas:
         calificacion_cliente = Calificacion.objects.filter(cliente=solicitud.cliente).first()
         solicitud_info = {
