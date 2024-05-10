@@ -12,7 +12,7 @@ from amigo.models.fotografiaDB import Fotografia
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def ObtenerListaDeSolicitudes(request ):
+def ObtenerListaDeSolicitudes(request):
     user = request.user
     amigo = get_object_or_404(Amigo, cliente__user=user)
     solicitudes_aceptadas = solicitud_alquiler.objects.filter(amigo=amigo, estado_solicitud='A')
@@ -26,8 +26,7 @@ def ObtenerListaDeSolicitudes(request ):
     for solicitud in solicitudes_ordenadas:
         if solicitud.fecha_inicio > now.date() or (solicitud.fecha_inicio == now.date() and solicitud.hora_inicio > now.time()):
             calificacion_cliente = Calificacion.objects.filter(cliente=solicitud.cliente).first()
-            # Obtener imágenes del cliente
-            imagenes = obtener_primera_imagen_cliente(amigo.cliente)
+            primera_imagen = obtener_primera_imagen_cliente(amigo.cliente)
             solicitud_info = {
                 'cliente': solicitud.cliente.nombre,
                 'calificacion': calificacion_cliente.puntuacion if calificacion_cliente else 0,
@@ -35,7 +34,7 @@ def ObtenerListaDeSolicitudes(request ):
                 'hora': solicitud.hora_inicio,
                 "duracion": solicitud.minutos,
                 'ubicacion': solicitud.lugar,
-                "imagenes": imagenes
+                "imagen": primera_imagen  # Aquí solo se envía la primera imagen
             }
             data.append(solicitud_info)
 
