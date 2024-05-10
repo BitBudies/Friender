@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from django.shortcuts import get_object_or_404
 from datetime import datetime
+from django.db.models import F
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -14,8 +15,12 @@ def ObtenerListaDeSolicitudes(request ):
     amigo = get_object_or_404(Amigo, cliente__user=user)  # Modificado para obtener el amigo del usuario
     solicitudes_aceptadas = solicitud_alquiler.objects.filter(amigo=amigo, estado_solicitud='A')
 
-    data = []
     now = datetime.now()
+    solicitudes_ordenadas = solicitudes_aceptadas.annotate(
+        fecha_hora_inicio=F('fecha_inicio') + F('hora_inicio')
+    ).order_by('fecha_hora_inicio')
+
+    data = []
     for solicitud in solicitudes_aceptadas:
         if solicitud.fecha_inicio > now.date() or (solicitud.fecha_inicio == now.date() and solicitud.hora_inicio > now.time()):
             calificacion_cliente = Calificacion.objects.filter(cliente=solicitud.cliente).first()
