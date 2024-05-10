@@ -108,7 +108,7 @@ urlpatterns = [
     
     
     #filtros
-    path('api/filtros/femenino', ClientePorGenero.as_view(), name='filtro_femenino'),
+    path('api/filtros/genero', ClientePorGenero.as_view(), name='filtro_femenino'),
     path('api/filtros/cliente', ClienteFiltro.as_view(), name='filtro_cliente'),
     path('api/filtros/interes', Interes.as_view(), name='filtro_interes'),
     path('api/filtros/precio', Precio.as_view()),
