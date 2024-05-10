@@ -23,21 +23,23 @@ const SolicitudesAceptadas = () => {
         </div>
         <div className='aceptadas'>
           {
-            data.solicitudes.map((solicitud) => {
+            data.solicitudes_recibidas.length>0 ? 
+            data.solicitudes_recibidas.map((solicitud) => {
               return (
                 <>
                   <SolicitudAceptada 
-                    imagenBase64={logo}
-                    nombre_cliente={solicitud.cliente}
-                    fecha_inicio={solicitud.fecha}
-                    hora_inicio={solicitud.hora}
-                    lugar={solicitud.ubicacion}
+                    imagenBase64={solicitud.imagenes[0].imagenBase64}
+                    nombre_cliente={solicitud.nombre_cliente}
+                    fecha_inicio={solicitud.fecha_inicio}
+                    hora_inicio={solicitud.hora_inicio}
+                    lugar={solicitud.lugar}
                     solicitud_aceptada_id={4}
                     duracion={solicitud.duracion}
                   />
                 </>
               )
             })
+            : <p>Upss no tienes Encuentros Programados</p>
           }
         </div>
       </div>
