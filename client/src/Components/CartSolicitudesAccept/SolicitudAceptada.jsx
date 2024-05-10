@@ -48,11 +48,14 @@ const SolicitudAceptada = ( {imagenBase64,
             </div>
           </div>
 
-          <div className="card-item">
-            <span>
-              <FaMapMarkerAlt />
-            </span>
-            <p>{lugar}</p>
+          <div className="card-item-aceptadas">
+            <div>
+              <span>
+                <FaMapMarkerAlt />
+              </span>
+              <span>{lugar}</span>
+            </div>
+            <p>{duracion} Hrs</p>
           </div>
           <div className="d-flex justify-content-between align-items-center solicitud-footer">
             {/* <Link
@@ -63,7 +66,7 @@ const SolicitudAceptada = ( {imagenBase64,
             >
               Ver Perfil
             </Link> */}
-            <p>{duracion} Hrs</p>
+            
           </div>
         </div>
       </div>

@@ -20,7 +20,7 @@ const optionsData = [
   },
   {
     id:2,
-    name: 'Encuentros aceptados',
+    name: 'Encuentros Programados',
     toRender: <SolicitudesAceptadas/>
   },
   {
