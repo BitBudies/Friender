@@ -11,9 +11,9 @@ const SolicitudesPendientes = () => {
   const token = cookies.token;
   const { data, isFetching, isSuccess } = useGetSolicitudesQuery(token);
 
-  useEffect(() => {
-    console.log(data, isFetching, isSuccess);
-  }, [data, isFetching, isSuccess]);
+  // useEffect(() => {
+  //   console.log(data, isFetching, isSuccess);
+  // }, [data, isFetching, isSuccess]);
 
   if (isFetching) {
     return <Loading />;

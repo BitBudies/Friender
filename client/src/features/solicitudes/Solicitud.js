@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { pictures } from "../api/pictures";
 
 const Solicitud = ({ solicitud, index }) => {
-  console.log(solicitud, "Solicitud");
+  // console.log(solicitud, "Solicitud");
 
   function formatFecha(fecha) {
     const [year, month, day] = fecha.split("-");

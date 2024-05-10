@@ -12,9 +12,6 @@ const SolicitudesAceptadas = () => {
   const [cookies] = useCookies(["token"]);
   const {data, isFetching, isSuccess} = useGetSolicitudesAceptadasQuery(cookies.token)
 
-  if (isSuccess){
-    console.log(data.solicitudes)
-  }
   if (isFetching){
     return <Loading />
   } else if (isSuccess){

@@ -12,7 +12,11 @@ const SolicitudAceptada = ( {imagenBase64,
                             solicitud_aceptada_id,
                             duracion} ) => { 
  
-
+  function formatFecha(fecha) {
+    const [year, month, day] = fecha.split("-");
+    return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${year}`;
+  }
+                              
   return (
     <div className="col-container ">
       <div className="solicitud-aceptada-card ">
@@ -38,7 +42,7 @@ const SolicitudAceptada = ( {imagenBase64,
               <span>
                 <FaCalendarAlt />
               </span>
-              <p>{fecha_inicio}</p>
+              <p>{formatFecha(fecha_inicio)}</p>
             </div>
             <div className="card-item">
               <span>

@@ -17,11 +17,10 @@ const NavBar = () => {
 
   const {data, isFetching, isSuccess} = useGetEsAmigoQuery(cookies.token)
   
-  
-  if (isSuccess){
-    console.log("este usuario se registro como amigo?")
-    console.log(data.data)
-  }
+  // if (isSuccess){
+  //   console.log("este usuario se registro como amigo?")
+  //   console.log(data.data)
+  // }
 
   const navigate = useNavigate();
 
