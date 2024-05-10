@@ -43,7 +43,7 @@ const HabilitarAmigo = () => {
 
     const handleSubmit = async () => {
         setIsEnabledBtn(false);
-        if(!isEnabled){
+        if(!isEnabled.data){
             await enable({ token: token, precio: precio });
 
         }else{
