@@ -42,15 +42,6 @@ const SolicitudesAceptadas = () => {
               )
             })
           }
-          <SolicitudAceptada 
-              imagenBase64={logo}
-              nombre_cliente={data.solicitudes[0].cliente}
-              fecha_inicio={data.solicitudes[0].fecha}
-              hora_inicio={data.solicitudes[0].hora}
-              lugar={data.solicitudes[0].ubicacion}
-              solicitud_aceptada_id={4}
-              duracion={data.solicitudes[0].duracion}
-          />
         </div>
       </div>
     )
