@@ -81,3 +81,8 @@
       flex-wrap: wrap;
     }
   }
+
+  .mi-perfil-centro {
+    display: flex;
+    align-content: center;
+  }

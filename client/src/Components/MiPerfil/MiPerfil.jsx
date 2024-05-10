@@ -85,7 +85,10 @@ const MiPerfil = () => {
           </div>
 
           <div className="perfil-amigo-right">
-            <h1>Mi Perfil</h1>
+            <div className='mi-perfil-centro'>
+              <h1>Mi Perfil</h1>
+            </div>
+            
             <p>
                 <strong>Mis Intereses</strong>
               </p>

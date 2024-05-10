@@ -72,7 +72,7 @@ urlpatterns = [
     # Amigo
     path('api/amigo/<int:amigo_id>/', AmigoDetailById),
     path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator),
-    path('api/amigo/solicitudes-aceptadas/', ObtenerListaDeSolicitudes),
+    path('api/amigo/solicitudes-aceptadas', ObtenerListaDeSolicitudes),
     path('api/amigo/precio', PrecioAmiwo),
     path('api/registraramigo', RegistrarAmigo),
     path('api/clienteesamigo', ClienteEsAmigo),
