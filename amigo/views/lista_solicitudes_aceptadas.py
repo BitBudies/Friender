@@ -27,7 +27,7 @@ def ObtenerListaDeSolicitudes(request ):
         if solicitud.fecha_inicio > now.date() or (solicitud.fecha_inicio == now.date() and solicitud.hora_inicio > now.time()):
             calificacion_cliente = Calificacion.objects.filter(cliente=solicitud.cliente).first()
             # Obtener imágenes del cliente
-            imagenes = obtener_imagenes_cliente(amigo.cliente)
+            imagenes = obtener_primera_imagen_cliente(amigo.cliente)
             solicitud_info = {
                 'cliente': solicitud.cliente.nombre,
                 'calificacion': calificacion_cliente.puntuacion if calificacion_cliente else 0,
@@ -42,15 +42,15 @@ def ObtenerListaDeSolicitudes(request ):
     response_data = {'solicitudes': data}
 
     return JsonResponse(response_data, safe=False)
-def obtener_imagenes_cliente(cliente):
-    imagenes = []
-    fotografiaCliente = Fotografia.objects.filter(cliente=cliente, estado_fotografia='F').order_by('prioridad')
-    for fotografia in fotografiaCliente:
+
+def obtener_primera_imagen_cliente(cliente):
+    fotografia_primera = Fotografia.objects.filter(cliente=cliente, estado_fotografia='F').order_by('prioridad').first()
+    if fotografia_primera:
         imagenBase64 = None
-        if fotografia.imagenBase64:
-            imagenBase64 = base64.b64encode(fotografia.imagenBase64).decode("utf-8")
-        imagenes.append({
+        if fotografia_primera.imagenBase64:
+            imagenBase64 = base64.b64encode(fotografia_primera.imagenBase64).decode("utf-8")
+        return {
             "imagenBase64": imagenBase64,
-            "prioridad": fotografia.prioridad
-        })
-    return imagenes 
+            "prioridad": fotografia_primera.prioridad
+        }
+    return None
