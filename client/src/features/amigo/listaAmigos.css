@@ -22,10 +22,7 @@
  .nomostraropcionxd {
      display: none;
  }
- .form-control{
-     width: 80px !important;
  
- }
  .itemsGenero {
      position: absolute;
      z-index: 999;
