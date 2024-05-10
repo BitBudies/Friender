@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link, useAsyncError, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./listaAmigos.css";
-import { useGetAmigosQuery } from "./amigoSlice";
 import Loading from "../../Components/Loading";
-import { FaUser } from "react-icons/fa";
+import { useGetAmigosQuery } from "./amigoSlice";
+import { FaUser, FaFilter, FaAngleDown, FaAngleUp } from "react-icons/fa";
+import {
+  MdInterests,
+  MdOutlineAttachMoney,
+  MdCheckBoxOutlineBlank,
+  MdCheckBox,
+} from "react-icons/md";
+import { BsCalendarRange } from "react-icons/bs";
+import { IoPeople, IoLocationSharp, IoClose } from "react-icons/io5";
 import { useGlobalContext } from "../../context";
 import { useCookies } from "react-cookie";
-import { MdInterests, MdOutlineAttachMoney } from "react-icons/md";
-import { BsCalendarRange } from "react-icons/bs";
-import { IoLocationSharp, IoClose } from "react-icons/io5";
-import { IoIosPeople } from "react-icons/io";
-import { FaFilter, FaAngleDown, FaAngleUp } from "react-icons/fa";
-import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
 
 const calificacionEstrellas = (calificacion) => {
   const numEstrellas = Math.round(calificacion);
@@ -111,8 +113,8 @@ const ListaAmigos = () => {
   } else if (isSuccess) {
     return (
       <div id="lista_amigos" className="page bg-light" ref={pageRef}>
-        <div className="filtrosYBoton   d-flex justify-content-center">
-          <div className="rectangle " style={{ height: '80px' }}>
+        <div className="filtrosYBoton d-flex justify-content-center">
+          <div className="rectangle">
             <div>
               <label htmlFor="intereses" className="input-label">
                 <MdInterests />
@@ -124,7 +126,6 @@ const ListaAmigos = () => {
                 value={values.intereses}
                 onChange={handleChange}
                 className="form-select"
-                
               >
                 {interesesPermitidos.map((interes) => (
                   <option key={interes} value={interes}>
@@ -157,50 +158,56 @@ const ListaAmigos = () => {
             </div>
 
             <div>
-           
-          <label htmlFor="precio" className="input-label input-item">
-            <MdOutlineAttachMoney />
-            Precio
-          </label>
-          <div className="precio-container">
-          <div className="precios">
-            <input
-              type="text"
-              placeholder="Min"
-              className="form-control"
-              value={values.precio.min}
-              onChange={(e) =>
-                setValues({ ...values, precio: { ...values.precio, min: e.target.value } })
-              }
-            />
-            <span> - </span>
-            <input
-              type="text"
-              placeholder="Max"
-              className="form-control"
-              value={values.precio.max}
-              onChange={(e) =>
-                setValues({ ...values, precio: { ...values.precio, max: e.target.value } })
-              }
-            />
-            </div>
-          </div>
-        </div>
-        
-            <div className="genero input-label input-item">
-              <span><IoIosPeople />Genero</span>
-              <div className="generoDropCheckBox form-control 1">
-                <div onClick={() => SetGeneroDropCheckBox(!generoDropCheckBox)}>
-                 -----{generoDropCheckBox ? <FaAngleUp /> : <FaAngleDown />}
+              <label htmlFor="precio" className="input-label input-item">
+                <MdOutlineAttachMoney />
+                Precio
+              </label>
+              <div className="precio-container">
+                <div className="precios">
+                  <input
+                    type="text"
+                    placeholder="Min"
+                    className="form-control"
+                    value={values.precio.min}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        precio: { ...values.precio, min: e.target.value },
+                      })
+                    }
+                  />
+                  <span> - </span>
+                  <input
+                    type="text"
+                    placeholder="Max"
+                    className="form-control"
+                    value={values.precio.max}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        precio: { ...values.precio, max: e.target.value },
+                      })
+                    }
+                  />
                 </div>
+              </div>
+            </div>
+
+            <div>
+              <label className="input-label input-item">
+                <IoPeople />
+                Genero
+              </label>
+              <div className="generoDropCheckBox">
+                <p onClick={() => SetGeneroDropCheckBox(!generoDropCheckBox)}>
+                  Seleccionar <FaAngleDown/>
+                </p>
                 {generoDropCheckBox && (
-                  <div class="itemsGenero ">
-                  
+                  <div class="itemsGenero">
                     {generos.map((genero) => {
                       return (
                         <div
-                          className="itemGenero "
-                          
+                          className="itemGenero"
                           onClick={() => {
                             handleGeneroChange(genero);
                           }}
@@ -218,8 +225,8 @@ const ListaAmigos = () => {
                 )}
               </div>
             </div>
+
             <div>
-                
               <label htmlFor="ubicacion" className="input-label">
                 <IoLocationSharp /> Ubicación
               </label>
@@ -239,11 +246,11 @@ const ListaAmigos = () => {
               </select>
             </div>
           </div>
-          <div className="btn-container" style={{ marginLeft: '10px' }}>
-          <button className="btn btn-azul">
-            <FaFilter /> Filtrar
-          </button>
-        </div>
+          <div className="btn-container" style={{ marginLeft: "10px" }}>
+            <button className="btn btn-azul">
+              <FaFilter style={{ color: "white" }} /> Filtrar
+            </button>
+          </div>
         </div>
         <div className="interesesSeleccionados">
           {interesesSeleccionados.map((interes) => (
@@ -251,12 +258,15 @@ const ListaAmigos = () => {
               {interes}{" "}
               <IoClose
                 className="cerrarBurbuja"
-                onClick={() => setInteresesSeleccionados(interesesSeleccionados.filter((i) => i !== interes))}
+                onClick={() =>
+                  setInteresesSeleccionados(
+                    interesesSeleccionados.filter((i) => i !== interes)
+                  )
+                }
               />
             </div>
           ))}
         </div>
-
         <div className="container-fluid py-5">
           <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 g-3">
             {amigos["amigos"].map((amigo, index) => (
@@ -287,7 +297,10 @@ const ListaAmigos = () => {
                         </div>
                       </div>
                       <div className="card-actions">
-                        <Link to={`/amigos/${amigo.amigo_id}`} className="btn btn-azul ">
+                        <Link
+                          to={`/amigos/${amigo.amigo_id}`}
+                          className="btn btn-azul "
+                        >
                           Ver Perfil
                         </Link>
                         {amigo.precio_amigo} Bs/hr
@@ -299,7 +312,6 @@ const ListaAmigos = () => {
             ))}
           </div>
         </div>
-
         {Number(n_page) === amigos.numero_paginas && (
           <p id="mensaje-no-more-results">No existen más resultados</p>
         )}
