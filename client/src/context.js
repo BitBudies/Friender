@@ -6,12 +6,12 @@ const AppProvider = ({ children }) => {
 
   const [clientId, setClientId] = useState('0');
   const [userData,setUserData] = useState({});
+  const [isFriendModeEnabled,setIsFriendModeEnabled] = useState(false);
   const [alert,setAlert] = useState({status: false, message: 'Mensaje de prueba',type : 'success'});
   const pageRef = useRef();
   
 
   const goToBeginning = () => {
-    console.log(pageRef.current.scrollTop,"pressing");
     pageRef.current.scrollTop = 0;
 }
 
@@ -28,7 +28,11 @@ const AppProvider = ({ children }) => {
   },[userData])
 
   return (
-    <AppContext.Provider value={{ clientId, setClientId,userData,setUserData,alert,showAlert,pageRef,goToBeginning }}>
+    <AppContext.Provider value={{ clientId, 
+    setClientId,
+    userData,
+    setUserData,alert,showAlert,pageRef,goToBeginning,
+    isFriendModeEnabled,setIsFriendModeEnabled }}>
       {children}
     </AppContext.Provider>
   );
