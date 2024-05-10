@@ -7,6 +7,7 @@ from rest_framework.authentication import TokenAuthentication
 from django.shortcuts import get_object_or_404
 from datetime import datetime
 from django.db.models import F
+from amigo.models.fotografiaDB import Fotografia
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -38,3 +39,9 @@ def ObtenerListaDeSolicitudes(request ):
 
     return JsonResponse(response_data, safe=False)
 
+def obtener_imagenes_cliente(cliente):
+    imagenes = []
+    fotografiaCliente = Fotografia.objects.filter(cliente=cliente, estado_fotografia='F').order_by('prioridad')
+    for fotografia in fotografiaCliente:
+        imagenBase64 = None
+    return imagenes 
