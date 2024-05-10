@@ -131,3 +131,14 @@ class ClienteFiltroToken(APIView):
 
         serializer = ClienteSerializer(clientes, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class InteresToken(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, *args, **kwargs):
+        interes = request.data.get('interes')
+        clientes_interes = ClienteInteres.objects.filter(interes__nombre__in=interes)
+        clientes = [ci.cliente for ci in clientes_interes]
+        serializer = ClienteSerializer(clientes, many=True)
+        return Response(serializer.data)
