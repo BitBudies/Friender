@@ -213,10 +213,9 @@ class FiltroTotalToken(APIView):
         
         serializer = ClienteSerializer(clientes, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    
+
 #class FiltroPaginacion(APIView):
-@api_view(["POST"])
+@api_view(["GET"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def AmigoListLimitPaginator(request, page_number=1, limite=10):

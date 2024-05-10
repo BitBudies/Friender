@@ -19,7 +19,7 @@ from django.urls import path
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator, ClienteEsAmigo, RegistrarAmigo, PrecioAmiwo
+from amigo.views.amigo_views import AmigoDetailById, ClienteEsAmigo, RegistrarAmigo, PrecioAmiwo
 from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, RegistrarCliente,VerificarCorreoUsuario, EnviarCodigos, VerificarCodigo, obtenerInformacionCliente
 from amigo.views.edicion_views import cambiarContrasena, enviarCorreoCambioContrasena, findEmail, verificarCodigoToken
 from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef
