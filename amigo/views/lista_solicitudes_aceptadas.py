@@ -29,6 +29,7 @@ def ObtenerListaDeSolicitudes(request ):
                 'calificacion': calificacion_cliente.puntuacion if calificacion_cliente else None,
                 'fecha': solicitud.fecha_inicio,
                 'hora': solicitud.hora_inicio,
+                "duracion": solicitud.minutos,
                 'ubicacion': solicitud.lugar
             }
             data.append(solicitud_info)
