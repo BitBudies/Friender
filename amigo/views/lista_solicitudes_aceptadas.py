@@ -14,7 +14,7 @@ from amigo.models.fotografiaDB import Fotografia
 @permission_classes([IsAuthenticated])
 def ObtenerListaDeSolicitudes(request ):
     user = request.user
-    amigo = get_object_or_404(Amigo, cliente__user=user)  # Modificado para obtener el amigo del usuario
+    amigo = get_object_or_404(Amigo, cliente__user=user)
     solicitudes_aceptadas = solicitud_alquiler.objects.filter(amigo=amigo, estado_solicitud='A')
 
     now = datetime.now()
@@ -23,23 +23,25 @@ def ObtenerListaDeSolicitudes(request ):
     ).order_by('fecha_hora_inicio')
 
     data = []
-    for solicitud in solicitudes_aceptadas:
+    for solicitud in solicitudes_ordenadas:
         if solicitud.fecha_inicio > now.date() or (solicitud.fecha_inicio == now.date() and solicitud.hora_inicio > now.time()):
             calificacion_cliente = Calificacion.objects.filter(cliente=solicitud.cliente).first()
+            # Obtener imágenes del cliente
+            imagenes = obtener_imagenes_cliente(amigo.cliente)
             solicitud_info = {
                 'cliente': solicitud.cliente.nombre,
-                'calificacion': calificacion_cliente.puntuacion if calificacion_cliente else None,
+                'calificacion': calificacion_cliente.puntuacion if calificacion_cliente else 0,
                 'fecha': solicitud.fecha_inicio,
                 'hora': solicitud.hora_inicio,
                 "duracion": solicitud.minutos,
-                'ubicacion': solicitud.lugar
+                'ubicacion': solicitud.lugar,
+                "imagenes": imagenes
             }
             data.append(solicitud_info)
 
     response_data = {'solicitudes': data}
 
     return JsonResponse(response_data, safe=False)
-
 def obtener_imagenes_cliente(cliente):
     imagenes = []
     fotografiaCliente = Fotografia.objects.filter(cliente=cliente, estado_fotografia='F').order_by('prioridad')
