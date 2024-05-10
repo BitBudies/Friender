@@ -46,14 +46,16 @@ function App() {
 
   const isAuthenticated = useIsAuthenticated();
 
+  // Kevin revisa >:v
   useEffect(() => {
     if(isAuthenticated){
       if(!isFetching && !isUninitialized){
         setUserData(data)  
+        // setIsFriendModeEnabled(isEnabled.data)
       }
     }
     
-  },[data, isAuthenticated, isFetching, isUninitialized, setUserData, clientId, setClientId, setIsFriendModeEnabled])
+  },[data, isAuthenticated, isFetching, isUninitialized, setUserData, clientId, setClientId]) //setIsFriendModeEnabled, isEnabled.data
 
   if(isFetching){
     return <Loading/>

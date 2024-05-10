@@ -62,10 +62,11 @@
     gap: 1rem   ;
 }
 
-.card-item{
+.card-item-aceptadas{
     display: flex;
     gap: 0.3rem;
     align-items: center;
+    justify-content: space-between;
 }
 
 #ver-perfil-button{

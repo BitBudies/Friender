@@ -31,7 +31,7 @@ from amigo.views.utils import obtener_csrf
 from amigo.views.login import Login
 from amigo.views.cerrarSesion import Logout
 from amigo.views.lista_solicitudes_aceptadas import ObtenerListaDeSolicitudes
-from amigo.views.filtros import  ClientePorGenero, ClienteFiltro,Interes,Precio,FiltroTotal
+from amigo.views.filtros import  ClientePorGenero,FiltroTotalToken, ClienteFiltro,Interes,Precio,FiltroTotal,ClientePorGeneroToken, ClienteFiltroToken, InteresToken,PrecioToken
 schema_view = get_schema_view(
     openapi.Info(
         title="Documentacion de la API 🐸",
@@ -72,7 +72,7 @@ urlpatterns = [
     # Amigo
     path('api/amigo/<int:amigo_id>/', AmigoDetailById),
     path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator),
-    path('api/amigo/<int:amigo_id>/solicitudes-aceptadas/', ObtenerListaDeSolicitudes),
+    path('api/amigo/solicitudes-aceptadas', ObtenerListaDeSolicitudes),
     path('api/amigo/precio', PrecioAmiwo),
     path('api/registraramigo', RegistrarAmigo),
     path('api/clienteesamigo', ClienteEsAmigo),
@@ -108,9 +108,16 @@ urlpatterns = [
     
     
     #filtros
-    path('api/filtros/femenino', ClientePorGenero.as_view(), name='filtro_femenino'),
+    path('api/filtros/genero', ClientePorGenero.as_view(), name='filtro_femenino'),
     path('api/filtros/cliente', ClienteFiltro.as_view(), name='filtro_cliente'),
     path('api/filtros/interes', Interes.as_view(), name='filtro_interes'),
     path('api/filtros/precio', Precio.as_view()),
-    path('api/filtros/total',FiltroTotal.as_view())
+    path('api/filtros/total',FiltroTotal.as_view()),
+    #filtros-con-tokens
+    path('api/filtros/generoToken',ClientePorGeneroToken.as_view()),
+    path('api/filtros/clienteToken',ClienteFiltroToken.as_view()),
+    path('api/filtros/interesToken',InteresToken.as_view()),
+    path('api/filtros/precioToken', PrecioToken.as_view()),
+    path('api/filtros/total',FiltroTotalToken.as_view())
+    
 ]
