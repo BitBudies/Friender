@@ -2,9 +2,12 @@ import React, {useState, useEffect} from 'react'
 import Foto from '../imagRegistro/test';
 import Preview from '../imagRegistro/preview';
 import { useCookies } from "react-cookie";
-import { useGetClienteByIdQuery } from '../NavBarSlice';
+import { useGetAmiwoPrecioQuery, useGetClienteByIdQuery } from '../NavBarSlice';
 import { useGlobalContext } from '../../context';
 import Loading from '../Loading';
+import Etiqueta from './Etiqueta';
+
+import './MiPerfil.css'
 
 const MiPerfil = () => {
     const [cookies] = useCookies(["token"]);
@@ -18,8 +21,14 @@ const MiPerfil = () => {
         isSuccess,
       } = useGetClienteByIdQuery({ id_cliente: userData.cliente_id, token: token });
     
-    if (isSuccess){
-        console.log(cliente)
+    const {
+        data: info, 
+        isFetching: cargandin, 
+        isSuccess: suceso} = useGetAmiwoPrecioQuery(token);
+
+    
+    if (suceso){
+        console.log("precio es: " + info.precio)
     }
     
     const calificacionEstrellas = (calificacion) => {
@@ -27,12 +36,12 @@ const MiPerfil = () => {
         const estrellas = "★".repeat(numEstrellas) + "☆".repeat(5 - numEstrellas);
         return estrellas;
     };
-  if (isFetching){
+  if (isFetching || cargandin){
     return <Loading />
   } else if (isSuccess){
     return (
         // <div className="page">
-        <div className="perfil-amigo-container">
+        <div className="miperfil-amigo-container">
           <div className=" perfil-amigo-left ">
             <div
               className="image-container"
@@ -77,10 +86,30 @@ const MiPerfil = () => {
 
           <div className="perfil-amigo-right">
             <h1>Mi Perfil</h1>
+            <p>
+                <strong>Mis Intereses</strong>
+              </p>
+            <div className='para-intereses'>
+              
+              {
+                cliente.interes.map((interes) =>{
+                    return <Etiqueta interes={interes}/>
+                })
+              }
+            </div>
             <div className="profile-description w-100">
               <p>
-                <strong>Descripción:</strong> {cliente.descripcion}
+                <strong>Descripción:</strong> 
               </p>
+              <p>
+                {cliente.descripcion}
+              </p>
+            </div>
+            <div>
+                {
+                    info.precio>0 && //falta aumentar si esta en modo amigo o cliente
+                    <h3>Precio {info.precio} Bs/hr</h3> 
+                }
             </div>
           </div>
         </div>

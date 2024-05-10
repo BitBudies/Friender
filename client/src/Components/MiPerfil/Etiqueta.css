@@ -1,0 +1,15 @@
+.etiqueta-interes {
+    position: relative;
+    padding: 5px 10px;
+    background-color: var(--azul-claro);
+    color: aliceblue;
+    border-radius: 15px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.perfil-amigo-container{
+    flex-wrap: wrap;
+}

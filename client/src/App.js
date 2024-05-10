@@ -7,6 +7,7 @@ import PerfilAmigo from './features/amigo/PerfilAmigo';
 import LogIn from './features/autenticacion/LogIn';
 import Default from './Pages/Default';
 import Perfil from './features/cliente/Perfil';
+import MiPerfil from './Components/MiPerfil/MiPerfil';
 import { useGetClienteByIdQuery } from './features/cliente/clienteSlice';
 import Loading from './Components/Loading';
 import { useGlobalContext } from './context';
@@ -68,6 +69,7 @@ function App() {
           <Route path='/new-password/:tokencito' element={<NewPassword/>}/>
           <Route path='/login' element= {<LogIn/>}/>
           <Route path='/cuenta-amigo' element={<Perfil/>}/>
+          <Route path='/miperfil' element={<MiPerfil/>}/>
           <Route path='/usuario/solicitud_pendiente/:id_solicitud' element={<SolicitudDetalles/>}/>
           <Route path="/test/jhon" element={<Jhon/>} />
           <Route path="/resetPassword" element={<ResetPassword/>}/>
