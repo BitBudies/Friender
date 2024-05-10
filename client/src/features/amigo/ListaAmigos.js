@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./listaAmigos.css";
 import Loading from "../../Components/Loading";
@@ -33,6 +33,13 @@ const ListaAmigos = () => {
     genero: "",
     ubicacion: "",
   });
+  const validNumberPattern = /^[0-9+-]*$/;
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.target.blur(); // Quitamos el focus del input jiji
+    }
+  };
 
   const { pageRef, goToBeginning } = useGlobalContext();
   const handleChange = (event) => {
@@ -54,6 +61,34 @@ const ListaAmigos = () => {
     // Aquí deberías pasar los valores de los filtros
     // valores: values
   });
+
+  const onBlurcito = (e, field) => {
+    let value = e.target.value;
+    console.log(`el usario dejo el ${field}: ${value}`);
+    // Reemplaza todo lo que no sea un número
+    value = value.replace(/[^\d]/g, "");
+
+    value = parseInt(value);
+
+    // Si no es un número válido, asigna una cadena vacía
+    if (isNaN(value)) {
+      value = "";
+    } else {
+      const minimooooo = parseInt(values.precio.min);
+      // Validar el valor máximo
+      if (field === "max" && !isNaN(minimooooo) && value <= minimooooo) {
+        value = minimooooo + 5;
+      }
+    }
+
+    setValues({
+      ...values,
+      precio: {
+        ...values.precio,
+        [field]: value.toString(),
+      },
+    });
+  };
 
   const [intereses, setIntereses] = useState([
     { nombre: "Arte y Cultura", seleccionado: false },
@@ -195,26 +230,41 @@ const ListaAmigos = () => {
                     className="form-control"
                     style={{ boxShadow: "none", border: "1px solid #ced4da" }}
                     value={values.precio.min}
-                    onChange={(e) =>
-                      setValues({
-                        ...values,
-                        precio: { ...values.precio, min: e.target.value },
-                      })
-                    }
+                    onBlur={(e) => onBlurcito(e, "min")}
+                    onChange={(e) => {
+                      if (validNumberPattern.test(e.target.value)) {
+                        setValues({
+                          ...values,
+                          precio: { ...values.precio, min: e.target.value },
+                        });
+                      }
+                    }}
+                    onKeyDown={handleKeyDown}
                   />
                   <p>-</p>
                   <input
-                    type="number"
+                    type="text"
                     placeholder="Max"
                     className="form-control"
-                    style={{ marginLeft: '0', boxShadow: "none", border: "1px solid #ced4da"}}
+                    style={{
+                      marginLeft: "0",
+                      boxShadow: "none",
+                      border: "1px solid #ced4da",
+                    }}
                     value={values.precio.max}
-                    onChange={(e) =>
-                      setValues({
-                        ...values,
-                        precio: { ...values.precio, max: e.target.value },
-                      })
-                    }
+                    onBlur={(e) => {
+                      console.log("holalalsadas");
+                      onBlurcito(e, "max");
+                    }}
+                    onChange={(e) => {
+                      if (validNumberPattern.test(e.target.value)) {
+                        setValues({
+                          ...values,
+                          precio: { ...values.precio, max: e.target.value },
+                        });
+                      }
+                    }}
+                    onKeyDown={handleKeyDown}
                   />
                 </div>
               </div>
@@ -227,7 +277,7 @@ const ListaAmigos = () => {
               </label>
               <div className="generoDropCheckBox" ref={dropdownRef}>
                 <p onClick={() => SetGeneroDropCheckBox(!generoDropCheckBox)}>
-                  Seleccionar <FaAngleDown/>
+                  Seleccionar <FaAngleDown />
                 </p>
                 {generoDropCheckBox && (
                   <div class="itemsGenero">
