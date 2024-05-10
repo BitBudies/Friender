@@ -238,8 +238,8 @@ def AmigoListLimitPaginator(request, page_number=1, limite=10):
         if direccion:
             amigos = amigos.filter(cliente__direccion=direccion)
         if interes:
-            clientes_interes = ClienteInteres.objects.filter(interes__nombre__in=interes, cliente__in = [amigo.cliente for amigo in amigos])
-            amigos = Amigo.objects.filter(cliente__in=[ci.cliente for ci in clientes_interes])
+            for interes in interes:
+             amigos = amigos.filter(cliente__clienteinteres__interes__nombre=interes)
         if precioMin and precioMax:
             amigos = amigos.filter(precio__range=(precioMin, precioMax))
 
