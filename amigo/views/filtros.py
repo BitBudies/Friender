@@ -8,6 +8,8 @@ from rest_framework import status
 from amigo.serializers.cliente_serializer import ClienteSerializer
 from ..models import Cliente , ClienteInteres, Amigo
 from datetime import date
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 # filtrar por edad, precio, genero, ubicacion, intereses
 
 #por tablas
@@ -90,4 +92,18 @@ class FiltroTotal(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
         
     
+#con tokens ______________________________________________________________________________________
+class ClientePorGeneroToken(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     
+    def post(self, request):
+        genero = request.data.get('genero')  
+        if not genero:
+            return Response({"error": "Género no proporcionado"}, status=status.HTTP_400_BAD_REQUEST)
+
+        clientes = Cliente.objects.filter(
+            Q(genero=genero)
+        ).distinct()
+        serializer = ClienteSerializer(clientes, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
