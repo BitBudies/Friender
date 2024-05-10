@@ -43,11 +43,6 @@ function App() {
     isUninitialized
   } = useGetClienteInfoQuery(token);
 
-  const {
-    data: isEnabled,
-    isFetching :fetching,
-    isSuccess : success,
-  } = useIsEnabledFriendModeQuery({ token: token });
 
   const isAuthenticated = useIsAuthenticated();
 
@@ -55,11 +50,10 @@ function App() {
     if(isAuthenticated){
       if(!isFetching && !isUninitialized){
         setUserData(data)  
-        setIsFriendModeEnabled(isEnabled.data)
       }
     }
     
-  },[data, isAuthenticated, isFetching, isUninitialized, setUserData, clientId, setClientId, setIsFriendModeEnabled, isEnabled.data])
+  },[data, isAuthenticated, isFetching, isUninitialized, setUserData, clientId, setClientId, setIsFriendModeEnabled])
 
   if(isFetching){
     return <Loading/>
