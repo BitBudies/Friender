@@ -68,7 +68,7 @@ function App() {
           <Route path='/cliente/:id_cliente' element={<PerfilCliente/>}/>
           <Route path='/new-password/:tokencito' element={<NewPassword/>}/>
           <Route path='/login' element= {<LogIn/>}/>
-          <Route path='/perfil' element={<Perfil/>}/>
+          <Route path='/cuenta-amigo' element={<Perfil/>}/>
           <Route path='/miperfil' element={<MiPerfil/>}/>
           <Route path='/usuario/solicitud_pendiente/:id_solicitud' element={<SolicitudDetalles/>}/>
           <Route path="/test/jhon" element={<Jhon/>} />
