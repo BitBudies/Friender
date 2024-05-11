@@ -66,13 +66,15 @@ const ListaAmigos = () => {
 
   function ActualizarListaAmigos() {
     console.log(values);
-    return;
+    const generosLetra = values.generosos.map(genero => genero.charAt(0).toUpperCase());
+
     getAmiwitos({
       pagina: n_page,
       limite: 24,
       token: token,
       filtros: {
-        genero: "M",
+        generos: generosLetra,
+        interes: values.interecitos
       },
     });
   }
