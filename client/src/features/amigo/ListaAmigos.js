@@ -308,7 +308,7 @@ const ListaAmigos = () => {
           <div>
             <label className="input-label input-item">
               <IoPeople />
-              Genero
+              Género
             </label>
             <div className="generoDropCheckBox" ref={dropdownRef}>
               <p onClick={() => SetGeneroDropCheckBox(!generoDropCheckBox)}>
