@@ -220,7 +220,7 @@ class FiltroTotalToken(APIView):
 @permission_classes([IsAuthenticated])
 def AmigoListLimitPaginator(request, page_number=1, limite=10):
         print(request.data)
-        genero = request.data.get('genero')  
+        generos = request.data.get('generos') 
         edadMin = request.data.get('edad_min')  
         edadMax = request.data.get('edad_max')  
         direccion = request.data.get('ubicacion')  
@@ -229,8 +229,8 @@ def AmigoListLimitPaginator(request, page_number=1, limite=10):
         precioMax = request.data.get('precio_max')
 
         amigos = Amigo.objects.order_by("amigo_id")  # ordenamiento temporal
-        if genero:
-            amigos = amigos.filter(cliente__genero=genero)
+        if generos:
+            amigos = amigos.filter(cliente__genero__in=generos)
         if edadMin and edadMax:
             fecha_nacimiento_mas_tardia = date.today().replace(year=date.today().year - int(edadMin))
             fecha_nacimiento_mas_temprana = date.today().replace(year=date.today().year - int(edadMax))
