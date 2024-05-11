@@ -66,16 +66,6 @@ class ClienteFiltro(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-# class Interes(APIView):
-#     def post(self, request, *args, **kwargs):
-#         interes = request.data.get('interes')
-
-#         clientes_interes = ClienteInteres.objects.filter(interes__nombre__in=interes)
-#         clientes = [ci.cliente for ci in clientes_interes]
-#         serializer = ClienteSerializer(clientes, many=True)
-#         return Response(serializer.data)
-
-
 # filtro exacto
 class Interes(APIView):
     def post(self, request, *args, **kwargs):
@@ -87,17 +77,6 @@ class Interes(APIView):
 
         serializer = ClienteSerializer(clientes, many=True)
         return Response(serializer.data)
-
-
-# class Interes(APIView):
-#     def post(self, request, *args, **kwargs):
-#         intereses = request.data.get('interes')
-#         clientes = Cliente.objects.annotate(
-#             num_intereses=Count('clienteinteres', filter=Q(clienteinteres__interes__nombre__in=intereses))
-#         ).filter(num_intereses=len(intereses))
-
-#         serializer = ClienteSerializer(clientes, many=True)
-#         return Response(serializer.data)
 
 
 class Precio(APIView):
@@ -232,7 +211,7 @@ class PrecioToken(APIView):
 class FiltroTotalToken(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
-
+    
     def post(self, request, *args, **kwargs):
         genero = request.data.get("genero")
         edadMin = request.data.get("edad_min")

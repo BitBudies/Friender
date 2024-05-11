@@ -19,19 +19,56 @@ from django.urls import path
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from amigo.views.amigo_views import AmigoDetailById, ClienteEsAmigo, RegistrarAmigo, PrecioAmiwo
-from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, RegistrarCliente,VerificarCorreoUsuario, EnviarCodigos, VerificarCodigo, obtenerInformacionCliente
-from amigo.views.edicion_views import cambiarContrasena, enviarCorreoCambioContrasena, findEmail, verificarCodigoToken
-from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef
+from amigo.views.amigo_views import (AmigoDetailById,
+                                     ClienteEsAmigo,
+                                     RegistrarAmigo,
+                                     PrecioAmiwo)
+
+from amigo.views.cliente_views import (ClienteDetailById,
+                                       ClienteListLimitPaginator,
+                                       RegistrarCliente,
+                                       VerificarCorreoUsuario,
+                                       EnviarCodigos,
+                                       VerificarCodigo,
+                                       obtenerInformacionCliente)
+
+from amigo.views.edicion_views import (cambiarContrasena,
+                                       enviarCorreoCambioContrasena,
+                                       findEmail,
+                                       verificarCodigoToken)
+
+from amigo.views.fotografia_views import (FotografiaPorID,
+                                          FotografiasDeCliente,
+                                          SubirFotografia,
+                                          SubirFotografiaDef)
 from amigo.views.gusto_views import obtenerGustos
 from amigo.views.interes_views import obtenerIntereses
 from amigo.views.login_views import LoginView
-from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetSolicitudesCliente, EnviarSolicitud, SolicitudAlquilerDetailAPIView, VerificarSolicitudes, obtenerSolicitudesAmigo
+
+from amigo.views.solicitud_views import (AcceptSolicitud,
+                                         RechazarSolicitud,
+                                         GetSolicitudesCliente,
+                                         EnviarSolicitud,
+                                         SolicitudAlquilerDetailAPIView,
+                                         VerificarSolicitudes,
+                                         obtenerSolicitudesAmigo)
+
 from amigo.views.utils import obtener_csrf
 from amigo.views.login import Login
 from amigo.views.cerrarSesion import Logout
 from amigo.views.lista_solicitudes_aceptadas import ObtenerListaDeSolicitudes
-from amigo.views.filtros import  ClientePorGenero,FiltroTotalToken, ClienteFiltro,Interes,Precio,FiltroTotal,ClientePorGeneroToken, ClienteFiltroToken, InteresToken,PrecioToken,AmigoListLimitPaginator
+from amigo.views.filtros import (ClientePorGenero,
+                                 FiltroTotalToken,
+                                 ClienteFiltro,
+                                 Interes,
+                                 Precio,
+                                 FiltroTotal,
+                                ClientePorGeneroToken,
+                                ClienteFiltroToken, 
+                                InteresToken,
+                                PrecioToken,
+                                AmigoListLimitPaginator)
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Documentacion de la API 🐸",
