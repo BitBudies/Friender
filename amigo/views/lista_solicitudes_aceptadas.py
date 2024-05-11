@@ -19,12 +19,12 @@ from rest_framework.authentication import TokenAuthentication
 def ObtenerListaDeSolicitudes(request):
     user = request.user
     amigo = get_object_or_404(Amigo, cliente__user=user)
-    solicitudes_aceptadas = solicitud_alquiler.objects.filter(amigo=amigo, estado_solicitud='A')
+    solicitudes_aceptadas = solicitud_alquiler.objects.filter(amigo=amigo, estado_solicitud='A').order_by('fecha_inicio')
 
-    now = datetime.now()
+    now = datetime.now().date()
     data = {"solicitudes_recibidas": []}
     for solicitud in solicitudes_aceptadas:
-        diferencia_dias = (solicitud.fecha_inicio - now.date()).days
+        diferencia_dias = (solicitud.fecha_inicio - now).days
         if diferencia_dias == 0:
             dias_faltantes = "Hoy"
         else:
