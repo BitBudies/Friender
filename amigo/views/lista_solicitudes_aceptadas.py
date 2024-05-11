@@ -22,29 +22,28 @@ def ObtenerListaDeSolicitudes(request):
     solicitudes_aceptadas = solicitud_alquiler.objects.filter(amigo=amigo, estado_solicitud='A')
 
     now = datetime.now()
-    solicitudes_ordenadas = solicitudes_aceptadas.annotate(
-        fecha_hora_inicio=ExpressionWrapper(
-            F('fecha_inicio') + F('hora_inicio'),
-            output_field=DateTimeField()
-        )
-    ).order_by('fecha_hora_inicio')
-
     data = {"solicitudes_recibidas": []}
-    for solicitud in solicitudes_ordenadas:
-        if solicitud.fecha_inicio > now.date() or (solicitud.fecha_inicio == now.date() and solicitud.hora_inicio > now.time()):
-            calificacion_cliente = Calificacion.objects.filter(cliente=solicitud.cliente).first()
-            imagenes_cliente = obtener_imagenes_cliente(solicitud.cliente)
-            solicitud_data = {
-                'nombre_cliente': solicitud.cliente.getFullName(),
-                'calificacion_cliente': calificacion_cliente.puntuacion if calificacion_cliente else 0,
-                'lugar': solicitud.lugar,
-                'fecha_inicio': solicitud.fecha_inicio,
-                'duracion': solicitud.minutos,
-                'precio': solicitud.precio,
-                'hora_inicio': solicitud.hora_inicio,
-                'imagenes': imagenes_cliente,
-            }
-            data["solicitudes_recibidas"].append(solicitud_data)
+    for solicitud in solicitudes_aceptadas:
+        diferencia_dias = (solicitud.fecha_inicio - now.date()).days
+        if diferencia_dias == 0:
+            dias_faltantes = "Hoy"
+        else:
+            dias_faltantes = f"{diferencia_dias} días"
+        
+        calificacion_cliente = Calificacion.objects.filter(cliente=solicitud.cliente).first()
+        imagenes_cliente = obtener_imagenes_cliente(solicitud.cliente)
+        solicitud_data = {
+            'nombre_cliente': solicitud.cliente.getFullName(),
+            'calificacion_cliente': calificacion_cliente.puntuacion if calificacion_cliente else 0,
+            'lugar': solicitud.lugar,
+            'fecha_inicio': solicitud.fecha_inicio,
+            'duracion': solicitud.minutos,
+            'precio': solicitud.precio,
+            'hora_inicio': solicitud.hora_inicio,
+            'dias_faltantes': dias_faltantes,
+            'imagenes': imagenes_cliente,
+        }
+        data["solicitudes_recibidas"].append(solicitud_data)
 
     return Response(data)
 
