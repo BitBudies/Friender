@@ -19,29 +19,47 @@ function calificacionEstrellas(calificacion) {
   const numEstrellas = Math.round(calificacion);
   const estrellas = "★".repeat(numEstrellas) + "☆".repeat(5 - numEstrellas);
   return estrellas;
-};
+}
 
 const ListaAmigos = () => {
-  const [cookies] = useCookies(["token"]);
-  const token = cookies.token;
+  const [cookies] = useCookies(["token"])
+  const token = cookies.token
+  const validNumberPattern = /^[0-9+-]*$/
 
-  const queryParams = new URLSearchParams(useLocation().search);
+  const queryParams = new URLSearchParams(useLocation().search)
+  const pagina = queryParams.get("pagina") || 1
+  const edadP = queryParams.get("edad")
+  const generoP = queryParams.getAll("genero")
+  const interesesP = queryParams.getAll("intereses")
+  const precio_minP = queryParams.get("precio_min") || ""
+  const precio_maxP = queryParams.get("precio_max") || ""
+  const ubicacionP = queryParams.get("ubicacion") || "0"
 
-  const n_page = queryParams.get('n_page');
-  const edadP = queryParams.get('edad');
-  const generoP = queryParams.get('genero');
-  const interesesP = queryParams.get('intereses');
-  const precio_minP = queryParams.get('precio_min');
-  const precio_maxP = queryParams.get('precio_max');
+  console.log(ubicacionP)
+
+  let precioMinimo = parseInt(precio_minP);
+  let precioMaximo = parseInt(precio_maxP);
+  if (!isNaN(precioMinimo)) {
+    if (precioMinimo < 0 || precioMinimo > 999999) {
+      precioMinimo = 0 / 0;
+    }
+  }
+  if (!isNaN(precioMaximo)) {
+    if (precioMaximo < 0 || precioMaximo > 999999) {
+      precioMaximo = 0 / 0;
+    }
+  }
 
   const [values, setValues] = useState({
     interecitos: [],
     rangoEdad: "",
-    precio: { min: "", max: "" },
+    precio: {
+      min: isNaN(precioMinimo) ? "" : precioMinimo.toString(),
+      max: isNaN(precioMaximo) ? "" : precioMaximo.toString(),
+    },
     generosos: [],
     ubicacion: "",
   });
-  const validNumberPattern = /^[0-9+-]*$/;
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -60,15 +78,23 @@ const ListaAmigos = () => {
 
   const [getAmiwitos, { data: amigos, isLoading, isSuccess }] =
     useGetAmigosMutation();
-
+  
   useEffect(() => {
     getAmiwitos({
-      pagina: n_page,
+      pagina: pagina,
       limite: 24,
       token: token,
-      filtros: {},
+      filtros: {
+        precio_min: isNaN(precioMinimo) ? null : precioMinimo,
+        precio_max: isNaN(precioMaximo) ? null : precioMaximo,
+        edad_min: 0,
+        edad_max: 999,
+        generos: {},
+        interes: {},
+        ubicacion: "",
+      },
     });
-  }, [n_page]);
+  }, [pagina]);
 
   function ActualizarListaAmigos() {
     console.log(values);
@@ -108,7 +134,7 @@ const ListaAmigos = () => {
       values.precio.max !== "" ? parseInt(values.precio.max) : null;
 
     getAmiwitos({
-      pagina: n_page,
+      pagina: pagina,
       limite: 24,
       token: token,
       filtros: {
@@ -118,7 +144,7 @@ const ListaAmigos = () => {
         edad_max: edad_max,
         generos: generosLetra,
         interes: values.interecitos,
-        ubicacion: values.ubicacion === "Cualquiera" ? "" : values.ubicacion
+        ubicacion: values.ubicacion === "Cualquiera" ? "" : values.ubicacion,
       },
     });
   }
@@ -287,7 +313,6 @@ const ListaAmigos = () => {
               className="form-select"
               style={{ boxShadow: "none", border: "1px solid #ced4da" }}
             >
-              <option value=""></option>
               <option value="0">Cualquiera</option>
               <option value="1">Entre 18 y 25 años</option>
               <option value="2">Entre 25 y 35 años</option>
@@ -483,7 +508,7 @@ const ListaAmigos = () => {
                 </div>
               ))}
             </div>
-            {Number(n_page) === amigos.numero_paginas && (
+            {Number(pagina) === amigos.numero_paginas && (
               <p id="mensaje-no-more-results">No existen más resultados</p>
             )}
             <nav aria-label="Page navigation example">
@@ -491,10 +516,10 @@ const ListaAmigos = () => {
                 <li className="page-item">
                   <Link
                     className={`page-link ${
-                      Number(n_page) === 1 && "disabled"
+                      Number(pagina) === 1 && "disabled"
                     }`}
-                    to={`/amigos?n_page=${
-                      Number(n_page) > 1 ? Number(n_page) - 1 : Number(n_page)
+                    to={`/amigos?pagina=${
+                      Number(pagina) > 1 ? Number(pagina) - 1 : Number(pagina)
                     }`}
                   >
                     {" "}
@@ -505,14 +530,14 @@ const ListaAmigos = () => {
                   <li
                     key={index}
                     className={`pagination-item page-item ${
-                      Number(n_page) === index + 1 && "active"
+                      Number(pagina) === index + 1 && "active"
                     }`}
                   >
                     <Link
                       className={`page-link ${
-                        Number(n_page) === index + 1 && "bg-azul-fuerte"
+                        Number(pagina) === index + 1 && "bg-azul-fuerte"
                       }`}
-                      to={`/amigos?n_page=${index + 1}`}
+                      to={`/amigos?pagina=${index + 1}`}
                       onClick={goToBeginning}
                     >
                       {index + 1}
@@ -522,13 +547,13 @@ const ListaAmigos = () => {
                 <li className="page-item">
                   <Link
                     className={`page-link ${
-                      Number(n_page) === amigos.numero_paginas && "disabled"
+                      Number(pagina) === amigos.numero_paginas && "disabled"
                     }`}
                     onClick={() => goToBeginning}
-                    to={`/amigos?n_page=${
-                      Number(n_page) < amigos.numero_paginas
-                        ? Number(n_page) + 1
-                        : Number(n_page)
+                    to={`/amigos?pagina=${
+                      Number(pagina) < amigos.numero_paginas
+                        ? Number(pagina) + 1
+                        : Number(pagina)
                     }`}
                   >
                     {">"}
