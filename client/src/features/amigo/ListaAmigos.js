@@ -30,7 +30,7 @@ const ListaAmigos = () => {
     intereses: [],
     rangoEdad: "",
     precio: { min: "", max: "" },
-    genero: "",
+    generosos: [],
     ubicacion: "",
   });
   const validNumberPattern = /^[0-9+-]*$/;
@@ -65,6 +65,8 @@ const ListaAmigos = () => {
   }, []);
 
   function ActualizarListaAmigos() {
+    console.log(values);
+    return
     getAmiwitos({
       pagina: n_page,
       limite: 24,
@@ -140,6 +142,12 @@ const ListaAmigos = () => {
       }
       return genero;
     });
+    setValues({...values, generosos: nuevosGeneros.filter((generitooo) => {
+        return generitooo.estado
+      }).map((generitooo12) => {
+        return generitooo12.nombre
+      })
+    })
     SetGeneros(nuevosGeneros);
   }
 
@@ -290,7 +298,7 @@ const ListaAmigos = () => {
                 Seleccionar <FaAngleDown />
               </p>
               {generoDropCheckBox && (
-                <div class="itemsGenero">
+                <div className="itemsGenero">
                   {generos.map((genero) => {
                     return (
                       <div
