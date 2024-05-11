@@ -14,6 +14,7 @@ import { BsCalendarRange } from "react-icons/bs";
 import { IoPeople, IoLocationSharp, IoClose } from "react-icons/io5";
 import { useGlobalContext } from "../../context";
 import { useCookies } from "react-cookie";
+import { prepareAutoBatched } from "@reduxjs/toolkit";
 
 const calificacionEstrellas = (calificacion) => {
   const numEstrellas = Math.round(calificacion);
@@ -50,7 +51,7 @@ const ListaAmigos = () => {
     });
   };
 
-  const [getAmiwitos, { data: amigos, isFetching, isSuccess }] =
+  const [getAmiwitos, { data: amigos, isLoading, isSuccess }] =
     useGetAmigosMutation();
 
   useEffect(() => {
@@ -58,23 +59,59 @@ const ListaAmigos = () => {
       pagina: n_page,
       limite: 24,
       token: token,
-      filtros: {
-        genero: "F",
-      },
+      filtros: {},
     });
   }, []);
 
   function ActualizarListaAmigos() {
     console.log(values);
-    const generosLetra = values.generosos.map(genero => genero.charAt(0).toUpperCase());
+    const generosLetra = values.generosos.map((genero) =>
+      genero.charAt(0).toUpperCase()
+    );
+    const rangoEdad = values.rangoEdad;
+
+    let edad_min, edad_max;
+    if (rangoEdad === "0") {
+      edad_min = null;
+      edad_max = null;
+    } else if (rangoEdad === "1") {
+      edad_min = 18;
+      edad_max = 25;
+    } else if (rangoEdad === "2") {
+      edad_min = 25;
+      edad_max = 35;
+    } else if (rangoEdad === "3") {
+      edad_min = 35;
+      edad_max = 45;
+    } else if (rangoEdad === "4") {
+      edad_min = 45;
+      edad_max = 55;
+    } else if (rangoEdad === "5") {
+      edad_min = 55;
+      edad_max = 65;
+    } else if (rangoEdad === "6") {
+      edad_min = 65;
+      edad_max = 999;
+    }
+
+    // Ajuste de precio_min y precio_max según los valores proporcionados
+    let precio_min =
+      values.precio.min !== "" ? parseInt(values.precio.min) : null;
+    let precio_max =
+      values.precio.max !== "" ? parseInt(values.precio.max) : null;
 
     getAmiwitos({
       pagina: n_page,
       limite: 24,
       token: token,
       filtros: {
+        precio_min: precio_min,
+        precio_max: precio_max,
+        edad_min: edad_min,
+        edad_max: edad_max,
         generos: generosLetra,
-        interes: values.interecitos
+        interes: values.interecitos,
+        ubicacion: values.ubicacion === "Cualquiera" ? "" : values.ubicacion
       },
     });
   }
@@ -244,7 +281,7 @@ const ListaAmigos = () => {
               style={{ boxShadow: "none", border: "1px solid #ced4da" }}
             >
               <option value=""></option>
-              <option value="1">Cualquiera</option>
+              <option value="0">Cualquiera</option>
               <option value="1">Entre 18 y 25 años</option>
               <option value="2">Entre 25 y 35 años</option>
               <option value="3">Entre 35 y 45 años</option>
@@ -391,8 +428,7 @@ const ListaAmigos = () => {
           }
         })}
       </div>
-
-      {isFetching ? (
+      {isLoading ? (
         <Loading />
       ) : (
         isSuccess && (
