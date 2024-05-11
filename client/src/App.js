@@ -65,7 +65,7 @@ function App() {
         <NavBar/>
         <Routes>
           <Route path='/' element={<Home/>}/>
-          <Route path='/amigos/page/:n_page' element={<ListaAmigos/>}/>
+          <Route path='/amigos' element={<ListaAmigos/>}/>
           <Route path='/amigos/:id_amigo' element={<PerfilAmigo/>}/>
           <Route path='/cliente/:id_cliente' element={<PerfilCliente/>}/>
           <Route path='/new-password/:tokencito' element={<NewPassword/>}/>
