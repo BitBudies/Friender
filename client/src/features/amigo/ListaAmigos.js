@@ -262,7 +262,7 @@ const ListaAmigos = () => {
                 <p>-</p>
                 <input
                   type="text"
-                  placeholder="Max"
+                  placeholder="Máx"
                   className="form-control"
                   style={{
                     marginLeft: "0",
