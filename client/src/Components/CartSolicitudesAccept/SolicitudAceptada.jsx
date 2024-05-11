@@ -10,7 +10,9 @@ const SolicitudAceptada = ( {imagenBase64,
                             hora_inicio, 
                             lugar, 
                             solicitud_aceptada_id,
-                            duracion} ) => { 
+                            duracion,
+                            dias_restantes
+                          } ) => { 
  
   function formatFecha(fecha) {
     const [year, month, day] = fecha.split("-");
@@ -62,14 +64,9 @@ const SolicitudAceptada = ( {imagenBase64,
             <p>{duracion} Hrs</p>
           </div>
           <div className="d-flex justify-content-between align-items-center solicitud-footer">
-            {/* <Link
-              to={`/usuario/solicitud_pendiente/${solicitud_aceptada_id}`}
-              id="ver-perfil-button"
-              className="btn btn-azul"
-              type="button"
-            >
-              Ver Perfil
-            </Link> */}
+            
+            <p>{dias_restantes}</p>
+            
             
           </div>
         </div>
