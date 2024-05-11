@@ -28,7 +28,7 @@ def ObtenerListaDeSolicitudes(request):
         if diferencia_dias == 0:
             dias_faltantes = "Hoy"
         else:
-            dias_faltantes = f"{diferencia_dias} días"
+            dias_faltantes = f"{diferencia_dias} "
         
         calificacion_cliente = Calificacion.objects.filter(cliente=solicitud.cliente).first()
         imagenes_cliente = obtener_imagenes_cliente(solicitud.cliente)
