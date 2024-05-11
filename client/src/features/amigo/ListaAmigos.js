@@ -14,6 +14,7 @@ import { BsCalendarRange } from "react-icons/bs";
 import { IoPeople, IoLocationSharp, IoClose } from "react-icons/io5";
 import { useGlobalContext } from "../../context";
 import { useCookies } from "react-cookie";
+import { prepareAutoBatched } from "@reduxjs/toolkit";
 
 const calificacionEstrellas = (calificacion) => {
   const numEstrellas = Math.round(calificacion);
@@ -93,11 +94,19 @@ const ListaAmigos = () => {
       edad_max = 999;
     }
 
+    // Ajuste de precio_min y precio_max según los valores proporcionados
+    let precio_min =
+      values.precio.min !== "" ? parseInt(values.precio.min) : null;
+    let precio_max =
+      values.precio.max !== "" ? parseInt(values.precio.max) : null;
+
     getAmiwitos({
       pagina: n_page,
       limite: 24,
       token: token,
       filtros: {
+        precio_min: precio_min,
+        precio_max: precio_max,
         edad_min: edad_min,
         edad_max: edad_max,
         generos: generosLetra,
