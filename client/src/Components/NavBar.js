@@ -29,7 +29,7 @@ const NavBar = () => {
   const [ShowMiPerfil, setShowMiPerfil] = useState();
   const [userLoged, setUserLoged] = useState(isAuthenticated);
   const location = useLocation();
-  const isActive = location.pathname.startsWith('/amigos/page/');
+  const isActive = location.pathname.startsWith('/amigos?n_page');
   const isTestJhon = location.pathname === '/test/jhon';
   const modelocation = useLocation();
 
@@ -63,7 +63,7 @@ const NavBar = () => {
   
   const handleAmigosClick = () => {
       if(!isActive){
-        navigate("/amigos/page/1")
+        navigate("/amigos?n_page=1")
       }else{
         goToBeginning();
       } 
@@ -109,7 +109,7 @@ const NavBar = () => {
                   <li><Link className="dropdown-item" to={"/miperfil"}>Mi Perfil</Link></li>
                   <li><Link className={`dropdown-item ${ModeAmigo && ShowMiPerfil ? "" : "hidden"}`} to={"/perfil"}>Volver a modo amigo</Link></li>
                   <li><Link className={`dropdown-item ${ModeAmigo ? "hidden" : ""}`} to={"/cuenta-amigo"} onClick={handleChangeModeAmigo}>Cambiar a modo amigo</Link></li>
-                  <li><Link className={`dropdown-item ${ModeAmigo ? "" : "hidden"}`} to={"/amigos/page/1"} onClick={handleChangeModeCliente}>Cambiar a modo cliente</Link></li>
+                  <li><Link className={`dropdown-item ${ModeAmigo ? "" : "hidden"}`} to={"/amigos?n_page=1"} onClick={handleChangeModeCliente}>Cambiar a modo cliente</Link></li>
                   <li><hr className="dropdown-divider"/></li>
                   <li><button className="dropdown-item "onClick={handleCloseSession}>Cerrar Sesión</button></li>
                 </>

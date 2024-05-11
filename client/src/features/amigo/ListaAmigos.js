@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import "./listaAmigos.css";
 import Loading from "../../Components/Loading";
 import { useGetAmigosMutation } from "./amigoSlice";
@@ -14,9 +14,8 @@ import { BsCalendarRange } from "react-icons/bs";
 import { IoPeople, IoLocationSharp, IoClose } from "react-icons/io5";
 import { useGlobalContext } from "../../context";
 import { useCookies } from "react-cookie";
-import { prepareAutoBatched } from "@reduxjs/toolkit";
 
-const calificacionEstrellas = (calificacion) => {
+function calificacionEstrellas(calificacion) {
   const numEstrellas = Math.round(calificacion);
   const estrellas = "★".repeat(numEstrellas) + "☆".repeat(5 - numEstrellas);
   return estrellas;
@@ -26,7 +25,15 @@ const ListaAmigos = () => {
   const [cookies] = useCookies(["token"]);
   const token = cookies.token;
 
-  const { n_page } = useParams();
+  const queryParams = new URLSearchParams(useLocation().search);
+
+  const n_page = queryParams.get('n_page');
+  const edadP = queryParams.get('edad');
+  const generoP = queryParams.get('genero');
+  const interesesP = queryParams.get('intereses');
+  const precio_minP = queryParams.get('precio_min');
+  const precio_maxP = queryParams.get('precio_max');
+
   const [values, setValues] = useState({
     interecitos: [],
     rangoEdad: "",
@@ -486,7 +493,7 @@ const ListaAmigos = () => {
                     className={`page-link ${
                       Number(n_page) === 1 && "disabled"
                     }`}
-                    to={`/amigos/page/${
+                    to={`/amigos?n_page=${
                       Number(n_page) > 1 ? Number(n_page) - 1 : Number(n_page)
                     }`}
                   >
@@ -505,7 +512,7 @@ const ListaAmigos = () => {
                       className={`page-link ${
                         Number(n_page) === index + 1 && "bg-azul-fuerte"
                       }`}
-                      to={`/amigos/page/${index + 1}`}
+                      to={`/amigos?n_page=${index + 1}`}
                       onClick={goToBeginning}
                     >
                       {index + 1}
@@ -518,7 +525,7 @@ const ListaAmigos = () => {
                       Number(n_page) === amigos.numero_paginas && "disabled"
                     }`}
                     onClick={() => goToBeginning}
-                    to={`/amigos/page/${
+                    to={`/amigos?n_page=${
                       Number(n_page) < amigos.numero_paginas
                         ? Number(n_page) + 1
                         : Number(n_page)
