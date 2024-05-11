@@ -12,6 +12,10 @@ const SolicitudesAceptadas = () => {
   const [cookies] = useCookies(["token"]);
   const {data, isFetching, isSuccess} = useGetSolicitudesAceptadasQuery(cookies.token)
 
+  if (isSuccess){
+    console.log(data.solicitudes_recibidas)
+  }
+
   if (isFetching){
     return <Loading />
   } else if (isSuccess){
@@ -35,6 +39,7 @@ const SolicitudesAceptadas = () => {
                     lugar={solicitud.lugar}
                     solicitud_aceptada_id={4}
                     duracion={solicitud.duracion}
+                    dias_restantes={solicitud.dias_faltantes}
                   />
                 </>
               )

@@ -68,7 +68,7 @@ const ListaAmigos = () => {
       token: token,
       filtros: {},
     });
-  }, []);
+  }, [n_page]);
 
   function ActualizarListaAmigos() {
     console.log(values);
