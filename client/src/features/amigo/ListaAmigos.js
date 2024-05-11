@@ -27,7 +27,7 @@ const ListaAmigos = () => {
 
   const { n_page } = useParams();
   const [values, setValues] = useState({
-    intereses: [],
+    interecitos: [],
     rangoEdad: "",
     precio: { min: "", max: "" },
     generosos: [],
@@ -66,7 +66,7 @@ const ListaAmigos = () => {
 
   function ActualizarListaAmigos() {
     console.log(values);
-    return
+    return;
     getAmiwitos({
       pagina: n_page,
       limite: 24,
@@ -142,12 +142,16 @@ const ListaAmigos = () => {
       }
       return genero;
     });
-    setValues({...values, generosos: nuevosGeneros.filter((generitooo) => {
-        return generitooo.estado
-      }).map((generitooo12) => {
-        return generitooo12.nombre
-      })
-    })
+    setValues({
+      ...values,
+      generosos: nuevosGeneros
+        .filter((generitooo) => {
+          return generitooo.estado;
+        })
+        .map((generitooo12) => {
+          return generitooo12.nombre;
+        }),
+    });
     SetGeneros(nuevosGeneros);
   }
 
@@ -170,6 +174,19 @@ const ListaAmigos = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownRef]);
+
+  useEffect(() => {
+    setValues({
+      ...values,
+      interecitos: intereses
+        .filter((int) => {
+          return int.seleccionado;
+        })
+        .map((int) => {
+          return int.nombre;
+        }),
+    });
+  }, [intereses]);
 
   return (
     <div id="lista_amigos" className="page bg-light" ref={pageRef}>
@@ -374,7 +391,7 @@ const ListaAmigos = () => {
       </div>
 
       {isFetching ? (
-        <Loading/>
+        <Loading />
       ) : (
         isSuccess && (
           <div className="container-fluid py-5">
