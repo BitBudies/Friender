@@ -50,7 +50,7 @@ const ListaAmigos = () => {
     });
   };
 
-  const [getAmiwitos, { data: amigos, isFetching, isSuccess }] =
+  const [getAmiwitos, { data: amigos, isLoading, isSuccess }] =
     useGetAmigosMutation();
 
   useEffect(() => {
@@ -390,10 +390,9 @@ const ListaAmigos = () => {
             );
           }
         })}
-      </div>
-
-      {isFetching ? (
-        <Loading />
+      </div>      
+      {isLoading ? (
+        <Loading/>
       ) : (
         isSuccess && (
           <div className="container-fluid py-5">
