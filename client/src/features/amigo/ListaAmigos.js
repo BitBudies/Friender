@@ -111,6 +111,7 @@ const ListaAmigos = () => {
         edad_max: edad_max,
         generos: generosLetra,
         interes: values.interecitos,
+        ubicacion: values.ubicacion === "Cualquiera" ? "" : values.ubicacion
       },
     });
   }
