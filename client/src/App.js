@@ -7,6 +7,7 @@ import PerfilAmigo from './features/amigo/PerfilAmigo';
 import LogIn from './features/autenticacion/LogIn';
 import Default from './Pages/Default';
 import Perfil from './features/cliente/Perfil';
+import MiPerfil from './Components/MiPerfil/MiPerfil';
 import { useGetClienteByIdQuery } from './features/cliente/clienteSlice';
 import Loading from './Components/Loading';
 import { useGlobalContext } from './context';
@@ -24,13 +25,17 @@ import { Cookies } from 'react-cookie';
 import { useGetClienteInfoQuery } from './features/cliente/clienteSlice';
 import { useCookies } from "react-cookie";
 import PerfilCliente from './features/cliente/PerfilCliente';
+import SolicitudesAceptadas from './features/solicitudes/SolicitudesAceptadas';
+import useGetToken from './hooks/getToken';
+import { useIsEnabledFriendModeQuery } from './features/cliente/clienteSlice';
 
 
 function App() {
 
-  const [cookies] = useCookies(["token"]);
-  const token = cookies.token;
-  const {clientId,setUserData,setClientId} = useGlobalContext();
+  // const [cookies] = useCookies(["token"]);
+  // const token = cookies.token;
+  const token = useGetToken();
+  const {clientId,setUserData,setClientId,setIsFriendModeEnabled} = useGlobalContext();
 
   const {
     data,
@@ -38,17 +43,19 @@ function App() {
     isUninitialized
   } = useGetClienteInfoQuery(token);
 
+
   const isAuthenticated = useIsAuthenticated();
 
+  // Kevin revisa >:v
   useEffect(() => {
     if(isAuthenticated){
       if(!isFetching && !isUninitialized){
-        setUserData(data)   
-        setClientId(data.cliente_id) 
+        setUserData(data)  
+        // setIsFriendModeEnabled(isEnabled.data)
       }
     }
     
-  },[data, isAuthenticated, isFetching, isUninitialized, setUserData, clientId, setClientId])
+  },[data, isAuthenticated, isFetching, isUninitialized, setUserData, clientId, setClientId]) //setIsFriendModeEnabled, isEnabled.data
 
   if(isFetching){
     return <Loading/>
@@ -63,12 +70,13 @@ function App() {
           <Route path='/cliente/:id_cliente' element={<PerfilCliente/>}/>
           <Route path='/new-password/:tokencito' element={<NewPassword/>}/>
           <Route path='/login' element= {<LogIn/>}/>
-          <Route path='/perfil' element={<Perfil/>}/>
+          <Route path='/cuenta-amigo' element={<Perfil/>}/>
+          <Route path='/miperfil' element={<MiPerfil/>}/>
           <Route path='/usuario/solicitud_pendiente/:id_solicitud' element={<SolicitudDetalles/>}/>
           <Route path="/test/jhon" element={<Jhon/>} />
           <Route path="/resetPassword" element={<ResetPassword/>}/>
           <Route path="/registrar" element={<Registrarse/>}/>
-          <Route path="/registrarse" element={<RegistrarDatos15/>}/>
+          <Route path="/aceptadas" element={<SolicitudesAceptadas/>}/>
           <Route path="/recuperar" element={<RecuperarCuenta/>}/>
           <Route path="/practica" element={<DayezaPractica/>}/>
           <Route path='/*' element={<Default/>}/>

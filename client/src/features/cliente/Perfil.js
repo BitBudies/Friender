@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import "./Perfil.css";
 import { useGlobalContext } from "../../context";
 import { GiReturnArrow } from "react-icons/gi";
 import { useNavigate } from 'react-router-dom';
-import { useCookies, removeCookie } from 'react-cookie';
-
+import { useCookies } from 'react-cookie';
 import SolicitudesPendientes from "../solicitudes/SolicitudesPendientes";
+import SolicitudesAceptadas from "../solicitudes/SolicitudesAceptadas";
+import HabilitarAmigo from "./HabilitarAmigo";
 
 const optionsData = [
   // {
-  //   id : 1,
+  //   id : 1,   
   //   name : "Editar Perfil",
   //   toRender : <div className='editar-perfil'><h1>Editar Perfil</h1></div>},
   {
@@ -17,11 +18,17 @@ const optionsData = [
     name: "Solicitudes Pendientes",
     toRender: <SolicitudesPendientes />,
   },
-  // {
-  //   id:3,
-  //   name: 'Configuracion',
-  //   toRender: <h1>Configuracion</h1>
-  // }
+  {
+    id:2,
+    name: 'Encuentros Programados',
+    toRender: <SolicitudesAceptadas/>
+  },
+  {
+    id:3,
+    name: 'Cuenta de Amigo',
+    toRender: <HabilitarAmigo/>
+  },
+  
 ];
 
 const Perfil = () => {
@@ -41,7 +48,6 @@ const Perfil = () => {
       setImagenBase64(informacion.imagenBase64);
       //nombre_completo = informacion.nombre_completo
     }
-
   }, [informacion]);
 
   const handleCloseSession = () => {
@@ -54,7 +60,7 @@ const Perfil = () => {
     if (window.innerWidth < 576) {
       setShowContent(true);
     }
-  };
+  };  
 
   useEffect(() => {
     const handleResize = () => {

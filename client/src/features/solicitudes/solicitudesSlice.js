@@ -33,6 +33,14 @@ const solicitudApi = apiSlice.injectEndpoints({
         },
       }),
     }),
+    getSolicitudesAceptadas: builder.query({
+      query: (token) => ({
+        url: "/amigo/solicitudes-aceptadas",
+        headers: {
+          Authorization: `Token ${token}`
+        },
+      }),
+    }),
     rechazarSolicitud: builder.mutation({
       query: (id_solicitud) => ({
         url: `/solicitud/rechazar/${id_solicitud}`,
@@ -57,4 +65,5 @@ export const {
   useGetSolicitudPendienteByIdQuery,
   useAceptarSolicitudMutation,
   useRechazarSolicitudMutation,
+  useGetSolicitudesAceptadasQuery,
 } = solicitudApi;

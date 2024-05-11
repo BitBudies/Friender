@@ -1,35 +1,39 @@
-import React from "react";
-import "./Solicitud.css";
+import React from 'react'
+import "./SolicitudAceptada.css";
 import { FaClock } from "react-icons/fa6";
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { pictures } from "../api/pictures";
 
-const Solicitud = ({ solicitud, index }) => {
-  // console.log(solicitud, "Solicitud");
-
+const SolicitudAceptada = ( {imagenBase64, 
+                            nombre_cliente, 
+                            fecha_inicio, 
+                            hora_inicio, 
+                            lugar, 
+                            solicitud_aceptada_id,
+                            duracion} ) => { 
+ 
   function formatFecha(fecha) {
     const [year, month, day] = fecha.split("-");
     return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${year}`;
   }
-
+                              
   return (
     <div className="col-container ">
-      <div className="solicitud-recibida-card ">
+      <div className="solicitud-aceptada-card ">
         <div id="datos-perfil">
           <div id="datos-perfil">
             <div
               className="card-image mb-2"
               style={{
                 backgroundImage: `url(${
-                  solicitud.imagenBase64
-                    ? `data:image/jpeg;base64,${solicitud.imagenBase64}`
+                  imagenBase64
+                    ? `data:image/jpeg;base64,${imagenBase64}`
                     : "/images/user.jpeg"
                 })`,
               }}
             ></div>
           </div>
-          <h5>{solicitud.nombre_cliente}</h5>
+          <h5>{nombre_cliente}</h5>
         </div>
         <div id="datos-solicitud">
           <p className="estrellas text-warning">★★★★☆</p>
@@ -38,37 +42,40 @@ const Solicitud = ({ solicitud, index }) => {
               <span>
                 <FaCalendarAlt />
               </span>
-              <p>{formatFecha(solicitud.fecha_inicio)}</p>
+              <p>{formatFecha(fecha_inicio)}</p>
             </div>
             <div className="card-item">
               <span>
                 <FaClock />
               </span>
-              <p>{solicitud.hora_inicio.match(/\d+:\d+/)}</p>
+              <p>{hora_inicio.match(/\d+:\d+/)}</p>
             </div>
           </div>
 
-          <div className="card-item">
-            <span>
-              <FaMapMarkerAlt />
-            </span>
-            <p>{solicitud.lugar}</p>
+          <div className="card-item-aceptadas">
+            <div>
+              <span>
+                <FaMapMarkerAlt />
+              </span>
+              <span>{lugar}</span>
+            </div>
+            <p>{duracion} Hrs</p>
           </div>
           <div className="d-flex justify-content-between align-items-center solicitud-footer">
-            <Link
-              to={`/usuario/solicitud_pendiente/${solicitud.solicitud_alquiler_id}`}
+            {/* <Link
+              to={`/usuario/solicitud_pendiente/${solicitud_aceptada_id}`}
               id="ver-perfil-button"
               className="btn btn-azul"
               type="button"
             >
-              Ver Solicitud
-            </Link>
-            <p>{solicitud.duracion_minutos} Hrs</p>
+              Ver Perfil
+            </Link> */}
+            
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Solicitud;
+export default SolicitudAceptada

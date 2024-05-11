@@ -19,7 +19,7 @@ from django.urls import path
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from amigo.views.amigo_views import AmigoDetailById,AmigoListLimitPaginator
+from amigo.views.amigo_views import AmigoDetailById, ClienteEsAmigo, RegistrarAmigo, PrecioAmiwo
 from amigo.views.cliente_views import ClienteDetailById, ClienteListLimitPaginator, RegistrarCliente,VerificarCorreoUsuario, EnviarCodigos, VerificarCodigo, obtenerInformacionCliente
 from amigo.views.edicion_views import cambiarContrasena, enviarCorreoCambioContrasena, findEmail, verificarCodigoToken
 from amigo.views.fotografia_views import FotografiaPorID, FotografiasDeCliente, SubirFotografia, SubirFotografiaDef
@@ -30,6 +30,8 @@ from amigo.views.solicitud_views import AcceptSolicitud, RechazarSolicitud, GetS
 from amigo.views.utils import obtener_csrf
 from amigo.views.login import Login
 from amigo.views.cerrarSesion import Logout
+from amigo.views.lista_solicitudes_aceptadas import ObtenerListaDeSolicitudes
+from amigo.views.filtros import  ClientePorGenero,FiltroTotalToken, ClienteFiltro,Interes,Precio,FiltroTotal,ClientePorGeneroToken, ClienteFiltroToken, InteresToken,PrecioToken,AmigoListLimitPaginator
 schema_view = get_schema_view(
     openapi.Info(
         title="Documentacion de la API 🐸",
@@ -57,7 +59,7 @@ urlpatterns = [
     path('api/get/csrf', obtener_csrf),
     
  
-    path('api/cliente/verificarCorreoUser', VerificarCorreoUsuario.as_view()),
+    path('api/cliente/verificarCorreoUser', VerificarCorreoUsuario.as_view(), name='verificarCorreoUser'),
     path('api/cliente/enviarCodigos', EnviarCodigos.as_view()),
     path('api/cliente/verificarCodigo', VerificarCodigo.as_view()),
     path('api/cliente/logout', Logout.as_view()),
@@ -69,7 +71,11 @@ urlpatterns = [
     # Amigo
     path('api/amigo/<int:amigo_id>/', AmigoDetailById),
     path('api/amigos/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator),
-
+    path('api/amigo/solicitudes-aceptadas', ObtenerListaDeSolicitudes),
+    path('api/amigo/precio', PrecioAmiwo),
+    path('api/registraramigo', RegistrarAmigo),
+    path('api/clienteesamigo', ClienteEsAmigo),
+    
     # Solicitud
     path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud),
     path('api/solicitud/rechazar/<int:solicitud_alquiler_id>', RechazarSolicitud.as_view()),
@@ -100,5 +106,18 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     
     
-  #  path('correo/', EnviarCorreo.as_view())
+    #filtros
+    path('api/filtros/genero', ClientePorGenero.as_view(), name='filtro_femenino'),
+    path('api/filtros/cliente', ClienteFiltro.as_view(), name='filtro_cliente'),
+    path('api/filtros/interes', Interes.as_view(), name='filtro_interes'),
+    path('api/filtros/precio', Precio.as_view()),
+    path('api/filtros/total',FiltroTotal.as_view()),
+    #filtros-con-tokens
+    path('api/filtros/generoToken',ClientePorGeneroToken.as_view()),
+    path('api/filtros/clienteToken',ClienteFiltroToken.as_view()),
+    path('api/filtros/interesToken',InteresToken.as_view()),
+    path('api/filtros/precioToken', PrecioToken.as_view()),
+    path('api/filtros/total',FiltroTotalToken.as_view()),
+    
+    path('api/filtros/filtrosPaginacion/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator),
 ]
