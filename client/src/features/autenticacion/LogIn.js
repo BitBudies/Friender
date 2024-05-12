@@ -54,7 +54,7 @@ const LogIn = () => {
       setClientId(response.id);
       window.localStorage.setItem("clientId",response.id);
       setCookie("token", response.token);
-      navigate("/amigos?n_page=1");
+      navigate("/amigos?pagina=1");
     }
     if (isError) {
       console.log(responseError,"error")
