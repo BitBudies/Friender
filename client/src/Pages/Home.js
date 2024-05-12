@@ -76,7 +76,7 @@ const Home = () => {
           <div className='display-flex'>
             <div className='home-post-it'>
             <img className='home-post-its-icon' src="/images/money-bag-myicon.png"></img>
-              <h3>Gana dinero extra</h3>
+              <h3>Gana dinero <br></br> extra</h3>
               <p>Establece tus propias tarifas y horas de disponibilidad.</p>
             </div>
             <div className='home-post-it'>
