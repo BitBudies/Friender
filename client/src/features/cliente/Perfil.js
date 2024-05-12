@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import SolicitudesPendientes from "../solicitudes/SolicitudesPendientes";
 import SolicitudesAceptadas from "../solicitudes/SolicitudesAceptadas";
+import PerfilCliente from "../cliente/PerfilCliente";
 import HabilitarAmigo from "./HabilitarAmigo";
 
 const optionsData = [
@@ -15,16 +16,22 @@ const optionsData = [
   //   toRender : <div className='editar-perfil'><h1>Editar Perfil</h1></div>},
   {
     id: 1,
+    name: "Mi perfil",
+    toRender: <PerfilCliente />,
+  },
+  
+  {
+    id: 2,
     name: "Solicitudes Pendientes",
     toRender: <SolicitudesPendientes />,
   },
   {
-    id:2,
+    id:3,
     name: 'Encuentros Programados',
     toRender: <SolicitudesAceptadas/>
   },
   {
-    id:3,
+    id:4,
     name: 'Cuenta de Amigo',
     toRender: <HabilitarAmigo/>
   },
