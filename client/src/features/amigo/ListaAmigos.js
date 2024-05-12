@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import "./listaAmigos.css";
 import Loading from "../../Components/Loading";
-import { useGetAmigosMutation } from "./amigoSlice";
+import { useGetAmigosMutation} from "./amigoSlice";
 import { FaUser, FaFilter, FaAngleDown, FaAngleUp } from "react-icons/fa";
 import {
   MdInterests,
@@ -359,7 +359,7 @@ const ListaAmigos = () => {
                 <p>-</p>
                 <input
                   type="text"
-                  placeholder="Max"
+                  placeholder="Máx"
                   className="form-control"
                   style={{
                     marginLeft: "0",

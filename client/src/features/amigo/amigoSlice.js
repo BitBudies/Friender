@@ -20,7 +20,17 @@ const amigoApi = apiSlice.injectEndpoints({
         },
       }),
     }),
+    getAmigoByfiltros: builder.query({
+      query: ({filtros, token}) => ({
+        url: `/filtros/filtrosPaginacion/pagina/${filtros}`,
+        method: "POST",
+        body: filtros,
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetAmigosMutation, useGetAmigoByIdQuery } = amigoApi;
+export const { useGetAmigosMutation, useGetAmigoByIdQuery,useGetAmigoByfiltrosQuery } = amigoApi;
