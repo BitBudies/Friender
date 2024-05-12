@@ -19,7 +19,7 @@ from rest_framework.authentication import TokenAuthentication
 def ObtenerListaDeSolicitudes(request):
     user = request.user
     amigo = get_object_or_404(Amigo, cliente__user=user)
-    solicitudes_aceptadas = solicitud_alquiler.objects.filter(amigo=amigo, estado_solicitud='A').order_by('fecha_inicio')
+    solicitudes_aceptadas = solicitud_alquiler.objects.filter(amigo=amigo, estado_solicitud='A', fecha_inicio__gte=datetime.now().date()).order_by('fecha_inicio')
 
     now = datetime.now().date()
     data = {"solicitudes_recibidas": []}
