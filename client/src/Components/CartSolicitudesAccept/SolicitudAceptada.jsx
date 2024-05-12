@@ -39,7 +39,7 @@ const SolicitudAceptada = ( {imagenBase64,
         </div>
         <div id="datos-solicitud">
           <p className="estrellas text-warning">★★★★☆</p>
-          <div className="card-double-item">
+          <div className="card-double-item-aceptada">
             <div className="card-item">
               <span>
                 <FaCalendarAlt />
@@ -63,11 +63,12 @@ const SolicitudAceptada = ( {imagenBase64,
             </div>
             <p>{duracion} Hrs</p>
           </div>
-          <div className="d-flex justify-content-between align-items-center solicitud-footer">
-            
-            <p>{dias_restantes}</p>
-            
-            
+          <div className="align-items-center ">
+            {
+              dias_restantes==='Hoy' ?
+              <h5><strong>{dias_restantes}</strong></h5>
+              : <p>{dias_restantes}</p>  
+            }            
           </div>
         </div>
       </div>
