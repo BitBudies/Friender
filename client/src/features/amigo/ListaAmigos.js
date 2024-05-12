@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import "./listaAmigos.css";
 import Loading from "../../Components/Loading";
-import { useGetAmigosMutation } from "./amigoSlice";
+import { useGetAmigosMutation} from "./amigoSlice";
 import { FaUser, FaFilter, FaAngleDown, FaAngleUp } from "react-icons/fa";
 import {
   MdInterests,
@@ -26,7 +26,6 @@ const ListaAmigos = () => {
   const token = cookies.token;
 
   const queryParams = new URLSearchParams(useLocation().search);
-
   const n_page = queryParams.get('n_page');
   const edadP = queryParams.get('edad');
   const generoP = queryParams.get('genero');
@@ -34,6 +33,7 @@ const ListaAmigos = () => {
   const precio_minP = queryParams.get('precio_min');
   const precio_maxP = queryParams.get('precio_max');
 
+  
   const [values, setValues] = useState({
     interecitos: [],
     rangoEdad: "",
@@ -61,6 +61,7 @@ const ListaAmigos = () => {
   const [getAmiwitos, { data: amigos, isLoading, isSuccess }] =
     useGetAmigosMutation();
 
+    
   useEffect(() => {
     getAmiwitos({
       pagina: n_page,
