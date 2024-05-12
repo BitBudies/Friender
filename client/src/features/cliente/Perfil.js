@@ -8,6 +8,7 @@ import SolicitudesPendientes from "../solicitudes/SolicitudesPendientes";
 import SolicitudesAceptadas from "../solicitudes/SolicitudesAceptadas";
 import PerfilCliente from "../cliente/PerfilCliente";
 import HabilitarAmigo from "./HabilitarAmigo";
+import MiPerfil from "../../Components/MiPerfil/MiPerfil"
 
 const optionsData = [
   // {
@@ -16,16 +17,16 @@ const optionsData = [
   //   toRender : <div className='editar-perfil'><h1>Editar Perfil</h1></div>},
   {
     id: 1,
-    name: "Mi perfil",
-    toRender: <PerfilCliente />,
+    name: "Mi Perfil",
+    toRender: <MiPerfil />,
   },
-  
   {
     id: 2,
     name: "Solicitudes Pendientes",
     toRender: <SolicitudesPendientes />,
   },
   {
+    id:3,
     id:3,
     name: 'Encuentros Programados',
     toRender: <SolicitudesAceptadas/>
