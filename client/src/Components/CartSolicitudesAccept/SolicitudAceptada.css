@@ -56,10 +56,11 @@
     text-align: start;
 }
 
-.card-double-item{
+.card-double-item-aceptada{
     display: flex;
     width: 100% ;
     gap: 1rem   ;
+    justify-content: space-between;
 }
 
 .card-item-aceptadas{
