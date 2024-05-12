@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useParams, useLocation } from "react-router-dom";
+import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import "./listaAmigos.css";
 import Loading from "../../Components/Loading";
 import { useGetAmigosMutation} from "./amigoSlice";
@@ -22,6 +22,7 @@ function calificacionEstrellas(calificacion) {
 }
 
 const ListaAmigos = () => {
+  const navigateTo = useNavigate()
   const [cookies] = useCookies(["token"])
   const token = cookies.token
   const validNumberPattern = /^[0-9+-]*$/
@@ -150,7 +151,11 @@ const ListaAmigos = () => {
       values.precio.min !== "" ? parseInt(values.precio.min) : null;
     let precio_max =
       values.precio.max !== "" ? parseInt(values.precio.max) : null;
-
+    const generosMandar = generosLetra.map((gen) => {
+      return `genero=${gen}`
+    }).join("&")
+    navigateTo(`/amigos?pagina=1${generosMandar.length > 0 ? "$"+generosMandar : ""}`)
+    return
     getAmiwitos({
       pagina: pagina,
       limite: 24,
