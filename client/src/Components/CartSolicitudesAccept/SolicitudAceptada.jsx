@@ -65,18 +65,13 @@ const SolicitudAceptada = ( {imagenBase64,
           </div>
           <div className="align-items-center ">
             {
-              dias_restantes==='Hoy' ?
-              <h5><strong>{dias_restantes}</strong></h5>
-              : <p>{dias_restantes}</p>  
-            }     
-            {/* {
               dias_restantes===0 ?
               <h5><strong>Hoy</strong></h5>
               :
                 dias_restantes===1 ?
                 <p>En 1 día</p>
                 : <p>En {dias_restantes} días</p>   
-            }        */}
+            }       
           </div>
         </div>
       </div>
