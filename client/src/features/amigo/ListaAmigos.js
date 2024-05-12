@@ -25,17 +25,26 @@ const ListaAmigos = () => {
   const [cookies] = useCookies(["token"])
   const token = cookies.token
   const validNumberPattern = /^[0-9+-]*$/
+  const interesssssss = [
+    "Arte y Cultura",
+    "Cine y Series",
+    "Gastronomía",
+    "Idiomas",
+    "Lectura",
+    "Taekwondo",
+    "Tecnología"
+  ]
 
   const queryParams = new URLSearchParams(useLocation().search)
   const pagina = queryParams.get("pagina") || 1
   const edadP = queryParams.get("edad") || "0"
-  const generoP = queryParams.getAll("genero") || []
-  const interesesP = queryParams.getAll("intereses") || []
+  const generosP = queryParams.getAll("genero") || []
+  const interesesP = queryParams.getAll("interes") || []
   const precio_minP = queryParams.get("precio_min") || ""
   const precio_maxP = queryParams.get("precio_max") || ""
-  const ubicacionP = queryParams.get("ubicacion") || "Cualquiera"
+  const ubicacionP = queryParams.get("ubicacion") || ""
 
-  console.log(ubicacionP)
+  console.log(interesesP)
 
   let precioMinimo = parseInt(precio_minP);
   let precioMaximo = parseInt(precio_maxP);
@@ -49,6 +58,15 @@ const ListaAmigos = () => {
       precioMaximo = 0 / 0;
     }
   }
+
+  const [intereses, setIntereses] = useState(
+    interesssssss.map((nombresito) => {
+      return {
+        nombre: nombresito,
+        seleccionado: interesesP.includes(nombresito)
+      }
+    })
+  )
 
   const [values, setValues] = useState({
     interecitos: [],
@@ -89,9 +107,9 @@ const ListaAmigos = () => {
         precio_max: isNaN(precioMaximo) ? null : precioMaximo,
         edad_min: 0,
         edad_max: 999,
-        generos: {},
-        interes: {},
-        ubicacion: "",
+        generos: generosP,
+        interes: interesesP,
+        ubicacion: values.ubicacion,
       },
     });
   }, [pagina]);
@@ -177,15 +195,6 @@ const ListaAmigos = () => {
     });
   };
 
-  const [intereses, setIntereses] = useState([
-    { nombre: "Arte y Cultura", seleccionado: false },
-    { nombre: "Cine y Series", seleccionado: false },
-    { nombre: "Gastronomía", seleccionado: false },
-    { nombre: "Idiomas", seleccionado: false },
-    { nombre: "Lectura", seleccionado: false },
-    { nombre: "Taekwondo", seleccionado: false },
-    { nombre: "Tecnología", seleccionado: false },
-  ]);
 
   const ubicacionesPermitidas = [
     "Cualquiera",
