@@ -29,8 +29,8 @@ const ListaAmigos = () => {
   const queryParams = new URLSearchParams(useLocation().search)
   const pagina = queryParams.get("pagina") || 1
   const edadP = queryParams.get("edad") || "0"
-  const generoP = queryParams.getAll("genero")
-  const interesesP = queryParams.getAll("intereses")
+  const generoP = queryParams.getAll("genero") || []
+  const interesesP = queryParams.getAll("intereses") || []
   const precio_minP = queryParams.get("precio_min") || ""
   const precio_maxP = queryParams.get("precio_max") || ""
   const ubicacionP = queryParams.get("ubicacion") || "Cualquiera"
@@ -58,7 +58,7 @@ const ListaAmigos = () => {
       max: isNaN(precioMaximo) ? "" : precioMaximo.toString(),
     },
     generosos: [],
-    ubicacion: "",
+    ubicacion: ubicacionP,
   });
 
   const handleKeyDown = (e) => {
