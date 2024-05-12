@@ -27,14 +27,14 @@ const SolicitudDetalles = () => {
         setEnableBtn(false);
         await aceptar(id_solicitud);
         showAlert('Solicitud Aceptada', 'success');
-        navigate("/perfil");
+        navigate("/cuenta-amigo");
     }
 
     const handleCancel = async () => {
         setEnableBtn(false);
         await rechazar(id_solicitud);
         showAlert('Solicitud Rechazada', 'danger');
-        navigate("/perfil");
+        navigate("/cuenta-amigo");
     }
 
     function formatFecha(fecha) {
