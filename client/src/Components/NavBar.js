@@ -86,22 +86,21 @@ const NavBar = () => {
                   onClick={handleAmigosClick}
                   >Buscar Amigos</button> 
               </li></ul>
+              <div className={`navbar-right-side ${userLoged ? "hidden" : ""}`}>
+                  <Link to={"/login"} className='btn btn-azul'>Iniciar Sesión</Link>
+                  <Link to={"/registrar"} className='btn btn-azul navbar-register-btn'>Registrarse</Link>
               </div>
-              
-              <div className='navbar-right-side'>
+              <div className={`navbar-right-side ${userLoged ? "" : "hidden"}`}>
               <ul className='navbar-nav px-lg-5 ml-auto'>
                 <li className={`nav-item ${userLoged ? "" : "hidden"}`}>
                   <NavLink className={`nav-link nav-item ${isActive && "active"} ${ModeAmigo ? "hidden" : ""}`} 
                     to={"/cuenta-amigo"}>Mi Perfil</NavLink>
                 </li>
               </ul>
-            </div>
+             </div>
+        </div>
 
-          <div className='nav-item dropdown '>
-            <div className={`navbar-right-side ${userLoged ? "hidden" : ""}`}>
-            <Link to={"/login"} className='btn btn-azul'>Iniciar Sesión</Link>
-            <Link to={"/registrar"} className='btn btn-azul navbar-register-btn'>Registrarse</Link>
-            </div>
+          <div className='nav-item dropdown login-buttons'>
             
             <div className={`${userLoged ? "" : "hidden"}`}>
             <span className="profile-icon"  aria-expanded="false"> {/*nav-link dropdown-toggle profile-icon role="button" data-bs-toggle="dropdown"*/}
