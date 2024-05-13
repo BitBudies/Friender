@@ -17,6 +17,7 @@ const clienteApi = apiSlice.injectEndpoints({
           Authorization: `Token ${token}`,
         },
       }),
+      
     }),
     
     enableFriendMode: builder.mutation({
@@ -29,6 +30,7 @@ const clienteApi = apiSlice.injectEndpoints({
         },
         body : `precio=${precio}`
       }),
+      invalidatesTags: ["Amigos"],
     }),
     disableFriendMode: builder.mutation({
       query: ({ token }) => ({
@@ -38,6 +40,7 @@ const clienteApi = apiSlice.injectEndpoints({
           Authorization: `Token ${token}`,
         },
       }),
+      invalidatesTags: ["Amigos"],
     }),
     isEnabledFriendMode: builder.query({
       query: ({ token }) => ({
@@ -46,6 +49,7 @@ const clienteApi = apiSlice.injectEndpoints({
           Authorization: `Token ${token}`,
         },
       }),
+      providesTags: ["Amigos"],
     }),
   }),
 });

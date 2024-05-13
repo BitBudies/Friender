@@ -6,7 +6,7 @@ const AppProvider = ({ children }) => {
 
   const [clientId, setClientId] = useState('0');
   const [userData,setUserData] = useState({});
-  const [isFriendModeEnabled,setIsFriendModeEnabled] = useState(true);
+  const [isFriendModeEnabled,setIsFriendModeEnabled] = useState(false);
   const [alert,setAlert] = useState({status: false, message: 'Mensaje de prueba',type : 'success'});
   const pageRef = useRef();
   
