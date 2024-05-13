@@ -22,6 +22,7 @@ from drf_yasg import openapi
 from amigo.views.amigo_views import (AmigoDetailById,
                                      ClienteEsAmigo,
                                      RegistrarAmigo,
+                                     DeshabilitarAmigo,
                                      PrecioAmiwo)
 
 from amigo.views.cliente_views import (ClienteDetailById,
@@ -113,6 +114,7 @@ urlpatterns = [
     path('api/amigo/precio', PrecioAmiwo),
     path('api/registraramigo', RegistrarAmigo),
     path('api/clienteesamigo', ClienteEsAmigo),
+    path('api/deshabilitarAmigo',DeshabilitarAmigo ),
     
     # Solicitud
     path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud),

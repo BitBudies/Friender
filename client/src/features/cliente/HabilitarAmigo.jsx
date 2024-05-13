@@ -78,7 +78,7 @@ const HabilitarAmigo = () => {
                         disabled={isLoading}
                         onClick={handleSubmit}
                     >
-                        Cambiar a modo cliente
+                        Deshabilitar Cuenta
                     </button>
                     </>
                        

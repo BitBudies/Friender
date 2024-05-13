@@ -52,14 +52,6 @@ const NavBar = () => {
     navigate("/")
     window.location.reload();
   }
-
-  const handleChangeModeAmigo= () =>{
-      setModeAmigo(true);  
-  }
-
-  const handleChangeModeCliente= () =>{
-    setModeAmigo(false);
-  }
   
   const handleAmigosClick = () => {
       if(!isActive){
@@ -86,22 +78,21 @@ const NavBar = () => {
                   onClick={handleAmigosClick}
                   >Buscar Amigos</button> 
               </li></ul>
+              <div className={`navbar-right-side ${userLoged ? "hidden" : ""}`}>
+                  <Link to={"/login"} className='btn btn-azul'>Iniciar Sesión</Link>
+                  <Link to={"/registrar"} className='btn btn-azul navbar-register-btn'>Registrarse</Link>
               </div>
-              
-              <div className='navbar-right-side'>
+              <div className={`navbar-right-side ${userLoged ? "" : "hidden"}`}>
               <ul className='navbar-nav px-lg-5 ml-auto'>
                 <li className={`nav-item ${userLoged ? "" : "hidden"}`}>
                   <NavLink className={`nav-link nav-item ${isActive && "active"} ${ModeAmigo ? "hidden" : ""}`} 
                     to={"/cuenta-amigo"}>Mi Perfil</NavLink>
                 </li>
               </ul>
-            </div>
+             </div>
+        </div>
 
-          <div className='nav-item dropdown '>
-            <div className={`navbar-right-side ${userLoged ? "hidden" : ""}`}>
-            <Link to={"/login"} className='btn btn-azul'>Iniciar Sesión</Link>
-            <Link to={"/registrar"} className='btn btn-azul navbar-register-btn'>Registrarse</Link>
-            </div>
+          <div className='nav-item dropdown login-buttons'>
             
             <div className={`${userLoged ? "" : "hidden"}`}>
             <span className="profile-icon"  aria-expanded="false"> {/*nav-link dropdown-toggle profile-icon role="button" data-bs-toggle="dropdown"*/}
@@ -114,28 +105,6 @@ const NavBar = () => {
               ></div>
              
             </span>
-
-            {/* <ul className="dropdown-menu">
-              <li><Link className="dropdown-item" to={"/acerca"}>Acerca De</Link></li>
-
-              {isAuthenticated ? 
-              //   <>
-                 
-              //     <li><Link className={`dropdown-item ${ModeAmigo && ShowMiPerfil ? "" : "hidden"}`} to={"/perfil"}>Volver a modo amigo</Link></li>
-              //     <li><Link className={`dropdown-item ${ModeAmigo ? "hidden" : ""}`} to={"/cuenta-amigo"} onClick={handleChangeModeAmigo}>Cambiar a modo amigo</Link></li>
-              //     <li><Link className={`dropdown-item ${ModeAmigo ? "" : "hidden"}`} to={"/amigos?pagina=1"} onClick={handleChangeModeCliente}>Cambiar a modo cliente</Link></li>
-              //     <li><hr className="dropdown-divider"/></li>
-              //     <li><button className="dropdown-item "onClick={handleCloseSession}>Cerrar Sesión</button></li>
-              //   </>
-              // :
-              //   <>
-              //     <li><Link className="dropdown-item" to={"/perfil"}>Hola :3</Link></li>
-              //     <li><button className="dropdown-item " onClick={handleCloseSession}>Cerrar Sesión</button></li>
-                  
-              //   </>
-              }
-                            
-            </ul> */}
             </div>
           </div>
         </div>

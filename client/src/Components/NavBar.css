@@ -43,6 +43,11 @@
     /* gap: 2rem;   */
 }
 
+.container-fluid{
+    width: 100% !important;
+}
+
+
 
 @media screen and (min-width: 768px) {
     .dropdown-menu{
@@ -56,6 +61,9 @@
     }
     .dropdown{
         margin: 10px 0 15px 0;
+    }
+    .login-buttons{
+        display: none;
     }
 }
 
