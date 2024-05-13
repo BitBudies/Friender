@@ -35,6 +35,11 @@ const ListaAmigos = () => {
     "Taekwondo",
     "Tecnología",
   ];
+  const generosPermitidos = [
+    "Masculino",
+    "Femenino",
+    "Otro"
+  ];
 
   const queryParams = new URLSearchParams(useLocation().search);
   const pagina = queryParams.get("pagina") || 1;
@@ -72,7 +77,12 @@ const ListaAmigos = () => {
       min: isNaN(precioMinimo) ? "" : precioMinimo.toString(),
       max: isNaN(precioMaximo) ? "" : precioMaximo.toString(),
     },
-    generosos: [],
+    generosos: generosPermitidos.map((nombreGenero) => {
+      return {
+        nombre: nombreGenero,
+        estado: generosP.includes(nombreGenero)
+      };
+    }),
     ubicacion: ubicacionP,
   });
 
@@ -106,7 +116,7 @@ const ListaAmigos = () => {
           values.precio.max == "" ? null : parseInt(values.precio.max),
         edad_min: 0,
         edad_max: 999,
-        generos: generosP,
+        generos: values.generosos.filter((genero) => genero.estado == true).map((genero) => genero.nombre),
         interes: interesesP,
         ubicacion: values.ubicacion,
       },
@@ -115,9 +125,7 @@ const ListaAmigos = () => {
 
   function ActualizarListaAmigos() {
     console.log(values);
-    const generosLetra = values.generosos.map((genero) =>
-      genero.charAt(0).toUpperCase()
-    );
+    
     const rangoEdad = values.rangoEdad;
 
     let edad_min, edad_max;
@@ -144,14 +152,13 @@ const ListaAmigos = () => {
       edad_max = 999;
     }
 
-    // Ajuste de precio_min y precio_max según los valores proporcionados
     let precio_min =
       values.precio.min !== "" ? parseInt(values.precio.min) : null;
     let precio_max =
       values.precio.max !== "" ? parseInt(values.precio.max) : null;
-    const generosMandar = generosLetra
-      .map((gen) => {
-        return `genero=${gen}`;
+    const generosMandar = values.generosos
+      .map((genero) => {
+        return `genero=${genero.nombre}`;
       })
       .join("&");
     const intereseMandar = values.interecitos
@@ -163,21 +170,6 @@ const ListaAmigos = () => {
         intereseMandar.length > 0 ? "&" + intereseMandar : ""
       }`
     );
-    return;
-    getAmiwitos({
-      pagina: pagina,
-      limite: 8,
-      token: token,
-      filtros: {
-        precio_min: precio_min,
-        precio_max: precio_max,
-        edad_min: edad_min,
-        edad_max: edad_max,
-        generos: generosLetra,
-        interes: values.interecitos,
-        ubicacion: values.ubicacion === "Cualquiera" ? "" : values.ubicacion,
-      },
-    });
   }
 
   const onBlurcito = (e, field) => {
@@ -220,36 +212,23 @@ const ListaAmigos = () => {
     "Santa Cruz",
     "Tarija",
   ];
-  const [generos, SetGeneros] = useState([
-    { nombre: "Masculino", estado: false },
-    { nombre: "Femenino", estado: false },
-    { nombre: "Otro", estado: false },
-  ]);
 
   const [generoDropCheckBox, SetGeneroDropCheckBox] = useState(false);
 
   function handleGeneroChange(nuevoGenero) {
-    const nuevosGeneros = generos.map((genero) => {
-      if (genero.nombre === nuevoGenero.nombre) {
-        return { ...genero, estado: !nuevoGenero.estado };
-      }
-      return genero;
-    });
     setValues({
       ...values,
-      generosos: nuevosGeneros
-        .filter((generitooo) => {
-          return generitooo.estado;
-        })
-        .map((generitooo12) => {
-          return generitooo12.nombre;
+      generosos: values.generosos
+        .map((genero) => {
+          if (genero.nombre === nuevoGenero.nombre) {
+            return { nombre: genero.nombre, estado: !genero.estado };
+          }
+          return genero
         }),
     });
-    SetGeneros(nuevosGeneros);
   }
 
   useEffect(() => {
-    // Ordenar intereses seleccionados alfabéticamente
     setValues({
       ...values,
       interecitos: values.interecitos.sort((a, b) =>
@@ -294,9 +273,9 @@ const ListaAmigos = () => {
                       return {
                         nombre: interes.nombre,
                         seleccionado: true,
-                      }
+                      };
                     }
-                    return interes
+                    return interes;
                   }),
                 });
               }}
@@ -401,7 +380,7 @@ const ListaAmigos = () => {
               </p>
               {generoDropCheckBox && (
                 <div className="itemsGenero">
-                  {generos.map((genero) => {
+                  {values.generosos.map((genero) => {
                     return (
                       <div
                         className="itemGenero"
@@ -466,7 +445,7 @@ const ListaAmigos = () => {
                           return {
                             nombre: interesUwu.nombre,
                             seleccionado: false,
-                          }
+                          };
                         }
                         return interesUwu;
                       }),
@@ -571,7 +550,7 @@ const ListaAmigos = () => {
                     to={(() => {
                       const generosMandar = values.generosos
                         .map((gen) => {
-                          return `genero=${gen.charAt(0).toUpperCase()}`;
+                          return `genero=${gen.nombre}`;
                         })
                         .join("&");
                       const intereseMandar = values.interecitos
