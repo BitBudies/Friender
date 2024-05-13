@@ -114,7 +114,7 @@ urlpatterns = [
     path('api/amigo/precio', PrecioAmiwo),
     path('api/registraramigo', RegistrarAmigo),
     path('api/clienteesamigo', ClienteEsAmigo),
-    path('api/deshabilitarAmigo',DeshabilitarAmigo ),
+    path('api/deshabilitaramigo',DeshabilitarAmigo ),
     
     # Solicitud
     path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud),

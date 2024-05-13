@@ -207,7 +207,8 @@ def DeshabilitarAmigo(request):
     user = request.user
     cliente = get_object_or_404(Cliente, user=user)
     try:
-        Amigo.objects.filter(cliente=cliente).update(estado="I")
+        #Borrar amigo
+        Amigo.objects.filter(cliente=cliente).delete();
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response({"data": True}, status=status.HTTP_200_OK)
