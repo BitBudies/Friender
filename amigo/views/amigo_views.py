@@ -199,3 +199,4 @@ def PrecioAmiwo(request):
     except Amigo.DoesNotExist:
         return Response(data, status=status.HTTP_200_OK)
     return Response(data, status=status.HTTP_200_OK)
+
