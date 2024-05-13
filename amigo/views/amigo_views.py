@@ -218,7 +218,7 @@ def DeshabilitarAmigo(request):
 @api_view(["POST"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def cambiarPrecioAmigo(request):
+def CambiarPrecioAmigo(request):
     user = request.user
     cliente = get_object_or_404(Cliente, user=user)
     precio = request.POST.get("precio")

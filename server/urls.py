@@ -23,6 +23,7 @@ from amigo.views.amigo_views import (AmigoDetailById,
                                      ClienteEsAmigo,
                                      RegistrarAmigo,
                                      DeshabilitarAmigo,
+                                     CambiarPrecioAmigo,
                                      PrecioAmiwo)
 
 from amigo.views.cliente_views import (ClienteDetailById,
@@ -115,6 +116,7 @@ urlpatterns = [
     path('api/registraramigo', RegistrarAmigo),
     path('api/clienteesamigo', ClienteEsAmigo),
     path('api/deshabilitaramigo',DeshabilitarAmigo ),
+    path('api/amigo/cambiarprecio', CambiarPrecioAmigo),
     
     # Solicitud
     path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud),
