@@ -26,7 +26,7 @@ const ListaAmigos = () => {
   const [cookies] = useCookies(["token"]);
   const token = cookies.token;
   const validNumberPattern = /^[0-9+-]*$/;
-  const interesssssss = [
+  const interesPermitidos = [
     "Arte y Cultura",
     "Cine y Series",
     "Gastronomía",
@@ -60,17 +60,13 @@ const ListaAmigos = () => {
     }
   }
 
-  const [intereses, setIntereses] = useState(
-    interesssssss.map((nombresito) => {
-      return {
-        nombre: nombresito,
-        seleccionado: interesesP.includes(nombresito),
-      };
-    })
-  );
-
   const [values, setValues] = useState({
-    interecitos: [],
+    interecitos: interesPermitidos.map((nombreInteres) => {
+      return {
+        nombre: nombreInteres,
+        seleccionado: interesesP.includes(nombreInteres),
+      };
+    }),
     rangoEdad: edadP,
     precio: {
       min: isNaN(precioMinimo) ? "" : precioMinimo.toString(),
@@ -82,7 +78,7 @@ const ListaAmigos = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.target.blur(); // Quitamos el focus del input jiji
+      e.target.blur();
     }
   };
 
@@ -103,9 +99,11 @@ const ListaAmigos = () => {
       token: token,
       filtros: {
         pagina: pagina,
-        limite: 24,
-        precio_min: isNaN(precioMinimo) ? null : precioMinimo,
-        precio_max: isNaN(precioMaximo) ? null : precioMaximo,
+        limite: 8,
+        precio_min:
+          values.precio.min == "" ? null : parseInt(values.precio.min),
+        precio_max:
+          values.precio.max == "" ? null : parseInt(values.precio.max),
         edad_min: 0,
         edad_max: 999,
         generos: generosP,
@@ -156,7 +154,7 @@ const ListaAmigos = () => {
         return `genero=${gen}`;
       })
       .join("&");
-    const intereseMandar = intereses
+    const intereseMandar = values.interecitos
       .filter((interes) => interes.seleccionado)
       .map((interes) => `interes=${interes.nombre}`)
       .join("&");
@@ -168,7 +166,7 @@ const ListaAmigos = () => {
     return;
     getAmiwitos({
       pagina: pagina,
-      limite: 24,
+      limite: 8,
       token: token,
       filtros: {
         precio_min: precio_min,
@@ -252,8 +250,13 @@ const ListaAmigos = () => {
 
   useEffect(() => {
     // Ordenar intereses seleccionados alfabéticamente
-    setIntereses(intereses.sort((a, b) => a.nombre.localeCompare(b.nombre)));
-  }, [intereses]);
+    setValues({
+      ...values,
+      interecitos: values.interecitos.sort((a, b) =>
+        a.nombre.localeCompare(b.nombre)
+      ),
+    });
+  }, [values.interecitos]);
 
   const dropdownRef = useRef(null);
   useEffect(() => {
@@ -270,19 +273,6 @@ const ListaAmigos = () => {
     };
   }, [dropdownRef]);
 
-  useEffect(() => {
-    setValues({
-      ...values,
-      interecitos: intereses
-        .filter((int) => {
-          return int.seleccionado;
-        })
-        .map((int) => {
-          return int.nombre;
-        }),
-    });
-  }, [intereses]);
-
   return (
     <div id="lista_amigos" className="page bg-light" ref={pageRef}>
       <div className="filtrosYBoton d-flex justify-content-center">
@@ -297,22 +287,23 @@ const ListaAmigos = () => {
               name="intereses"
               onChange={(e) => {
                 const selectedInterest = e.target.value;
-                setIntereses(
-                  intereses.map((interes) => {
-                    if (interes.nombre === selectedInterest) {
+                setValues({
+                  ...values,
+                  interecitos: values.interecitos.map((interes) => {
+                    if (interes.nombre == selectedInterest) {
                       return {
-                        ...interes,
-                        seleccionado: interes.nombre === selectedInterest,
-                      };
+                        nombre: interes.nombre,
+                        seleccionado: true,
+                      }
                     }
-                    return interes;
-                  })
-                );
+                    return interes
+                  }),
+                });
               }}
               className="form-select"
             >
               <option className="nomostraropcionxd"> </option>
-              {intereses.map((interes) => {
+              {values.interecitos.map((interes) => {
                 if (!interes.seleccionado) {
                   return (
                     <option key={interes.nombre} value={interes.nombre}>
@@ -460,7 +451,7 @@ const ListaAmigos = () => {
         </div>
       </div>
       <div className="interesesSeleccionados">
-        {intereses.map((interes) => {
+        {values.interecitos.map((interes) => {
           if (interes.seleccionado) {
             return (
               <div className="burbujaInteres">
@@ -468,14 +459,18 @@ const ListaAmigos = () => {
                 <IoClose
                   className="cerrarBurbuja"
                   onClick={() =>
-                    setIntereses(
-                      intereses.map((i) => {
-                        if (i.nombre === interes.nombre) {
-                          return { ...i, seleccionado: !i.seleccionado };
+                    setValues({
+                      ...values,
+                      interecitos: values.interecitos.map((interesUwu) => {
+                        if (interesUwu.nombre === interes.nombre) {
+                          return {
+                            nombre: interesUwu.nombre,
+                            seleccionado: false,
+                          }
                         }
-                        return i;
-                      })
-                    )
+                        return interesUwu;
+                      }),
+                    })
                   }
                 />
               </div>
@@ -579,7 +574,7 @@ const ListaAmigos = () => {
                           return `genero=${gen.charAt(0).toUpperCase()}`;
                         })
                         .join("&");
-                      const intereseMandar = intereses
+                      const intereseMandar = values.interecitos
                         .filter((interes) => interes.seleccionado)
                         .map((interes) => `interes=${interes.nombre}`)
                         .join("&");
