@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import "./listaAmigos.css";
 import Loading from "../../Components/Loading";
-import { useGetAmigosMutation} from "./amigoSlice";
+import { useGetAmigosMutation } from "./amigoSlice";
 import { FaUser, FaFilter, FaAngleDown, FaAngleUp } from "react-icons/fa";
 import {
   MdInterests,
@@ -22,10 +22,10 @@ function calificacionEstrellas(calificacion) {
 }
 
 const ListaAmigos = () => {
-  const navigateTo = useNavigate()
-  const [cookies] = useCookies(["token"])
-  const token = cookies.token
-  const validNumberPattern = /^[0-9+-]*$/
+  const navigateTo = useNavigate();
+  const [cookies] = useCookies(["token"]);
+  const token = cookies.token;
+  const validNumberPattern = /^[0-9+-]*$/;
   const interesssssss = [
     "Arte y Cultura",
     "Cine y Series",
@@ -33,19 +33,19 @@ const ListaAmigos = () => {
     "Idiomas",
     "Lectura",
     "Taekwondo",
-    "Tecnología"
-  ]
+    "Tecnología",
+  ];
 
-  const queryParams = new URLSearchParams(useLocation().search)
-  const pagina = queryParams.get("pagina") || 1
-  const edadP = queryParams.get("edad") || "0"
-  const generosP = queryParams.getAll("genero") || []
-  const interesesP = queryParams.getAll("interes") || []
-  const precio_minP = queryParams.get("precio_min") || ""
-  const precio_maxP = queryParams.get("precio_max") || ""
-  const ubicacionP = queryParams.get("ubicacion") || ""
+  const queryParams = new URLSearchParams(useLocation().search);
+  const pagina = queryParams.get("pagina") || 1;
+  const edadP = queryParams.get("edad") || "0";
+  const generosP = queryParams.getAll("genero") || [];
+  const interesesP = queryParams.getAll("interes") || [];
+  const precio_minP = queryParams.get("precio_min") || "";
+  const precio_maxP = queryParams.get("precio_max") || "";
+  const ubicacionP = queryParams.get("ubicacion") || "";
 
-  console.log(interesesP)
+  console.log(interesesP);
 
   let precioMinimo = parseInt(precio_minP);
   let precioMaximo = parseInt(precio_maxP);
@@ -64,10 +64,10 @@ const ListaAmigos = () => {
     interesssssss.map((nombresito) => {
       return {
         nombre: nombresito,
-        seleccionado: interesesP.includes(nombresito)
-      }
+        seleccionado: interesesP.includes(nombresito),
+      };
     })
-  )
+  );
 
   const [values, setValues] = useState({
     interecitos: [],
@@ -97,13 +97,13 @@ const ListaAmigos = () => {
 
   const [getAmiwitos, { data: amigos, isLoading, isSuccess }] =
     useGetAmigosMutation();
-  
+
   useEffect(() => {
     getAmiwitos({
-      pagina: pagina,
-      limite: 24,
       token: token,
       filtros: {
+        pagina: pagina,
+        limite: 24,
         precio_min: isNaN(precioMinimo) ? null : precioMinimo,
         precio_max: isNaN(precioMaximo) ? null : precioMaximo,
         edad_min: 0,
@@ -151,11 +151,21 @@ const ListaAmigos = () => {
       values.precio.min !== "" ? parseInt(values.precio.min) : null;
     let precio_max =
       values.precio.max !== "" ? parseInt(values.precio.max) : null;
-    const generosMandar = generosLetra.map((gen) => {
-      return `genero=${gen}`
-    }).join("&")
-    navigateTo(`/amigos?pagina=1${generosMandar.length > 0 ? "$"+generosMandar : ""}`)
-    return
+    const generosMandar = generosLetra
+      .map((gen) => {
+        return `genero=${gen}`;
+      })
+      .join("&");
+    const intereseMandar = intereses
+      .filter((interes) => interes.seleccionado)
+      .map((interes) => `interes=${interes.nombre}`)
+      .join("&");
+    navigateTo(
+      `/amigos?pagina=1${generosMandar.length > 0 ? "&" + generosMandar : ""}${
+        intereseMandar.length > 0 ? "&" + intereseMandar : ""
+      }`
+    );
+    return;
     getAmiwitos({
       pagina: pagina,
       limite: 24,
@@ -199,7 +209,6 @@ const ListaAmigos = () => {
       },
     });
   };
-
 
   const ubicacionesPermitidas = [
     "Cualquiera",
@@ -564,11 +573,24 @@ const ListaAmigos = () => {
                       Number(pagina) === amigos.numero_paginas && "disabled"
                     }`}
                     onClick={() => goToBeginning}
-                    to={`/amigos?pagina=${
-                      Number(pagina) < amigos.numero_paginas
-                        ? Number(pagina) + 1
-                        : Number(pagina)
-                    }`}
+                    to={(() => {
+                      const generosMandar = values.generosos
+                        .map((gen) => {
+                          return `genero=${gen.charAt(0).toUpperCase()}`;
+                        })
+                        .join("&");
+                      const intereseMandar = intereses
+                        .filter((interes) => interes.seleccionado)
+                        .map((interes) => `interes=${interes.nombre}`)
+                        .join("&");
+                      return `/amigos?pagina=${
+                        Number(pagina) < amigos.numero_paginas
+                          ? Number(pagina) + 1
+                          : Number(pagina)
+                      }${generosMandar.length > 0 ? "&" + generosMandar : ""}${
+                        intereseMandar.length > 0 ? "&" + intereseMandar : ""
+                      }`;
+                    })()}
                   >
                     {">"}
                   </Link>

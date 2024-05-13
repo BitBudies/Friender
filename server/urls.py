@@ -161,5 +161,5 @@ urlpatterns = [
     path('api/filtros/precioToken', PrecioToken.as_view()),
     path('api/filtros/total',FiltroTotalToken.as_view()),
     
-    path('api/filtros/filtrosPaginacion/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator),
+    path('api/filtros/filtrosPaginacion', AmigoListLimitPaginator),
 ]
