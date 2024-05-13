@@ -52,14 +52,6 @@ const NavBar = () => {
     navigate("/")
     window.location.reload();
   }
-
-  const handleChangeModeAmigo= () =>{
-      setModeAmigo(true);  
-  }
-
-  const handleChangeModeCliente= () =>{
-    setModeAmigo(false);
-  }
   
   const handleAmigosClick = () => {
       if(!isActive){
@@ -113,28 +105,6 @@ const NavBar = () => {
               ></div>
              
             </span>
-
-            {/* <ul className="dropdown-menu">
-              <li><Link className="dropdown-item" to={"/acerca"}>Acerca De</Link></li>
-
-              {isAuthenticated ? 
-              //   <>
-                 
-              //     <li><Link className={`dropdown-item ${ModeAmigo && ShowMiPerfil ? "" : "hidden"}`} to={"/perfil"}>Volver a modo amigo</Link></li>
-              //     <li><Link className={`dropdown-item ${ModeAmigo ? "hidden" : ""}`} to={"/cuenta-amigo"} onClick={handleChangeModeAmigo}>Cambiar a modo amigo</Link></li>
-              //     <li><Link className={`dropdown-item ${ModeAmigo ? "" : "hidden"}`} to={"/amigos?pagina=1"} onClick={handleChangeModeCliente}>Cambiar a modo cliente</Link></li>
-              //     <li><hr className="dropdown-divider"/></li>
-              //     <li><button className="dropdown-item "onClick={handleCloseSession}>Cerrar Sesión</button></li>
-              //   </>
-              // :
-              //   <>
-              //     <li><Link className="dropdown-item" to={"/perfil"}>Hola :3</Link></li>
-              //     <li><button className="dropdown-item " onClick={handleCloseSession}>Cerrar Sesión</button></li>
-                  
-              //   </>
-              }
-                            
-            </ul> */}
             </div>
           </div>
         </div>
