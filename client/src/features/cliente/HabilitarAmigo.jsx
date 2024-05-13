@@ -7,10 +7,11 @@ import { useGlobalContext } from '../../context';
 
 
 const HabilitarAmigo = () => {
-  const [precio, setPrecio] = useState(0);
   const [isEnabledBtn,setIsEnabledBtn] = useState(true);
   const token = useGetToken();
   const {isFriendModeEnabled} = useGlobalContext()
+  const [precio, setPrecio] = useState(isFriendModeEnabled);
+
   // const {
   //   data: isEnabled,
   //   isFetching,
@@ -39,6 +40,10 @@ const HabilitarAmigo = () => {
     }
   },[isSuccessDisable,disabled]);
 
+
+  useEffect(() => {
+    console.log(isFriendModeEnabled,"precio");
+  },[isFriendModeEnabled])
 
    if (isSuccessEnable) {
     return <p>Registrado correctamente como amigo (lo cambiamos de modo ? (´▽`ʃ♡ƪ))</p>
