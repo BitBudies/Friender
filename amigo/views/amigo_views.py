@@ -215,3 +215,18 @@ def DeshabilitarAmigo(request):
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response({"data": True}, status=status.HTTP_200_OK)
 
+@api_view(["POST"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def cambiarPrecioAmigo(request):
+    user = request.user
+    cliente = get_object_or_404(Cliente, user=user)
+    precio = request.POST.get("precio")
+    if not precio:
+        return Response({"error": "El precio es obligatorio"}, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        #Borrar amigo
+        Amigo.objects.filter(cliente=cliente).update(precio=precio);
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    return Response({"data": "Precio cambiado correctamente"}, status=status.HTTP_200_OK)
