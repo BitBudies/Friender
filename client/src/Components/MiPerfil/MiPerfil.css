@@ -1,13 +1,12 @@
 .miperfil-amigo-container{
     position: relative;
     width: 100%;
-    min-height: calc(100vh - var(--navbar-height));
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 5rem;
     padding: 7rem 2rem 0 2rem;
-    height: 100%;
+    height: fit-content;
     overflow: hidden;
   }
   
