@@ -482,20 +482,26 @@ const ListaAmigos = () => {
                 {interes.nombre}
                 <IoClose
                   className="cerrarBurbuja"
-                  onClick={() =>
+                  onClick={() => {
+                    const nuevosIntereses = values.interecitos.map((interesUwu) => {
+                      if (interesUwu.nombre === interes.nombre) {
+                        return {
+                          nombre: interesUwu.nombre,
+                          seleccionado: false,
+                        };
+                      }
+                      return interesUwu;
+                    })
                     setValues({
                       ...values,
-                      interecitos: values.interecitos.map((interesUwu) => {
-                        if (interesUwu.nombre === interes.nombre) {
-                          return {
-                            nombre: interesUwu.nombre,
-                            seleccionado: false,
-                          };
-                        }
-                        return interesUwu;
-                      }),
+                      interecitos: nuevosIntereses
                     })
-                  }
+                    const queryParams = new URLSearchParams(location.search);
+                    queryParams.delete("interes");
+                    nuevosIntereses.filter(interes => interes.seleccionado).map(interes => queryParams.append("interes", interes.nombre))
+                    navigateTo(`/amigos?${queryParams.toString()}`);
+                    goToBeginning();
+                  }}
                 />
               </div>
             );
