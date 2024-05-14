@@ -585,15 +585,19 @@ const ListaAmigos = () => {
                       Number(pagina) === index + 1 && "active"
                     }`}
                   >
-                    <Link
+                    <button
                       className={`page-link ${
                         Number(pagina) === index + 1 && "bg-azul-fuerte"
                       }`}
-                      to={`/amigos?pagina=${index + 1}`}
-                      onClick={goToBeginning}
+                      onClick={() => {
+                        const queryParams = new URLSearchParams(location.search);
+                        queryParams.set("pagina", index + 1);
+                        navigateTo(`/amigos?${queryParams.toString()}`);
+                        goToBeginning()
+                      }}
                     >
                       {index + 1}
-                    </Link>
+                    </button>
                   </li>
                 ))}
                   <li className="page-item">
