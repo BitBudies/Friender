@@ -563,17 +563,20 @@ const ListaAmigos = () => {
             <nav aria-label="Page navigation example">
               <ul className="pagination justify-content-center">
                 <li className="page-item">
-                  <Link
-                    className={`page-link ${
-                      Number(pagina) === 1 && "disabled"
-                    }`}
-                    to={`/amigos?pagina=${
-                      Number(pagina) > 1 ? Number(pagina) - 1 : Number(pagina)
-                    }`}
+                  <button
+                    className={"page-link"}
+                    disabled={Number(pagina) === 1}
+                    onClick={() => {
+                      const lastPage = Number(pagina) - 1;
+                      const queryParams = new URLSearchParams(location.search);
+                      queryParams.set("pagina", lastPage);
+                      navigateTo(`/amigos?${queryParams.toString()}`);
+                      goToBeginning();
+                    }}
                   >
                     {" "}
                     {"<"}{" "}
-                  </Link>
+                  </button>
                 </li>
                 {Array.from({ length: amigos.numero_paginas }, (_, index) => (
                   <li
@@ -593,11 +596,10 @@ const ListaAmigos = () => {
                     </Link>
                   </li>
                 ))}
-                          <li className="page-item">
+                  <li className="page-item">
                   <button
-                    className={`page-link ${
-                      Number(pagina) === amigos.numero_paginas && "disabled"
-                    }`}
+                    className={"page-link"}
+                    disabled={Number(pagina) === amigos.numero_paginas}
                     onClick={() => {
                       const nextPage = Number(pagina) + 1;
                       const queryParams = new URLSearchParams(location.search);
