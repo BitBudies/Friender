@@ -137,7 +137,7 @@ const ListaAmigos = () => {
       token: token,
       filtros: {
         pagina: pagina,
-        limite: 8,
+        limite: 24,
         precio_min:
           values.precio.min == "" ? null : parseInt(values.precio.min),
         precio_max:
@@ -574,8 +574,7 @@ const ListaAmigos = () => {
                       goToBeginning();
                     }}
                   >
-                    {" "}
-                    {"<"}{" "}
+                    {"<"}
                   </button>
                 </li>
                 {Array.from({ length: amigos.numero_paginas }, (_, index) => (
