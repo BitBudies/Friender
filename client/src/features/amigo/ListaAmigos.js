@@ -21,7 +21,9 @@ function calificacionEstrellas(calificacion) {
   return estrellas;
 }
 
+
 const ListaAmigos = () => {
+  const [consultar, setConsultar] = useState(false)
   const navigateTo = useNavigate();
   const [cookies] = useCookies(["token"]);
   const token = cookies.token;
@@ -35,17 +37,32 @@ const ListaAmigos = () => {
     "Taekwondo",
     "Tecnología",
   ];
-
-  const queryParams = new URLSearchParams(useLocation().search);
+  const generosPermitidos = [
+    "Masculino",
+    "Femenino",
+    "Otro"
+  ];
+  const ubicacionesPermitidas = [
+    "Cualquiera",
+    "Beni",
+    "Chuquisaca",
+    "Cochabamba",
+    "La Paz",
+    "Oruro",
+    "Pando",
+    "Potosí",
+    "Santa Cruz",
+    "Tarija",
+  ];
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
   const pagina = queryParams.get("pagina") || 1;
   const edadP = queryParams.get("edad") || "0";
   const generosP = queryParams.getAll("genero") || [];
   const interesesP = queryParams.getAll("interes") || [];
   const precio_minP = queryParams.get("precio_min") || "";
   const precio_maxP = queryParams.get("precio_max") || "";
-  const ubicacionP = queryParams.get("ubicacion") || "";
-
-  console.log(interesesP);
+  const ubicacionP = queryParams.get("ubicacion") || "Cualquiera";
 
   let precioMinimo = parseInt(precio_minP);
   let precioMaximo = parseInt(precio_maxP);
@@ -72,7 +89,12 @@ const ListaAmigos = () => {
       min: isNaN(precioMinimo) ? "" : precioMinimo.toString(),
       max: isNaN(precioMaximo) ? "" : precioMaximo.toString(),
     },
-    generosos: [],
+    generosos: generosPermitidos.map((nombreGenero) => {
+      return {
+        nombre: nombreGenero,
+        estado: generosP.includes(nombreGenero)
+      };
+    }),
     ubicacion: ubicacionP,
   });
 
@@ -95,6 +117,19 @@ const ListaAmigos = () => {
     useGetAmigosMutation();
 
   useEffect(() => {
+    setConsultar(false)
+    const edadRanges = {
+      "0": { min: null, max: null },
+      "1": { min: 18, max: 25 },
+      "2": { min: 25, max: 35 },
+      "3": { min: 35, max: 45 },
+      "4": { min: 45, max: 55 },
+      "5": { min: 55, max: 65 },
+      "6": { min: 65, max: 999 },
+    };
+    const rangoEdad = values.rangoEdad;
+    const { min: edad_min, max: edad_max } = edadRanges[rangoEdad];
+
     getAmiwitos({
       token: token,
       filtros: {
@@ -104,54 +139,24 @@ const ListaAmigos = () => {
           values.precio.min == "" ? null : parseInt(values.precio.min),
         precio_max:
           values.precio.max == "" ? null : parseInt(values.precio.max),
-        edad_min: 0,
-        edad_max: 999,
-        generos: generosP,
-        interes: interesesP,
-        ubicacion: values.ubicacion,
+        edad_min: edad_min,
+        edad_max: edad_max,
+        generos: values.generosos.filter((genero) => genero.estado).map((genero) => genero.nombre.charAt(0).toUpperCase()),
+        interes: values.interecitos.filter((interes) => interes.seleccionado).map((interes) => interes.nombre),
+        ubicacion: values.ubicacion === "Cualquiera" ? "" : values.ubicacion,
       },
     });
-  }, [pagina]);
+  }, [consultar, location]);
 
   function ActualizarListaAmigos() {
     console.log(values);
-    const generosLetra = values.generosos.map((genero) =>
-      genero.charAt(0).toUpperCase()
-    );
-    const rangoEdad = values.rangoEdad;
-
-    let edad_min, edad_max;
-    if (rangoEdad === "0") {
-      edad_min = null;
-      edad_max = null;
-    } else if (rangoEdad === "1") {
-      edad_min = 18;
-      edad_max = 25;
-    } else if (rangoEdad === "2") {
-      edad_min = 25;
-      edad_max = 35;
-    } else if (rangoEdad === "3") {
-      edad_min = 35;
-      edad_max = 45;
-    } else if (rangoEdad === "4") {
-      edad_min = 45;
-      edad_max = 55;
-    } else if (rangoEdad === "5") {
-      edad_min = 55;
-      edad_max = 65;
-    } else if (rangoEdad === "6") {
-      edad_min = 65;
-      edad_max = 999;
-    }
-
-    // Ajuste de precio_min y precio_max según los valores proporcionados
     let precio_min =
       values.precio.min !== "" ? parseInt(values.precio.min) : null;
     let precio_max =
       values.precio.max !== "" ? parseInt(values.precio.max) : null;
-    const generosMandar = generosLetra
-      .map((gen) => {
-        return `genero=${gen}`;
+    const generosMandar = values.generosos
+      .filter((genero) => genero.estado).map((genero) => {
+        return `genero=${genero.nombre}`;
       })
       .join("&");
     const intereseMandar = values.interecitos
@@ -160,24 +165,9 @@ const ListaAmigos = () => {
       .join("&");
     navigateTo(
       `/amigos?pagina=1${generosMandar.length > 0 ? "&" + generosMandar : ""}${
-        intereseMandar.length > 0 ? "&" + intereseMandar : ""
-      }`
+        intereseMandar.length > 0 ? "&" + intereseMandar : ""}${values.ubicacion === "Cualquiera" ? "": `&ubicacion=${values.ubicacion}`}${values.rangoEdad ==="0" ? "" : `&edad=${values.rangoEdad}`}${precio_min !== null ? `&precio_min=${precio_min}`: ""}${precio_max !== null ? `&precio_max=${precio_max}`: ""}`
     );
-    return;
-    getAmiwitos({
-      pagina: pagina,
-      limite: 8,
-      token: token,
-      filtros: {
-        precio_min: precio_min,
-        precio_max: precio_max,
-        edad_min: edad_min,
-        edad_max: edad_max,
-        generos: generosLetra,
-        interes: values.interecitos,
-        ubicacion: values.ubicacion === "Cualquiera" ? "" : values.ubicacion,
-      },
-    });
+    setConsultar(true)
   }
 
   const onBlurcito = (e, field) => {
@@ -208,48 +198,22 @@ const ListaAmigos = () => {
     });
   };
 
-  const ubicacionesPermitidas = [
-    "Cualquiera",
-    "Beni",
-    "Chuquisaca",
-    "Cochabamba",
-    "La Paz",
-    "Oruro",
-    "Pando",
-    "Potosí",
-    "Santa Cruz",
-    "Tarija",
-  ];
-  const [generos, SetGeneros] = useState([
-    { nombre: "Masculino", estado: false },
-    { nombre: "Femenino", estado: false },
-    { nombre: "Otro", estado: false },
-  ]);
-
   const [generoDropCheckBox, SetGeneroDropCheckBox] = useState(false);
 
   function handleGeneroChange(nuevoGenero) {
-    const nuevosGeneros = generos.map((genero) => {
-      if (genero.nombre === nuevoGenero.nombre) {
-        return { ...genero, estado: !nuevoGenero.estado };
-      }
-      return genero;
-    });
     setValues({
       ...values,
-      generosos: nuevosGeneros
-        .filter((generitooo) => {
-          return generitooo.estado;
-        })
-        .map((generitooo12) => {
-          return generitooo12.nombre;
+      generosos: values.generosos
+        .map((genero) => {
+          if (genero.nombre === nuevoGenero.nombre) {
+            return { nombre: genero.nombre, estado: !genero.estado };
+          }
+          return genero
         }),
     });
-    SetGeneros(nuevosGeneros);
   }
 
   useEffect(() => {
-    // Ordenar intereses seleccionados alfabéticamente
     setValues({
       ...values,
       interecitos: values.interecitos.sort((a, b) =>
@@ -294,9 +258,9 @@ const ListaAmigos = () => {
                       return {
                         nombre: interes.nombre,
                         seleccionado: true,
-                      }
+                      };
                     }
-                    return interes
+                    return interes;
                   }),
                 });
               }}
@@ -401,7 +365,7 @@ const ListaAmigos = () => {
               </p>
               {generoDropCheckBox && (
                 <div className="itemsGenero">
-                  {generos.map((genero) => {
+                  {values.generosos.map((genero) => {
                     return (
                       <div
                         className="itemGenero"
@@ -435,7 +399,6 @@ const ListaAmigos = () => {
               className="form-select"
               style={{ boxShadow: "none", border: "1px solid #ced4da" }}
             >
-              <option value=""></option>
               {ubicacionesPermitidas.map((ubicacion) => (
                 <option key={ubicacion} value={ubicacion}>
                   {ubicacion}
@@ -466,7 +429,7 @@ const ListaAmigos = () => {
                           return {
                             nombre: interesUwu.nombre,
                             seleccionado: false,
-                          }
+                          };
                         }
                         return interesUwu;
                       }),
@@ -570,8 +533,8 @@ const ListaAmigos = () => {
                     onClick={() => goToBeginning}
                     to={(() => {
                       const generosMandar = values.generosos
-                        .map((gen) => {
-                          return `genero=${gen.charAt(0).toUpperCase()}`;
+                        .map((genero) => {
+                          return `genero=${genero.nombre}`;
                         })
                         .join("&");
                       const intereseMandar = values.interecitos

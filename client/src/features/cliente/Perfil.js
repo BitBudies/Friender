@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import SolicitudesPendientes from "../solicitudes/SolicitudesPendientes";
 import SolicitudesAceptadas from "../solicitudes/SolicitudesAceptadas";
+import PerfilCliente from "../cliente/PerfilCliente";
 import HabilitarAmigo from "./HabilitarAmigo";
 import MiPerfil from "../../Components/MiPerfil/MiPerfil"
 import { useIsEnabledFriendModeQuery } from "./clienteSlice";
@@ -27,6 +28,7 @@ const optionsData = [
     toRender: <SolicitudesPendientes />,
   },
   {
+    id:3,
     id:3,
     name: 'Encuentros Programados',
     toRender: <SolicitudesAceptadas/>
