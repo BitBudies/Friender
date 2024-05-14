@@ -32,10 +32,9 @@ import { useIsEnabledFriendModeQuery } from './features/cliente/clienteSlice';
 
 function App() {
 
-  // const [cookies] = useCookies(["token"]);
-  // const token = cookies.token;
+
   const token = useGetToken();
-  const {clientId,setUserData,setClientId,setIsFriendModeEnabled} = useGlobalContext();
+  const {clientId,setUserData,setClientId} = useGlobalContext();
 
   const {
     data,
@@ -46,7 +45,6 @@ function App() {
 
   const isAuthenticated = useIsAuthenticated();
 
-  // Kevin revisa >:v
   useEffect(() => {
     if(isAuthenticated){
       if(!isFetching && !isUninitialized){

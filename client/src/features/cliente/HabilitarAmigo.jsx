@@ -1,16 +1,17 @@
 import React,{useEffect, useState} from 'react'
 import "./habilitarAmigo.css"
-import { useEnableFriendModeMutation, useIsEnabledFriendModeQuery } from './clienteSlice';
+import { useEnableFriendModeMutation,  useDisableFriendModeMutation } from './clienteSlice';
 import useGetToken from '../../hooks/getToken';
 import Loading from '../../Components/Loading';
 import { useGlobalContext } from '../../context';
 
 
 const HabilitarAmigo = () => {
-  const [precio, setPrecio] = useState(0);
   const [isEnabledBtn,setIsEnabledBtn] = useState(true);
   const token = useGetToken();
   const {isFriendModeEnabled} = useGlobalContext()
+  const [precio, setPrecio] = useState(isFriendModeEnabled);
+
   // const {
   //   data: isEnabled,
   //   isFetching,
@@ -22,6 +23,8 @@ const HabilitarAmigo = () => {
     { data: enabled, isSuccess: isSuccessEnable, isError, error, isLoading },
   ] = useEnableFriendModeMutation();
 
+  const [disable, { data: disabled, isSuccess: isSuccessDisable, isError: isErrorDisable, error: errorDisable, isLoading: isLoadingDisable }] = useDisableFriendModeMutation();
+
   useEffect(() => {
     if (isError) {
         console.log(error);
@@ -31,7 +34,17 @@ const HabilitarAmigo = () => {
     }
   }, [isError, enabled, isSuccessEnable, error]);
 
- 
+  useEffect(() => {
+    if(isSuccessDisable){
+      console.log(disabled);
+    }
+  },[isSuccessDisable,disabled]);
+
+
+  useEffect(() => {
+    console.log(isFriendModeEnabled,"precio");
+  },[isFriendModeEnabled])
+
    if (isSuccessEnable) {
     return <p>Registrado correctamente como amigo (lo cambiamos de modo ? (´▽`ʃ♡ƪ))</p>
   } else {
@@ -47,9 +60,11 @@ const HabilitarAmigo = () => {
             await enable({ token: token, precio: precio });
 
         }else{
-            alert("En desarrollo")
+            await disable({ token: token });
         }
     };
+
+    
 
     return(
       <div className="habilitar-amigo">
@@ -78,7 +93,7 @@ const HabilitarAmigo = () => {
                         disabled={isLoading}
                         onClick={handleSubmit}
                     >
-                        Cambiar a modo cliente
+                        Deshabilitar Cuenta
                     </button>
                     </>
                        

@@ -56,10 +56,11 @@
     text-align: start;
 }
 
-.card-double-item{
+.card-double-item-aceptada{
     display: flex;
     width: 100% ;
     gap: 1rem   ;
+    justify-content: space-between;
 }
 
 .card-item-aceptadas{
@@ -71,4 +72,18 @@
 
 #ver-perfil-button{
     border-radius: 25px;
+}
+
+.hoy-jaja {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    border: 1px solid #202020;
+    background-color: rgb(199, 132, 246);
+}
+
+.mañana-uwu {
+    border: 1px solid #202020;
+    border-radius: 15px;
 }

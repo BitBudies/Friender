@@ -22,6 +22,8 @@ from drf_yasg import openapi
 from amigo.views.amigo_views import (AmigoDetailById,
                                      ClienteEsAmigo,
                                      RegistrarAmigo,
+                                     DeshabilitarAmigo,
+                                     CambiarPrecioAmigo,
                                      PrecioAmiwo)
 
 from amigo.views.cliente_views import (ClienteDetailById,
@@ -112,6 +114,8 @@ urlpatterns = [
     path('api/amigo/precio', PrecioAmiwo),
     path('api/registraramigo', RegistrarAmigo),
     path('api/clienteesamigo', ClienteEsAmigo),
+    path('api/deshabilitaramigo',DeshabilitarAmigo ),
+    path('api/amigo/cambiarprecio', CambiarPrecioAmigo),
     
     # Solicitud
     path('api/solicitud/aceptar/<int:solicitud_alquiler_id>', AcceptSolicitud),
@@ -156,5 +160,5 @@ urlpatterns = [
     path('api/filtros/precioToken', PrecioToken.as_view()),
     path('api/filtros/total',FiltroTotalToken.as_view()),
     
-    path('api/filtros/filtrosPaginacion/pagina/<int:page_number>/limite/<int:limite>', AmigoListLimitPaginator),
+    path('api/filtros/filtrosPaginacion', AmigoListLimitPaginator),
 ]

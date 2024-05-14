@@ -182,9 +182,11 @@ def ClienteEsAmigo(request):
     cliente = get_object_or_404(Cliente, user=user)
 
     if Amigo.objects.filter(cliente=cliente).exists():
-        return Response({"data": True}, status=status.HTTP_200_OK)
+        #Precio de amigo
+        precio = {"data": Amigo.objects.get(cliente=cliente).precio}
+        return Response({"data": precio["data"]}, status=status.HTTP_200_OK)
     
-    return Response({"data":False}, status=status.HTTP_200_OK)
+    return Response({"data":0}, status=status.HTTP_200_OK)
 
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])
@@ -199,3 +201,32 @@ def PrecioAmiwo(request):
     except Amigo.DoesNotExist:
         return Response(data, status=status.HTTP_200_OK)
     return Response(data, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def DeshabilitarAmigo(request):
+    user = request.user
+    cliente = get_object_or_404(Cliente, user=user)
+    try:
+        #Borrar amigo
+        Amigo.objects.filter(cliente=cliente).delete();
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    return Response({"data": True}, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def CambiarPrecioAmigo(request):
+    user = request.user
+    cliente = get_object_or_404(Cliente, user=user)
+    precio = request.POST.get("precio")
+    if not precio:
+        return Response({"error": "El precio es obligatorio"}, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        #Borrar amigo
+        Amigo.objects.filter(cliente=cliente).update(precio=precio);
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    return Response({"data": "Precio cambiado correctamente"}, status=status.HTTP_200_OK)

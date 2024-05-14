@@ -2,7 +2,7 @@ import React from 'react'
 import "./SolicitudAceptada.css";
 import { FaClock } from "react-icons/fa6";
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { MdUpdate } from "react-icons/md";
 
 const SolicitudAceptada = ( {imagenBase64, 
                             nombre_cliente, 
@@ -10,7 +10,9 @@ const SolicitudAceptada = ( {imagenBase64,
                             hora_inicio, 
                             lugar, 
                             solicitud_aceptada_id,
-                            duracion} ) => { 
+                            duracion,
+                            dias_restantes
+                          } ) => { 
  
   function formatFecha(fecha) {
     const [year, month, day] = fecha.split("-");
@@ -37,7 +39,7 @@ const SolicitudAceptada = ( {imagenBase64,
         </div>
         <div id="datos-solicitud">
           <p className="estrellas text-warning">★★★★☆</p>
-          <div className="card-double-item">
+          <div className="card-double-item-aceptada">
             <div className="card-item">
               <span>
                 <FaCalendarAlt />
@@ -61,16 +63,18 @@ const SolicitudAceptada = ( {imagenBase64,
             </div>
             <p>{duracion} Hrs</p>
           </div>
-          <div className="d-flex justify-content-between align-items-center solicitud-footer">
-            {/* <Link
-              to={`/usuario/solicitud_pendiente/${solicitud_aceptada_id}`}
-              id="ver-perfil-button"
-              className="btn btn-azul"
-              type="button"
-            >
-              Ver Perfil
-            </Link> */}
-            
+          <div className="align-items-center">
+            {
+              dias_restantes===0 ?
+                <div className='hoy-jaja'>
+                  <MdUpdate size={25}/>
+                  <h5><strong>Hoy</strong></h5>
+                </div>
+              :
+                dias_restantes===1 ?
+                <p className='mañana-uwu'>En 1 día</p>
+                : <p className='mañana-uwu'>En {dias_restantes} días</p>   
+            }       
           </div>
         </div>
       </div>

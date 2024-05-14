@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useParams, useLocation } from "react-router-dom";
+import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import "./listaAmigos.css";
 import Loading from "../../Components/Loading";
 import { useGetAmigosMutation } from "./amigoSlice";
@@ -19,33 +19,91 @@ function calificacionEstrellas(calificacion) {
   const numEstrellas = Math.round(calificacion);
   const estrellas = "★".repeat(numEstrellas) + "☆".repeat(5 - numEstrellas);
   return estrellas;
-};
+}
+
 
 const ListaAmigos = () => {
+  const [consultar, setConsultar] = useState(false)
+  const navigateTo = useNavigate();
   const [cookies] = useCookies(["token"]);
   const token = cookies.token;
+  const validNumberPattern = /^[0-9+-]*$/;
+  const interesPermitidos = [
+    "Arte y Cultura",
+    "Cine y Series",
+    "Gastronomía",
+    "Idiomas",
+    "Lectura",
+    "Taekwondo",
+    "Tecnología",
+  ];
+  const generosPermitidos = [
+    "Masculino",
+    "Femenino",
+    "Otro"
+  ];
+  const ubicacionesPermitidas = [
+    "Cualquiera",
+    "Beni",
+    "Chuquisaca",
+    "Cochabamba",
+    "La Paz",
+    "Oruro",
+    "Pando",
+    "Potosí",
+    "Santa Cruz",
+    "Tarija",
+  ];
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
 
-  const queryParams = new URLSearchParams(useLocation().search);
+  const pagina = queryParams.get("pagina") || 1;
+  const edadP = queryParams.get("edad") || "0";
+  const generosP = (queryParams.getAll("genero") || []).filter(genero => generosPermitidos.includes(genero));
 
-  const n_page = queryParams.get('n_page');
-  const edadP = queryParams.get('edad');
-  const generoP = queryParams.get('genero');
-  const interesesP = queryParams.get('intereses');
-  const precio_minP = queryParams.get('precio_min');
-  const precio_maxP = queryParams.get('precio_max');
+  const interesesP = (queryParams.getAll("interes") || []).filter(interes => interesPermitidos.includes(interes))
+
+  const precio_minP = queryParams.get("precio_min") || "";
+  const precio_maxP = queryParams.get("precio_max") || "";
+  const ubicacionP = queryParams.get("ubicacion") || "Cualquiera";
+
+  let precioMinimo = parseInt(precio_minP);
+  let precioMaximo = parseInt(precio_maxP);
+  if (!isNaN(precioMinimo)) {
+    if (precioMinimo < 0 || precioMinimo > 999999) {
+      precioMinimo = 0 / 0;
+    }
+  }
+  if (!isNaN(precioMaximo)) {
+    if (precioMaximo < 0 || precioMaximo > 999999) {
+      precioMaximo = 0 / 0;
+    }
+  }
 
   const [values, setValues] = useState({
-    interecitos: [],
-    rangoEdad: "",
-    precio: { min: "", max: "" },
-    generosos: [],
-    ubicacion: "",
+    interecitos: interesPermitidos.map((nombreInteres) => {
+      return {
+        nombre: nombreInteres,
+        seleccionado: interesesP.includes(nombreInteres),
+      };
+    }),
+    rangoEdad: edadP,
+    precio: {
+      min: isNaN(precioMinimo) ? "" : precioMinimo.toString(),
+      max: isNaN(precioMaximo) ? "" : precioMaximo.toString(),
+    },
+    generosos: generosPermitidos.map((nombreGenero) => {
+      return {
+        nombre: nombreGenero,
+        estado: generosP.includes(nombreGenero)
+      };
+    }),
+    ubicacion: ubicacionP,
   });
-  const validNumberPattern = /^[0-9+-]*$/;
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.target.blur(); // Quitamos el focus del input jiji
+      e.target.blur();
     }
   };
 
@@ -58,70 +116,120 @@ const ListaAmigos = () => {
     });
   };
 
-  const [getAmiwitos, { data: amigos, isLoading, isSuccess }] =
+  const [getAmiwitos, { data: amigos, isLoading, isSuccess, isError, error }] =
     useGetAmigosMutation();
 
   useEffect(() => {
+    setConsultar(false)
+    const edadRanges = {
+      "0": { min: null, max: null },
+      "1": { min: 18, max: 25 },
+      "2": { min: 25, max: 35 },
+      "3": { min: 35, max: 45 },
+      "4": { min: 45, max: 55 },
+      "5": { min: 55, max: 65 },
+      "6": { min: 65, max: 999 },
+    };
+    const rangoEdad = values.rangoEdad;
+    const { min: edad_min, max: edad_max } = edadRanges[rangoEdad];
+
     getAmiwitos({
-      pagina: n_page,
-      limite: 24,
       token: token,
-      filtros: {},
+      filtros: {
+        pagina: pagina,
+        limite: 24,
+        precio_min:
+          values.precio.min == "" ? null : parseInt(values.precio.min),
+        precio_max:
+          values.precio.max == "" ? null : parseInt(values.precio.max),
+        edad_min: edad_min,
+        edad_max: edad_max,
+        generos: values.generosos.filter((genero) => genero.estado).map((genero) => genero.nombre.charAt(0).toUpperCase()),
+        interes: values.interecitos.filter((interes) => interes.seleccionado).map((interes) => interes.nombre),
+        ubicacion: values.ubicacion === "Cualquiera" ? "" : values.ubicacion,
+      },
     });
-  }, []);
+  }, [consultar, location]);
 
   function ActualizarListaAmigos() {
     console.log(values);
-    const generosLetra = values.generosos.map((genero) =>
-      genero.charAt(0).toUpperCase()
-    );
-    const rangoEdad = values.rangoEdad;
-
-    let edad_min, edad_max;
-    if (rangoEdad === "0") {
-      edad_min = null;
-      edad_max = null;
-    } else if (rangoEdad === "1") {
-      edad_min = 18;
-      edad_max = 25;
-    } else if (rangoEdad === "2") {
-      edad_min = 25;
-      edad_max = 35;
-    } else if (rangoEdad === "3") {
-      edad_min = 35;
-      edad_max = 45;
-    } else if (rangoEdad === "4") {
-      edad_min = 45;
-      edad_max = 55;
-    } else if (rangoEdad === "5") {
-      edad_min = 55;
-      edad_max = 65;
-    } else if (rangoEdad === "6") {
-      edad_min = 65;
-      edad_max = 999;
-    }
-
-    // Ajuste de precio_min y precio_max según los valores proporcionados
     let precio_min =
       values.precio.min !== "" ? parseInt(values.precio.min) : null;
     let precio_max =
       values.precio.max !== "" ? parseInt(values.precio.max) : null;
-
-    getAmiwitos({
-      pagina: n_page,
-      limite: 24,
-      token: token,
-      filtros: {
-        precio_min: precio_min,
-        precio_max: precio_max,
-        edad_min: edad_min,
-        edad_max: edad_max,
-        generos: generosLetra,
-        interes: values.interecitos,
-        ubicacion: values.ubicacion === "Cualquiera" ? "" : values.ubicacion
-      },
-    });
+    const generosMandar = values.generosos
+      .filter((genero) => genero.estado)
+      .map((genero) => {
+        return `genero=${genero.nombre}`;
+      })
+      .join("&");
+    const intereseMandar = values.interecitos
+      .filter((interes) => interes.seleccionado)
+      .map((interes) => `interes=${interes.nombre}`)
+      .join("&");
+    
+    // Establecer la página en 1 al filtrar
+    const nuevaURL = `/amigos?pagina=1${
+      generosMandar.length > 0 ? "&" + generosMandar : ""
+    }${intereseMandar.length > 0 ? "&" + intereseMandar : ""}${
+      values.ubicacion === "Cualquiera" ? "" : `&ubicacion=${values.ubicacion}`
+    }${values.rangoEdad === "0" ? "" : `&edad=${values.rangoEdad}`}${
+      precio_min !== null ? `&precio_min=${precio_min}` : ""
+    }${precio_max !== null ? `&precio_max=${precio_max}` : ""}`;
+  
+    navigateTo(nuevaURL);
+    setConsultar(true);
   }
+
+  useEffect(() => {
+    // Mantener los filtros previamente seleccionados al cambiar de página
+    const queryParams = new URLSearchParams(location.search);
+    const edadP = queryParams.get("edad") || "0";
+    const generosP = (queryParams.getAll("genero") || []).filter((genero) =>
+      generosPermitidos.includes(genero)
+    );
+    const interesesP = (queryParams.getAll("interes") || []).filter((interes) =>
+      interesPermitidos.includes(interes)
+    );
+    const precio_minP = queryParams.get("precio_min") || "";
+    const precio_maxP = queryParams.get("precio_max") || "";
+    const ubicacionP = queryParams.get("ubicacion") || "Cualquiera";
+
+    let precioMinimo = parseInt(precio_minP);
+    let precioMaximo = parseInt(precio_maxP);
+    if (!isNaN(precioMinimo)) {
+      if (precioMinimo < 0 || precioMinimo > 999999) {
+        precioMinimo = NaN;
+      }
+    }
+    if (!isNaN(precioMaximo)) {
+      if (precioMaximo < 0 || precioMaximo > 999999) {
+        precioMaximo = NaN;
+      }
+    }
+
+    setValues({
+      ...values,
+      interecitos: interesPermitidos.map((nombreInteres) => {
+        return {
+          nombre: nombreInteres,
+          seleccionado: interesesP.includes(nombreInteres),
+        };
+      }),
+      rangoEdad: edadP,
+      precio: {
+        min: isNaN(precioMinimo) ? "" : precioMinimo.toString(),
+        max: isNaN(precioMaximo) ? "" : precioMaximo.toString(),
+      },
+      generosos: generosPermitidos.map((nombreGenero) => {
+        return {
+          nombre: nombreGenero,
+          estado: generosP.includes(nombreGenero),
+        };
+      }),
+      ubicacion: ubicacionP,
+    });
+  }, [location]);
 
   const onBlurcito = (e, field) => {
     let value = e.target.value;
@@ -151,60 +259,29 @@ const ListaAmigos = () => {
     });
   };
 
-  const [intereses, setIntereses] = useState([
-    { nombre: "Arte y Cultura", seleccionado: false },
-    { nombre: "Cine y Series", seleccionado: false },
-    { nombre: "Gastronomía", seleccionado: false },
-    { nombre: "Idiomas", seleccionado: false },
-    { nombre: "Lectura", seleccionado: false },
-    { nombre: "Taekwondo", seleccionado: false },
-    { nombre: "Tecnología", seleccionado: false },
-  ]);
-
-  const ubicacionesPermitidas = [
-    "Cualquiera",
-    "Beni",
-    "Chuquisaca",
-    "Cochabamba",
-    "La Paz",
-    "Oruro",
-    "Pando",
-    "Potosí",
-    "Santa Cruz",
-    "Tarija",
-  ];
-  const [generos, SetGeneros] = useState([
-    { nombre: "Masculino", estado: false },
-    { nombre: "Femenino", estado: false },
-    { nombre: "Otro", estado: false },
-  ]);
-
   const [generoDropCheckBox, SetGeneroDropCheckBox] = useState(false);
 
   function handleGeneroChange(nuevoGenero) {
-    const nuevosGeneros = generos.map((genero) => {
-      if (genero.nombre === nuevoGenero.nombre) {
-        return { ...genero, estado: !nuevoGenero.estado };
-      }
-      return genero;
-    });
     setValues({
       ...values,
-      generosos: nuevosGeneros
-        .filter((generitooo) => {
-          return generitooo.estado;
-        })
-        .map((generitooo12) => {
-          return generitooo12.nombre;
+      generosos: values.generosos
+        .map((genero) => {
+          if (genero.nombre === nuevoGenero.nombre) {
+            return { nombre: genero.nombre, estado: !genero.estado };
+          }
+          return genero
         }),
     });
-    SetGeneros(nuevosGeneros);
   }
 
   useEffect(() => {
-    // Ordenar intereses seleccionados alfabéticamente
-    setIntereses(intereses.sort((a, b) => a.nombre.localeCompare(b.nombre)));
-  }, [intereses]);
+    setValues({
+      ...values,
+      interecitos: values.interecitos.sort((a, b) =>
+        a.nombre.localeCompare(b.nombre)
+      ),
+    });
+  }, [values.interecitos]);
 
   const dropdownRef = useRef(null);
   useEffect(() => {
@@ -221,19 +298,6 @@ const ListaAmigos = () => {
     };
   }, [dropdownRef]);
 
-  useEffect(() => {
-    setValues({
-      ...values,
-      interecitos: intereses
-        .filter((int) => {
-          return int.seleccionado;
-        })
-        .map((int) => {
-          return int.nombre;
-        }),
-    });
-  }, [intereses]);
-
   return (
     <div id="lista_amigos" className="page bg-light" ref={pageRef}>
       <div className="filtrosYBoton d-flex justify-content-center">
@@ -248,22 +312,23 @@ const ListaAmigos = () => {
               name="intereses"
               onChange={(e) => {
                 const selectedInterest = e.target.value;
-                setIntereses(
-                  intereses.map((interes) => {
-                    if (interes.nombre === selectedInterest) {
+                setValues({
+                  ...values,
+                  interecitos: values.interecitos.map((interes) => {
+                    if (interes.nombre == selectedInterest) {
                       return {
-                        ...interes,
-                        seleccionado: interes.nombre === selectedInterest,
+                        nombre: interes.nombre,
+                        seleccionado: true,
                       };
                     }
                     return interes;
-                  })
-                );
+                  }),
+                });
               }}
               className="form-select"
             >
               <option className="nomostraropcionxd"> </option>
-              {intereses.map((interes) => {
+              {values.interecitos.map((interes) => {
                 if (!interes.seleccionado) {
                   return (
                     <option key={interes.nombre} value={interes.nombre}>
@@ -287,7 +352,6 @@ const ListaAmigos = () => {
               className="form-select"
               style={{ boxShadow: "none", border: "1px solid #ced4da" }}
             >
-              <option value=""></option>
               <option value="0">Cualquiera</option>
               <option value="1">Entre 18 y 25 años</option>
               <option value="2">Entre 25 y 35 años</option>
@@ -325,7 +389,7 @@ const ListaAmigos = () => {
                 <p>-</p>
                 <input
                   type="text"
-                  placeholder="Max"
+                  placeholder="Máx"
                   className="form-control"
                   style={{
                     marginLeft: "0",
@@ -362,7 +426,7 @@ const ListaAmigos = () => {
               </p>
               {generoDropCheckBox && (
                 <div className="itemsGenero">
-                  {generos.map((genero) => {
+                  {values.generosos.map((genero) => {
                     return (
                       <div
                         className="itemGenero"
@@ -396,7 +460,6 @@ const ListaAmigos = () => {
               className="form-select"
               style={{ boxShadow: "none", border: "1px solid #ced4da" }}
             >
-              <option value=""></option>
               {ubicacionesPermitidas.map((ubicacion) => (
                 <option key={ubicacion} value={ubicacion}>
                   {ubicacion}
@@ -412,23 +475,34 @@ const ListaAmigos = () => {
         </div>
       </div>
       <div className="interesesSeleccionados">
-        {intereses.map((interes) => {
+        {values.interecitos.map((interes) => {
           if (interes.seleccionado) {
             return (
               <div className="burbujaInteres">
                 {interes.nombre}
                 <IoClose
                   className="cerrarBurbuja"
-                  onClick={() =>
-                    setIntereses(
-                      intereses.map((i) => {
-                        if (i.nombre === interes.nombre) {
-                          return { ...i, seleccionado: !i.seleccionado };
-                        }
-                        return i;
-                      })
-                    )
-                  }
+                  onClick={() => {
+                    const nuevosIntereses = values.interecitos.map((interesUwu) => {
+                      if (interesUwu.nombre === interes.nombre) {
+                        return {
+                          nombre: interesUwu.nombre,
+                          seleccionado: false,
+                        };
+                      }
+                      return interesUwu;
+                    })
+                    setValues({
+                      ...values,
+                      interecitos: nuevosIntereses
+                    })
+                    const queryParams = new URLSearchParams(location.search);
+                    queryParams.delete("interes");
+                    queryParams.set("pagina", "1");
+                    nuevosIntereses.filter(interes => interes.seleccionado).map(interes => queryParams.append("interes", interes.nombre))
+                    navigateTo(`/amigos?${queryParams.toString()}`);
+                    goToBeginning();
+                  }}
                 />
               </div>
             );
@@ -438,7 +512,7 @@ const ListaAmigos = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        isSuccess && (
+        isSuccess ? (
           <div className="container-fluid py-5">
             <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 g-3">
               {amigos["amigos"].map((amigo, index) => (
@@ -483,60 +557,71 @@ const ListaAmigos = () => {
                 </div>
               ))}
             </div>
-            {Number(n_page) === amigos.numero_paginas && (
+            {Number(pagina) === amigos.numero_paginas && (
               <p id="mensaje-no-more-results">No existen más resultados</p>
             )}
             <nav aria-label="Page navigation example">
               <ul className="pagination justify-content-center">
                 <li className="page-item">
-                  <Link
-                    className={`page-link ${
-                      Number(n_page) === 1 && "disabled"
-                    }`}
-                    to={`/amigos?n_page=${
-                      Number(n_page) > 1 ? Number(n_page) - 1 : Number(n_page)
-                    }`}
+                  <button
+                    className={"page-link"}
+                    disabled={Number(pagina) === 1}
+                    onClick={() => {
+                      const lastPage = Number(pagina) - 1;
+                      const queryParams = new URLSearchParams(location.search);
+                      queryParams.set("pagina", lastPage);
+                      navigateTo(`/amigos?${queryParams.toString()}`);
+                      goToBeginning();
+                    }}
                   >
-                    {" "}
-                    {"<"}{" "}
-                  </Link>
+                    {"<"}
+                  </button>
                 </li>
                 {Array.from({ length: amigos.numero_paginas }, (_, index) => (
                   <li
                     key={index}
                     className={`pagination-item page-item ${
-                      Number(n_page) === index + 1 && "active"
+                      Number(pagina) === index + 1 && "active"
                     }`}
                   >
-                    <Link
+                    <button
                       className={`page-link ${
-                        Number(n_page) === index + 1 && "bg-azul-fuerte"
+                        Number(pagina) === index + 1 && "bg-azul-fuerte"
                       }`}
-                      to={`/amigos?n_page=${index + 1}`}
-                      onClick={goToBeginning}
+                      onClick={() => {
+                        const queryParams = new URLSearchParams(location.search);
+                        queryParams.set("pagina", index + 1);
+                        navigateTo(`/amigos?${queryParams.toString()}`);
+                        goToBeginning()
+                      }}
                     >
                       {index + 1}
-                    </Link>
+                    </button>
                   </li>
                 ))}
-                <li className="page-item">
-                  <Link
-                    className={`page-link ${
-                      Number(n_page) === amigos.numero_paginas && "disabled"
-                    }`}
-                    onClick={() => goToBeginning}
-                    to={`/amigos?n_page=${
-                      Number(n_page) < amigos.numero_paginas
-                        ? Number(n_page) + 1
-                        : Number(n_page)
-                    }`}
+                  <li className="page-item">
+                  <button
+                    className={"page-link"}
+                    disabled={Number(pagina) === amigos.numero_paginas}
+                    onClick={() => {
+                      const nextPage = Number(pagina) + 1;
+                      const queryParams = new URLSearchParams(location.search);
+                      queryParams.set("pagina", nextPage);
+               
+                      navigateTo(`/amigos?${queryParams.toString()}`);
+                      goToBeginning();
+                    }}
                   >
                     {">"}
-                  </Link>
+                  </button>
                 </li>
+
               </ul>
             </nav>
           </div>
+        ) : ( isError && (
+          <div className="mostrarErrorListaAmigos">{error.data.error}</div>
+        )
         )
       )}
     </div>
