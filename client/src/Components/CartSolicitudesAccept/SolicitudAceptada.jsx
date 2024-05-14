@@ -2,7 +2,7 @@ import React from 'react'
 import "./SolicitudAceptada.css";
 import { FaClock } from "react-icons/fa6";
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { MdUpdate } from "react-icons/md";
 
 const SolicitudAceptada = ( {imagenBase64, 
                             nombre_cliente, 
@@ -63,10 +63,13 @@ const SolicitudAceptada = ( {imagenBase64,
             </div>
             <p>{duracion} Hrs</p>
           </div>
-          <div className="align-items-center ">
+          <div className="align-items-center">
             {
               dias_restantes===0 ?
-              <h5><strong>Hoy</strong></h5>
+                <div className='hoy-jaja'>
+                  <MdUpdate size={25}/>
+                  <h5><strong>Hoy</strong></h5>
+                </div>
               :
                 dias_restantes===1 ?
                 <p>En 1 día</p>

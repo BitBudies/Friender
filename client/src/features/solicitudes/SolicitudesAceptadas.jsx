@@ -44,7 +44,7 @@ const SolicitudesAceptadas = () => {
                 </>
               )
             })
-            : <p>Upss no tienes Encuentros Programados</p>
+            : <p>No hay encuentros aceptados</p>
           }
         </div>
       </div>

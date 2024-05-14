@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import "./listaAmigos.css";
 import Loading from "../../Components/Loading";
-import { useGetAmigosMutation} from "./amigoSlice";
+import { useGetAmigosMutation } from "./amigoSlice";
 import { FaUser, FaFilter, FaAngleDown, FaAngleUp } from "react-icons/fa";
 import {
   MdInterests,
@@ -22,30 +22,30 @@ function calificacionEstrellas(calificacion) {
 }
 
 const ListaAmigos = () => {
-  const navigateTo = useNavigate()
-  const [cookies] = useCookies(["token"])
-  const token = cookies.token
-  const validNumberPattern = /^[0-9+-]*$/
-  const interesssssss = [
+  const navigateTo = useNavigate();
+  const [cookies] = useCookies(["token"]);
+  const token = cookies.token;
+  const validNumberPattern = /^[0-9+-]*$/;
+  const interesPermitidos = [
     "Arte y Cultura",
     "Cine y Series",
     "Gastronomía",
     "Idiomas",
     "Lectura",
     "Taekwondo",
-    "Tecnología"
-  ]
+    "Tecnología",
+  ];
 
-  const queryParams = new URLSearchParams(useLocation().search)
-  const pagina = queryParams.get("pagina") || 1
-  const edadP = queryParams.get("edad") || "0"
-  const generosP = queryParams.getAll("genero") || []
-  const interesesP = queryParams.getAll("interes") || []
-  const precio_minP = queryParams.get("precio_min") || ""
-  const precio_maxP = queryParams.get("precio_max") || ""
-  const ubicacionP = queryParams.get("ubicacion") || ""
+  const queryParams = new URLSearchParams(useLocation().search);
+  const pagina = queryParams.get("pagina") || 1;
+  const edadP = queryParams.get("edad") || "0";
+  const generosP = queryParams.getAll("genero") || [];
+  const interesesP = queryParams.getAll("interes") || [];
+  const precio_minP = queryParams.get("precio_min") || "";
+  const precio_maxP = queryParams.get("precio_max") || "";
+  const ubicacionP = queryParams.get("ubicacion") || "";
 
-  console.log(interesesP)
+  console.log(interesesP);
 
   let precioMinimo = parseInt(precio_minP);
   let precioMaximo = parseInt(precio_maxP);
@@ -60,17 +60,13 @@ const ListaAmigos = () => {
     }
   }
 
-  const [intereses, setIntereses] = useState(
-    interesssssss.map((nombresito) => {
-      return {
-        nombre: nombresito,
-        seleccionado: interesesP.includes(nombresito)
-      }
-    })
-  )
-
   const [values, setValues] = useState({
-    interecitos: [],
+    interecitos: interesPermitidos.map((nombreInteres) => {
+      return {
+        nombre: nombreInteres,
+        seleccionado: interesesP.includes(nombreInteres),
+      };
+    }),
     rangoEdad: edadP,
     precio: {
       min: isNaN(precioMinimo) ? "" : precioMinimo.toString(),
@@ -82,7 +78,7 @@ const ListaAmigos = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.target.blur(); // Quitamos el focus del input jiji
+      e.target.blur();
     }
   };
 
@@ -97,15 +93,17 @@ const ListaAmigos = () => {
 
   const [getAmiwitos, { data: amigos, isLoading, isSuccess }] =
     useGetAmigosMutation();
-  
+
   useEffect(() => {
     getAmiwitos({
-      pagina: pagina,
-      limite: 24,
       token: token,
       filtros: {
-        precio_min: isNaN(precioMinimo) ? null : precioMinimo,
-        precio_max: isNaN(precioMaximo) ? null : precioMaximo,
+        pagina: pagina,
+        limite: 8,
+        precio_min:
+          values.precio.min == "" ? null : parseInt(values.precio.min),
+        precio_max:
+          values.precio.max == "" ? null : parseInt(values.precio.max),
         edad_min: 0,
         edad_max: 999,
         generos: generosP,
@@ -151,14 +149,24 @@ const ListaAmigos = () => {
       values.precio.min !== "" ? parseInt(values.precio.min) : null;
     let precio_max =
       values.precio.max !== "" ? parseInt(values.precio.max) : null;
-    const generosMandar = generosLetra.map((gen) => {
-      return `genero=${gen}`
-    }).join("&")
-    navigateTo(`/amigos?pagina=1${generosMandar.length > 0 ? "$"+generosMandar : ""}`)
-    return
+    const generosMandar = generosLetra
+      .map((gen) => {
+        return `genero=${gen}`;
+      })
+      .join("&");
+    const intereseMandar = values.interecitos
+      .filter((interes) => interes.seleccionado)
+      .map((interes) => `interes=${interes.nombre}`)
+      .join("&");
+    navigateTo(
+      `/amigos?pagina=1${generosMandar.length > 0 ? "&" + generosMandar : ""}${
+        intereseMandar.length > 0 ? "&" + intereseMandar : ""
+      }`
+    );
+    return;
     getAmiwitos({
       pagina: pagina,
-      limite: 24,
+      limite: 8,
       token: token,
       filtros: {
         precio_min: precio_min,
@@ -199,7 +207,6 @@ const ListaAmigos = () => {
       },
     });
   };
-
 
   const ubicacionesPermitidas = [
     "Cualquiera",
@@ -243,8 +250,13 @@ const ListaAmigos = () => {
 
   useEffect(() => {
     // Ordenar intereses seleccionados alfabéticamente
-    setIntereses(intereses.sort((a, b) => a.nombre.localeCompare(b.nombre)));
-  }, [intereses]);
+    setValues({
+      ...values,
+      interecitos: values.interecitos.sort((a, b) =>
+        a.nombre.localeCompare(b.nombre)
+      ),
+    });
+  }, [values.interecitos]);
 
   const dropdownRef = useRef(null);
   useEffect(() => {
@@ -261,19 +273,6 @@ const ListaAmigos = () => {
     };
   }, [dropdownRef]);
 
-  useEffect(() => {
-    setValues({
-      ...values,
-      interecitos: intereses
-        .filter((int) => {
-          return int.seleccionado;
-        })
-        .map((int) => {
-          return int.nombre;
-        }),
-    });
-  }, [intereses]);
-
   return (
     <div id="lista_amigos" className="page bg-light" ref={pageRef}>
       <div className="filtrosYBoton d-flex justify-content-center">
@@ -288,22 +287,23 @@ const ListaAmigos = () => {
               name="intereses"
               onChange={(e) => {
                 const selectedInterest = e.target.value;
-                setIntereses(
-                  intereses.map((interes) => {
-                    if (interes.nombre === selectedInterest) {
+                setValues({
+                  ...values,
+                  interecitos: values.interecitos.map((interes) => {
+                    if (interes.nombre == selectedInterest) {
                       return {
-                        ...interes,
-                        seleccionado: interes.nombre === selectedInterest,
-                      };
+                        nombre: interes.nombre,
+                        seleccionado: true,
+                      }
                     }
-                    return interes;
-                  })
-                );
+                    return interes
+                  }),
+                });
               }}
               className="form-select"
             >
               <option className="nomostraropcionxd"> </option>
-              {intereses.map((interes) => {
+              {values.interecitos.map((interes) => {
                 if (!interes.seleccionado) {
                   return (
                     <option key={interes.nombre} value={interes.nombre}>
@@ -451,7 +451,7 @@ const ListaAmigos = () => {
         </div>
       </div>
       <div className="interesesSeleccionados">
-        {intereses.map((interes) => {
+        {values.interecitos.map((interes) => {
           if (interes.seleccionado) {
             return (
               <div className="burbujaInteres">
@@ -459,14 +459,18 @@ const ListaAmigos = () => {
                 <IoClose
                   className="cerrarBurbuja"
                   onClick={() =>
-                    setIntereses(
-                      intereses.map((i) => {
-                        if (i.nombre === interes.nombre) {
-                          return { ...i, seleccionado: !i.seleccionado };
+                    setValues({
+                      ...values,
+                      interecitos: values.interecitos.map((interesUwu) => {
+                        if (interesUwu.nombre === interes.nombre) {
+                          return {
+                            nombre: interesUwu.nombre,
+                            seleccionado: false,
+                          }
                         }
-                        return i;
-                      })
-                    )
+                        return interesUwu;
+                      }),
+                    })
                   }
                 />
               </div>
@@ -564,11 +568,24 @@ const ListaAmigos = () => {
                       Number(pagina) === amigos.numero_paginas && "disabled"
                     }`}
                     onClick={() => goToBeginning}
-                    to={`/amigos?pagina=${
-                      Number(pagina) < amigos.numero_paginas
-                        ? Number(pagina) + 1
-                        : Number(pagina)
-                    }`}
+                    to={(() => {
+                      const generosMandar = values.generosos
+                        .map((gen) => {
+                          return `genero=${gen.charAt(0).toUpperCase()}`;
+                        })
+                        .join("&");
+                      const intereseMandar = values.interecitos
+                        .filter((interes) => interes.seleccionado)
+                        .map((interes) => `interes=${interes.nombre}`)
+                        .join("&");
+                      return `/amigos?pagina=${
+                        Number(pagina) < amigos.numero_paginas
+                          ? Number(pagina) + 1
+                          : Number(pagina)
+                      }${generosMandar.length > 0 ? "&" + generosMandar : ""}${
+                        intereseMandar.length > 0 ? "&" + intereseMandar : ""
+                      }`;
+                    })()}
                   >
                     {">"}
                   </Link>

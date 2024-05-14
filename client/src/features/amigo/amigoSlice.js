@@ -3,8 +3,8 @@ import { apiSlice } from "../api/apiSlice";
 const amigoApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAmigos: builder.mutation({
-      query: ({ pagina, limite, token,filtros }) => ({
-        url: `/filtros/filtrosPaginacion/pagina/${pagina}/limite/${limite}`,
+      query: ({token,filtros }) => ({
+        url: `/filtros/filtrosPaginacion`,
         body: filtros,
         method: "POST",
         headers: {
@@ -19,18 +19,8 @@ const amigoApi = apiSlice.injectEndpoints({
           Authorization: `Token ${token}`,
         },
       }),
-    }),
-    getAmigoByfiltros: builder.query({
-      query: ({filtros, token}) => ({
-        url: `/filtros/filtrosPaginacion/pagina/${filtros}`,
-        method: "POST",
-        body: filtros,
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      }),
-    }),
+    })
   }),
 });
 
-export const { useGetAmigosMutation, useGetAmigoByIdQuery,useGetAmigoByfiltrosQuery } = amigoApi;
+export const { useGetAmigosMutation, useGetAmigoByIdQuery } = amigoApi;

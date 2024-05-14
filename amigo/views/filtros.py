@@ -257,8 +257,10 @@ class FiltroTotalToken(APIView):
 @api_view(["POST"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def AmigoListLimitPaginator(request, page_number=1, limite=10):
+def AmigoListLimitPaginator(request):
     print(request.data)
+    page_number = request.data.get("pagina")
+    limite = request.data.get("limite")
     generos = request.data.get("generos")
     edadMin = request.data.get("edad_min")
     edadMax = request.data.get("edad_max")
@@ -266,6 +268,7 @@ def AmigoListLimitPaginator(request, page_number=1, limite=10):
     interes = request.data.get("interes")
     precioMin = request.data.get("precio_min")
     precioMax = request.data.get("precio_max")
+    
     amigos = Amigo.objects.order_by("amigo_id")  # ordenamiento temporal
     if generos:
         amigos = amigos.filter(cliente__genero__in=generos)

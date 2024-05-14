@@ -73,3 +73,11 @@
 #ver-perfil-button{
     border-radius: 25px;
 }
+
+.hoy-jaja {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background-color: rgb(199, 132, 246);
+}
