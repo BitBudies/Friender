@@ -9,7 +9,7 @@ import Loading from "../../Components/Loading";
 import { useGlobalContext } from "../../context";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 
-const HabilitarAmigo = () => {
+const HabilitarAmigo = ({modalcito}) => {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isEnabledBtn, setIsEnabledBtn] = useState(true);
   const token = useGetToken();
@@ -114,6 +114,7 @@ const HabilitarAmigo = () => {
                   style={{ cursor: "pointer" }}
                   className="link-primary d-inline"
                   onClick={() => {
+                    modalcito(true)
                     console.log("abrir un modal")
                   }}
                 >
