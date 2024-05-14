@@ -25,7 +25,7 @@ const Home = () => {
             <p>Crea un perfil gratuito con tu información personal e intereses.</p>
 
             <b>Paso 2: Busca amigos</b>
-            <p>Utiliza nuestros filtros para encontrar amigos que se ajusten a tus necesidades, como ubicación, disponibilidad, intereses, etc.</p>
+            <p>Utiliza nuestros filtros para encontrar amigos que se ajusten a tus necesidades como: ubicación, disponibilidad, intereses, etc.</p>
 
             <b>Paso 3: Reserva un amigo </b>
             <p>Envía una solicitud de amistad al amigo que te interesa y espera su respuesta.</p>
