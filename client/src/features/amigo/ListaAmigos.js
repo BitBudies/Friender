@@ -54,8 +54,8 @@ const ListaAmigos = () => {
     "Santa Cruz",
     "Tarija",
   ];
-
-  const queryParams = new URLSearchParams(useLocation().search);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
   const pagina = queryParams.get("pagina") || 1;
   const edadP = queryParams.get("edad") || "0";
   const generosP = queryParams.getAll("genero") || [];
@@ -146,7 +146,7 @@ const ListaAmigos = () => {
         ubicacion: values.ubicacion === "Cualquiera" ? "" : values.ubicacion,
       },
     });
-  }, [consultar]);
+  }, [consultar, location]);
 
   function ActualizarListaAmigos() {
     console.log(values);
