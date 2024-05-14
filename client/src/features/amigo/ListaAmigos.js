@@ -58,8 +58,10 @@ const ListaAmigos = () => {
   const queryParams = new URLSearchParams(location.search);
   const pagina = queryParams.get("pagina") || 1;
   const edadP = queryParams.get("edad") || "0";
-  const generosP = queryParams.getAll("genero") || [];
-  const interesesP = queryParams.getAll("interes") || [];
+  const generosP = (queryParams.getAll("genero") || []).filter(genero => generosPermitidos.includes(genero));
+
+  const interesesP = (queryParams.getAll("interes") || []).filter(interes => interesPermitidos.includes(interes))
+
   const precio_minP = queryParams.get("precio_min") || "";
   const precio_maxP = queryParams.get("precio_max") || "";
   const ubicacionP = queryParams.get("ubicacion") || "Cualquiera";
@@ -113,7 +115,7 @@ const ListaAmigos = () => {
     });
   };
 
-  const [getAmiwitos, { data: amigos, isLoading, isSuccess }] =
+  const [getAmiwitos, { data: amigos, isLoading, isSuccess, isError, error }] =
     useGetAmigosMutation();
 
   useEffect(() => {
@@ -444,7 +446,7 @@ const ListaAmigos = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        isSuccess && (
+        isSuccess ? (
           <div className="container-fluid py-5">
             <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 g-3">
               {amigos["amigos"].map((amigo, index) => (
@@ -556,6 +558,9 @@ const ListaAmigos = () => {
               </ul>
             </nav>
           </div>
+        ) : ( isError && (
+          <div className="mostrarErrorListaAmigos">{error.data.error}</div>
+        )
         )
       )}
     </div>
