@@ -498,6 +498,7 @@ const ListaAmigos = () => {
                     })
                     const queryParams = new URLSearchParams(location.search);
                     queryParams.delete("interes");
+                    queryParams.set("pagina", "1");
                     nuevosIntereses.filter(interes => interes.seleccionado).map(interes => queryParams.append("interes", interes.nombre))
                     navigateTo(`/amigos?${queryParams.toString()}`);
                     goToBeginning();
