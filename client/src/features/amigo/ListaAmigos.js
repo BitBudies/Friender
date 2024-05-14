@@ -56,6 +56,7 @@ const ListaAmigos = () => {
   ];
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
+
   const pagina = queryParams.get("pagina") || 1;
   const edadP = queryParams.get("edad") || "0";
   const generosP = (queryParams.getAll("genero") || []).filter(genero => generosPermitidos.includes(genero));
@@ -165,12 +166,67 @@ const ListaAmigos = () => {
       .filter((interes) => interes.seleccionado)
       .map((interes) => `interes=${interes.nombre}`)
       .join("&");
-    navigateTo(
-      `/amigos?pagina=1${generosMandar.length > 0 ? "&" + generosMandar : ""}${
-        intereseMandar.length > 0 ? "&" + intereseMandar : ""}${values.ubicacion === "Cualquiera" ? "": `&ubicacion=${values.ubicacion}`}${values.rangoEdad ==="0" ? "" : `&edad=${values.rangoEdad}`}${precio_min !== null ? `&precio_min=${precio_min}`: ""}${precio_max !== null ? `&precio_max=${precio_max}`: ""}`
-    );
+      navigateTo(
+        `/amigos?pagina=${pagina}${
+          generosMandar.length > 0 ? "&" + generosMandar : ""
+        }${intereseMandar.length > 0 ? "&" + intereseMandar : ""}${
+          values.ubicacion === "Cualquiera" ? "" : `&ubicacion=${values.ubicacion}`
+        }${values.rangoEdad === "0" ? "" : `&edad=${values.rangoEdad}`}${
+          precio_min !== null ? `&precio_min=${precio_min}` : ""
+        }${precio_max !== null ? `&precio_max=${precio_max}` : ""}`
+      );
     setConsultar(true)
   }
+
+  useEffect(() => {
+    // Mantener los filtros previamente seleccionados al cambiar de página
+    const queryParams = new URLSearchParams(location.search);
+    const edadP = queryParams.get("edad") || "0";
+    const generosP = (queryParams.getAll("genero") || []).filter((genero) =>
+      generosPermitidos.includes(genero)
+    );
+    const interesesP = (queryParams.getAll("interes") || []).filter((interes) =>
+      interesPermitidos.includes(interes)
+    );
+    const precio_minP = queryParams.get("precio_min") || "";
+    const precio_maxP = queryParams.get("precio_max") || "";
+    const ubicacionP = queryParams.get("ubicacion") || "Cualquiera";
+
+    let precioMinimo = parseInt(precio_minP);
+    let precioMaximo = parseInt(precio_maxP);
+    if (!isNaN(precioMinimo)) {
+      if (precioMinimo < 0 || precioMinimo > 999999) {
+        precioMinimo = NaN;
+      }
+    }
+    if (!isNaN(precioMaximo)) {
+      if (precioMaximo < 0 || precioMaximo > 999999) {
+        precioMaximo = NaN;
+      }
+    }
+
+    setValues({
+      ...values,
+      interecitos: interesPermitidos.map((nombreInteres) => {
+        return {
+          nombre: nombreInteres,
+          seleccionado: interesesP.includes(nombreInteres),
+        };
+      }),
+      rangoEdad: edadP,
+      precio: {
+        min: isNaN(precioMinimo) ? "" : precioMinimo.toString(),
+        max: isNaN(precioMaximo) ? "" : precioMaximo.toString(),
+      },
+      generosos: generosPermitidos.map((nombreGenero) => {
+        return {
+          nombre: nombreGenero,
+          estado: generosP.includes(nombreGenero),
+        };
+      }),
+      ubicacion: ubicacionP,
+    });
+  }, [location]);
 
   const onBlurcito = (e, field) => {
     let value = e.target.value;
@@ -527,34 +583,24 @@ const ListaAmigos = () => {
                     </Link>
                   </li>
                 ))}
-                <li className="page-item">
-                  <Link
+                          <li className="page-item">
+                  <button
                     className={`page-link ${
                       Number(pagina) === amigos.numero_paginas && "disabled"
                     }`}
-                    onClick={() => goToBeginning}
-                    to={(() => {
-                      const generosMandar = values.generosos
-                        .map((genero) => {
-                          return `genero=${genero.nombre}`;
-                        })
-                        .join("&");
-                      const intereseMandar = values.interecitos
-                        .filter((interes) => interes.seleccionado)
-                        .map((interes) => `interes=${interes.nombre}`)
-                        .join("&");
-                      return `/amigos?pagina=${
-                        Number(pagina) < amigos.numero_paginas
-                          ? Number(pagina) + 1
-                          : Number(pagina)
-                      }${generosMandar.length > 0 ? "&" + generosMandar : ""}${
-                        intereseMandar.length > 0 ? "&" + intereseMandar : ""
-                      }`;
-                    })()}
+                    onClick={() => {
+                      const nextPage = Number(pagina) + 1;
+                      const queryParams = new URLSearchParams(location.search);
+                      queryParams.set("pagina", nextPage);
+               
+                      navigateTo(`/amigos?${queryParams.toString()}`);
+                      goToBeginning();
+                    }}
                   >
                     {">"}
-                  </Link>
+                  </button>
                 </li>
+
               </ul>
             </nav>
           </div>
