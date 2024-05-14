@@ -79,5 +79,11 @@
     align-items: center;
     justify-content: center;
     border-radius: 15px;
+    border: 1px solid #202020;
     background-color: rgb(199, 132, 246);
+}
+
+.mañana-uwu {
+    border: 1px solid #202020;
+    border-radius: 15px;
 }
