@@ -158,7 +158,8 @@ const ListaAmigos = () => {
     let precio_max =
       values.precio.max !== "" ? parseInt(values.precio.max) : null;
     const generosMandar = values.generosos
-      .filter((genero) => genero.estado).map((genero) => {
+      .filter((genero) => genero.estado)
+      .map((genero) => {
         return `genero=${genero.nombre}`;
       })
       .join("&");
@@ -166,16 +167,18 @@ const ListaAmigos = () => {
       .filter((interes) => interes.seleccionado)
       .map((interes) => `interes=${interes.nombre}`)
       .join("&");
-      navigateTo(
-        `/amigos?pagina=${pagina}${
-          generosMandar.length > 0 ? "&" + generosMandar : ""
-        }${intereseMandar.length > 0 ? "&" + intereseMandar : ""}${
-          values.ubicacion === "Cualquiera" ? "" : `&ubicacion=${values.ubicacion}`
-        }${values.rangoEdad === "0" ? "" : `&edad=${values.rangoEdad}`}${
-          precio_min !== null ? `&precio_min=${precio_min}` : ""
-        }${precio_max !== null ? `&precio_max=${precio_max}` : ""}`
-      );
-    setConsultar(true)
+    
+    // Establecer la página en 1 al filtrar
+    const nuevaURL = `/amigos?pagina=1${
+      generosMandar.length > 0 ? "&" + generosMandar : ""
+    }${intereseMandar.length > 0 ? "&" + intereseMandar : ""}${
+      values.ubicacion === "Cualquiera" ? "" : `&ubicacion=${values.ubicacion}`
+    }${values.rangoEdad === "0" ? "" : `&edad=${values.rangoEdad}`}${
+      precio_min !== null ? `&precio_min=${precio_min}` : ""
+    }${precio_max !== null ? `&precio_max=${precio_max}` : ""}`;
+  
+    navigateTo(nuevaURL);
+    setConsultar(true);
   }
 
   useEffect(() => {
