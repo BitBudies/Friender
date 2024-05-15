@@ -106,7 +106,7 @@ const Perfil = () => {
         {showModal && (
           <div className="terminitos position-absolute  top-50 start-50 translate-middle"
           style={{
-            zIndex: "9999",
+            zIndex: "3",
             backgroundColor: "rgba(0, 0, 0, 0.9)",
             width: "70vw",
             height: "70vh",
@@ -216,7 +216,10 @@ const Perfil = () => {
               </div>
               <h4>{nombreCompleto}</h4>
             </div>
-            <div className="options">
+            <div 
+            className="options"
+            style={{zIndex: "5"}}
+            >
               <ul>
                 {optionsData.map((item) => (
                   <li

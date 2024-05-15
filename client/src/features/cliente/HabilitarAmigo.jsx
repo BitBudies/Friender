@@ -9,7 +9,7 @@ import Loading from "../../Components/Loading";
 import { useGlobalContext } from "../../context";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 
-const HabilitarAmigo = ({modalcito}) => {
+const HabilitarAmigo = ({ modalcito }) => {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isEnabledBtn, setIsEnabledBtn] = useState(true);
   const token = useGetToken();
@@ -99,28 +99,6 @@ const HabilitarAmigo = ({modalcito}) => {
                 value={precio}
                 onChange={(e) => handleChange(e)}
               />
-              <div className="terminossss d-inline">
-                {acceptedTerms ? (
-                  <ImCheckboxChecked style={{ cursor: "pointer" }} onClick={() => {
-                    setAcceptedTerms(false)
-                  }}/>
-                ) : (
-                  <ImCheckboxUnchecked style={{ cursor: "pointer" }} onClick={() => {
-                    setAcceptedTerms(true)
-                  }}/>
-                )}
-                <p className="d-inline">Estoy de acuerdo con los </p>
-                <p
-                  style={{ cursor: "pointer" }}
-                  className="link-primary d-inline"
-                  onClick={() => {
-                    modalcito(true)
-                    console.log("abrir un modal")
-                  }}
-                >
-                  terminos y condiciones
-                </p>
-              </div>
             </div>
             <div className="btns">
               {isFriendModeEnabled ? (
@@ -135,13 +113,45 @@ const HabilitarAmigo = ({modalcito}) => {
                   </button>
                 </>
               ) : (
-                <button
-                  className={`btn btn-azul ${!isEnabledBtn && "disabled"}`}
-                  disabled={isLoading || !acceptedTerms}
-                  onClick={handleSubmit}
-                >
-                  Habilitar
-                </button>
+                <div>
+                  <div className="terminossss d-inline"
+                  style={{marginTop:"40px"}}>
+                    {acceptedTerms ? (
+                      <ImCheckboxChecked
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setAcceptedTerms(false);
+                        }}
+                      />
+                    ) : (
+                      <ImCheckboxUnchecked
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setAcceptedTerms(true);
+                        }}
+                      />
+                    )}
+                    <p className="d-inline">Estoy de acuerdo con los </p>
+                    <p
+                      style={{ cursor: "pointer" }}
+                      className="link-primary d-inline"
+                      onClick={() => {
+                        modalcito(true);
+                        console.log("abrir un modal");
+                      }}
+                    >
+                      terminos y condiciones
+                    </p>
+                  </div>
+                  <p></p>
+                  <button
+                    className={`btn btn-azul ${!isEnabledBtn && "disabled"}`}
+                    disabled={isLoading || !acceptedTerms}
+                    onClick={handleSubmit}
+                  >
+                    Habilitar
+                  </button>
+                </div>
               )}
             </div>
           </div>
