@@ -370,7 +370,7 @@ const ListaAmigos = () => {
               <div className="precios">
                 <input
                   type="text"
-                  placeholder="Min"
+                  placeholder="Mín"
                   className="form-control"
                   style={{ boxShadow: "none", border: "1px solid #ced4da" }}
                   value={values.precio.min}
