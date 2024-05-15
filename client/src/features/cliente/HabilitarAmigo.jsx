@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import "./habilitarAmigo.css"
-import { useEnableFriendModeMutation,  useDisableFriendModeMutation } from './clienteSlice';
+import { useEnableFriendModeMutation,  useDisableFriendModeMutation, useChangePriceMutation } from './clienteSlice';
 import useGetToken from '../../hooks/getToken';
 import Loading from '../../Components/Loading';
 import { useGlobalContext } from '../../context';
@@ -23,7 +23,9 @@ const HabilitarAmigo = () => {
     { data: enabled, isSuccess: isSuccessEnable, isError, error, isLoading },
   ] = useEnableFriendModeMutation();
 
-  const [disable, { data: disabled, isSuccess: isSuccessDisable, isError: isErrorDisable, error: errorDisable, isLoading: isLoadingDisable }] = useDisableFriendModeMutation();
+  const [disable, { data: disabled, isSuccess: isSuccessDisable }] = useDisableFriendModeMutation();
+
+  const [change,{data,isLoading:isLoadingChange,isSuccess:isSuccessChange,isError:isErrorChange,error:errorChange}] = useChangePriceMutation();
 
   useEffect(() => {
     if (isError) {
@@ -64,6 +66,11 @@ const HabilitarAmigo = () => {
         }
     };
 
+    const handleChangePrice = async () => {
+        setIsEnabledBtn(false);
+        await change({ token: token, precio:precio });
+    }
+
     
 
     return(
@@ -87,7 +94,7 @@ const HabilitarAmigo = () => {
             {
                 isFriendModeEnabled ? (
                     <>
-                         <button className='btn btn-azul'>Cambiar Precio</button>
+                         <button className='btn btn-azul' disabled={isLoadingChange} onClick={handleChangePrice}>Cambiar Precio</button>
                     <button
                         className={`btn btn-outline-secondary`}
                         disabled={isLoading}
