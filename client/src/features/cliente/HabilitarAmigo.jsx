@@ -4,12 +4,13 @@ import { useEnableFriendModeMutation,  useDisableFriendModeMutation, useChangePr
 import useGetToken from '../../hooks/getToken';
 import Loading from '../../Components/Loading';
 import { useGlobalContext } from '../../context';
+import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 
-
-const HabilitarAmigo = () => {
-  const [isEnabledBtn,setIsEnabledBtn] = useState(true);
+const HabilitarAmigo = ({ modalcito }) => {
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [isEnabledBtn, setIsEnabledBtn] = useState(true);
   const token = useGetToken();
-  const {isFriendModeEnabled} = useGlobalContext()
+  const { isFriendModeEnabled } = useGlobalContext();
   const [precio, setPrecio] = useState(isFriendModeEnabled);
 
   // const {
@@ -29,26 +30,29 @@ const HabilitarAmigo = () => {
 
   useEffect(() => {
     if (isError) {
-        console.log(error);
+      console.log(error);
     }
     if (isSuccessEnable) {
-        console.log(enabled);
+      console.log(enabled);
     }
   }, [isError, enabled, isSuccessEnable, error]);
 
   useEffect(() => {
-    if(isSuccessDisable){
+    if (isSuccessDisable) {
       console.log(disabled);
     }
-  },[isSuccessDisable,disabled]);
-
+  }, [isSuccessDisable, disabled]);
 
   useEffect(() => {
-    console.log(isFriendModeEnabled,"precio");
-  },[isFriendModeEnabled])
+    console.log(isFriendModeEnabled, "precio");
+  }, [isFriendModeEnabled]);
 
-   if (isSuccessEnable) {
-    return <p>Registrado correctamente como amigo (lo cambiamos de modo ? (´▽`ʃ♡ƪ))</p>
+  if (isSuccessEnable) {
+    return (
+      <p>
+        Registrado correctamente como amigo (lo cambiamos de modo ? (´▽`ʃ♡ƪ))
+      </p>
+    );
   } else {
     const handleChange = (e) => {
       let value = e.target.value;
@@ -57,13 +61,12 @@ const HabilitarAmigo = () => {
     };
 
     const handleSubmit = async () => {
-        setIsEnabledBtn(false);
-        if(!isFriendModeEnabled){
-            await enable({ token: token, precio: precio });
-
-        }else{
-            await disable({ token: token });
-        }
+      setIsEnabledBtn(false);
+      if (!isFriendModeEnabled) {
+        await enable({ token: token, precio: precio });
+      } else {
+        await disable({ token: token });
+      }
     };
 
     const handleChangePrice = async () => {
@@ -76,13 +79,17 @@ const HabilitarAmigo = () => {
     return(
       <div className="habilitar-amigo">
         <div className="habilitar-amigo-container">
-          <h1>{isFriendModeEnabled? "Cuenta Como Amigo Habilitada" : "Habilitar Cuenta Como Amigo"}</h1>
+          <h1>
+            {isFriendModeEnabled
+              ? "Cuenta Como Amigo Habilitada"
+              : "Habilitar Cuenta Como Amigo"}
+          </h1>
           <div className="habilitar-form">
             <div className="input-item">
               <label htmlFor="precio">Precio por hora (en Bs).</label>
               <input
                 className="form-control mt-2"
-                type='number'
+                type="number"
                 id="precio"
                 name="precio"
                 placeholder="Precio"
@@ -91,36 +98,60 @@ const HabilitarAmigo = () => {
               />
             </div>
             <div className="btns">
-            {
-                isFriendModeEnabled ? (
-                    <>
-                         <button className='btn btn-azul' disabled={isLoadingChange} onClick={handleChangePrice}>Cambiar Precio</button>
-                    <button
-                        className={`btn btn-outline-secondary`}
-                        disabled={isLoading}
-                        onClick={handleSubmit}
-                    >
-                        Deshabilitar Cuenta
-                    </button>
-                    </>
-                       
-                    
-                
-                ) :
-                 (
-                
-             <button
-              className={`btn btn-azul ${!isEnabledBtn && "disabled"}`}
-              disabled={isLoading}
-              onClick={handleSubmit}
-            >
-              Habilitar
-            </button>
-                 )
-                 
-            }
-            </div>
             
+              {isFriendModeEnabled ? (
+                <>
+                  <button className='btn btn-azul' disabled={isLoadingChange} onClick={handleChangePrice}>Cambiar Precio</button>
+                  <button
+                    className={`btn btn-outline-secondary`}
+                    disabled={isLoading}
+                    onClick={handleSubmit}
+                  >
+                    Deshabilitar Cuenta
+                  </button>
+                </>
+              ) : (
+                <div>
+                  <div className="terminossss d-inline"
+                  style={{marginTop:"40px"}}>
+                    {acceptedTerms ? (
+                      <ImCheckboxChecked
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setAcceptedTerms(false);
+                        }}
+                      />
+                    ) : (
+                      <ImCheckboxUnchecked
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setAcceptedTerms(true);
+                        }}
+                      />
+                    )}
+                    <p className="d-inline">Estoy de acuerdo con los </p>
+                    <p
+                      style={{ cursor: "pointer" }}
+                      className="link-primary d-inline"
+                      onClick={() => {
+                        modalcito(true);
+                        console.log("abrir un modal");
+                      }}
+                    >
+                      terminos y condiciones
+                    </p>
+                  </div>
+                  <p></p>
+                  <button
+                    className={`btn btn-azul ${!isEnabledBtn && "disabled"}`}
+                    disabled={isLoading || !acceptedTerms}
+                    onClick={handleSubmit}
+                  >
+                    Habilitar
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
