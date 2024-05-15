@@ -12,10 +12,7 @@ import MiPerfil from "../../Components/MiPerfil/MiPerfil";
 import { useIsEnabledFriendModeQuery } from "./clienteSlice";
 import Loading from "../../Components/Loading";
 
-
-
 const Perfil = () => {
-  
   const [showModal, setShowModal] = useState(false);
   const [currentOption, setCurrentOption] = useState(1);
   const [showContent, setShowContent] = useState(false);
@@ -54,10 +51,10 @@ const Perfil = () => {
     {
       id: 4,
       name: "Cuenta de Amigo",
-      toRender: <HabilitarAmigo modalcito={setShowModal}/>,
+      toRender: <HabilitarAmigo modalcito={setShowModal} />,
     },
   ];
-  
+
   useEffect(() => {
     if (informacion) {
       console.log(informacion);
@@ -104,98 +101,104 @@ const Perfil = () => {
     return (
       <div className="profile-section">
         {showModal && (
-          <div className="terminitos position-absolute  top-50 start-50 translate-middle"
-          style={{
-            zIndex: "9999",
-            backgroundColor: "rgba(0, 0, 0, 0.9)",
-            width: "70vw",
-            height: "70vh",
-            padding: "20px",
-            borderRadius: "10px",
-          }}
-        >
-          <h1 style={{ color: 'white' }}>Terminos y condiciones</h1>
-          <p style={{ color: 'white', maxHeight: '80%', overflowY: 'auto'}}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Pellentesque quis justo sollicitudin, posuere diam et, lobortis
-            velit. Mauris et nulla tortor. Vivamus condimentum finibus augue, a
-            consequat justo. Proin id lectus elementum, mattis ligula id, luctus
-            ante. Cras aliquam accumsan lacinia. Duis quis elit sem. Fusce lorem
-            ipsum, gravida id enim ut, maximus sagittis quam. Praesent faucibus
-            congue velit, ut congue arcu eleifend non. Mauris non orci semper,
-            eleifend sapien et, sollicitudin velit. Proin vel justo efficitur
-            odio cursus congue. Nunc mollis nulla a mauris lacinia, a porta
-            dolor lobortis. Duis vehicula sodales sodales. Morbi semper nibh
-            quis mi molestie, eu feugiat sapien laoreet. Mauris sed ex ut sem
-            dictum dignissim. Maecenas sollicitudin ipsum tortor, nec feugiat
-            velit sodales vel. Fusce at elit urna. Quisque in odio diam. Duis
-            consequat est ac est rutrum lacinia. Nulla lorem ante, vestibulum id
-            hendrerit quis, commodo id leo. Suspendisse non pellentesque urna.
-            Phasellus volutpat est dui. Vestibulum elit urna, blandit non tempor
-            id, scelerisque quis diam. Suspendisse tempor, felis id accumsan
-            euismod, turpis est suscipit neque, tincidunt mattis turpis lorem
-            non justo. Morbi vel justo eu velit iaculis suscipit vitae nec
-            ipsum. Nunc molestie convallis egestas. Cras bibendum sit amet arcu
-            nec ullamcorper. Interdum et malesuada fames ac ante ipsum primis in
-            faucibus. Pellentesque habitant morbi tristique senectus et netus et
-            malesuada fames ac turpis egestas. Sed consequat, arcu et
-            scelerisque auctor, eros ex faucibus lorem, eget cursus nunc lectus
-            nec dui. Pellentesque odio ligula, auctor ut tristique facilisis,
-            ornare a neque. Aliquam scelerisque tempus arcu vitae tincidunt.
-            Phasellus augue enim, venenatis sit amet pharetra quis, mollis vitae
-            erat. Aliquam condimentum urna ac ornare finibus. Quisque consequat
-            mollis ipsum ac gravida. Praesent scelerisque dignissim nibh quis
-            venenatis. Curabitur molestie odio sit amet tellus pharetra
-            convallis ut vel massa. Pellentesque a magna quis mi faucibus
-            vehicula eu eu sem. Suspendisse et nibh eros. Nullam consectetur
-            ipsum nulla, sollicitudin hendrerit sapien vestibulum sit amet. Cras
-            eget massa neque. Nulla maximus eleifend laoreet. Ut vehicula purus
-            nisi, at bibendum elit hendrerit id. Aenean ante libero, accumsan
-            sed arcu et, posuere tempor diam. Vivamus id turpis in justo dapibus
-            mattis sed eu ante. Vivamus egestas et nibh fermentum varius. Cras
-            consequat nisl nunc, et imperdiet justo viverra id. Pellentesque
-            habitant morbi tristique senectus et netus et malesuada fames ac
-            turpis egestas. Etiam vel leo non lorem tincidunt vulputate. Aliquam
-            sed imperdiet nulla. Cras pretium mollis nisl, in placerat sapien
-            cursus sollicitudin. Aliquam porttitor risus eget ultricies
-            consequat. Ut sit amet nunc eros. Phasellus quam ligula, faucibus eu
-            ligula id, consectetur sodales leo. Maecenas vitae lacinia leo. Nam
-            imperdiet leo eget mi ultrices, sed consequat justo ultricies. Donec
-            et leo gravida, dapibus lorem eget, pretium mi. Nullam semper odio
-            quis efficitur tincidunt. Nunc facilisis lacus dui, quis venenatis
-            quam sollicitudin sed. Etiam tristique erat et augue sodales
-            laoreet. Praesent id tempus ex. Duis ullamcorper iaculis sapien. In
-            mattis ex eu diam vestibulum egestas. Pellentesque lacinia lorem
-            aliquet magna ullamcorper ullamcorper. Ut in faucibus magna. Ut non
-            tellus id massa ullamcorper aliquet mattis non lorem. In et felis
-            lacinia, gravida nulla a, elementum massa. Curabitur blandit lectus
-            vel odio vehicula commodo. Pellentesque quis convallis erat, ut
-            fringilla nunc. Mauris elit mauris, porta rhoncus lacinia et,
-            laoreet nec turpis. Integer scelerisque aliquet lorem non elementum.
-            Mauris rhoncus mauris orci, eget blandit felis commodo non. Ut
-            sagittis est non enim elementum commodo. Class aptent taciti
-            sociosqu ad litora torquent per conubia nostra, per inceptos
-            himenaeos. Aliquam a sapien velit. Duis eget sem eget felis
-            ultricies ullamcorper. Ut commodo elit non lacinia porttitor.
-            Integer semper ligula ligula, ut tincidunt diam faucibus nec.
-            Aliquam nec finibus nunc, eget vulputate eros. Morbi gravida magna
-            eget ligula lacinia semper. Aenean pulvinar tempus lectus,
-            sollicitudin bibendum sapien lobortis a. Nulla dignissim ultrices
-            commodo. Praesent semper, ligula in convallis congue, urna nunc
-            faucibus ipsum, a ultricies massa leo ut ante. Fusce feugiat eu nunc
-            eu porttitor. Suspendisse a magna vitae augue semper gravida. In non
-            lacus eu eros lobortis consequat at vitae mauris. Proin in justo ut
-            nulla suscipit finibus. Vivamus pellentesque ut nisi in varius. Cras
-            consequat vitae sapien sit amet scelerisque. Nam fermentum elementum
-            bibendum. Curabitur id molestie nisl.
-          </p>
-          <div className="d-flex justify-content-end" style={{ padding: '3%' }}>
-            <button 
-            className="btn btn-primary"
-            onClick={() => {setShowModal(false)}}
-            >Cerrar</button>
+          <div
+            className="terminitos position-absolute  top-50 start-50 translate-middle"
+            style={{
+              zIndex: "3",
+              backgroundColor: "rgba(21, 21, 21, 1)",
+              width: "70vw",
+              height: "70vh",
+              padding: "20px",
+              borderRadius: "10px",
+            }}
+          >
+            <h1 style={{ color: "white" }}>Terminos y condiciones</h1>
+            <p style={{ color: "white", maxHeight: "80%", overflowY: "auto" }}>
+              Términos y Condiciones de Uso de Friender <br />
+              Por favor, lee estos términos y condiciones de uso cuidadosamente
+              antes de utilizar los servicios ofrecidos por Friender. Al acceder
+              y utilizar los servicios de Friender, aceptas estar legalmente
+              obligado por los términos y condiciones descritos a continuación.
+              Si no estás de acuerdo con alguno de estos términos, no utilices
+              este sitio web.
+              <br />
+              <br />
+              1. Descripción del Servicio <br />
+              Friender es una plataforma en línea que conecta a personas que
+              desean encontrar amigos o contratar servicios de compañía con
+              individuos que ofrecen dichos servicios a cambio de una tarifa.
+              Los usuarios pueden registrarse para ofrecer sus servicios como
+              amigo y también buscar amigos disponibles para contratar.
+              <br />
+              <br />
+              2. Registro <br />
+              a. Solo personas mayores de edad y residentes legales de Bolivia
+              pueden registrarse en Friender. <br />
+              b. Al registrarte en Friender, garantizas que toda la información
+              proporcionada es precisa, completa y actualizada. <br />
+              c. Eres responsable de mantener la confidencialidad de tu cuenta y
+              contraseña, y aceptas no compartir esta información con terceros.
+              <br />
+              <br />
+              3. Servicios de Compañía <br />
+              a. Los usuarios que ofrecen servicios de compañía en Friender son
+              responsables de establecer sus propias tarifas, términos y
+              condiciones para la prestación de servicios. <br />
+              b. Friender no se hace responsable de la calidad de los servicios
+              prestados por los usuarios.
+              <br />
+              <br />
+              4. Uso Adecuado del Servicio <br />
+              a. Al utilizar Friender, aceptas no utilizar el servicio para
+              fines ilegales o no autorizados. <br />
+              b. No debes violar ninguna ley aplicable al utilizar Friender.
+              <br />
+              <br />
+              5. Privacidad <br />
+              a. Friender recopila y procesa información personal de acuerdo con
+              su Política de Privacidad. Al utilizar el servicio, aceptas el
+              procesamiento de tu información personal según esta política.
+              <br />
+              <br />
+              6. Propiedad Intelectual <br />
+              a. Todos los derechos de propiedad intelectual relacionados con
+              Friender y su contenido pertenecen a Friender o a sus
+              licenciantes.
+              <br />
+              <br />
+              7. Limitación de Responsabilidad <br />
+              a. Friender no será responsable de ningún daño directo, indirecto,
+              incidental, especial o consecuente que surja del uso o la
+              imposibilidad de usar el servicio.
+              <br />
+              <br />
+              8. Modificaciones de los Términos y Condiciones <br />
+              a. Friender se reserva el derecho de modificar o actualizar estos
+              términos y condiciones en cualquier momento sin previo aviso.
+              <br />
+              <br />
+              9. Ley Aplicable <br />
+              a. Estos términos y condiciones se rigen por las leyes de Bolivia,
+              y cualquier disputa relacionada con ellos se resolverá
+              exclusivamente en los tribunales de Bolivia. Al utilizar los
+              servicios de Friender, aceptas estos términos y condiciones en su
+              totalidad. Si no estás de acuerdo con alguno de estos términos,
+              por favor, no utilices este sitio web.
+            </p>
+            <div
+              className="d-flex justify-content-end"
+              style={{ padding: "3%" }}
+            >
+              <button
+                className="btn btn-azul"
+                onClick={() => {
+                  setShowModal(false);
+                }}
+              >
+                Cerrar
+              </button>
+            </div>
           </div>
-        </div>
         )}
         <div
           className={`profile-section-center ${showContent && "show-content"}`}
@@ -216,7 +219,7 @@ const Perfil = () => {
               </div>
               <h4>{nombreCompleto}</h4>
             </div>
-            <div className="options">
+            <div className="options" style={{ zIndex: "1" }}>
               <ul>
                 {optionsData.map((item) => (
                   <li
