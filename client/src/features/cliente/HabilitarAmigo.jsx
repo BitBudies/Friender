@@ -67,11 +67,13 @@ const HabilitarAmigo = ({ modalcito }) => {
       } else {
         await disable({ token: token });
       }
+      window.location.reload();
     };
 
     const handleChangePrice = async () => {
         setIsEnabledBtn(false);
         await change({ token: token, precio:precio });
+        window.location.reload();
     }
 
     
