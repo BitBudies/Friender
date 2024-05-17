@@ -129,7 +129,7 @@ const HabilitarAmigo = ({ modalcito }) => {
                         }}
                       />
                     )}
-                    <p className="d-inline">Estoy de acuerdo con los </p>
+                    <p className="d-inline" style={{ paddingLeft:"10px"}}>Estoy de acuerdo con los </p>
                     <p
                       style={{ cursor: "pointer" }}
                       className="link-primary d-inline"
@@ -138,7 +138,7 @@ const HabilitarAmigo = ({ modalcito }) => {
                         console.log("abrir un modal");
                       }}
                     >
-                      terminos y condiciones
+                      términos y condiciones
                     </p>
                   </div>
                   <p></p>
@@ -146,6 +146,7 @@ const HabilitarAmigo = ({ modalcito }) => {
                     className={`btn btn-azul ${!isEnabledBtn && "disabled"}`}
                     disabled={isLoading || !acceptedTerms}
                     onClick={handleSubmit}
+                    style={{ marginTop:"1rem"}}
                   >
                     Habilitar
                   </button>
