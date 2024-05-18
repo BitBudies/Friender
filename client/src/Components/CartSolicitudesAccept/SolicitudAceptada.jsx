@@ -1,9 +1,8 @@
 import React from 'react';
-import "./SolicitudAceptada.css";
-import { FaClock } from "react-icons/fa6";
-import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
-import { MdUpdate } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import "./SolicitudAceptada.css";
+import { FaClock, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
+import { MdUpdate } from "react-icons/md";
 
 const SolicitudAceptada = ({
   imagenBase64,
