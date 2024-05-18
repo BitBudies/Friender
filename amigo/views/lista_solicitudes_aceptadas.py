@@ -38,6 +38,7 @@ def ObtenerListaDeSolicitudes(request):
             'hora_inicio': solicitud.hora_inicio,
             'dias_faltantes': diferencia_dias,
             'imagenes': imagenes_cliente,
+            'detalle' : solicitud.descripcion
         }
         data["solicitudes_recibidas"].append(solicitud_data)
 
