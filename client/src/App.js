@@ -27,6 +27,7 @@ import { useCookies } from "react-cookie";
 import PerfilCliente from './features/cliente/PerfilCliente';
 import SolicitudesAceptadas from './features/solicitudes/SolicitudesAceptadas';
 import useGetToken from './hooks/getToken';
+import SolicitudDetalle from './Components/CartSolicitudesAccept/SolicitudDetalle';
 import { useIsEnabledFriendModeQuery } from './features/cliente/clienteSlice';
 
 
@@ -77,6 +78,7 @@ function App() {
           <Route path="/aceptadas" element={<SolicitudesAceptadas/>}/>
           <Route path="/recuperar" element={<RecuperarCuenta/>}/>
           <Route path="/practica" element={<DayezaPractica/>}/>
+          <Route path='/usuario/solicitud_aceptada/:id_solicitud' element={<SolicitudDetalle/>}/>
           <Route path='/*' element={<Default/>}/>
         </Routes>
         <Alert/>

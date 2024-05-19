@@ -69,4 +69,4 @@ const clienteApi = apiSlice.injectEndpoints({
 export const { useGetClienteByIdQuery, 
   useGetClienteInfoQuery, useEnableFriendModeMutation,
    useDisableFriendModeMutation, 
-  useIsEnabledFriendModeQuery } = clienteApi;
+  useIsEnabledFriendModeQuery,useChangePriceMutation } = clienteApi;

@@ -103,7 +103,9 @@ class ClienteListLimitPaginator(APIView):
                 status=status.HTTP_200_OK,
             )
 
-        clientes = Cliente.objects.order_by("cliente_id")  # ordenamiento temporal
+        clientes = Cliente.objects.order_by("cliente_id").values(
+            "cliente_id", "nombre", "ap_paterno", "ap_materno", "fecha_nacimiento", "genero", "descripcion", "dinero", "estado"
+        )
         paginator = Paginator(clientes, limite)
 
         try:
@@ -116,24 +118,10 @@ class ClienteListLimitPaginator(APIView):
         data = {
             "numero_paginas": paginator.num_pages,
             "numero_clientes_total": clientes.count(),
-            "clientes": [],
+            "clientes": list(page_obj),
         }
-        for cliente in page_obj:
-            cliente_data = {
-                "cliente_id": cliente.cliente_id,
-                "nombre_completo": cliente.getFullName(),
-                "nombre": cliente.nombre.title(),
-                "ap_paterno": cliente.ap_paterno.title(),
-                "ap_materno": cliente.ap_materno.title(),
-                "fecha_nacimiento": cliente.fecha_nacimiento,
-                "edad": cliente.calcular_edad(),
-                "genero": cliente.genero,
-                "descripcion": cliente.descripcion,
-                "dinero": cliente.dinero,
-                "estado_cliente": cliente.estado,
-            }
-            data["clientes"].append(cliente_data)
         return Response(data)
+
 
 
 # @csrf_exempt

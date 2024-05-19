@@ -20,7 +20,7 @@
 }
 
 .home-img{
-    width: 50%;
+    max-width: 500px;
 }
 
 .faq-img{
@@ -29,6 +29,10 @@
 
 .display-flex{
     display: flex;
+}
+
+.d-flex-centered{
+    align-items: center;
 }
 
 .colored-section{
@@ -95,7 +99,6 @@
     max-width: 280px;
     margin: 10px;
     padding: 25px;
-    border-radius: 15px;
 }
 
 .home-post-its-icon{
@@ -122,7 +125,7 @@
 
 
 
-@media screen and (max-width : 768px) {
+@media screen and (max-width : 900px) {
     .display-flex{
         display: block;
     }
@@ -139,11 +142,9 @@
     .home-img{
         height: auto;
         width: 100%;
-        max-width: none;
         margin-bottom: 15px;
     }
     .home-faq-text{
-        max-width: none;
         padding: 15px 0;
     }
 }

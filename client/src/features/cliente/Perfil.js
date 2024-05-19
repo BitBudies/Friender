@@ -108,12 +108,12 @@ const Perfil = () => {
               backgroundColor: "rgba(21, 21, 21, 1)",
               width: "70vw",
               height: "70vh",
-              padding: "20px",
+              padding: "50px 40px",
               borderRadius: "10px",
             }}
           >
-            <h1 style={{ color: "white" }}>Terminos y condiciones</h1>
-            <p style={{ color: "white", maxHeight: "80%", overflowY: "auto" }}>
+            <h1 style={{ color: "white" }}>Términos y condiciones</h1>
+            <p style={{ color: "white", maxHeight: "80%", overflowY: "auto", padding:"15px 20px 0 10px"}}>
               Términos y Condiciones de Uso de Friender <br />
               Por favor, lee estos términos y condiciones de uso cuidadosamente
               antes de utilizar los servicios ofrecidos por Friender. Al acceder
@@ -187,7 +187,7 @@ const Perfil = () => {
             </p>
             <div
               className="d-flex justify-content-end"
-              style={{ padding: "3%" }}
+              style={{ paddingTop: "3%" }}
             >
               <button
                 className="btn btn-azul"

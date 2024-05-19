@@ -5,7 +5,9 @@
     /* width: 100%; */
     
 }
-
+.solicitud-aceptada-card {
+    cursor: pointer; 
+  }
 .solicitud-aceptada-card {
     position: relative;
     width: 17rem;

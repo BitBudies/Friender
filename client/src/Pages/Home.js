@@ -18,7 +18,7 @@ const Home = () => {
       <section className='home-section home-section-hgtAll'>
         <div className='section-image text-centered'>
           <h2>¿Cómo Funciona?</h2>
-          <div className='display-flex'>
+          <div className='display-flex d-flex-centered'>
           <img className='home-img' src="/images/home-steps-friends.png"></img>
           <div className='text-lefted home-pasos-text'>
             <b>Paso 1: Regístrate </b>
@@ -101,7 +101,7 @@ const Home = () => {
             <div className='home-faq-text'>
               <b>¿Tienes alguna pregunta sobre Friender?</b>
               <p>¡No te preocupes! Aquí encontrarás las respuestas a las preguntas más comunes que nuestros usuarios suelen tener.</p>
-              <p>Esta sección está diseñada para ayudarte a encontrar la información que necesitas de forma rápida y sencilla. 
+              <br></br><p>Esta sección está diseñada para ayudarte a encontrar la información que necesitas de forma rápida y sencilla. 
                   Si no encuentras la respuesta a tu pregunta, no dudes en ponerte en contacto con nuestro equipo de atención al cliente.</p>
             </div>
             <Link className='btn btn-azul' to={"/preguntas-frecuentes"}>Leer más...</Link>
