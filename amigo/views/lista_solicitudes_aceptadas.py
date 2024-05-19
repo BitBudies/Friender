@@ -29,6 +29,7 @@ def ObtenerListaDeSolicitudes(request):
         calificacion_cliente = Calificacion.objects.filter(cliente=solicitud.cliente).first()
         imagenes_cliente = obtener_imagenes_cliente(solicitud.cliente)
         solicitud_data = {
+            'solicitud_alquiler_id': solicitud.solicitud_alquiler_id,
             'nombre_cliente': solicitud.cliente.getFullName(),
             'calificacion_cliente': calificacion_cliente.puntuacion if calificacion_cliente else 0,
             'lugar': solicitud.lugar,
@@ -38,6 +39,7 @@ def ObtenerListaDeSolicitudes(request):
             'hora_inicio': solicitud.hora_inicio,
             'dias_faltantes': diferencia_dias,
             'imagenes': imagenes_cliente,
+            'detalle' : solicitud.descripcion
         }
         data["solicitudes_recibidas"].append(solicitud_data)
 

@@ -32,12 +32,13 @@ const SolicitudesAceptadas = () => {
               return (
                 <>
                   <SolicitudAceptada 
+                    key={solicitud.solicitud_alquiler_id}
                     imagenBase64={solicitud.imagenes[0].imagenBase64}
                     nombre_cliente={solicitud.nombre_cliente}
                     fecha_inicio={solicitud.fecha_inicio}
                     hora_inicio={solicitud.hora_inicio}
                     lugar={solicitud.lugar}
-                    solicitud_aceptada_id={4}
+                    solicitud_aceptada_id={solicitud.solicitud_alquiler_id}
                     duracion={solicitud.duracion}
                     dias_restantes={solicitud.dias_faltantes}
                   />
