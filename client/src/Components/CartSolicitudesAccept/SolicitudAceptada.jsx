@@ -17,7 +17,11 @@ const SolicitudAceptada = ({
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/solicitud-detalles/${solicitud_aceptada_id}`);
+    navigate(`/usuario/solicitud_aceptada/${solicitud_aceptada_id}`);
+  };
+
+  const handleRightClick = (e) => {
+    e.preventDefault(); 
   };
 
   function formatFecha(fecha) {
@@ -26,7 +30,7 @@ const SolicitudAceptada = ({
   }
 
   return (
-    <div className="col-container" key={solicitud_aceptada_id} onClick={handleClick}>
+    <div className="col-container" key={solicitud_aceptada_id} onClick={handleClick} onContextMenu={handleRightClick}>
       <div className="solicitud-aceptada-card">
         <div id="datos-perfil">
           <div className="card-image mb-2"
