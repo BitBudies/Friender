@@ -29,7 +29,7 @@ const HabilitarAmigo = ({ modalcito }) => {
     { data: enabled, isSuccess: isSuccessEnable, isError, error, isLoading },
   ] = useEnableFriendModeMutation();
 
-  const [disable, { data: disabled, isSuccess: isSuccessDisable }] =
+  const [disable, { data: disabled, isSuccess: isSuccessDisable, isLoading: disableLoading }] =
     useDisableFriendModeMutation();
 
   const [
@@ -127,14 +127,14 @@ const HabilitarAmigo = ({ modalcito }) => {
                 <>
                   <button
                     className="btn btn-azul"
-                    disabled={isLoadingChange}
+                    disabled={isLoadingChange || disableLoading}
                     onClick={handleChangePrice}
                   >
                     Cambiar Precio
                   </button>
                   <button
                     className={`btn btn-outline-secondary`}
-                    disabled={isLoading}
+                    disabled={disableLoading}
                     onClick={handleSubmit}
                   >
                     Deshabilitar Cuenta
