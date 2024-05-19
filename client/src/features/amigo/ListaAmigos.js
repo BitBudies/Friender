@@ -165,10 +165,9 @@ const ListaAmigos = () => {
         };
       }),
       ubicacion: ubicacionP,
-    }
+    };
 
     setValues(nuevosValores);
-
 
     const edadRanges = {
       0: { min: null, max: null },
@@ -179,7 +178,8 @@ const ListaAmigos = () => {
       5: { min: 55, max: 65 },
       6: { min: 65, max: 999 },
     };
-    const { min: edad_min, max: edad_max } = edadRanges[nuevosValores.rangoEdad];
+    const { min: edad_min, max: edad_max } =
+      edadRanges[nuevosValores.rangoEdad];
 
     getAmiwitos({
       token: token,
@@ -187,9 +187,13 @@ const ListaAmigos = () => {
         pagina: pagina,
         limite: 24,
         precio_min:
-        nuevosValores.precio.min == "" ? null : parseInt(nuevosValores.precio.min),
+          nuevosValores.precio.min == ""
+            ? null
+            : parseInt(nuevosValores.precio.min),
         precio_max:
-        nuevosValores.precio.max == "" ? null : parseInt(nuevosValores.precio.max),
+          nuevosValores.precio.max == ""
+            ? null
+            : parseInt(nuevosValores.precio.max),
         edad_min: edad_min,
         edad_max: edad_max,
         generos: nuevosValores.generosos
@@ -198,7 +202,10 @@ const ListaAmigos = () => {
         interes: nuevosValores.interecitos
           .filter((interes) => interes.seleccionado)
           .map((interes) => interes.nombre),
-        ubicacion: nuevosValores.ubicacion === "Cualquiera" ? "" : nuevosValores.ubicacion,
+        ubicacion:
+          nuevosValores.ubicacion === "Cualquiera"
+            ? ""
+            : nuevosValores.ubicacion,
       },
     });
   }, [location]);
@@ -325,6 +332,11 @@ const ListaAmigos = () => {
                 });
               }}
               className="form-select"
+              style={{
+                boxShadow: "none",
+                border: "1px solid #ced4da",
+                width: "150px",
+              }}
             >
               <option className="nomostraropcionxd"> </option>
               {values.interecitos.map((interes) => {
@@ -340,8 +352,16 @@ const ListaAmigos = () => {
           </div>
 
           <div>
-            <label htmlFor="rangoEdad" className="input-label">
-              <BsCalendarRange /> Rango de edad
+            <label
+              htmlFor="rangoEdad"
+              className="input-label"
+              style={{ whiteSpace: "nowrap" }}
+            >
+              <BsCalendarRange />
+              <span style={{ whiteSpace: "nowrap" }} class="range-label">
+                {" "}
+                Rango de edad
+              </span>
             </label>
             <select
               id="rangoEdad"
@@ -372,7 +392,11 @@ const ListaAmigos = () => {
                   type="text"
                   placeholder="Mín"
                   className="form-control"
-                  style={{ boxShadow: "none", border: "1px solid #ced4da" }}
+                  style={{
+                    boxShadow: "none",
+                    border: "1px solid #ced4da",
+                    width: "100px",
+                  }}
                   value={values.precio.min}
                   onBlur={(e) => onBlurcito(e, "min")}
                   onChange={(e) => {
@@ -394,6 +418,7 @@ const ListaAmigos = () => {
                     marginLeft: "0",
                     boxShadow: "none",
                     border: "1px solid #ced4da",
+                    width: "100px",
                   }}
                   value={values.precio.max}
                   onBlur={(e) => {
@@ -415,12 +440,18 @@ const ListaAmigos = () => {
           </div>
 
           <div>
-            <label className="input-label input-item">
+            <label
+              className="input-label input-item"
+              style={{ whiteSpace: "nowrap" }}
+            >
               <IoPeople />
               Género
             </label>
             <div className="generoDropCheckBox" ref={dropdownRef}>
-              <p onClick={() => SetGeneroDropCheckBox(!generoDropCheckBox)}>
+              <p
+                onClick={() => SetGeneroDropCheckBox(!generoDropCheckBox)}
+                style={{ whiteSpace: "nowrap" }}
+              >
                 Seleccionar <FaAngleDown />
               </p>
               {generoDropCheckBox && (
@@ -448,7 +479,11 @@ const ListaAmigos = () => {
           </div>
 
           <div>
-            <label htmlFor="ubicacion" className="input-label">
+            <label 
+              htmlFor="ubicacion"
+              className="input-label"
+              style={{ whiteSpace: "nowrap" }}
+            >
               <IoLocationSharp /> Ubicación
             </label>
             <select
@@ -468,7 +503,11 @@ const ListaAmigos = () => {
           </div>
         </div>
         <div className="btn-container" style={{ marginLeft: "10px" }}>
-          <button className="btn btn-azul" onClick={ActualizarListaAmigos}>
+          <button
+            className="btn btn-azul display-flex"
+            onClick={ActualizarListaAmigos}
+            style={{ whiteSpace: "nowrap" }}
+          >
             <FaFilter style={{ color: "white" }} /> Filtrar
           </button>
         </div>
@@ -497,16 +536,6 @@ const ListaAmigos = () => {
                       ...values,
                       interecitos: nuevosIntereses,
                     });
-                    const queryParams = new URLSearchParams(location.search);
-                    queryParams.delete("interes");
-                    queryParams.set("pagina", "1");
-                    nuevosIntereses
-                      .filter((interes) => interes.seleccionado)
-                      .map((interes) =>
-                        queryParams.append("interes", interes.nombre)
-                      );
-                    navigateTo(`/amigos?${queryParams.toString()}`);
-                    goToBeginning();
                   }}
                 />
               </div>

@@ -9,6 +9,7 @@
   align-items: center;
   border-radius: 10px;
   padding: 10px;
+  gap: 8px;
 }
 
 .mostrarErrorListaAmigos {
@@ -89,7 +90,7 @@
   background-color: transparent;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .filtrosYBoton {
     flex-direction: column;
   }

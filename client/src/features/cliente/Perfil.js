@@ -18,7 +18,7 @@ const Perfil = () => {
   const [showContent, setShowContent] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
-  const { userData: informacion, setIsFriendModeEnabled } = useGlobalContext();
+  const { userData: informacion, setIsFriendModeEnabled, isFriendModeEnabled,setFriendPrice } = useGlobalContext();
 
   const [nombreCompleto, setNombreCompleto] = useState("");
   const [imagenBase64, setImagenBase64] = useState("");
@@ -36,22 +36,26 @@ const Perfil = () => {
       id: 1,
       name: "Mi Perfil",
       toRender: <MiPerfil />,
+      cliente: true
     },
     {
       id: 2,
       name: "Solicitudes Pendientes",
       toRender: <SolicitudesPendientes />,
+      cliente: false
     },
     {
       id: 3,
       id: 3,
       name: "Encuentros Programados",
       toRender: <SolicitudesAceptadas />,
+      cliente: false
     },
     {
       id: 4,
       name: "Cuenta de Amigo",
       toRender: <HabilitarAmigo modalcito={setShowModal} />,
+      cliente: true
     },
   ];
 
@@ -91,7 +95,12 @@ const Perfil = () => {
   useEffect(() => {
     if (isSuccess) {
       console.log(data, "data");
-      setIsFriendModeEnabled(data.data);
+      if (data.data.amigo) {
+        setIsFriendModeEnabled(true);
+        setFriendPrice(data.data.precio)
+      } else {
+        setIsFriendModeEnabled(false);
+      }
     }
   }, [isFetching, data, setIsFriendModeEnabled, isSuccess]);
 
@@ -221,7 +230,7 @@ const Perfil = () => {
             </div>
             <div className="options" style={{ zIndex: "1" }}>
               <ul>
-                {optionsData.map((item) => (
+                {optionsData.filter(opcion => opcion.cliente || isFriendModeEnabled ).map((item) => (
                   <li
                     key={item.id}
                     onClick={() => handleOptionClick(item.id)}

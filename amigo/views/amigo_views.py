@@ -158,7 +158,7 @@ def RegistrarAmigo(request):
     print(request.POST)
     cliente = get_object_or_404(Cliente, user=user)
     precio = request.POST.get("precio")
-    if not precio:
+    if precio == None:
         return Response({"error": "El precio es obligatorio"}, status=status.HTTP_400_BAD_REQUEST)
     if Amigo.objects.filter(cliente=cliente).exists():
         return Response({"error": "El cliente ya es un amigo"}, status=status.HTTP_400_BAD_REQUEST)
@@ -180,13 +180,16 @@ def RegistrarAmigo(request):
 def ClienteEsAmigo(request):
     user = request.user
     cliente = get_object_or_404(Cliente, user=user)
-
-    if Amigo.objects.filter(cliente=cliente).exists():
-        #Precio de amigo
-        precio = {"data": Amigo.objects.get(cliente=cliente).precio}
-        return Response({"data": precio["data"]}, status=status.HTTP_200_OK)
     
-    return Response({"data":0}, status=status.HTTP_200_OK)
+    amigo = Amigo.objects.filter(cliente=cliente).first()
+
+    respuesta = {
+        "amigo": False
+    }
+    if amigo:
+        respuesta["precio"] = amigo.precio
+        respuesta["amigo"] = True
+    return Response({"data": respuesta}, status=status.HTTP_200_OK)
 
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])

@@ -1,17 +1,22 @@
-import React,{useEffect, useState} from 'react'
-import "./habilitarAmigo.css"
-import { useEnableFriendModeMutation,  useDisableFriendModeMutation, useChangePriceMutation } from './clienteSlice';
-import useGetToken from '../../hooks/getToken';
-import Loading from '../../Components/Loading';
-import { useGlobalContext } from '../../context';
+import React, { useEffect, useState } from "react";
+import "./habilitarAmigo.css";
+import {
+  useEnableFriendModeMutation,
+  useDisableFriendModeMutation,
+  useChangePriceMutation,
+} from "./clienteSlice";
+import useGetToken from "../../hooks/getToken";
+import Loading from "../../Components/Loading";
+import { useGlobalContext } from "../../context";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 
 const HabilitarAmigo = ({ modalcito }) => {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isEnabledBtn, setIsEnabledBtn] = useState(true);
   const token = useGetToken();
-  const { isFriendModeEnabled } = useGlobalContext();
-  const [precio, setPrecio] = useState(isFriendModeEnabled);
+  const { isFriendModeEnabled, friendPrice } = useGlobalContext();
+  const [precio, setPrecio] = useState(friendPrice);
+  const [supportingText, setSupportingText] = useState("");
 
   // const {
   //   data: isEnabled,
@@ -24,9 +29,19 @@ const HabilitarAmigo = ({ modalcito }) => {
     { data: enabled, isSuccess: isSuccessEnable, isError, error, isLoading },
   ] = useEnableFriendModeMutation();
 
-  const [disable, { data: disabled, isSuccess: isSuccessDisable }] = useDisableFriendModeMutation();
+  const [disable, { data: disabled, isSuccess: isSuccessDisable, isLoading: disableLoading }] =
+    useDisableFriendModeMutation();
 
-  const [change,{data,isLoading:isLoadingChange,isSuccess:isSuccessChange,isError:isErrorChange,error:errorChange}] = useChangePriceMutation();
+  const [
+    change,
+    {
+      data,
+      isLoading: isLoadingChange,
+      isSuccess: isSuccessChange,
+      isError: isErrorChange,
+      error: errorChange,
+    },
+  ] = useChangePriceMutation();
 
   useEffect(() => {
     if (isError) {
@@ -55,6 +70,7 @@ const HabilitarAmigo = ({ modalcito }) => {
     );
   } else {
     const handleChange = (e) => {
+      setSupportingText("")
       let value = e.target.value;
       if (value < 0 || value > 150) return;
       setPrecio(value);
@@ -62,6 +78,12 @@ const HabilitarAmigo = ({ modalcito }) => {
 
     const handleSubmit = async () => {
       setIsEnabledBtn(false);
+      console.log(precio);
+      if (precio === "") {
+        setSupportingText("Introduzca Precio")
+        setIsEnabledBtn(true);
+        return
+      }
       if (!isFriendModeEnabled) {
         await enable({ token: token, precio: precio });
       } else {
@@ -71,14 +93,12 @@ const HabilitarAmigo = ({ modalcito }) => {
     };
 
     const handleChangePrice = async () => {
-        setIsEnabledBtn(false);
-        await change({ token: token, precio:precio });
-        window.location.reload();
-    }
+      setIsEnabledBtn(false);
+      await change({ token: token, precio: precio });
+      window.location.reload();
+    };
 
-    
-
-    return(
+    return (
       <div className="habilitar-amigo">
         <div className="habilitar-amigo-container">
           <h1>
@@ -97,16 +117,24 @@ const HabilitarAmigo = ({ modalcito }) => {
                 placeholder="Precio"
                 value={precio}
                 onChange={(e) => handleChange(e)}
+                
               />
             </div>
+            {supportingText.length > 0 && <div style={{color:"red", marginLeft:"10px"}}>{supportingText}</div>}
             <div className="btns">
-            
+              
               {isFriendModeEnabled ? (
                 <>
-                  <button className='btn btn-azul' disabled={isLoadingChange} onClick={handleChangePrice}>Cambiar Precio</button>
+                  <button
+                    className="btn btn-azul"
+                    disabled={isLoadingChange || disableLoading}
+                    onClick={handleChangePrice}
+                  >
+                    Cambiar Precio
+                  </button>
                   <button
                     className={`btn btn-outline-secondary`}
-                    disabled={isLoading}
+                    disabled={disableLoading}
                     onClick={handleSubmit}
                   >
                     Deshabilitar Cuenta
@@ -114,8 +142,10 @@ const HabilitarAmigo = ({ modalcito }) => {
                 </>
               ) : (
                 <div>
-                  <div className="terminossss d-inline"
-                  style={{marginTop:"40px"}}>
+                  <div
+                    className="terminossss d-inline"
+                    style={{ marginTop: "40px" }}
+                  >
                     {acceptedTerms ? (
                       <ImCheckboxChecked
                         style={{ cursor: "pointer" }}
@@ -131,7 +161,9 @@ const HabilitarAmigo = ({ modalcito }) => {
                         }}
                       />
                     )}
-                    <p className="d-inline" style={{ paddingLeft:"10px"}}>Estoy de acuerdo con los </p>
+                    <p className="d-inline" style={{ paddingLeft: "10px" }}>
+                      Estoy de acuerdo con los{" "}
+                    </p>
                     <p
                       style={{ cursor: "pointer" }}
                       className="link-primary d-inline"
@@ -148,7 +180,7 @@ const HabilitarAmigo = ({ modalcito }) => {
                     className={`btn btn-azul ${!isEnabledBtn && "disabled"}`}
                     disabled={isLoading || !acceptedTerms}
                     onClick={handleSubmit}
-                    style={{ marginTop:"1rem"}}
+                    style={{ marginTop: "1rem" }}
                   >
                     Habilitar
                   </button>
