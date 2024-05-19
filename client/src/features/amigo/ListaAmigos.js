@@ -352,8 +352,16 @@ const ListaAmigos = () => {
           </div>
 
           <div>
-            <label htmlFor="rangoEdad" className="input-label">
-              <BsCalendarRange /> Rango de edad
+            <label
+              htmlFor="rangoEdad"
+              className="input-label"
+              style={{ whiteSpace: "nowrap" }}
+            >
+              <BsCalendarRange />
+              <span style={{ whiteSpace: "nowrap" }} class="range-label">
+                {" "}
+                Rango de edad
+              </span>
             </label>
             <select
               id="rangoEdad"
@@ -410,7 +418,7 @@ const ListaAmigos = () => {
                     marginLeft: "0",
                     boxShadow: "none",
                     border: "1px solid #ced4da",
-                    width: "100px"
+                    width: "100px",
                   }}
                   value={values.precio.max}
                   onBlur={(e) => {
@@ -432,12 +440,18 @@ const ListaAmigos = () => {
           </div>
 
           <div>
-            <label className="input-label input-item">
+            <label
+              className="input-label input-item"
+              style={{ whiteSpace: "nowrap" }}
+            >
               <IoPeople />
               Género
             </label>
             <div className="generoDropCheckBox" ref={dropdownRef}>
-              <p onClick={() => SetGeneroDropCheckBox(!generoDropCheckBox)}>
+              <p
+                onClick={() => SetGeneroDropCheckBox(!generoDropCheckBox)}
+                style={{ whiteSpace: "nowrap" }}
+              >
                 Seleccionar <FaAngleDown />
               </p>
               {generoDropCheckBox && (
@@ -465,7 +479,11 @@ const ListaAmigos = () => {
           </div>
 
           <div>
-            <label htmlFor="ubicacion" className="input-label">
+            <label 
+              htmlFor="ubicacion"
+              className="input-label"
+              style={{ whiteSpace: "nowrap" }}
+            >
               <IoLocationSharp /> Ubicación
             </label>
             <select
@@ -488,6 +506,7 @@ const ListaAmigos = () => {
           <button
             className="btn btn-azul display-flex"
             onClick={ActualizarListaAmigos}
+            style={{ whiteSpace: "nowrap" }}
           >
             <FaFilter style={{ color: "white" }} /> Filtrar
           </button>
