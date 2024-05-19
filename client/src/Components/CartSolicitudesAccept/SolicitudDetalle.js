@@ -5,7 +5,7 @@ import Loading from '../../Components/Loading';
 import "../../features/solicitudes/SolicitudDetalles.css";
 import { FaMapMarkerAlt } from "react-icons/fa";
 
-// Función de utilidad para formatear la fecha
+
 function formatFecha(fecha) {
     const [year, month, day] = fecha.split("-");
     return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${year}`;
