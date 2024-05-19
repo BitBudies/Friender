@@ -79,7 +79,7 @@ const HabilitarAmigo = ({ modalcito }) => {
     const handleSubmit = async () => {
       setIsEnabledBtn(false);
       console.log(precio);
-      if (precio == "") {
+      if (precio === "") {
         setSupportingText("Introduzca Precio")
         setIsEnabledBtn(true);
         return
