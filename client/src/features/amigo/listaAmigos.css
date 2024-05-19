@@ -9,6 +9,7 @@
   align-items: center;
   border-radius: 10px;
   padding: 10px;
+  gap: 10px;
 }
 
 .mostrarErrorListaAmigos {

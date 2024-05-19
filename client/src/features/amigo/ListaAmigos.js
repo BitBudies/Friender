@@ -165,10 +165,9 @@ const ListaAmigos = () => {
         };
       }),
       ubicacion: ubicacionP,
-    }
+    };
 
     setValues(nuevosValores);
-
 
     const edadRanges = {
       0: { min: null, max: null },
@@ -179,7 +178,8 @@ const ListaAmigos = () => {
       5: { min: 55, max: 65 },
       6: { min: 65, max: 999 },
     };
-    const { min: edad_min, max: edad_max } = edadRanges[nuevosValores.rangoEdad];
+    const { min: edad_min, max: edad_max } =
+      edadRanges[nuevosValores.rangoEdad];
 
     getAmiwitos({
       token: token,
@@ -187,9 +187,13 @@ const ListaAmigos = () => {
         pagina: pagina,
         limite: 24,
         precio_min:
-        nuevosValores.precio.min == "" ? null : parseInt(nuevosValores.precio.min),
+          nuevosValores.precio.min == ""
+            ? null
+            : parseInt(nuevosValores.precio.min),
         precio_max:
-        nuevosValores.precio.max == "" ? null : parseInt(nuevosValores.precio.max),
+          nuevosValores.precio.max == ""
+            ? null
+            : parseInt(nuevosValores.precio.max),
         edad_min: edad_min,
         edad_max: edad_max,
         generos: nuevosValores.generosos
@@ -198,7 +202,10 @@ const ListaAmigos = () => {
         interes: nuevosValores.interecitos
           .filter((interes) => interes.seleccionado)
           .map((interes) => interes.nombre),
-        ubicacion: nuevosValores.ubicacion === "Cualquiera" ? "" : nuevosValores.ubicacion,
+        ubicacion:
+          nuevosValores.ubicacion === "Cualquiera"
+            ? ""
+            : nuevosValores.ubicacion,
       },
     });
   }, [location]);
@@ -325,6 +332,11 @@ const ListaAmigos = () => {
                 });
               }}
               className="form-select"
+              style={{
+                boxShadow: "none",
+                border: "1px solid #ced4da",
+                width: "150px",
+              }}
             >
               <option className="nomostraropcionxd"> </option>
               {values.interecitos.map((interes) => {
@@ -372,7 +384,11 @@ const ListaAmigos = () => {
                   type="text"
                   placeholder="Mín"
                   className="form-control"
-                  style={{ boxShadow: "none", border: "1px solid #ced4da" }}
+                  style={{
+                    boxShadow: "none",
+                    border: "1px solid #ced4da",
+                    width: "100px",
+                  }}
                   value={values.precio.min}
                   onBlur={(e) => onBlurcito(e, "min")}
                   onChange={(e) => {
@@ -394,6 +410,7 @@ const ListaAmigos = () => {
                     marginLeft: "0",
                     boxShadow: "none",
                     border: "1px solid #ced4da",
+                    width: "100px"
                   }}
                   value={values.precio.max}
                   onBlur={(e) => {
@@ -468,7 +485,10 @@ const ListaAmigos = () => {
           </div>
         </div>
         <div className="btn-container" style={{ marginLeft: "10px" }}>
-          <button className="btn btn-azul" onClick={ActualizarListaAmigos}>
+          <button
+            className="btn btn-azul display-flex"
+            onClick={ActualizarListaAmigos}
+          >
             <FaFilter style={{ color: "white" }} /> Filtrar
           </button>
         </div>
