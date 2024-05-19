@@ -10,8 +10,8 @@ const HabilitarAmigo = ({ modalcito }) => {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isEnabledBtn, setIsEnabledBtn] = useState(true);
   const token = useGetToken();
-  const { isFriendModeEnabled } = useGlobalContext();
-  const [precio, setPrecio] = useState(isFriendModeEnabled);
+  const { isFriendModeEnabled, friendPrice } = useGlobalContext();
+  const [precio, setPrecio] = useState(friendPrice);
 
   // const {
   //   data: isEnabled,

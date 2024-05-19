@@ -18,7 +18,7 @@ const Perfil = () => {
   const [showContent, setShowContent] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
-  const { userData: informacion, setIsFriendModeEnabled } = useGlobalContext();
+  const { userData: informacion, setIsFriendModeEnabled, setFriendPrice } = useGlobalContext();
 
   const [nombreCompleto, setNombreCompleto] = useState("");
   const [imagenBase64, setImagenBase64] = useState("");
@@ -91,7 +91,12 @@ const Perfil = () => {
   useEffect(() => {
     if (isSuccess) {
       console.log(data, "data");
-      setIsFriendModeEnabled(data.data);
+      if (data.data.amigo) {
+        setIsFriendModeEnabled(true);
+        setFriendPrice(data.data.precio)
+      } else {
+        setIsFriendModeEnabled(false);
+      }
     }
   }, [isFetching, data, setIsFriendModeEnabled, isSuccess]);
 
