@@ -68,12 +68,12 @@ const ListaAmigos = () => {
   let precioMinimo = parseInt(precio_minP);
   let precioMaximo = parseInt(precio_maxP);
   if (!isNaN(precioMinimo)) {
-    if (precioMinimo < 0 || precioMinimo > 999999) {
+    if (precioMinimo < 0 || precioMinimo > 250) {
       precioMinimo = 0 / 0;
     }
   }
   if (!isNaN(precioMaximo)) {
-    if (precioMaximo < 0 || precioMaximo > 999999) {
+    if (precioMaximo < 0 || precioMaximo > 250) {
       precioMaximo = 0 / 0;
     }
   }
@@ -137,12 +137,12 @@ const ListaAmigos = () => {
     let precioMinimo = parseInt(precio_minP);
     let precioMaximo = parseInt(precio_maxP);
     if (!isNaN(precioMinimo)) {
-      if (precioMinimo < 0 || precioMinimo > 999999) {
+      if (precioMinimo < 0 || precioMinimo > 250) {
         precioMinimo = 0 / 0;
       }
     }
     if (!isNaN(precioMaximo)) {
-      if (precioMaximo < 0 || precioMaximo > 999999) {
+      if (precioMaximo < 0 || precioMaximo > 250) {
         precioMaximo = 0 / 0;
       }
     }
@@ -400,12 +400,18 @@ const ListaAmigos = () => {
                   value={values.precio.min}
                   onBlur={(e) => onBlurcito(e, "min")}
                   onChange={(e) => {
+                    let value = parseInt(e.target.value);
+        
+                    if ((value) && value >= 0 && value <= 250 && value == ""){
+
                     if (validNumberPattern.test(e.target.value)) {
                       setValues({
                         ...values,
                         precio: { ...values.precio, min: e.target.value },
                       });
-                    }
+                      
+                    }}
+                    
                   }}
                   onKeyDown={handleKeyDown}
                 />
@@ -426,12 +432,15 @@ const ListaAmigos = () => {
                     onBlurcito(e, "max");
                   }}
                   onChange={(e) => {
+                    let value = parseInt(e.target.value);
+    
+                    if (!isNaN(value)  && value <= 250 && value == ""){
                     if (validNumberPattern.test(e.target.value)) {
                       setValues({
                         ...values,
                         precio: { ...values.precio, max: e.target.value },
                       });
-                    }
+                    }}
                   }}
                   onKeyDown={handleKeyDown}
                 />
