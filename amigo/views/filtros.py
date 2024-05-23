@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -258,7 +259,9 @@ class FiltroTotalToken(APIView):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def AmigoListLimitPaginator(request):
-    print(request.data)
+    user = request.user
+    cliente = get_object_or_404(Cliente, user=user)
+
     page_number = request.data.get("pagina")
     limite = request.data.get("limite")
     generos = request.data.get("generos")
@@ -269,7 +272,7 @@ def AmigoListLimitPaginator(request):
     precioMin = request.data.get("precio_min")
     precioMax = request.data.get("precio_max")
     
-    amigos = Amigo.objects.order_by("amigo_id")  # ordenamiento temporal
+    amigos = Amigo.objects.exclude(cliente=cliente).order_by("amigo_id") # se ordenan por id
     if generos:
         amigos = amigos.filter(cliente__genero__in=generos)
     if edadMin and edadMax:
