@@ -86,6 +86,11 @@ const HabilitarAmigo = ({ modalcito }) => {
         setIsEnabledBtn(true);
         return
       }
+      if (precio == 0) {
+        setSupportingText("El precio debe ser mayor a 0 Bs")
+        setIsEnabledBtn(true);
+        return
+      }
       if (!isFriendModeEnabled) {
         await enable({ token: token, precio: precio });
         navigateTo("/cuenta-amigo?opcion=4")
