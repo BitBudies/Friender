@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetAmigoByIdQuery } from "./amigoSlice";
@@ -7,19 +6,19 @@ import "./PerfilAmigo.css";
 import Formulario from "../solicitudes/Formulario";
 import { useCookies } from "react-cookie";
 import Foto from "../../Components/imagRegistro/test";
-import Preview from "../../Components/imagRegistro/preview"
+import Preview from "../../Components/imagRegistro/preview";
 
 const PerfilAmigo = () => {
   const [cookies] = useCookies(["token"]);
   const token = cookies.token;
-  const [foto,setFoto] = useState(''); //para la preview
+  const [foto, setFoto] = useState(""); //para la preview
 
   const { id_amigo } = useParams();
   const {
     data: amigo,
     isFetching,
     isSuccess,
-  } = useGetAmigoByIdQuery({ id_amigo:id_amigo, token:token });
+  } = useGetAmigoByIdQuery({ id_amigo: id_amigo, token: token });
   const [showForm, setShowForm] = useState(false);
   const [formStatus, setFormStatus] = useState({
     sent: false,
@@ -28,7 +27,7 @@ const PerfilAmigo = () => {
   });
   const calificacionEstrellas = (calificacion) => {
     const numEstrellas = Math.round(calificacion);
-    const estrellas = '★'.repeat(numEstrellas) + '☆'.repeat(5 - numEstrellas);
+    const estrellas = "★".repeat(numEstrellas) + "☆".repeat(5 - numEstrellas);
     return estrellas;
   };
 
@@ -62,22 +61,25 @@ const PerfilAmigo = () => {
             <p>
               <strong>Edad:</strong> {amigo.edad} años
             </p>
-            
+
             <div className="galeria">
-              {
-                amigo.imagenes.map((imagen) => {
-                  console.log(imagen);
-                  return <Foto
+              {amigo.imagenes.map((imagen) => {
+                console.log(imagen);
+                return (
+                  <Foto
                     foto={"data:image/jpeg;base64," + imagen.imagenBase64}
                     setPreview={setFoto}
                     conX={false}
                   />
-                })
-              }
+                );
+              })}
             </div>
-            <Preview foto={foto} handleClose={()=>{
-              setFoto('')
-            }}/>
+            <Preview
+              foto={foto}
+              handleClose={() => {
+                setFoto("");
+              }}
+            />
           </div>
 
           <div className="perfil-amigo-right">
