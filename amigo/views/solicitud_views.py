@@ -214,7 +214,7 @@ def obtenerSolicitudesAmigo(request):
         solicitud_data = {
             "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
             "nombre_cliente": nombre_cliente,
-            "calificacion_cliente": calificacion_cliente,
+            "calificacion_cliente": calificacion_cliente or 0,
             "lugar": lugar_solicitud,
             "fecha_inicio": solicitud.fecha_inicio,
             "duracion_minutos": solicitud.minutos,
@@ -300,7 +300,7 @@ class SolicitudAlquilerDetailAPIView(APIView):
                 "%Y-%m-%d %H:%M:%S"
             ),
             "imagenBase64": imagen_base64,
-            "calificacion_cliente": calificacion_cliente
+            "calificacion_cliente": calificacion_cliente or 0
         }
         return Response(data)
 

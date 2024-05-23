@@ -38,7 +38,7 @@ def ObtenerListaDeSolicitudes(request):
         solicitud_data = {
             "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
             "nombre_cliente": solicitud.cliente.getFullName(),
-            "calificacion_cliente": calificacion_cliente,
+            "calificacion_cliente": calificacion_cliente or 0,
             "lugar": solicitud.lugar,
             "fecha_inicio": solicitud.fecha_inicio,
             "duracion": solicitud.minutos,
