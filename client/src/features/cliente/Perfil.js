@@ -13,6 +13,7 @@ import Loading from "../../Components/Loading";
 import {useLocation, useNavigate } from "react-router-dom";
 
 const Perfil = () => {
+  const navigateTo = useNavigate()
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const { userData: informacion, setIsFriendModeEnabled, isFriendModeEnabled,setFriendPrice } = useGlobalContext();
@@ -80,9 +81,11 @@ const Perfil = () => {
   };
   const handleOptionClick = (id) => {
     setCurrentOption(id);
+
     if (window.innerWidth < 576) {
       setShowContent(true);
     }
+    navigateTo(`/cuenta-amigo?opcion=${id}`)
   };
 
   useEffect(() => {
