@@ -252,7 +252,7 @@ const ListaAmigos = () => {
     } else {
       const minimooooo = parseInt(values.precio.min);
       // Validar el valor máximo
-      if (field === "max" && !isNaN(minimooooo) && value <= minimooooo) {
+      if (field === "max" && !isNaN(minimooooo) && value <= minimooooo && minimooooo !=250 ) {
         value = minimooooo + 5;
       }
     }
@@ -400,11 +400,9 @@ const ListaAmigos = () => {
                   value={values.precio.min}
                   onBlur={(e) => onBlurcito(e, "min")}
                   onChange={(e) => {
-                    let value = parseInt(e.target.value);
-        
-                    if ((value) && value >= 0 && value <= 250 && value == ""){
-
+  
                     if (validNumberPattern.test(e.target.value)) {
+                      if (!isNaN(e.target.value) && e.target.value >= 0 && e.target.value <= 250){
                       setValues({
                         ...values,
                         precio: { ...values.precio, min: e.target.value },
@@ -432,10 +430,11 @@ const ListaAmigos = () => {
                     onBlurcito(e, "max");
                   }}
                   onChange={(e) => {
-                    let value = parseInt(e.target.value);
+                    
     
-                    if (!isNaN(value)  && value <= 250 && value == ""){
+                   
                     if (validNumberPattern.test(e.target.value)) {
+                      if (!isNaN(e.target.value) && e.target.value >= 0 && e.target.value <= 250){
                       setValues({
                         ...values,
                         precio: { ...values.precio, max: e.target.value },
