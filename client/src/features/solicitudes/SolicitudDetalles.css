@@ -1,80 +1,76 @@
-#solicitud_detalles{
-    padding: 2rem 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+#solicitud_detalles {
+  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.solicitud-detalles-center{
-    position: relative;
-    display: flex;
-    height: fit-content;
-    align-items: center;
-    height: 100%;
-    padding: 0 5rem;
-    gap: 7rem;
+.solicitud-detalles-center {
+  position: relative;
+  display: flex;
+  height: fit-content;
+  align-items: center;
+  height: 100%;
+  padding: 0 5rem;
+  gap: 7rem;
 }
 
-.solicitud-detalles-center .cliente-info{
-    display: flex;
+.solicitud-detalles-center .cliente-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cliente-info .profile-image {
+  width: 17rem;
+  height: 17rem;
+  border-radius: 100%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.cliente-info span {
+  transform: scale(2);
+}
+
+.solicitud-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.solicitud-details .footer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.btns {
+  display: flex;
+  gap: 2rem;
+}
+
+.solicitud-detalles-alert {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  transform: translateX(-1rem);
+  z-index: 100;
+}
+
+@media screen and (max-width: 763px) {
+  .solicitud-detalles-center {
     flex-direction: column;
+    gap: 3rem;
+  }
+
+  .solicitud-details {
+    text-align: center;
     align-items: center;
-    gap: 0.5rem;
-}
-
-.cliente-info .profile-image{
-    width: 17rem;
-    height: 17rem;
-    border-radius: 100%;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-}
-
-.cliente-info span{
-    transform: scale(2);
-}
-
-
-.solicitud-details{
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-
-.solicitud-details .footer{
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.btns{
-    display: flex;
-    gap: 2rem;
-}
-
-.solicitud-detalles-alert{
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    transform: translateX(-1rem);
-    z-index: 100;
-}
-
-@media  screen and (max-width : 763px) {
-    .solicitud-detalles-center{
-        flex-direction: column;
-        gap: 3rem;        
-    }
-
-    .solicitud-details{
-        text-align: center;
-        align-items: center;
-    }
-    .btns{
-        margin-bottom: 2rem;
-    }
-    
-    
+  }
+  .btns {
+    margin-bottom: 2rem;
+  }
 }

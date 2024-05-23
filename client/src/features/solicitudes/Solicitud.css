@@ -1,92 +1,84 @@
-.col-container{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    
+.col-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 .solicitud-recibida-card {
-    position: relative;
-    width: 17rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 15px;
-    border-color: black;
-    --bs-card-border-width: var(--bs-border-width);
-    --bs-card-border-color: var(--bs-border-color-translucent) ;
-    border: var(--bs-card-border-width) solid var(--bs-card-border-color);
-    padding: 1rem;
+  position: relative;
+  width: 17rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 15px;
+  border-color: black;
+  --bs-card-border-width: var(--bs-border-width);
+  --bs-card-border-color: var(--bs-border-color-translucent);
+  border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+  padding: 1rem;
 }
 
-.solicitud-recibida-card:hover{
-    transform: scale(0.98);
-    box-shadow: 0 0 10px 1px var(--gris);
+.solicitud-recibida-card:hover {
+  transform: scale(0.98);
+  box-shadow: 0 0 10px 1px var(--gris);
 }
-
 
 /*Datos de Perfil*/
 
-.card-image{
-    width: 100%;
-    height: 13rem;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    /*border-radius: 15px;*/
+.card-image {
+  width: 100%;
+  height: 13rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /*border-radius: 15px;*/
 }
 
-
-#datos-perfil{
-    position: relative;
-    width: 100%;
-    text-align: start;
+#datos-perfil {
+  position: relative;
+  width: 100%;
+  text-align: start;
 }
-
 
 /*Datos Solicitud*/
-#datos-solicitud{
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap:  0.7rem;
-    
+#datos-solicitud {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
 }
 
-
-
-
-.estrellas{
-    font-size: 1.3rem;
-    text-align: start;
+.estrellas {
+  font-size: 1.3rem;
+  text-align: start;
 }
 
-.icono-solicitudes-recibidas{
-    width: 20px;
+.icono-solicitudes-recibidas {
+  width: 20px;
 }
 
-.hora-solicitud{
-    margin: 0;
-    position: absolute;
-    top: 15px;
-    right: 15px;
+.hora-solicitud {
+  margin: 0;
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
 
-.card-double-item{
-    display: flex;
-    width: 100% ;
-    gap: 1rem   ;
+.card-double-item {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
 }
 
-.card-item{
-    display: flex;
-    gap: 0.3rem;
-    align-items: center;
+.card-item {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
 }
 
-#ver-perfil-button{
-    border-radius: 25px;
+#ver-perfil-button {
+  border-radius: 25px;
 }
 
 /* @media screen and (max-width: 993px) {
