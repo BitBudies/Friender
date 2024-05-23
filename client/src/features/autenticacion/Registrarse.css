@@ -8,8 +8,7 @@
   gap: 5rem;
 } */
 
-
-.regist{
+.regist {
   width: 100vw;
   min-height: 100%;
   display: flex;
@@ -18,175 +17,167 @@
   border: 2px solid black;
 }
 
-
 .align-left {
-    text-align: left;
-    margin: 10px;
-  }
-  
-
-  .logo-img {
-    width: 180px !important; 
-    height: 200px !important; 
-    margin-top: 25px;
-  }
-
-  .registrarse-left{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 50%;
-    
-  }
-
-
-  .registrarse-right{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 50%;
-  }
-
-  .registrarse-right-container{
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .form-indicators{
-    width: 5rem;
-    height: 1rem;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin: 1rem;
-  }
-  
-  .form-indicators .indicator{
-    width: 1.2em;
-    height: 1.2rem;
-    border-radius: 50%;
-    border: 2px solid var(--gris);
-  }
-  
-  .form-indicators .indicator.active{
-    background-color: black;
-  }
-  
-  .form-registro{
-    position: relative;
-    width: 100%;
-    height: 80%;
-    overflow: hidden;
-  }
-  
-  .form-registro .form-carousel{
-    width: 300%;
-    height: 100%;
-    display: flex;
-    justify-content: space-around;
-    transition: 1s;
-  }
-
-  .form-item{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 1rem;
-    width: 100%;
-    height: fit-content;
-  }
-  
-
-.input-field {
-  width: 300px; 
-  padding: 10px;
-  border: 1px solid #ccc; 
-  border-radius: 5px; 
-  outline: none; 
-  gap: 5rem;
-  
+  text-align: left;
+  margin: 10px;
 }
 
-.registro{
+.logo-img {
+  width: 180px !important;
+  height: 200px !important;
+  margin-top: 25px;
+}
+
+.registrarse-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 50%;
+}
+
+.registrarse-right {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+}
+
+.registrarse-right-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.form-indicators {
+  width: 5rem;
+  height: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem;
+}
+
+.form-indicators .indicator {
+  width: 1.2em;
+  height: 1.2rem;
+  border-radius: 50%;
+  border: 2px solid var(--gris);
+}
+
+.form-indicators .indicator.active {
+  background-color: black;
+}
+
+.form-registro {
+  position: relative;
+  width: 100%;
+  height: 80%;
+  overflow: hidden;
+}
+
+.form-registro .form-carousel {
+  width: 300%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  transition: 1s;
+}
+
+.form-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  height: fit-content;
+}
+
+.input-field {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  gap: 5rem;
+}
+
+.registro {
   display: flex;
   gap: 1rem;
 }
 
-
-.registro .input-item{
+.registro .input-item {
   display: flex;
   flex-direction: column;
 }
 
-.registro .input-item .form-control{
+.registro .input-item .form-control {
   width: 12rem;
   /*margin-left: 0;*/
 }
 
-.registro2{
+.registro2 {
   display: flex;
   gap: 1rem;
 }
 
-.registro2 .input-item{
+.registro2 .input-item {
   width: 40%;
 }
 
-.registro2 .input-item .form-control{
+.registro2 .input-item .form-control {
   width: 100%;
   /*margin-left: 0;*/
 }
 
-.btn-next-container{
+.btn-next-container {
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-@media screen and (max-width : 800px) {
-  .regist{
+@media screen and (max-width: 800px) {
+  .regist {
     flex-direction: column;
     gap: 2rem;
   }
 
-  .form-indicators{
+  .form-indicators {
     width: auto;
   }
 
-  .form-select{
+  .form-select {
     width: auto !important;
   }
 
-  .registrarse-left{
+  .registrarse-left {
     display: none !important;
   }
 
-
-  .registrarse-left, .registrarse-right{
+  .registrarse-left,
+  .registrarse-right {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .registrarse-right-container{
+  .registrarse-right-container {
     width: 90%;
     display: flex;
     flex-direction: column;
   }
 
-
-  .registro, .registro2{
+  .registro,
+  .registro2 {
     display: flex;
     padding: 0 2rem;
   }
 
-  .btn-next-container{
+  .btn-next-container {
     margin-bottom: 10rem;
   }
-
 }

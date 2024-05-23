@@ -7,10 +7,9 @@ import { useGlobalContext } from "../../context";
 import NavBar from "../../Components/NavBar.js";
 import logo from "../../logo-friender.png";
 import { useCookies } from "react-cookie";
-import  { useRedirectIfAuthenticated } from "../../hooks/isAuthenticated.js";
+import { useRedirectIfAuthenticated } from "../../hooks/isAuthenticated.js";
 
 const LogIn = () => {
-
   const redirectIfAuth = useRedirectIfAuthenticated();
   redirectIfAuth();
   const [cookies, setCookie] = useCookies(["token"]);
@@ -24,26 +23,28 @@ const LogIn = () => {
   const [disableBtnLoading, setDisableBtnLoading] = useState(false);
 
   // Para cuenta regresiva
-  const [remainingTime, setRemainingTime] = useState(0)
+  const [remainingTime, setRemainingTime] = useState(0);
   const [supportingText, setSupportingText] = useState("");
 
   const navigate = useNavigate();
 
   const { setClientId } = useGlobalContext();
 
-  const [login, { data: response, isLoading, isSuccess, isError, error: responseError }] =
-    useLoginMutation();
+  const [
+    login,
+    { data: response, isLoading, isSuccess, isError, error: responseError },
+  ] = useLoginMutation();
 
   const handleBtn = async (e) => {
     e.preventDefault();
-      const form = new FormData();
-      form.append("username_or_email", username);
-      form.append("password", password);
-      await login(form);
+    const form = new FormData();
+    form.append("username_or_email", username);
+    form.append("password", password);
+    await login(form);
   };
 
   useEffect(() => {
-    console.log(response,"response");
+    console.log(response, "response");
 
     if (isLoading) {
       setDisableBtnLoading(true);
@@ -52,38 +53,46 @@ const LogIn = () => {
     }
     if (isSuccess) {
       setClientId(response.id);
-      window.localStorage.setItem("clientId",response.id);
+      window.localStorage.setItem("clientId", response.id);
       setCookie("token", response.token);
       navigate("/amigos?pagina=1");
     }
     if (isError) {
-      console.log(responseError,"error")
+      console.log(responseError, "error");
       setDisableBtnLoading(false);
       setShowFeedback(true);
-      if (responseError.data.tiempo){
-        setSupportingText("")
+      if (responseError.data.tiempo) {
+        setSupportingText("");
         const tiempoRestante = responseError.data.tiempo;
-          if (tiempoRestante) {
-            setRemainingTime(tiempoRestante);
-            console.log(tiempoRestante);
-            const timer = setInterval(() => {
-              setRemainingTime((prevTime) => prevTime - 1);
-            }, 1000);
-            // cuando llegue a 0 lo eliminamos
-            setTimeout(() => {
-              clearInterval(timer);
-            }, tiempoRestante * 1000);
-          } else {
-            console.log("Error:", responseError.data.error); // Log en caso de error
-          }
+        if (tiempoRestante) {
+          setRemainingTime(tiempoRestante);
+          console.log(tiempoRestante);
+          const timer = setInterval(() => {
+            setRemainingTime((prevTime) => prevTime - 1);
+          }, 1000);
+          // cuando llegue a 0 lo eliminamos
+          setTimeout(() => {
+            clearInterval(timer);
+          }, tiempoRestante * 1000);
+        } else {
+          console.log("Error:", responseError.data.error); // Log en caso de error
+        }
       } else {
-        setSupportingText(responseError.data.error)
+        setSupportingText(responseError.data.error);
       }
-      
 
       setFeedbackText(responseError.data.error);
     }
-  }, [isError, isLoading, isSuccess, navigate, response, responseError, setClientId, setCookie]);
+  }, [
+    isError,
+    isLoading,
+    isSuccess,
+    navigate,
+    response,
+    responseError,
+    setClientId,
+    setCookie,
+  ]);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -95,7 +104,7 @@ const LogIn = () => {
         <img src={logo} alt="icono-friender"></img>
         <h1>Friender</h1>
       </div>
-      
+
       <div className="form-section-rigth login-box">
         <p className="mb-4 fw-bold login-box-title">
           Inicia sesión en Friender
@@ -127,19 +136,16 @@ const LogIn = () => {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-          {
-            supportingText &&
+          {supportingText && (
             <p className="text-danger mb-2 login-box-text-danger">
               {supportingText}
             </p>
-          }
-          { 
-            remainingTime > 0 &&
+          )}
+          {remainingTime > 0 && (
             <p className="text-danger mb-2 login-box-text-danger">
               Inténtalo de nuevo en {remainingTime} segundos.
             </p>
-          }
-
+          )}
 
           <button
             className={`btn btn-azul mb-2 button-login ${

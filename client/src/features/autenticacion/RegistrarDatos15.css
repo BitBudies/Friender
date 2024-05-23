@@ -1,28 +1,27 @@
-.verificar-correo-container{
-    position: relative;
-    width: 100%;
+.verificar-correo-container {
+  position: relative;
+  width: 100%;
 }
 
 .verificar {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .verificar input {
-    width: 15rem;
-    /* width: 18rem; */
+  width: 15rem;
+  /* width: 18rem; */
 }
 
 .para-verificar {
-    margin: 13px;
+  margin: 13px;
 }
 
-
 .avanzar {
-    position: relative;
-    display: flex;
-    width: 100%;
-    margin-top: 8rem;
-    justify-content: space-between;
+  position: relative;
+  display: flex;
+  width: 100%;
+  margin-top: 8rem;
+  justify-content: space-between;
 }

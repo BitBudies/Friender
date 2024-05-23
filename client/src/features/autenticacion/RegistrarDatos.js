@@ -46,7 +46,9 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    if (name === "confirmar_contraseña" && value.length > 64){return};
+    if (name === "confirmar_contraseña" && value.length > 64) {
+      return;
+    }
     setValues({
       ...values,
       [name]: value,
@@ -87,17 +89,17 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
   };
 
   const onPasswordChange = (e) => {
-      setValues((values) => {
-        return {...values,confirmar_contraseña : ""}
-      })
-      const passwordChecked = checkPass(e.target.value);
-      const { pass, message } = passwordChecked;
-      if (!passwordChecked.pass) {
-        setPasswordStatus({ ...passwordStatus, pass, message });
-      } else {
-        setPasswordStatus({ ...passwordStatus, pass: true });
-      }
-      setPassword(e.target.value);    
+    setValues((values) => {
+      return { ...values, confirmar_contraseña: "" };
+    });
+    const passwordChecked = checkPass(e.target.value);
+    const { pass, message } = passwordChecked;
+    if (!passwordChecked.pass) {
+      setPasswordStatus({ ...passwordStatus, pass, message });
+    } else {
+      setPasswordStatus({ ...passwordStatus, pass: true });
+    }
+    setPassword(e.target.value);
   };
 
   // Función para validar el formulario antes de pasar al siguiente paso
@@ -108,7 +110,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
     if (!password.length) {
       setPasswordStatus({
         pass: false,
-        message:  "El campo Contraseña es obligatorio" ,
+        message: "El campo Contraseña es obligatorio",
       });
       isValid = false;
     }
@@ -223,11 +225,11 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
     }
     if (isError) {
       console.log(responseError);
-      const tipoError = responseError.data
+      const tipoError = responseError.data;
       if (tipoError.username) {
         setErrors({
           ...errors,
-          nombre_usuario : tipoError.username,
+          nombre_usuario: tipoError.username,
         });
       } else if (tipoError.email) {
         setErrors({
@@ -237,7 +239,6 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
       } else {
         console.log(tipoError.error);
       }
-      
     }
   }, [
     response,
@@ -287,15 +288,10 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             className="form-control"
             required
           />
-          <p className="text-danger">
-            {errors.apellido_paterno}
-          </p>
+          <p className="text-danger">{errors.apellido_paterno}</p>
         </div>
         <div className="mb-2 input-item">
-          <label
-            htmlFor="apellido_materno"
-            className="input-label "
-          >
+          <label htmlFor="apellido_materno" className="input-label ">
             Apellido Materno
           </label>
           <input
@@ -330,10 +326,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
           <p className="text-danger">{errors.fecha_nacimiento}</p>
         </div>
         <div className="mb-2 input-item">
-          <label
-            htmlFor="genero"
-            className="input-label required-label"
-          >
+          <label htmlFor="genero" className="input-label required-label">
             Género
           </label>
           <select
@@ -353,17 +346,11 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
           </select>
           <p className="text-danger">{errors.genero}</p>
         </div>
-       
         <div className="mb-2 input-item">
-      
-          <label
-            htmlFor="ubicacion"
-            className="input-label required-label"
-          >
+          <label htmlFor="ubicacion" className="input-label required-label">
             Ubicación
-           
           </label>
-          
+
           <select
             id="ubicacion"
             name="ubicacion"
@@ -372,7 +359,6 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             className="form-select "
             required
           >
-            
             <option value="" disabled selected hidden>
               ----------
             </option>
@@ -388,13 +374,9 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
           </select>
           <p className="text-danger">{errors.ubicacion}</p>
         </div>
-       
-        <div className="mb-2 input-item">
-      
-         
-        </div>  </div>
-     
-     
+        <div className="mb-2 input-item"></div>{" "}
+      </div>
+
       <div className="input-group registro2">
         <div className="mb-2 input-item">
           <label
@@ -413,7 +395,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             className="form-control "
             required
           />
-          <p className="text-danger" >{errors.nombre_usuario}</p>
+          <p className="text-danger">{errors.nombre_usuario}</p>
         </div>
         <div className="mb-2 input-item">
           <label
@@ -432,9 +414,7 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
             className="form-control "
             required
           />
-          <p className="text-danger ">
-            {errors.correo_electronico}
-          </p>
+          <p className="text-danger ">{errors.correo_electronico}</p>
         </div>
       </div>
 
@@ -461,7 +441,11 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
               {!passwordStatus.pass && passwordStatus.message && (
                 <p className="text-danger mw-100">{passwordStatus.message}</p>
               )}
-              <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword}>
+              <span
+                className="password-icon"
+                style={{ cursor: "pointer" }}
+                onClick={toggleShowPassword}
+              >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
@@ -493,10 +477,12 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
                 required
                 disabled={!passwordStatus.pass}
               />
-              <p className="text-danger ">
-                {errors.confirmar_contraseña}
-              </p>
-              <span className="password-icon" style={{ cursor: "pointer" }} onClick={toggleShowPassword1}>
+              <p className="text-danger ">{errors.confirmar_contraseña}</p>
+              <span
+                className="password-icon"
+                style={{ cursor: "pointer" }}
+                onClick={toggleShowPassword1}
+              >
                 {showPassword1 ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
@@ -504,14 +490,13 @@ const RegistrarDatos = ({ setNForm, data, setData }) => {
         </div>
       </div>
       <div className="btn-next-container">
-      <button
+        <button
           className={`btn btn-azul ${isLoading && "disabled"}`}
           onClick={handleSubmit}
         >
           Siguiente
         </button>
       </div>
-        
     </div>
   );
 };

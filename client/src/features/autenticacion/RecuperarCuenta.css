@@ -1,45 +1,41 @@
-.recuperar{
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.recuperar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.recuperar .container-recuperar{
-    position: relative;
-    display: flex;
-    width: 50rem;
-    height: 30rem;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    background-color: antiquewhite;
+.recuperar .container-recuperar {
+  position: relative;
+  display: flex;
+  width: 50rem;
+  height: 30rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: antiquewhite;
 }
 
-.box{
-    position: relative;
-    /* position: absolute; */
-    width: 40%;
-    height: 20rem;
-    background-color: red;
-
+.box {
+  position: relative;
+  /* position: absolute; */
+  width: 40%;
+  height: 20rem;
+  background-color: red;
 }
 
-.box1{    
-    position: relative;
-    width: 40%;
-    height: 20rem;
-    border: 2px solid black;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.box1 {
+  position: relative;
+  width: 40%;
+  height: 20rem;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-
-.form-itema{
-    /* position: relative; */
-    width: 100%;
-    height: 100%;
+.form-itema {
+  /* position: relative; */
+  width: 100%;
+  height: 100%;
 }
-
-
