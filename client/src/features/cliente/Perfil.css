@@ -1,89 +1,88 @@
-.profile-section{
-    position: relative;
-    height: calc(100vh - var(--navbar-height));
-    width: 100vw; 
-    margin-top: var(--navbar-height);
-    overflow: hidden;
+.profile-section {
+  position: relative;
+  height: calc(100vh - var(--navbar-height));
+  width: 100vw;
+  margin-top: var(--navbar-height);
+  overflow: hidden;
 }
 
-.profile-section-center{
-    position: relative;
-    display: flex;
-    align-items: center;
-    min-width: 100%;
-    height: 100%;
-    transition: 0.5s;
-
+.profile-section-center {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 100%;
+  height: 100%;
+  transition: 0.5s;
 }
 
-.profile-section-center.show-content{
-    transform: translateX(-100vw);
+.profile-section-center.show-content {
+  transform: translateX(-100vw);
 }
 
-.profile-options{
-    position:relative;
-    width: var(--small);
-    background-color: var(--azul-marino);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    color: var(--white);
+.profile-options {
+  position: relative;
+  width: var(--small);
+  background-color: var(--azul-marino);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: var(--white);
 }
 
-.profile-info{
-    position: relative;
-    width: 100%;
-    height: 25%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 2rem;
+.profile-info {
+  position: relative;
+  width: 100%;
+  height: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
 }
 
-.profile-image{
-    position: relative;
-    height: 8rem;
-    width: 8rem;
+.profile-image {
+  position: relative;
+  height: 8rem;
+  width: 8rem;
 }
-.profile-image .image{
-    border-radius: 50%;
-}
-
-.options{
-    position: relative;
-    height: 75%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+.profile-image .image {
+  border-radius: 50%;
 }
 
-.options ul{
-    padding: 0 2rem;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
+.options {
+  position: relative;
+  height: 75%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.options ul .option{
-    width: 100%;
-    list-style: none;
-    padding: 1rem 0;
-    background-color: var(--white);
-    border-radius: 50px;
-    color: black;
+.options ul {
+  padding: 0 2rem;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
-.options ul .option.active{
-    background-color: var(--azul-claro);
-    color: var(--white);
+.options ul .option {
+  width: 100%;
+  list-style: none;
+  padding: 1rem 0;
+  background-color: var(--white);
+  border-radius: 50px;
+  color: black;
+}
+
+.options ul .option.active {
+  background-color: var(--azul-claro);
+  color: var(--white);
 }
 
 /* .options ul .option:last-child{
@@ -91,11 +90,11 @@
    color: white;
 } */
 
-.options ul .option:hover{
-    cursor: pointer;
-    background-color: var(--azul-claro);
-    filter: brightness(0.9);
-    color: var(--white);
+.options ul .option:hover {
+  cursor: pointer;
+  background-color: var(--azul-claro);
+  filter: brightness(0.9);
+  color: var(--white);
 }
 
 /* .options ul .option:last-child:hover{
@@ -104,47 +103,43 @@
     filter: brightness(0.9);
  } */
 
-.profile-content{
-    position: relative;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    overflow-y: auto;
-    padding: 2rem 0;
+.profile-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 2rem 0;
 }
 
-
-.return-btn{
-    position: absolute;
-    top: 0px;
-    right: 10px;
-    font-size: 2rem;
-    color: var(--azul-oscuro);
-    display: none;
+.return-btn {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  font-size: 2rem;
+  color: var(--azul-oscuro);
+  display: none;
 }
 
-.return-btn :hover{
-    cursor: pointer;
+.return-btn :hover {
+  cursor: pointer;
 }
-
 
 @media screen and (max-width: 572px) {
-    .profile-section-center{
-        width: 200vw;
-    }
+  .profile-section-center {
+    width: 200vw;
+  }
 
-    .profile-options{
-        width: 100vw
-    }
-    .profile-content{
-        width: 100vw;
-    }
+  .profile-options {
+    width: 100vw;
+  }
+  .profile-content {
+    width: 100vw;
+  }
 
-    .return-btn{
-        display: flex;
-    }
-
-    
+  .return-btn {
+    display: flex;
+  }
 }

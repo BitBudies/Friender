@@ -1,6 +1,4 @@
-
-
-.perfil-amigo-container{
+.perfil-amigo-container {
   position: relative;
   width: 100%;
   min-height: calc(100vh - var(--navbar-height));
@@ -14,29 +12,29 @@
 .image-container {
   width: 15rem; /* Ancho de la imagen */
   height: 15rem; /* Altura de la imagen */
-  background-size: cover; 
-  background-repeat: no-repeat; 
-  background-position: center; 
-  border-radius: 100%; 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 100%;
 }
 
-.perfil-amigo-left{
+.perfil-amigo-left {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.perfil-amigo-right{
+.perfil-amigo-right {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
 }
 
-.perfil-amigo-right .profile-description{
+.perfil-amigo-right .profile-description {
   max-width: var(--small);
 }
- /*
+/*
 .rectangulo {
   width: 100%;
   height: 100px; 
@@ -56,8 +54,7 @@
 }
 */
 
-
-.btn-container{
+.btn-container {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -69,21 +66,21 @@
   align-items: center;
 }
 
-.profile-alert{
+.profile-alert {
   max-width: var(--xs);
 }
 
-.profile-alert.hide{
+.profile-alert.hide {
   display: none;
 }
 
-@media screen and (max-width : 700px) {
-  .perfil-amigo-container{
+@media screen and (max-width: 700px) {
+  .perfil-amigo-container {
     flex-direction: column;
     margin: 3rem 0;
   }
 
-  .perfil-amigo-right{
+  .perfil-amigo-right {
     align-items: center;
   }
 }
@@ -95,4 +92,3 @@
   column-gap: 10px;
   row-gap: 10px;
 }
-

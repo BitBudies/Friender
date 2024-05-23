@@ -1,129 +1,128 @@
 /*Logo e Imagen Friender*/
-.button-login{
-    margin-bottom: 20px !important;
+.button-login {
+  margin-bottom: 20px !important;
 }
 
-.login-logo-box{
-    text-align: center;
-    margin-top: 110px;
-    margin-bottom: 25px;
+.login-logo-box {
+  text-align: center;
+  margin-top: 110px;
+  margin-bottom: 25px;
 }
 
-.login-logo-box img{
-    width: 100px;
+.login-logo-box img {
+  width: 100px;
 }
-
 
 /*Formulario*/
-.login-box{
-    width: 320px;
-    text-align: -webkit-center;
-    border-radius: 15px;
-    padding: 1rem;
-    box-shadow: 0 5px 10px 1px var(--gris);
+.login-box {
+  width: 320px;
+  text-align: -webkit-center;
+  border-radius: 15px;
+  padding: 1rem;
+  box-shadow: 0 5px 10px 1px var(--gris);
 }
 
-.login-box-title{
-    margin-top: 15px;
+.login-box-title {
+  margin-top: 15px;
 }
 
-.login-box-separator{
-    display: flex;
-    width: 100%;
-    margin: 30px 0px;
+.login-box-separator {
+  display: flex;
+  width: 100%;
+  margin: 30px 0px;
 }
 
-.login-box-separator hr{
-    width: 50%;
-    margin: 0.5rem 0 !important;
+.login-box-separator hr {
+  width: 50%;
+  margin: 0.5rem 0 !important;
 }
 
-.login-box-separator p{
-    font-size: 0.8rem;
-    margin: 0px 8px !important;
+.login-box-separator p {
+  font-size: 0.8rem;
+  margin: 0px 8px !important;
 }
 
 .login-box a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
-.login-box a:hover{
-    text-decoration: underline;
+.login-box a:hover {
+  text-decoration: underline;
 }
 
-.login-form input{
-    width: 90% !important;
+.login-form input {
+  width: 90% !important;
 }
 
 /*Boton Iniciar sesion*/
-.button-login{
-    width: 90%;
-    background-color: azure;
+.button-login {
+  width: 90%;
+  background-color: azure;
 }
 
-.button-login:hover{
-    color: white;
-    background-color: var(--azul);
+.button-login:hover {
+  color: white;
+  background-color: var(--azul);
 }
 
 /*Texto no tienes cuenta*/
-.form-register-text{
-    margin-bottom: 20px !important;
+.form-register-text {
+  margin-bottom: 20px !important;
 }
 
 /*Input contraseña y su icono ojo*/
-.password-input{
-    position: relative;
+.password-input {
+  position: relative;
 }
-.password-icon{
-    position: absolute;
-    right: 15px;
-    top: 5px;
+.password-icon {
+  position: absolute;
+  right: 15px;
+  top: 5px;
 }
-.login-password-icon{
-    position: absolute;
-    right: 30px;
-    top: 5px;
+.login-password-icon {
+  position: absolute;
+  right: 30px;
+  top: 5px;
 }
-.password-input input{
-    padding-right: 42px;
-}
-
-.modal-bloqueo{
-    width: 350px;
-    display: flex;
-    position: absolute;
-    margin-top: 90px;
-    background-color: aliceblue;
-    text-align: center;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 10px 1px var(--gris);
+.password-input input {
+  padding-right: 42px;
 }
 
-.hidden{
-    display: none !important;
+.modal-bloqueo {
+  width: 350px;
+  display: flex;
+  position: absolute;
+  margin-top: 90px;
+  background-color: aliceblue;
+  text-align: center;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 10px 1px var(--gris);
 }
 
-.login-box-text-danger{
-    font-size: 0.9rem;
-    text-align: left;
-    padding-left: 20px;
+.hidden {
+  display: none !important;
 }
 
-.login-password-icon:hover{
-    cursor: pointer;
+.login-box-text-danger {
+  font-size: 0.9rem;
+  text-align: left;
+  padding-left: 20px;
 }
 
-@media screen and (max-width : 380px) {
-    .login-box{
-        width: 90%;
-        padding: 1rem;
-    }
-    .login-logo-box img{
-        width: 50px;
-    }
-    .modal-bloqueo{
-        width: 90%;
-    }
+.login-password-icon:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 380px) {
+  .login-box {
+    width: 90%;
+    padding: 1rem;
+  }
+  .login-logo-box img {
+    width: 50px;
+  }
+  .modal-bloqueo {
+    width: 90%;
+  }
 }

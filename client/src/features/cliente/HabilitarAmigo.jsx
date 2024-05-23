@@ -9,10 +9,10 @@ import useGetToken from "../../hooks/getToken";
 import Loading from "../../Components/Loading";
 import { useGlobalContext } from "../../context";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
-import {useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const HabilitarAmigo = ({ modalcito }) => {
-  const navigateTo = useNavigate()
+  const navigateTo = useNavigate();
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isEnabledBtn, setIsEnabledBtn] = useState(true);
   const token = useGetToken();
@@ -31,8 +31,10 @@ const HabilitarAmigo = ({ modalcito }) => {
     { data: enabled, isSuccess: isSuccessEnable, isError, error, isLoading },
   ] = useEnableFriendModeMutation();
 
-  const [disable, { data: disabled, isSuccess: isSuccessDisable, isLoading: disableLoading }] =
-    useDisableFriendModeMutation();
+  const [
+    disable,
+    { data: disabled, isSuccess: isSuccessDisable, isLoading: disableLoading },
+  ] = useDisableFriendModeMutation();
 
   const [
     change,
@@ -72,7 +74,7 @@ const HabilitarAmigo = ({ modalcito }) => {
     );
   } else {
     const handleChange = (e) => {
-      setSupportingText("")
+      setSupportingText("");
       let value = e.target.value;
       if (value < 0 || value > 150) return;
       setPrecio(value);
@@ -82,51 +84,49 @@ const HabilitarAmigo = ({ modalcito }) => {
       setIsEnabledBtn(false);
       console.log(precio);
       if (precio === "") {
-        setSupportingText("Introduzca Precio")
+        setSupportingText("Introduzca Precio");
         setIsEnabledBtn(true);
-        return
+        return;
       }
       if (precio == 0) {
-        setSupportingText("El precio debe ser mayor a 0 Bs")
+        setSupportingText("El precio debe ser mayor a 0 Bs");
         setIsEnabledBtn(true);
-        return
+        return;
       }
       if (!isFriendModeEnabled) {
         await enable({ token: token, precio: precio });
-        navigateTo("/cuenta-amigo?opcion=4")
+        navigateTo("/cuenta-amigo?opcion=4");
       } else {
         await disable({ token: token });
-        navigateTo("/cuenta-amigo?opcion=1")
+        navigateTo("/cuenta-amigo?opcion=1");
       }
     };
 
     async function handleDisableFriend() {
       if (!isFriendModeEnabled) {
         await enable({ token: token, precio: precio });
-        navigateTo("/cuenta-amigo?opcion=4")
+        navigateTo("/cuenta-amigo?opcion=4");
       } else {
         await disable({ token: token });
-        navigateTo("/cuenta-amigo?opcion=1")
+        navigateTo("/cuenta-amigo?opcion=1");
       }
     }
 
     const handleChangePrice = async () => {
       setIsEnabledBtn(false);
       if (precio === "") {
-        setSupportingText("Introduzca Precio")
+        setSupportingText("Introduzca Precio");
         setIsEnabledBtn(true);
-        return
+        return;
       }
       if (precio == 0) {
-        setSupportingText("El precio debe ser mayor a 0 Bs")
+        setSupportingText("El precio debe ser mayor a 0 Bs");
         setIsEnabledBtn(true);
-        return
+        return;
       }
       await change({ token: token, precio: precio });
       window.location.reload();
     };
-
-
 
     return (
       <div className="habilitar-amigo">
@@ -147,12 +147,14 @@ const HabilitarAmigo = ({ modalcito }) => {
                 placeholder="Precio"
                 value={precio}
                 onChange={(e) => handleChange(e)}
-                
               />
             </div>
-            {supportingText.length > 0 && <div style={{color:"red", marginLeft:"10px"}}>{supportingText}</div>}
+            {supportingText.length > 0 && (
+              <div style={{ color: "red", marginLeft: "10px" }}>
+                {supportingText}
+              </div>
+            )}
             <div className="btns">
-              
               {isFriendModeEnabled ? (
                 <>
                   <button

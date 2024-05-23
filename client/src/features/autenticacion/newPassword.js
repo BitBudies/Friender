@@ -32,13 +32,18 @@ const NewPassword = () => {
       console.log(tokencitoErrorData);
       setLoading(false);
     }
-  }, [tokencitoCargando, tokencitoCorrecto, tokencitoErrorData, tokencitoIsError, tokencitoRespuesta]);
+  }, [
+    tokencitoCargando,
+    tokencitoCorrecto,
+    tokencitoErrorData,
+    tokencitoIsError,
+    tokencitoRespuesta,
+  ]);
 
   const [loading, setLoading] = useState(false);
 
   const [step, setStep] = useState(3); // control de pagina
   const [submitClicked, setSubmitClicked] = useState(false);
-
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
@@ -75,9 +80,9 @@ const NewPassword = () => {
   };
 
   const handleConfirmPasswordChange = (e) => {
-    const {value} = e.target;
+    const { value } = e.target;
     setConfirmPassword(value);
-  }
+  };
 
   // cambio de paginas
   const goToNextStep = () => setStep(step + 1);
@@ -135,21 +140,20 @@ const NewPassword = () => {
       } catch (error) {
         console.log(error);
       }
-    }else{
-
+    } else {
     }
   };
 
   useEffect(() => {
     if (passLoading) {
       console.log("Cargando...");
-      setLoading(true)
+      setLoading(true);
     } else if (passIsError) {
-      setLoading(false)
+      setLoading(false);
       console.log("Error:", passError.data.error);
       goToNextStep();
     } else if (passSucess) {
-      setLoading(false)
+      setLoading(false);
       console.log(passData);
       goToNextStep();
     }
@@ -240,8 +244,11 @@ const NewPassword = () => {
                 className="btn btn-azul"
                 onClick={handleSubmitPasswordForm}
                 disabled={
-                  !password.trim() || !confirmPassword.trim() ||
-                  password != confirmPassword || confirmPassword.length < 8 || passLoading
+                  !password.trim() ||
+                  !confirmPassword.trim() ||
+                  password != confirmPassword ||
+                  confirmPassword.length < 8 ||
+                  passLoading
                 }
               >
                 Confirmar
@@ -251,7 +258,12 @@ const NewPassword = () => {
         </div>
       ) : (
         <div>
-          <h1> {passIsError ? passError.data.error : "Se restableció correctamente la contraseña"}</h1>
+          <h1>
+            {" "}
+            {passIsError
+              ? passError.data.error
+              : "Se restableció correctamente la contraseña"}
+          </h1>
         </div>
       )}
     </div>

@@ -22,7 +22,7 @@ const ResetPassword = () => {
     setSupportingText("");
     setEmailText(e.target.value);
     if (remainingTime <= 0) {
-      setIsButtonEmailEnabled(true)
+      setIsButtonEmailEnabled(true);
     }
   };
 
@@ -74,7 +74,7 @@ const ResetPassword = () => {
   useEffect(() => {
     if (step === 2) {
       setTimeout(() => {
-        navigate("/")
+        navigate("/");
       }, 5000);
     }
   }, [step]);
@@ -123,7 +123,7 @@ const ResetPassword = () => {
       )}
       {step === 2 && (
         <div className="step-2 step-1">
-          <h1>Revisa tu bandeja de entrada</h1>         
+          <h1>Revisa tu bandeja de entrada</h1>
           <p>
             Se ha enviado un correo electrónico con un enlace para restablecer
             la contraseña

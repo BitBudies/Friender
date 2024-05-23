@@ -36,7 +36,9 @@ const Solicitud = ({ solicitud, index }) => {
           <h5>{solicitud.nombre_cliente}</h5>
         </div>
         <div id="datos-solicitud">
-          <p className="estrellas text-warning">{calificacionEstrellas(solicitud.calificacion_cliente)}</p>
+          <p className="estrellas text-warning">
+            {calificacionEstrellas(solicitud.calificacion_cliente)}
+          </p>
           <div className="card-double-item">
             <div className="card-item">
               <span>

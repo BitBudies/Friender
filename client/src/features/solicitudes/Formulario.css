@@ -1,119 +1,110 @@
 .formulario {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-} 
-.formulario.hide{
-    display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.formulario.hide {
+  display: none;
 }
 
-#cajaFormularioEncuentro{
-    position: relative;
-    background-color: var(--white);
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3rem;
-    padding: 2rem;
-    position: absolute;
+#cajaFormularioEncuentro {
+  position: relative;
+  background-color: var(--white);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  padding: 2rem;
+  position: absolute;
 }
 
-
-.application-form{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-    width: 100%;
+.application-form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
 }
 
-.form-box{
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: baseline;
-    align-items: center;
-    gap: 1rem;
-
+.form-box {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: baseline;
+  align-items: center;
+  gap: 1rem;
 }
-.form-item-alquilar{
-    width: 50%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+.form-item-alquilar {
+  width: 50%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
-
 
 .required-label::after {
-    content: "*";
-    color: var(--red);
-  }
-  
-.form-control{
-    margin-left: 5px;
-    border-radius: 10px;
-    resize: none;
+  content: "*";
+  color: var(--red);
 }
 
+.form-control {
+  margin-left: 5px;
+  border-radius: 10px;
+  resize: none;
+}
 
 .text-error {
-    color: var(--red);
+  color: var(--red);
 }
 
 .text-danger {
-    font-size: 0.8rem !important;
+  font-size: 0.8rem !important;
 }
 
 /*ICONO CERRAR*/
 #cajaFormularioEncuentro {
-    position: relative;
-    align-items: center;
+  position: relative;
+  align-items: center;
 }
 
 .close-icon {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    /* width: 25px; */
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  /* width: 25px; */
 }
 
-.close-icon:hover{
-    cursor: pointer;
+.close-icon:hover {
+  cursor: pointer;
 }
 
-.close-icon span{
-    font-size: 2rem;
+.close-icon span {
+  font-size: 2rem;
 }
 
-
-
-.form-bottom{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.form-bottom {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .texto-rojo {
-    color: red;
-  }
-  
-
-@media screen and (max-width : 576px){
-
-    #cajaFormularioEncuentro{
-        width: 95vw;
-        padding: 1rem;
-    }
+  color: red;
 }
 
+@media screen and (max-width: 576px) {
+  #cajaFormularioEncuentro {
+    width: 95vw;
+    padding: 1rem;
+  }
+}

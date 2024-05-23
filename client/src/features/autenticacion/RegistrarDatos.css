@@ -1,71 +1,68 @@
 .input-group {
-    margin-bottom: 10px; 
-    
-  }
-  
-  .input-width-160 {
-    width: 160px !important;
-    margin-Left: 60px;
-  }
-  
-  .input1-width-70 {
-    margin-Left: 70px !important;
-  }
+  margin-bottom: 10px;
+}
 
-  .input1m-width-70{
-    width: 160px !important;
-  }
+.input-width-160 {
+  width: 160px !important;
+  margin-left: 60px;
+}
 
-  .input-width-30 {
-    margin-Left: 50px !important;
-  }
+.input1-width-70 {
+  margin-left: 70px !important;
+}
 
-  .input-width-140 {
-    width: 160px !important;
-  }
-  
-  .input1f-width-70{
-    width: 160px
+.input1m-width-70 {
+  width: 160px !important;
+}
 
-  }
-  .input-width-280 {
-    width: 280px !important;
-    margin-Left: 50px;
-  }
-  .input1fv-width-70{
-    width: 280px !important;
+.input-width-30 {
+  margin-left: 50px !important;
+}
 
-  }
+.input-width-140 {
+  width: 160px !important;
+}
 
-  .ubicacion-input {
-    display: flex;
-    align-items: center;
-    position: relative;
-  }
+.input1f-width-70 {
+  width: 160px;
+}
+.input-width-280 {
+  width: 280px !important;
+  margin-left: 50px;
+}
+.input1fv-width-70 {
+  width: 280px !important;
+}
 
-  .ubicacion-input-box{
-    padding-right: 35px !important;
-  }
-  
-  .step-3 .password-icon{
-    position: relative;
-    right: 7%;
-    top: 48% !important;
-    transform: translateY(-30%);
-  }
-  
-  .para1-boton {
-    width: 100%;
-    text-align: end;
-    padding-left: 40px;
-  }
-  
-  .password-match input,
-  .password-match input:focus {
-    border: 1px solid green; 
-  }
+.ubicacion-input {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
 
-  .password-no-match input,
-  .password-no-match input:focus {
-    border: 1px solid red !important;
-  }
+.ubicacion-input-box {
+  padding-right: 35px !important;
+}
+
+.step-3 .password-icon {
+  position: relative;
+  right: 7%;
+  top: 48% !important;
+  transform: translateY(-30%);
+}
+
+.para1-boton {
+  width: 100%;
+  text-align: end;
+  padding-left: 40px;
+}
+
+.password-match input,
+.password-match input:focus {
+  border: 1px solid green;
+}
+
+.password-no-match input,
+.password-no-match input:focus {
+  border: 1px solid red !important;
+}

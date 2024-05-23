@@ -260,17 +260,19 @@ const Perfil = () => {
             </div>
             <div className="options" style={{ zIndex: "1" }}>
               <ul>
-                {optionsData.filter(opcion => opcion.cliente || isFriendModeEnabled).map((item) => (
-                  <li
-                    key={item.id}
-                    onClick={() => handleOptionClick(item.id)}
-                    className={`option ${
-                      currentOption === item.id && "active"
-                    }`}
-                  >
-                    <p>{item.name}</p>
-                  </li>
-                ))}
+                {optionsData
+                  .filter((opcion) => opcion.cliente || isFriendModeEnabled)
+                  .map((item) => (
+                    <li
+                      key={item.id}
+                      onClick={() => handleOptionClick(item.id)}
+                      className={`option ${
+                        currentOption === item.id && "active"
+                      }`}
+                    >
+                      <p>{item.name}</p>
+                    </li>
+                  ))}
                 <li className="option">
                   <li>
                     <button
