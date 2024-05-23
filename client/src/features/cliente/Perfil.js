@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Perfil.css";
 import { useGlobalContext } from "../../context";
 import { GiReturnArrow } from "react-icons/gi";
-import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import SolicitudesPendientes from "../solicitudes/SolicitudesPendientes";
 import SolicitudesAceptadas from "../solicitudes/SolicitudesAceptadas";
@@ -11,14 +10,21 @@ import HabilitarAmigo from "./HabilitarAmigo";
 import MiPerfil from "../../Components/MiPerfil/MiPerfil";
 import { useIsEnabledFriendModeQuery } from "./clienteSlice";
 import Loading from "../../Components/Loading";
+import {useLocation, useNavigate } from "react-router-dom";
 
 const Perfil = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const { userData: informacion, setIsFriendModeEnabled, isFriendModeEnabled,setFriendPrice } = useGlobalContext();
+
+  const opcionA = queryParams.get("opcion") || 1
+  const opcion = isFriendModeEnabled ? opcionA : 1
+
   const [showModal, setShowModal] = useState(false);
-  const [currentOption, setCurrentOption] = useState(1);
+  const [currentOption, setCurrentOption] = useState(Number(opcion));
   const [showContent, setShowContent] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
-  const { userData: informacion, setIsFriendModeEnabled, isFriendModeEnabled,setFriendPrice } = useGlobalContext();
 
   const [nombreCompleto, setNombreCompleto] = useState("");
   const [imagenBase64, setImagenBase64] = useState("");
@@ -45,7 +51,6 @@ const Perfil = () => {
       cliente: false
     },
     {
-      id: 3,
       id: 3,
       name: "Encuentros Programados",
       toRender: <SolicitudesAceptadas />,

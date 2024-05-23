@@ -9,8 +9,10 @@ import useGetToken from "../../hooks/getToken";
 import Loading from "../../Components/Loading";
 import { useGlobalContext } from "../../context";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
+import {useLocation, useNavigate } from "react-router-dom";
 
 const HabilitarAmigo = ({ modalcito }) => {
+  const navigateTo = useNavigate()
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isEnabledBtn, setIsEnabledBtn] = useState(true);
   const token = useGetToken();
@@ -86,10 +88,11 @@ const HabilitarAmigo = ({ modalcito }) => {
       }
       if (!isFriendModeEnabled) {
         await enable({ token: token, precio: precio });
+        navigateTo("/cuenta-amigo?opcion=4")
       } else {
         await disable({ token: token });
+        navigateTo("/cuenta-amigo")
       }
-      window.location.reload();
     };
 
     const handleChangePrice = async () => {
