@@ -5,7 +5,11 @@ import Loading from '../../Components/Loading';
 import "../../features/solicitudes/SolicitudDetalles.css";
 import { FaMapMarkerAlt } from "react-icons/fa";
 
-
+const calificacionEstrellas = (calificacion) => {
+    const numEstrellas = Math.round(calificacion);
+    const estrellas = "★".repeat(numEstrellas) + "☆".repeat(5 - numEstrellas);
+    return estrellas;
+  };
 function formatFecha(fecha) {
     const [year, month, day] = fecha.split("-");
     return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${year}`;
@@ -34,7 +38,7 @@ const SolicitudDetalle = () => {
                         ></div>
 
                         <h3>{solicitud.nombre_cliente}</h3>
-                        <span className="text-warning">★★★☆☆</span>
+                        <span className="text-warning">{calificacionEstrellas(solicitud.calificacion_cliente)}</span>
                     </div>
                     <div className="solicitud-details">
                         <div className="title">
