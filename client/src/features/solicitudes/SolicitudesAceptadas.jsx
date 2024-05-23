@@ -41,6 +41,7 @@ const SolicitudesAceptadas = () => {
                     solicitud_aceptada_id={solicitud.solicitud_alquiler_id}
                     duracion={solicitud.duracion}
                     dias_restantes={solicitud.dias_faltantes}
+                    calificacion={solicitud.calificacion_cliente}
                   />
                 </>
               )
