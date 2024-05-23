@@ -122,7 +122,7 @@ const SolicitudDetalles = () => {
                       Fecha solicitud:{" "}
                       {formatDateTime(solicitud.timestamp_registro)}
                     </p>
-                    <h5>Total: {solicitud.precio * solicitud.minutos} Bs </h5>
+                    <h5>Total: {solicitud.precio} Bs </h5>
                     <div className="btns">
                       <button
                         onClick={() =>
