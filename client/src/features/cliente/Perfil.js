@@ -18,11 +18,8 @@ const Perfil = () => {
   const queryParams = new URLSearchParams(location.search);
   const { userData: informacion, setIsFriendModeEnabled, isFriendModeEnabled,setFriendPrice } = useGlobalContext();
 
-  const opcionA = queryParams.get("opcion") || 1
-  const opcion = isFriendModeEnabled ? opcionA : 1
-
   const [showModal, setShowModal] = useState(false);
-  const [currentOption, setCurrentOption] = useState(Number(opcion));
+  const [currentOption, setCurrentOption] = useState(1);
   const [showContent, setShowContent] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
@@ -64,7 +61,21 @@ const Perfil = () => {
       cliente: true
     },
   ];
-
+  useEffect(() => {
+    const opcionA = queryParams.get("opcion") || 1
+    if (Number(opcionA) > 4 || Number(opcionA) < 1) {
+      setCurrentOption(1)
+        return
+    }
+    if (!isFriendModeEnabled) {
+      if (!optionsData.filter(op => op.id === Number(opcionA))[0].cliente) {
+        setCurrentOption(1)
+        return
+      }
+    }
+    setCurrentOption(Number(opcionA))
+    
+  },[location])
   useEffect(() => {
     if (informacion) {
       console.log(informacion);

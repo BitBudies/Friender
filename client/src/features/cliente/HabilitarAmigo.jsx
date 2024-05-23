@@ -91,7 +91,7 @@ const HabilitarAmigo = ({ modalcito }) => {
         navigateTo("/cuenta-amigo?opcion=4")
       } else {
         await disable({ token: token });
-        navigateTo("/cuenta-amigo")
+        navigateTo("/cuenta-amigo?opcion=1")
       }
     };
 
