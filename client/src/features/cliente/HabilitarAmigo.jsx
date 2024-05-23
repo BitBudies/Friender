@@ -9,8 +9,10 @@ import useGetToken from "../../hooks/getToken";
 import Loading from "../../Components/Loading";
 import { useGlobalContext } from "../../context";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
+import {useLocation, useNavigate } from "react-router-dom";
 
 const HabilitarAmigo = ({ modalcito }) => {
+  const navigateTo = useNavigate()
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isEnabledBtn, setIsEnabledBtn] = useState(true);
   const token = useGetToken();
@@ -84,19 +86,47 @@ const HabilitarAmigo = ({ modalcito }) => {
         setIsEnabledBtn(true);
         return
       }
+      if (precio == 0) {
+        setSupportingText("El precio debe ser mayor a 0 Bs")
+        setIsEnabledBtn(true);
+        return
+      }
       if (!isFriendModeEnabled) {
         await enable({ token: token, precio: precio });
+        navigateTo("/cuenta-amigo?opcion=4")
       } else {
         await disable({ token: token });
+        navigateTo("/cuenta-amigo?opcion=1")
       }
-      window.location.reload();
     };
+
+    async function handleDisableFriend() {
+      if (!isFriendModeEnabled) {
+        await enable({ token: token, precio: precio });
+        navigateTo("/cuenta-amigo?opcion=4")
+      } else {
+        await disable({ token: token });
+        navigateTo("/cuenta-amigo?opcion=1")
+      }
+    }
 
     const handleChangePrice = async () => {
       setIsEnabledBtn(false);
+      if (precio === "") {
+        setSupportingText("Introduzca Precio")
+        setIsEnabledBtn(true);
+        return
+      }
+      if (precio == 0) {
+        setSupportingText("El precio debe ser mayor a 0 Bs")
+        setIsEnabledBtn(true);
+        return
+      }
       await change({ token: token, precio: precio });
       window.location.reload();
     };
+
+
 
     return (
       <div className="habilitar-amigo">
@@ -135,7 +165,7 @@ const HabilitarAmigo = ({ modalcito }) => {
                   <button
                     className={`btn btn-outline-secondary`}
                     disabled={disableLoading}
-                    onClick={handleSubmit}
+                    onClick={handleDisableFriend}
                   >
                     Deshabilitar Cuenta
                   </button>

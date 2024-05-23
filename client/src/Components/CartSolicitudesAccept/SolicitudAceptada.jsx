@@ -4,6 +4,11 @@ import "./SolicitudAceptada.css";
 import { FaClock, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { MdUpdate } from "react-icons/md";
 
+const calificacionEstrellas = (calificacion) => {
+  const numEstrellas = Math.round(calificacion);
+  const estrellas = "★".repeat(numEstrellas) + "☆".repeat(5 - numEstrellas);
+  return estrellas;
+};
 const SolicitudAceptada = ({
   imagenBase64,
   nombre_cliente,
@@ -12,7 +17,8 @@ const SolicitudAceptada = ({
   lugar,
   solicitud_aceptada_id,
   duracion,
-  dias_restantes
+  dias_restantes,
+  calificacion
 }) => {
   const navigate = useNavigate();
 
@@ -41,7 +47,7 @@ const SolicitudAceptada = ({
           <h5>{nombre_cliente}</h5>
         </div>
         <div id="datos-solicitud">
-          <p className="estrellas text-warning">★★★★☆</p>
+          <p className="estrellas text-warning">{calificacionEstrellas(calificacion)}</p>
           <div className="card-double-item-aceptada">
             <div className="card-item">
               <span>

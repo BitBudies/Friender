@@ -4,7 +4,11 @@ import { FaClock } from "react-icons/fa6";
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { pictures } from "../api/pictures";
-
+const calificacionEstrellas = (calificacion) => {
+  const numEstrellas = Math.round(calificacion);
+  const estrellas = "★".repeat(numEstrellas) + "☆".repeat(5 - numEstrellas);
+  return estrellas;
+};
 const Solicitud = ({ solicitud, index }) => {
   // console.log(solicitud, "Solicitud");
 
@@ -32,7 +36,7 @@ const Solicitud = ({ solicitud, index }) => {
           <h5>{solicitud.nombre_cliente}</h5>
         </div>
         <div id="datos-solicitud">
-          <p className="estrellas text-warning">★★★★☆</p>
+          <p className="estrellas text-warning">{calificacionEstrellas(solicitud.calificacion_cliente)}</p>
           <div className="card-double-item">
             <div className="card-item">
               <span>

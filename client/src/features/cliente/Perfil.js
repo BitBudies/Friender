@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Perfil.css";
 import { useGlobalContext } from "../../context";
 import { GiReturnArrow } from "react-icons/gi";
-import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import SolicitudesPendientes from "../solicitudes/SolicitudesPendientes";
 import SolicitudesAceptadas from "../solicitudes/SolicitudesAceptadas";
@@ -11,14 +10,19 @@ import HabilitarAmigo from "./HabilitarAmigo";
 import MiPerfil from "../../Components/MiPerfil/MiPerfil";
 import { useIsEnabledFriendModeQuery } from "./clienteSlice";
 import Loading from "../../Components/Loading";
+import {useLocation, useNavigate } from "react-router-dom";
 
 const Perfil = () => {
+  const navigateTo = useNavigate()
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const { userData: informacion, setIsFriendModeEnabled, isFriendModeEnabled,setFriendPrice } = useGlobalContext();
+
   const [showModal, setShowModal] = useState(false);
   const [currentOption, setCurrentOption] = useState(1);
   const [showContent, setShowContent] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
-  const { userData: informacion, setIsFriendModeEnabled, isFriendModeEnabled,setFriendPrice } = useGlobalContext();
 
   const [nombreCompleto, setNombreCompleto] = useState("");
   const [imagenBase64, setImagenBase64] = useState("");
@@ -36,7 +40,7 @@ const Perfil = () => {
       id: 1,
       name: "Mi Perfil",
       toRender: <MiPerfil />,
-      cliente: true
+      cliente: false
     },
     {
       id: 2,
@@ -45,7 +49,6 @@ const Perfil = () => {
       cliente: false
     },
     {
-      id: 3,
       id: 3,
       name: "Encuentros Programados",
       toRender: <SolicitudesAceptadas />,
@@ -58,7 +61,21 @@ const Perfil = () => {
       cliente: true
     },
   ];
-
+  useEffect(() => {
+    const opcionA = queryParams.get("opcion") || 1
+    if (Number(opcionA) > 4 || Number(opcionA) < 1) {
+      setCurrentOption(1)
+        return
+    }
+    if (!isFriendModeEnabled) {
+      if (!optionsData.filter(op => op.id === Number(opcionA))[0].cliente) {
+        setCurrentOption(1)
+        return
+      }
+    }
+    setCurrentOption(Number(opcionA))
+    
+  },[location])
   useEffect(() => {
     if (informacion) {
       console.log(informacion);
@@ -75,9 +92,11 @@ const Perfil = () => {
   };
   const handleOptionClick = (id) => {
     setCurrentOption(id);
+
     if (window.innerWidth < 576) {
       setShowContent(true);
     }
+    navigateTo(`/cuenta-amigo?opcion=${id}`)
   };
 
   useEffect(() => {
@@ -230,7 +249,7 @@ const Perfil = () => {
             </div>
             <div className="options" style={{ zIndex: "1" }}>
               <ul>
-                {optionsData.filter(opcion => opcion.cliente || isFriendModeEnabled ).map((item) => (
+                {optionsData.filter(opcion => opcion.cliente || isFriendModeEnabled).filter(o => o.id !== 1).map((item) => (
                   <li
                     key={item.id}
                     onClick={() => handleOptionClick(item.id)}

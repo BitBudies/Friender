@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAceptarSolicitudMutation, useGetSolicitudPendienteByIdQuery, useRechazarSolicitudMutation } from './solicitudesSlice';
 import Loading from '../../Components/Loading';
@@ -7,7 +7,11 @@ import { useGlobalContext } from '../../context';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import Modal from './Modal'; 
 import { pictures } from '../api/pictures'; 
-
+const calificacionEstrellas = (calificacion) => {
+  const numEstrellas = Math.round(calificacion);
+  const estrellas = "★".repeat(numEstrellas) + "☆".repeat(5 - numEstrellas);
+  return estrellas;
+};
 const SolicitudDetalles = () => {
     const { id_solicitud } = useParams();
     const [enableBtn, setEnableBtn] = useState(true);
@@ -53,6 +57,7 @@ const SolicitudDetalles = () => {
 
         return `${day}/${month}/${year}  ${hours}:${minutes}:${seconds}`;
     }
+    useEffect(() => {console.log(solicitud);}, [solicitud])
 
     if (isFetching) {
         return <Loading />
@@ -75,7 +80,7 @@ const SolicitudDetalles = () => {
                   
                   <h3>{solicitud.nombre_cliente}</h3>
                   <p>Edad: {solicitud.edad_cliente} años</p>
-                  <span className="text-warning">★★★☆☆</span>
+                  <span className="text-warning">{calificacionEstrellas(solicitud.calificacion_cliente)}</span>
                   <Link
                     to={`/cliente/${solicitud.cliente_id}`}
                     className="btn btn-azul btn-lg"
@@ -117,7 +122,7 @@ const SolicitudDetalles = () => {
                       Fecha solicitud:{" "}
                       {formatDateTime(solicitud.timestamp_registro)}
                     </p>
-                    <h5>Total: {solicitud.precio * solicitud.minutos} Bs </h5>
+                    <h5>Total: {solicitud.precio} Bs </h5>
                     <div className="btns">
                       <button
                         onClick={() =>

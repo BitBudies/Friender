@@ -214,7 +214,7 @@ def obtenerSolicitudesAmigo(request):
         solicitud_data = {
             "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
             "nombre_cliente": nombre_cliente,
-            "calificacion_cliente": calificacion_cliente,
+            "calificacion_cliente": calificacion_cliente or 0,
             "lugar": lugar_solicitud,
             "fecha_inicio": solicitud.fecha_inicio,
             "duracion_minutos": solicitud.minutos,
@@ -280,6 +280,9 @@ class SolicitudAlquilerDetailAPIView(APIView):
             imagen_base64 = base64.b64encode(fotografia_amigo.imagenBase64).decode(
                 "utf-8"
             )
+        calificacion_cliente = Calificacion.objects.filter(
+            amigo=solicitud.amigo, emisor="cliente"
+        ).aggregate(Avg("puntuacion"))["puntuacion__avg"]
         data = {
             "solicitud_alquiler_id": solicitud.solicitud_alquiler_id,
             "cliente_id": solicitud.cliente.cliente_id,
@@ -297,6 +300,7 @@ class SolicitudAlquilerDetailAPIView(APIView):
                 "%Y-%m-%d %H:%M:%S"
             ),
             "imagenBase64": imagen_base64,
+            "calificacion_cliente": calificacion_cliente or 0
         }
         return Response(data)
 
