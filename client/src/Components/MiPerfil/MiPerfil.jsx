@@ -13,8 +13,7 @@ const MiPerfil = () => {
     const [cookies] = useCookies(["token"]);
     const token = cookies.token;
     const [foto, setFoto] = useState(""); //para la preview
-    const {userData} = useGlobalContext();
-
+    const {userData, isFriendModeEnabled, friendPrice } = useGlobalContext();
     const {
         data: cliente,
         isFetching,
@@ -110,8 +109,8 @@ const MiPerfil = () => {
             </div>
             <div>
                 {
-                    info.precio>0 && //falta aumentar si esta en modo amigo o cliente
-                    <h3>Precio {info.precio} Bs/hr</h3> 
+                    isFriendModeEnabled && //falta aumentar si esta en modo amigo o cliente
+                    <h3><strong>Precio:</strong> {friendPrice} Bs/hr</h3> 
                 }
             </div>
           </div>
