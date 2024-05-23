@@ -17,9 +17,8 @@ const clienteApi = apiSlice.injectEndpoints({
           Authorization: `Token ${token}`,
         },
       }),
-      
     }),
-    
+
     enableFriendMode: builder.mutation({
       query: ({ precio, token }) => ({
         url: `/registraramigo`,
@@ -28,7 +27,7 @@ const clienteApi = apiSlice.injectEndpoints({
           Authorization: `Token ${token}`,
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        body : `precio=${precio}`
+        body: `precio=${precio}`,
       }),
       invalidatesTags: ["Amigos"],
     }),
@@ -59,14 +58,18 @@ const clienteApi = apiSlice.injectEndpoints({
           Authorization: `Token ${token}`,
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        body : `precio=${precio}`
+        body: `precio=${precio}`,
       }),
       invalidatesTags: ["Amigos"],
     }),
   }),
 });
 
-export const { useGetClienteByIdQuery, 
-  useGetClienteInfoQuery, useEnableFriendModeMutation,
-   useDisableFriendModeMutation, 
-  useIsEnabledFriendModeQuery,useChangePriceMutation } = clienteApi;
+export const {
+  useGetClienteByIdQuery,
+  useGetClienteInfoQuery,
+  useEnableFriendModeMutation,
+  useDisableFriendModeMutation,
+  useIsEnabledFriendModeQuery,
+  useChangePriceMutation,
+} = clienteApi;

@@ -10,13 +10,18 @@ import HabilitarAmigo from "./HabilitarAmigo";
 import MiPerfil from "../../Components/MiPerfil/MiPerfil";
 import { useIsEnabledFriendModeQuery } from "./clienteSlice";
 import Loading from "../../Components/Loading";
-import {useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Perfil = () => {
-  const navigateTo = useNavigate()
+  const navigateTo = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const { userData: informacion, setIsFriendModeEnabled, isFriendModeEnabled,setFriendPrice } = useGlobalContext();
+  const {
+    userData: informacion,
+    setIsFriendModeEnabled,
+    isFriendModeEnabled,
+    setFriendPrice,
+  } = useGlobalContext();
 
   const [showModal, setShowModal] = useState(false);
   const [currentOption, setCurrentOption] = useState(1);
@@ -40,42 +45,41 @@ const Perfil = () => {
       id: 1,
       name: "Mi Perfil",
       toRender: <MiPerfil />,
-      cliente: true
+      cliente: true,
     },
     {
       id: 2,
       name: "Solicitudes Pendientes",
       toRender: <SolicitudesPendientes />,
-      cliente: false
+      cliente: false,
     },
     {
       id: 3,
       name: "Encuentros Programados",
       toRender: <SolicitudesAceptadas />,
-      cliente: false
+      cliente: false,
     },
     {
       id: 4,
       name: "Cuenta de Amigo",
       toRender: <HabilitarAmigo modalcito={setShowModal} />,
-      cliente: true
+      cliente: true,
     },
   ];
   useEffect(() => {
-    const opcionA = queryParams.get("opcion") || 1
+    const opcionA = queryParams.get("opcion") || 1;
     if (Number(opcionA) > 4 || Number(opcionA) < 1) {
-      setCurrentOption(1)
-        return
+      setCurrentOption(1);
+      return;
     }
     if (!isFriendModeEnabled) {
-      if (!optionsData.filter(op => op.id === Number(opcionA))[0].cliente) {
-        setCurrentOption(1)
-        return
+      if (!optionsData.filter((op) => op.id === Number(opcionA))[0].cliente) {
+        setCurrentOption(1);
+        return;
       }
     }
-    setCurrentOption(Number(opcionA))
-    
-  },[location])
+    setCurrentOption(Number(opcionA));
+  }, [location]);
   useEffect(() => {
     if (informacion) {
       console.log(informacion);
@@ -96,7 +100,7 @@ const Perfil = () => {
     if (window.innerWidth < 576) {
       setShowContent(true);
     }
-    navigateTo(`/cuenta-amigo?opcion=${id}`)
+    navigateTo(`/cuenta-amigo?opcion=${id}`);
   };
 
   useEffect(() => {
@@ -116,7 +120,7 @@ const Perfil = () => {
       console.log(data, "data");
       if (data.data.amigo) {
         setIsFriendModeEnabled(true);
-        setFriendPrice(data.data.precio)
+        setFriendPrice(data.data.precio);
       } else {
         setIsFriendModeEnabled(false);
       }
@@ -141,7 +145,14 @@ const Perfil = () => {
             }}
           >
             <h1 style={{ color: "white" }}>Términos y condiciones</h1>
-            <p style={{ color: "white", maxHeight: "80%", overflowY: "auto", padding:"15px 20px 0 10px"}}>
+            <p
+              style={{
+                color: "white",
+                maxHeight: "80%",
+                overflowY: "auto",
+                padding: "15px 20px 0 10px",
+              }}
+            >
               Términos y Condiciones de Uso de Friender <br />
               Por favor, lee estos términos y condiciones de uso cuidadosamente
               antes de utilizar los servicios ofrecidos por Friender. Al acceder
@@ -249,17 +260,19 @@ const Perfil = () => {
             </div>
             <div className="options" style={{ zIndex: "1" }}>
               <ul>
-                {optionsData.filter(opcion => opcion.cliente || isFriendModeEnabled).map((item) => (
-                  <li
-                    key={item.id}
-                    onClick={() => handleOptionClick(item.id)}
-                    className={`option ${
-                      currentOption === item.id && "active"
-                    }`}
-                  >
-                    <p>{item.name}</p>
-                  </li>
-                ))}
+                {optionsData
+                  .filter((opcion) => opcion.cliente || isFriendModeEnabled)
+                  .map((item) => (
+                    <li
+                      key={item.id}
+                      onClick={() => handleOptionClick(item.id)}
+                      className={`option ${
+                        currentOption === item.id && "active"
+                      }`}
+                    >
+                      <p>{item.name}</p>
+                    </li>
+                  ))}
                 <li className="option">
                   <li>
                     <button

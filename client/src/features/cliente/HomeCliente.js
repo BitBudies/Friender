@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const HomeCliente = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default HomeCliente
+export default HomeCliente;
