@@ -40,7 +40,7 @@ const Perfil = () => {
       id: 1,
       name: "Mi Perfil",
       toRender: <MiPerfil />,
-      cliente: false
+      cliente: true
     },
     {
       id: 2,
@@ -249,7 +249,7 @@ const Perfil = () => {
             </div>
             <div className="options" style={{ zIndex: "1" }}>
               <ul>
-                {optionsData.filter(opcion => opcion.cliente || isFriendModeEnabled).filter(o => o.id !== 1).map((item) => (
+                {optionsData.filter(opcion => opcion.cliente || isFriendModeEnabled).map((item) => (
                   <li
                     key={item.id}
                     onClick={() => handleOptionClick(item.id)}
