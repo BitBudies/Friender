@@ -185,7 +185,7 @@ const ListaAmigos = () => {
       token: token,
       filtros: {
         pagina: pagina,
-        limite: 24,
+        limite: 12,
         precio_min:
           nuevosValores.precio.min == ""
             ? null
@@ -252,7 +252,12 @@ const ListaAmigos = () => {
     } else {
       const minimooooo = parseInt(values.precio.min);
       // Validar el valor máximo
-      if (field === "max" && !isNaN(minimooooo) && value <= minimooooo && minimooooo !=250 ) {
+      if (
+        field === "max" &&
+        !isNaN(minimooooo) &&
+        value <= minimooooo &&
+        minimooooo != 250
+      ) {
         value = minimooooo + 5;
       }
     }
@@ -400,16 +405,18 @@ const ListaAmigos = () => {
                   value={values.precio.min}
                   onBlur={(e) => onBlurcito(e, "min")}
                   onChange={(e) => {
-  
                     if (validNumberPattern.test(e.target.value)) {
-                      if (!isNaN(e.target.value) && e.target.value >= 0 && e.target.value <= 250){
-                      setValues({
-                        ...values,
-                        precio: { ...values.precio, min: e.target.value },
-                      });
-                      
-                    }}
-                    
+                      if (
+                        !isNaN(e.target.value) &&
+                        e.target.value >= 0 &&
+                        e.target.value <= 250
+                      ) {
+                        setValues({
+                          ...values,
+                          precio: { ...values.precio, min: e.target.value },
+                        });
+                      }
+                    }
                   }}
                   onKeyDown={handleKeyDown}
                 />
@@ -430,16 +437,18 @@ const ListaAmigos = () => {
                     onBlurcito(e, "max");
                   }}
                   onChange={(e) => {
-                    
-    
-                   
                     if (validNumberPattern.test(e.target.value)) {
-                      if (!isNaN(e.target.value) && e.target.value >= 0 && e.target.value <= 250){
-                      setValues({
-                        ...values,
-                        precio: { ...values.precio, max: e.target.value },
-                      });
-                    }}
+                      if (
+                        !isNaN(e.target.value) &&
+                        e.target.value >= 0 &&
+                        e.target.value <= 250
+                      ) {
+                        setValues({
+                          ...values,
+                          precio: { ...values.precio, max: e.target.value },
+                        });
+                      }
+                    }
                   }}
                   onKeyDown={handleKeyDown}
                 />
@@ -487,7 +496,7 @@ const ListaAmigos = () => {
           </div>
 
           <div>
-            <label 
+            <label
               htmlFor="ubicacion"
               className="input-label"
               style={{ whiteSpace: "nowrap" }}
@@ -603,10 +612,10 @@ const ListaAmigos = () => {
           )}
           <nav aria-label="Page navigation example">
             <ul className="pagination justify-content-center">
-              <li className="page-item">
+              <li>
                 <button
-                  className={"page-link"}
-                  disabled={Number(pagina) === 1}
+                  className={`page-link ${Number(pagina) == 1 && "disabled"}`}
+                  disabled={Number(pagina) == 1}
                   onClick={() => {
                     const lastPage = Number(pagina) - 1;
                     const queryParams = new URLSearchParams(location.search);
@@ -629,6 +638,7 @@ const ListaAmigos = () => {
                     className={`page-link ${
                       Number(pagina) === index + 1 && "bg-azul-fuerte"
                     }`}
+                    disabled={Number(pagina) == index + 1}
                     onClick={() => {
                       const queryParams = new URLSearchParams(location.search);
                       queryParams.set("pagina", index + 1);
@@ -640,10 +650,12 @@ const ListaAmigos = () => {
                   </button>
                 </li>
               ))}
-              <li className="page-item">
+              <li>
                 <button
-                  className={"page-link"}
-                  disabled={Number(pagina) === amigos.numero_paginas}
+                  className={`page-link ${
+                    Number(pagina) == amigos.numero_paginas && "disabled"
+                  }`}
+                  disabled={Number(pagina) == amigos.numero_paginas}
                   onClick={() => {
                     const nextPage = Number(pagina) + 1;
                     const queryParams = new URLSearchParams(location.search);
