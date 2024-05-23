@@ -102,6 +102,16 @@ const HabilitarAmigo = ({ modalcito }) => {
 
     const handleChangePrice = async () => {
       setIsEnabledBtn(false);
+      if (precio === "") {
+        setSupportingText("Introduzca Precio")
+        setIsEnabledBtn(true);
+        return
+      }
+      if (precio == 0) {
+        setSupportingText("El precio debe ser mayor a 0 Bs")
+        setIsEnabledBtn(true);
+        return
+      }
       await change({ token: token, precio: precio });
       window.location.reload();
     };
