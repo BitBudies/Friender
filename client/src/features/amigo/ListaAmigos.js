@@ -185,7 +185,7 @@ const ListaAmigos = () => {
       token: token,
       filtros: {
         pagina: pagina,
-        limite: 12,
+        limite: 24,
         precio_min:
           nuevosValores.precio.min == ""
             ? null
