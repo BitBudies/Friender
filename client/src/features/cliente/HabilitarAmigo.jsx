@@ -100,6 +100,16 @@ const HabilitarAmigo = ({ modalcito }) => {
       }
     };
 
+    async function handleDisableFriend() {
+      if (!isFriendModeEnabled) {
+        await enable({ token: token, precio: precio });
+        navigateTo("/cuenta-amigo?opcion=4")
+      } else {
+        await disable({ token: token });
+        navigateTo("/cuenta-amigo?opcion=1")
+      }
+    }
+
     const handleChangePrice = async () => {
       setIsEnabledBtn(false);
       if (precio === "") {
@@ -115,6 +125,8 @@ const HabilitarAmigo = ({ modalcito }) => {
       await change({ token: token, precio: precio });
       window.location.reload();
     };
+
+
 
     return (
       <div className="habilitar-amigo">
@@ -153,7 +165,7 @@ const HabilitarAmigo = ({ modalcito }) => {
                   <button
                     className={`btn btn-outline-secondary`}
                     disabled={disableLoading}
-                    onClick={handleSubmit}
+                    onClick={handleDisableFriend}
                   >
                     Deshabilitar Cuenta
                   </button>
