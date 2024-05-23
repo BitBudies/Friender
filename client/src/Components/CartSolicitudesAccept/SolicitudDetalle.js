@@ -69,7 +69,7 @@ const SolicitudDetalle = () => {
                             <p>{solicitud.descripcion}</p>
                         </div>
                         <div className="footer">
-                            <h5>Total: {solicitud.precio * solicitud.minutos} Bs </h5>
+                            <h5>Total: {solicitud.precio} Bs </h5>
                         </div>
                     </div>
                 </div>
