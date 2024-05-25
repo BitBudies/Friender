@@ -6,8 +6,6 @@ import { useLocation } from "react-router-dom";
 import { useGlobalContext } from "../context";
 import { useNavigate } from "react-router-dom";
 import { useIsAuthenticated } from "../hooks/isAuthenticated";
-import { useCookies } from "react-cookie";
-import { useGetEsAmigoQuery } from "./NavBarSlice";
 
 const NavBar = () => {
   const { userData } = useGlobalContext();
@@ -27,7 +25,7 @@ const NavBar = () => {
 
   const handleRefresh = () => {
     if (inHome) {
-      window.location.href = window.location.href;
+      window.location.href = "/"
     } else {
       navigate("/");
     }
