@@ -59,17 +59,7 @@ from amigo.views.utils import obtener_csrf
 from amigo.views.login import Login
 from amigo.views.cerrarSesion import Logout
 from amigo.views.lista_solicitudes_aceptadas import ObtenerListaDeSolicitudes
-from amigo.views.filtros import (ClientePorGenero,
-                                 FiltroTotalToken,
-                                 ClienteFiltro,
-                                 Interes,
-                                 Precio,
-                                 FiltroTotal,
-                                ClientePorGeneroToken,
-                                ClienteFiltroToken, 
-                                InteresToken,
-                                PrecioToken,
-                                AmigoListLimitPaginator)
+from amigo.views.filtros import AmigoListLimitPaginator
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -146,20 +136,6 @@ urlpatterns = [
     #ducumentacion de la API
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), 
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    
-    
-    #filtros
-    path('api/filtros/genero', ClientePorGenero.as_view(), name='filtro_femenino'),
-    path('api/filtros/cliente', ClienteFiltro.as_view(), name='filtro_cliente'),
-    path('api/filtros/interes', Interes.as_view(), name='filtro_interes'),
-    path('api/filtros/precio', Precio.as_view()),
-    path('api/filtros/total',FiltroTotal.as_view()),
-    #filtros-con-tokens
-    path('api/filtros/generoToken',ClientePorGeneroToken.as_view()),
-    path('api/filtros/clienteToken',ClienteFiltroToken.as_view()),
-    path('api/filtros/interesToken',InteresToken.as_view()),
-    path('api/filtros/precioToken', PrecioToken.as_view()),
-    path('api/filtros/total',FiltroTotalToken.as_view()),
     
     path('api/filtros/filtrosPaginacion', AmigoListLimitPaginator),
 ]
