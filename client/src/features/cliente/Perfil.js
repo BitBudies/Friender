@@ -5,7 +5,6 @@ import { GiReturnArrow } from "react-icons/gi";
 import { useCookies } from "react-cookie";
 import SolicitudesPendientes from "../solicitudes/SolicitudesPendientes";
 import SolicitudesAceptadas from "../solicitudes/SolicitudesAceptadas";
-import PerfilCliente from "../cliente/PerfilCliente";
 import HabilitarAmigo from "./HabilitarAmigo";
 import MiPerfil from "../../Components/MiPerfil/MiPerfil";
 import { useIsEnabledFriendModeQuery } from "./clienteSlice";
@@ -26,7 +25,7 @@ const Perfil = () => {
   const [showModal, setShowModal] = useState(false);
   const [currentOption, setCurrentOption] = useState(1);
   const [showContent, setShowContent] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const [cookies, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
 
   const [nombreCompleto, setNombreCompleto] = useState("");
@@ -37,10 +36,6 @@ const Perfil = () => {
   });
 
   const optionsData = [
-    // {
-    //   id : 1,
-    //   name : "Editar Perfil",
-    //   toRender : <div className='editar-perfil'><h1>Editar Perfil</h1></div>},
     {
       id: 1,
       name: "Mi Perfil",
@@ -85,7 +80,6 @@ const Perfil = () => {
       console.log(informacion);
       setNombreCompleto(informacion.nombre_completo);
       setImagenBase64(informacion.imagenBase64);
-      //nombre_completo = informacion.nombre_completo
     }
   }, [informacion]);
 
@@ -126,7 +120,7 @@ const Perfil = () => {
         setFriendPrice(0);
       }
     }
-  },[isFetching, data, setIsFriendModeEnabled, isSuccess]);
+  }, [isFetching, data, setIsFriendModeEnabled, isSuccess]);
 
   if (isFetching) {
     return <Loading />;
