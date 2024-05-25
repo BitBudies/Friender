@@ -123,9 +123,10 @@ const Perfil = () => {
         setFriendPrice(data.data.precio);
       } else {
         setIsFriendModeEnabled(false);
+        setFriendPrice(0);
       }
     }
-  }, [isSuccess]);
+  },[isFetching, data, setIsFriendModeEnabled, isSuccess]);
 
   if (isFetching) {
     return <Loading />;
