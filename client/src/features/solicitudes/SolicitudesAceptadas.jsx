@@ -1,13 +1,11 @@
 import React from "react";
 import "./SolicitudesAceptadas.css";
 import SolicitudAceptada from "../../Components/CartSolicitudesAccept/SolicitudAceptada";
-import logo from "../../logo-friender.png";
 import { useGetSolicitudesAceptadasQuery } from "./solicitudesSlice";
 import { useCookies } from "react-cookie";
 import Loading from "../../Components/Loading";
 
 const SolicitudesAceptadas = () => {
-  //   const url = URL.createObjectURL(logo)
   const [cookies] = useCookies(["token"]);
   const { data, isFetching, isSuccess } = useGetSolicitudesAceptadasQuery(
     cookies.token
