@@ -52,13 +52,14 @@ const NavBar = () => {
     window.location.reload();
   }*/
 
-  const handleRefresh=()=>{
-    if(inHome){
-      window.location.reload();
-    }else{
+  const handleRefresh = () => {
+    if (inHome) {
+      window.location.href = window.location.href;
+    } else {
       navigate("/");
     }
   }
+  
   
   return (
     <nav className='navbar navbar-expand-md bg-azul-fuerte text-light' data-bs-theme="dark" style={{zIndex: "5"}}>
