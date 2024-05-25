@@ -10,7 +10,6 @@ import "./SolicitudDetalles.css";
 import { useGlobalContext } from "../../context";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import Modal from "./Modal";
-import { pictures } from "../api/pictures";
 const calificacionEstrellas = (calificacion) => {
   const numEstrellas = Math.round(calificacion);
   const estrellas = "★".repeat(numEstrellas) + "☆".repeat(5 - numEstrellas);

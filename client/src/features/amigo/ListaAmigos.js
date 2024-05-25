@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./listaAmigos.css";
 import Loading from "../../Components/Loading";
 import { useGetAmigosMutation } from "./amigoSlice";
-import { FaUser, FaFilter, FaAngleDown, FaAngleUp } from "react-icons/fa";
+import { FaUser, FaFilter, FaAngleDown } from "react-icons/fa";
 import {
   MdInterests,
   MdOutlineAttachMoney,
@@ -187,11 +187,11 @@ const ListaAmigos = () => {
         pagina: pagina,
         limite: 24,
         precio_min:
-          nuevosValores.precio.min == ""
+          nuevosValores.precio.min === ""
             ? null
             : parseInt(nuevosValores.precio.min),
         precio_max:
-          nuevosValores.precio.max == ""
+          nuevosValores.precio.max === ""
             ? null
             : parseInt(nuevosValores.precio.max),
         edad_min: edad_min,
@@ -251,17 +251,25 @@ const ListaAmigos = () => {
       value = "";
     } else {
       const minimooooo = parseInt(values.precio.min);
+      const maximooooo = parseInt(values.precio.max);
       // Validar el valor máximo
       if (
         field === "max" &&
         !isNaN(minimooooo) &&
         value <= minimooooo &&
-        minimooooo != 250
+        minimooooo !== 250
       ) {
         value = minimooooo + 5;
       }
+      if (maximooooo < minimooooo) {
+        values.precio.min = values.precio.max;
+        values.precio.max = values.precio.min;
+      }
+      if (minimooooo === 250) {
+        values.precio.min = values.precio.max;
+        values.precio.max = 250;
+      }
     }
-
     setValues({
       ...values,
       precio: {
@@ -326,7 +334,7 @@ const ListaAmigos = () => {
                 setValues({
                   ...values,
                   interecitos: values.interecitos.map((interes) => {
-                    if (interes.nombre == selectedInterest) {
+                    if (interes.nombre === selectedInterest) {
                       return {
                         nombre: interes.nombre,
                         seleccionado: true,
@@ -345,13 +353,11 @@ const ListaAmigos = () => {
             >
               <option className="nomostraropcionxd"> </option>
               {values.interecitos.map((interes) => {
-                if (!interes.seleccionado) {
-                  return (
-                    <option key={interes.nombre} value={interes.nombre}>
-                      {interes.nombre}
-                    </option>
-                  );
-                }
+                return !interes.seleccionado ? (
+                  <option key={interes.nombre} value={interes.nombre}>
+                    {interes.nombre}
+                  </option>
+                ) : null;
               })}
             </select>
           </div>
@@ -531,33 +537,31 @@ const ListaAmigos = () => {
       </div>
       <div className="interesesSeleccionados">
         {values.interecitos.map((interes) => {
-          if (interes.seleccionado) {
-            return (
-              <div className="burbujaInteres">
-                {interes.nombre}
-                <IoClose
-                  className="cerrarBurbuja"
-                  onClick={() => {
-                    const nuevosIntereses = values.interecitos.map(
-                      (interesUwu) => {
-                        if (interesUwu.nombre === interes.nombre) {
-                          return {
-                            nombre: interesUwu.nombre,
-                            seleccionado: false,
-                          };
-                        }
-                        return interesUwu;
+          return interes.seleccionado ? (
+            <div className="burbujaInteres">
+              {interes.nombre}
+              <IoClose
+                className="cerrarBurbuja"
+                onClick={() => {
+                  const nuevosIntereses = values.interecitos.map(
+                    (interesUwu) => {
+                      if (interesUwu.nombre === interes.nombre) {
+                        return {
+                          nombre: interesUwu.nombre,
+                          seleccionado: false,
+                        };
                       }
-                    );
-                    setValues({
-                      ...values,
-                      interecitos: nuevosIntereses,
-                    });
-                  }}
-                />
-              </div>
-            );
-          }
+                      return interesUwu;
+                    }
+                  );
+                  setValues({
+                    ...values,
+                    interecitos: nuevosIntereses,
+                  });
+                }}
+              />
+            </div>
+          ) : null;
         })}
       </div>
       {isLoading ? (
@@ -614,8 +618,8 @@ const ListaAmigos = () => {
             <ul className="pagination justify-content-center">
               <li>
                 <button
-                  className={`page-link ${Number(pagina) == 1 && "disabled"}`}
-                  disabled={Number(pagina) == 1}
+                  className={`page-link ${Number(pagina) === 1 && "disabled"}`}
+                  disabled={Number(pagina) === 1}
                   onClick={() => {
                     const lastPage = Number(pagina) - 1;
                     const queryParams = new URLSearchParams(location.search);
@@ -638,7 +642,7 @@ const ListaAmigos = () => {
                     className={`page-link ${
                       Number(pagina) === index + 1 && "bg-azul-fuerte"
                     }`}
-                    disabled={Number(pagina) == index + 1}
+                    disabled={Number(pagina) === index + 1}
                     onClick={() => {
                       const queryParams = new URLSearchParams(location.search);
                       queryParams.set("pagina", index + 1);
@@ -653,9 +657,9 @@ const ListaAmigos = () => {
               <li>
                 <button
                   className={`page-link ${
-                    Number(pagina) == amigos.numero_paginas && "disabled"
+                    Number(pagina) === amigos.numero_paginas && "disabled"
                   }`}
-                  disabled={Number(pagina) == amigos.numero_paginas}
+                  disabled={Number(pagina) === amigos.numero_paginas}
                   onClick={() => {
                     const nextPage = Number(pagina) + 1;
                     const queryParams = new URLSearchParams(location.search);

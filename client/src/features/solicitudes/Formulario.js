@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Formulario.css";
 import { RxCross2 } from "react-icons/rx";
 import { useEnviarSolicitudMutation } from "./solicitudesSlice";
-import { useGlobalContext } from "../../context";
 import { useCookies } from "react-cookie";
 
 const defaultValues = {

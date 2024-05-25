@@ -6,10 +6,9 @@ import {
   useChangePriceMutation,
 } from "./clienteSlice";
 import useGetToken from "../../hooks/getToken";
-import Loading from "../../Components/Loading";
 import { useGlobalContext } from "../../context";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const HabilitarAmigo = ({ modalcito }) => {
   const navigateTo = useNavigate();
@@ -17,54 +16,29 @@ const HabilitarAmigo = ({ modalcito }) => {
   const [isEnabledBtn, setIsEnabledBtn] = useState(true);
   const token = useGetToken();
   const { isFriendModeEnabled, friendPrice } = useGlobalContext();
-  const [precio, setPrecio] = useState(friendPrice);
+  const [precio, setPrecio] = useState(0);
   const [supportingText, setSupportingText] = useState("");
 
-  // const {
-  //   data: isEnabled,
-  //   isFetching,
-  //   isSuccess,
-  // } = useIsEnabledFriendModeQuery({ token: token });
+  useEffect(() => {
+    console.log("el friend price es: ", friendPrice);
+    setPrecio(friendPrice);
+  }, [friendPrice]);
 
-  const [
-    enable,
-    { data: enabled, isSuccess: isSuccessEnable, isError, error, isLoading },
-  ] = useEnableFriendModeMutation();
+  const [enable, { isSuccess: isSuccessEnable, isLoading }] =
+    useEnableFriendModeMutation();
 
   const [
     disable,
     { data: disabled, isSuccess: isSuccessDisable, isLoading: disableLoading },
   ] = useDisableFriendModeMutation();
 
-  const [
-    change,
-    {
-      data,
-      isLoading: isLoadingChange,
-      isSuccess: isSuccessChange,
-      isError: isErrorChange,
-      error: errorChange,
-    },
-  ] = useChangePriceMutation();
-
-  useEffect(() => {
-    if (isError) {
-      console.log(error);
-    }
-    if (isSuccessEnable) {
-      console.log(enabled);
-    }
-  }, [isError, enabled, isSuccessEnable, error]);
+  const [change, { isLoading: isLoadingChange }] = useChangePriceMutation();
 
   useEffect(() => {
     if (isSuccessDisable) {
       console.log(disabled);
     }
   }, [isSuccessDisable, disabled]);
-
-  useEffect(() => {
-    console.log(isFriendModeEnabled, "precio");
-  }, [isFriendModeEnabled]);
 
   if (isSuccessEnable) {
     return (
@@ -138,7 +112,9 @@ const HabilitarAmigo = ({ modalcito }) => {
           </h1>
           <div className="habilitar-form">
             <div className="input-item">
-              <label htmlFor="precio">Precio por hora (en Bs).</label>
+              <label htmlFor="precio" className="required-label">
+                Precio por hora (en Bs)
+              </label>
               <input
                 className="form-control mt-2"
                 type="number"

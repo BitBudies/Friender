@@ -3,15 +3,12 @@ import "./Solicitud.css";
 import { FaClock } from "react-icons/fa6";
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { pictures } from "../api/pictures";
 const calificacionEstrellas = (calificacion) => {
   const numEstrellas = Math.round(calificacion);
   const estrellas = "★".repeat(numEstrellas) + "☆".repeat(5 - numEstrellas);
   return estrellas;
 };
-const Solicitud = ({ solicitud, index }) => {
-  // console.log(solicitud, "Solicitud");
-
+const Solicitud = ({ solicitud }) => {
   function formatFecha(fecha) {
     const [year, month, day] = fecha.split("-");
     return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${year}`;

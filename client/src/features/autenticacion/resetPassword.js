@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./resetPassword.css";
 import { useFindEmailMutation } from "./authSlice";
-
 import { useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
@@ -66,10 +65,9 @@ const ResetPassword = () => {
         setSupportingText(errorsito.data.error);
       }
     }
-  }, [isError, isLoading, isSuccess, response]);
+  }, [isError, isLoading, isSuccess, response, errorsito]);
 
   const goToNextStep = () => setStep(step + 1);
-  const goToPreviousStep = () => setStep(step - 1);
 
   useEffect(() => {
     if (step === 2) {
@@ -77,7 +75,7 @@ const ResetPassword = () => {
         navigate("/");
       }, 5000);
     }
-  }, [step]);
+  }, [step, navigate]);
 
   return (
     <div className="page principal">
