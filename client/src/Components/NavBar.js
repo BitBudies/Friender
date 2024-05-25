@@ -1,6 +1,5 @@
 import React,{useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
-import { FaUserCircle } from "react-icons/fa";
 import "./NavBar.css"
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -13,23 +12,13 @@ import { useGetEsAmigoQuery } from './NavBarSlice';
 const NavBar = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const {goToBeginning,userData} = useGlobalContext();
-  /*false --> Muestra iniciar sesión;  true --> Muestra el icono del perfil*/
-
   const {data, isFetching, isSuccess} = useGetEsAmigoQuery(cookies.token)
-  
-  // if (isSuccess){
-  //   console.log("este usuario se registro como amigo?")
-  //   console.log(data.data)
-  // }
-
   const navigate = useNavigate();
-
   const isAuthenticated = useIsAuthenticated();
   const [ModeAmigo, setModeAmigo] = useState();
   const [ShowMiPerfil, setShowMiPerfil] = useState();
   const [userLoged, setUserLoged] = useState(isAuthenticated);
   const location = useLocation();
-  //const isActive = location.pathname.startsWith('/amigos?pagina');
   const isTestJhon = location.pathname === '/test/jhon';
   const inHome = location.pathname === '/';
   const modelocation = useLocation();
@@ -46,11 +35,6 @@ const NavBar = () => {
   if (isTestJhon) {
     return null;
   }
-  /*const handleCloseSession = () => {
-    removeCookie("token")
-    navigate("/")
-    window.location.reload();
-  }*/
 
   const handleRefresh = () => {
     if (inHome) {
@@ -94,7 +78,7 @@ const NavBar = () => {
           <div className='nav-item dropdown login-buttons'>
             
             <div className={`${userLoged ? "" : "hidden"}`}>
-            <span className="profile-icon"  aria-expanded="false"> {/*nav-link dropdown-toggle profile-icon role="button" data-bs-toggle="dropdown"*/}
+            <span className="profile-icon"  aria-expanded="false">
               <div
               
                 className="image-icon"
