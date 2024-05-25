@@ -4,7 +4,6 @@ import "./Login.css";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { useLoginMutation } from "./authSlice";
 import { useGlobalContext } from "../../context";
-import NavBar from "../../Components/NavBar.js";
 import logo from "../../logo-friender.png";
 import { useCookies } from "react-cookie";
 import { useRedirectIfAuthenticated } from "../../hooks/isAuthenticated.js";
@@ -15,14 +14,8 @@ const LogIn = () => {
   const [cookies, setCookie] = useCookies(["token"]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [feedbackText, setFeedbackText] = useState("");
-
-  const [showFeedback, setShowFeedback] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [disableBtn, setDisableBtn] = useState(false);
   const [disableBtnLoading, setDisableBtnLoading] = useState(false);
-
-  // Para cuenta regresiva
   const [remainingTime, setRemainingTime] = useState(0);
   const [supportingText, setSupportingText] = useState("");
 
@@ -48,7 +41,6 @@ const LogIn = () => {
 
     if (isLoading) {
       setDisableBtnLoading(true);
-      setShowFeedback(false);
       setSupportingText("");
     }
     if (isSuccess) {
@@ -60,7 +52,6 @@ const LogIn = () => {
     if (isError) {
       console.log(responseError, "error");
       setDisableBtnLoading(false);
-      setShowFeedback(true);
       if (responseError.data.tiempo) {
         setSupportingText("");
         const tiempoRestante = responseError.data.tiempo;
@@ -80,8 +71,6 @@ const LogIn = () => {
       } else {
         setSupportingText(responseError.data.error);
       }
-
-      setFeedbackText(responseError.data.error);
     }
   }, [
     isError,

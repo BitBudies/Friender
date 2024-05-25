@@ -25,7 +25,7 @@ const Perfil = () => {
   const [showModal, setShowModal] = useState(false);
   const [currentOption, setCurrentOption] = useState(1);
   const [showContent, setShowContent] = useState(false);
-  const [cookies, removeCookie] = useCookies(["token"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
 
   const [nombreCompleto, setNombreCompleto] = useState("");
