@@ -238,6 +238,7 @@ const ListaAmigos = () => {
     navigateTo(nuevaURL);
   }
 
+
   const onBlurcito = (e, field) => {
     let value = e.target.value;
     console.log(`el usario dejo el ${field}: ${value}`);
@@ -251,6 +252,7 @@ const ListaAmigos = () => {
       value = "";
     } else {
       const minimooooo = parseInt(values.precio.min);
+      const maximooooo = parseInt(values.precio.max);
       // Validar el valor máximo
       if (
         field === "max" &&
@@ -260,8 +262,18 @@ const ListaAmigos = () => {
       ) {
         value = minimooooo + 5;
       }
-    }
+        if (maximooooo < minimooooo) {
+          values.precio.min = values.precio.max;
+          values.precio.max= values.precio.min;
+          
+        }
+        if ( minimooooo == 250) {
+          values.precio.min = values.precio.max;
+          values.precio.max= 250;
+        }
 
+        
+    }
     setValues({
       ...values,
       precio: {
