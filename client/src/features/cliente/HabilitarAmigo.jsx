@@ -138,7 +138,7 @@ const HabilitarAmigo = ({ modalcito }) => {
           </h1>
           <div className="habilitar-form">
             <div className="input-item">
-              <label htmlFor="precio">Precio por hora (en Bs).</label>
+              <label htmlFor="precio" className="required-label">Precio por hora (en Bs)</label>
               <input
                 className="form-control mt-2"
                 type="number"
