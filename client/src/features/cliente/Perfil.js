@@ -125,7 +125,7 @@ const Perfil = () => {
         setIsFriendModeEnabled(false);
       }
     }
-  }, [isFetching, data, setIsFriendModeEnabled, isSuccess]);
+  }, [isSuccess]);
 
   if (isFetching) {
     return <Loading />;

@@ -17,14 +17,13 @@ const HabilitarAmigo = ({ modalcito }) => {
   const [isEnabledBtn, setIsEnabledBtn] = useState(true);
   const token = useGetToken();
   const { isFriendModeEnabled, friendPrice } = useGlobalContext();
-  const [precio, setPrecio] = useState(friendPrice);
+  const [precio, setPrecio] = useState(0);
   const [supportingText, setSupportingText] = useState("");
 
-  // const {
-  //   data: isEnabled,
-  //   isFetching,
-  //   isSuccess,
-  // } = useIsEnabledFriendModeQuery({ token: token });
+  useEffect(()=>{
+    console.log("el friend price es: ", friendPrice);
+    setPrecio(friendPrice)
+  }, [friendPrice])
 
   const [
     enable,
@@ -61,10 +60,6 @@ const HabilitarAmigo = ({ modalcito }) => {
       console.log(disabled);
     }
   }, [isSuccessDisable, disabled]);
-
-  useEffect(() => {
-    console.log(isFriendModeEnabled, "precio");
-  }, [isFriendModeEnabled]);
 
   if (isSuccessEnable) {
     return (
