@@ -257,18 +257,23 @@ const ListaAmigos = () => {
         field === "max" &&
         !isNaN(minimooooo) &&
         value <= minimooooo &&
-        minimooooo !== 250
+        minimooooo !== 250 && maximooooo > minimooooo
       ) {
         value = minimooooo + 5;
       }
-      if (maximooooo < minimooooo) {
-        values.precio.min = values.precio.max;
-        values.precio.max = values.precio.min;
-      }
+     
       if (minimooooo === 250) {
         values.precio.min = values.precio.max;
         values.precio.max = 250;
       }
+    }
+    const minimooooo = parseInt(values.precio.min);
+      const maximooooo = parseInt(values.precio.max);
+
+    if (maximooooo < minimooooo) {
+     value  =  values.precio.min;
+     value = 250;
+      
     }
     setValues({
       ...values,
