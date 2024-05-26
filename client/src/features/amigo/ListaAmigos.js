@@ -257,7 +257,7 @@ const ListaAmigos = () => {
         field === "max" &&
         !isNaN(minimooooo) &&
         value <= minimooooo &&
-        minimooooo !== 250 && maximooooo > minimooooo
+        minimooooo !== 250 
       ) {
         value = minimooooo + 5;
       }
